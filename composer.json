@@ -77,7 +77,7 @@
     "test-db-mysql": "php vendor/bin/codecept run --ext DotReporter database --env mysql -g mysql",
     "test-db-pgsql": "php vendor/bin/codecept run --ext DotReporter database --env pgsql -g pgsql",
     "test-db-sqlite": "php vendor/bin/codecept run --ext DotReporter database --env sqlite -g sqlite",
-    "test-db": "test-db-common && test-db-mysql && test-db-pgsql && test-db-sqlite",
-    "test-all": "test-unit && test-cli && test-integration && test-db"
+    "test-db": "composer test-db-common && composer test-db-mysql && composer test-db-pgsql && composer test-db-sqlite",
+    "test-all": "composer test-unit && composer test-cli && composer test-integration && composer test-db"
   }
 }
