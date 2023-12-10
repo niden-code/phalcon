@@ -122,7 +122,7 @@ class Grouped extends Config
                 }
 
                 $configArray    = $configInstance['config'];
-                $configInstance = new Config($configArray);
+                $configInstance = new Config($configArray, $this->insensitive);
 
                 $this->merge($configInstance);
 

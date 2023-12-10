@@ -11,23 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Config\Adapter\Grouped;
+namespace Phalcon\Tests\Unit\Dispatcher;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
-class MergeCest
+class GetBoundModelsCest
 {
-    use ConfigTrait;
-
     /**
-     * Tests Phalcon\Config\Adapter\Grouped :: merge()
+     * Tests Phalcon\Dispatcher :: getBoundModels()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function configAdapterGroupedMerge(UnitTester $I)
+    public function dispatcherGetBoundModels(UnitTester $I)
     {
-        $this->checkMergeException($I, 'Grouped');
+        $I->wantToTest('Dispatcher - getBoundModels()');
+
+        $I->skipTest('Need implementation');
     }
 }

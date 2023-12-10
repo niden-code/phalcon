@@ -168,32 +168,6 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Phalcon\Config\Adapter\* :: merge() - exception
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
-     */
-    private function checkMergeException(UnitTester $I, string $adapter = '')
-    {
-        $I->wantToTest(
-            sprintf(
-                $this->getMessage($adapter),
-                'merge()'
-            )
-        );
-
-        $config = $this->getConfig($adapter);
-        $I->expectThrowable(
-            new Exception(
-                'Invalid data type for merge.'
-            ),
-            function () use ($config) {
-                $config->merge(false);
-            }
-        );
-    }
-
-    /**
      * Tests Phalcon\Config\Adapter\* :: offsetExists()
      *
      * @author Phalcon Team <team@phalcon.io>

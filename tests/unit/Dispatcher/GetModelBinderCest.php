@@ -11,25 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Config\Adapter\Php;
+namespace Phalcon\Tests\Unit\Dispatcher;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
-class MergeCest
+class GetModelBinderCest
 {
-    use ConfigTrait;
-
     /**
-     * Tests Phalcon\Config\Adapter\Php :: merge()
+     * Tests Phalcon\Dispatcher :: getModelBinder()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function configAdapterPhpMerge(UnitTester $I)
+    public function dispatcherGetModelBinder(UnitTester $I)
     {
-        $I->wantToTest("Config\Adapter\Php - merge()");
+        $I->wantToTest('Dispatcher - getModelBinder()');
 
-        $this->checkMergeException($I, 'Php');
+        $I->skipTest('Need implementation');
     }
 }

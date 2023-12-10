@@ -39,7 +39,6 @@ abstract class AbstractSeries extends AbstractHelper
     ): AbstractSeries {
         $this->delimiter = $delimiter;
         $this->indent    = $indent;
-        $this->store     = [];
 
         return $this;
     }
@@ -55,6 +54,16 @@ abstract class AbstractSeries extends AbstractHelper
             $this->store,
             $this->delimiter
         );
+    }
+
+    /**
+     * Resets the internal store.
+     */
+    public function reset(): AbstractSeries
+    {
+        $this->store = [];
+
+        return $this;
     }
 
     /**

@@ -85,32 +85,6 @@ class MergeCest
     }
 
     /**
-     * Tests Phalcon\Config :: merge() - exceptions
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-10-26
-     */
-    public function configMergeExceptions(UnitTester $I)
-    {
-        $I->wantToTest('Phalcon\Config :: merge() - exceptions');
-
-        $config = new Config(
-            [
-                'my' => 'config',
-            ]
-        );
-
-        $I->expectThrowable(
-            new Exception(
-                'Invalid data type for merge.'
-            ),
-            function () use ($config) {
-                $config->merge('invalid-config');
-            }
-        );
-    }
-
-    /**
      * @return array<array-key, array<string, mixed>>
      */
     private function getExamples(): array

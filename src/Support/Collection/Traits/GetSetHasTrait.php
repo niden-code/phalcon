@@ -97,5 +97,5 @@ trait GetSetHasTrait
      * @param string $element
      * @param mixed  $value
      */
-    abstract public function set(string $element, $value): void;
+    abstract public function set(string $element, mixed $value): void;
 }

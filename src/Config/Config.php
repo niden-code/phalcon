@@ -28,7 +28,7 @@ use function method_exists;
  * code.
  *
  *```php
- * $config = new \Phalcon\Config(
+ * $config = new \Phalcon\Config\Config(
  *     [
  *         "database" => [
  *             "adapter"  => "Mysql",
@@ -68,10 +68,24 @@ class Config extends Collection implements ConfigInterface
     }
 
     /**
+     * Sets the default path delimiter
+     *
+     * @param string|null $delimiter
+     *
+     * @return ConfigInterface
+     */
+    public function setPathDelimiter(?string $delimiter = null): ConfigInterface
+    {
+        $this->pathDelimiter = $delimiter;
+
+        return $this;
+    }
+
+    /**
      * Merges a configuration into the current one
      *
      *```php
-     * $appConfig = new \Phalcon\Config(
+     * $appConfig = new \Phalcon\Config\Config(
      *     [
      *         "database" => [
      *             "host" => "localhost",
@@ -87,94 +101,19 @@ class Config extends Collection implements ConfigInterface
      * @return ConfigInterface
      * @throws Exception
      */
-    public function merge($toMerge): ConfigInterface
+    public function merge(array|ConfigInterface $toMerge): ConfigInterface
     {
         $source = $this->toArray();
 
         $this->clear();
 
-        if (is_array($toMerge)) {
-            $result = $this->internalMerge($source, $toMerge);
-
-            $this->init($result);
-
-            return $this;
+        if (!is_array($toMerge)) {
+            $toMerge = $toMerge->toArray();
         }
 
-        if (
-            true === is_object($toMerge) &&
-            $toMerge instanceof ConfigInterface
-        ) {
-            $result = $this->internalMerge($source, $toMerge->toArray());
+        $result = $this->internalMerge($source, $toMerge);
 
-            $this->init($result);
-
-            return $this;
-        }
-
-        throw new Exception('Invalid data type for merge.');
-    }
-
-    /**
-     * Returns a value from current config using a dot separated path.
-     *
-     *```php
-     * echo $config->path("unknown.path", "default", ".");
-     *```
-     *
-     * @param string      $path
-     * @param mixed|null  $defaultValue
-     * @param string|null $delimiter
-     *
-     * @return mixed
-     */
-    public function path(
-        string $path,
-        $defaultValue = null,
-        string $delimiter = null
-    ) {
-        if (false !== $this->has($path)) {
-            return $this->get($path);
-        }
-
-        if (false !== empty($delimiter)) {
-            $delimiter = $this->pathDelimiter;
-        }
-
-        $config = clone $this;
-        $keys   = explode($delimiter, $path);
-
-        while (true !== empty($keys)) {
-            $key = array_shift($keys);
-
-            if (true !== $config->has($key)) {
-                break;
-            }
-
-            if (false !== empty($keys)) {
-                return $config->get($key);
-            }
-
-            $config = $config->get($key);
-
-            if (true === empty($config)) {
-                break;
-            }
-        }
-
-        return $defaultValue;
-    }
-
-    /**
-     * Sets the default path delimiter
-     *
-     * @param string|null $delimiter
-     *
-     * @return ConfigInterface
-     */
-    public function setPathDelimiter(?string $delimiter = null): ConfigInterface
-    {
-        $this->pathDelimiter = $delimiter;
+        $this->init($result);
 
         return $this;
     }
@@ -193,7 +132,7 @@ class Config extends Collection implements ConfigInterface
     public function toArray(): array
     {
         $results = [];
-        $data    = parent::toArray();
+        $data = parent::toArray();
 
         foreach ($data as $key => $value) {
             if (is_object($value) && method_exists($value, 'toArray')) {
@@ -234,22 +173,72 @@ class Config extends Collection implements ConfigInterface
     }
 
     /**
+     * Returns a value from current config using a dot separated path.
+     *
+     *```php
+     * echo $config->path("unknown.path", "default", ".");
+     *```
+     *
+     * @param string $path
+     * @param mixed|null $defaultValue
+     * @param string|null $delimiter
+     *
+     * @return mixed
+     */
+    public function path(
+        string $path,
+        mixed $defaultValue = null,
+        string $delimiter = null
+    ): mixed {
+        if (false !== $this->has($path)) {
+            return $this->get($path);
+        }
+
+        if (false !== empty($delimiter)) {
+            $delimiter = $this->pathDelimiter;
+        }
+
+        $config = clone $this;
+        $keys = explode($delimiter, $path);
+
+        while (true !== empty($keys)) {
+            $key = array_shift($keys);
+
+            if (true !== $config->has($key)) {
+                break;
+            }
+
+            if (false !== empty($keys)) {
+                return $config->get($key);
+            }
+
+            $config = $config->get($key);
+
+            if (true === empty($config)) {
+                break;
+            }
+        }
+
+        return $defaultValue;
+    }
+
+    /**
      * Sets the collection data
      *
      * @param mixed $element
      * @param mixed $value
+     *
+     * @return void
      */
-    protected function setData($element, $value): void
+    protected function setData(mixed $element, mixed $value): void
     {
         $element = (string)$element;
-        $key     = ($this->insensitive) ? mb_strtolower($element) : $element;
+        $key = ($this->insensitive) ? mb_strtolower($element) : $element;
 
         $this->lowerKeys[$key] = $element;
 
         if (is_array($value)) {
-            $this->data[$element] = new Config($value);
-
-            return;
+            $value = new Config($value, $this->insensitive);
         }
 
         $this->data[$element] = $value;

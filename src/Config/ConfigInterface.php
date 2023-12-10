@@ -32,7 +32,7 @@ interface ConfigInterface extends CollectionInterface
      *
      * @return ConfigInterface
      */
-    public function merge($toMerge): ConfigInterface;
+    public function merge(array|ConfigInterface $toMerge): ConfigInterface;
 
     /**
      * @param string      $path

@@ -26,6 +26,7 @@ use Phalcon\Mvc\ControllerInterface;
 use Phalcon\Mvc\Model\BinderInterface;
 
 use function array_map;
+use function array_values;
 use function call_user_func_array;
 use function class_exists;
 use function is_callable;
@@ -168,7 +169,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
     ): mixed {
         return call_user_func_array(
             [$handler, $actionMethod],
-            $parameters
+            array_values($parameters)
         );
     }
 

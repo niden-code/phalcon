@@ -365,7 +365,7 @@ class Manager implements InjectionAwareInterface
      * Returns true or false if collection exists.
      *
      * ```php
-     * if ($manager->exists("jsHeader")) {
+     * if ($manager->has("jsHeader")) {
      *     // \Phalcon\Assets\Collection
      *     $collection = $manager->get("jsHeader");
      * }
@@ -1148,6 +1148,13 @@ class Manager implements InjectionAwareInterface
         $helper->__invoke(""); // no indentation
         $helper->add($tag, $params);
 
-        return (string)$helper;
+        $output = (string) $helper;
+
+        /**
+         * This is because the helper no longer resets the store automatically
+         */
+        $helper->reset();
+
+        return $output;
     }
 }

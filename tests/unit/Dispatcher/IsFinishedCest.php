@@ -11,25 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Config\Adapter\Json;
+namespace Phalcon\Tests\Unit\Dispatcher;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
-class MergeCest
+class IsFinishedCest
 {
-    use ConfigTrait;
-
     /**
-     * Tests Phalcon\Config\Adapter\Json :: merge()
+     * Tests Phalcon\Dispatcher :: isFinished()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function configAdapterJsonMerge(UnitTester $I)
+    public function dispatcherIsFinished(UnitTester $I)
     {
-        $I->wantToTest("Config\Adapter\Json - merge()");
+        $I->wantToTest('Dispatcher - isFinished()');
 
-        $this->checkMergeException($I, 'Json');
+        $I->skipTest('Need implementation');
     }
 }

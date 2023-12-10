@@ -42,10 +42,9 @@ trait SerializableTrait
      *
      * @param string $serialized
      */
-    public function unserialize($serialized)
+    public function unserialize(string $serialized)
     {
-        $serialized = (string)$serialized;
-        $data       = unserialize($serialized);
+        $data = unserialize($serialized);
 
         $this->init($data);
     }

@@ -11,25 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Config\Adapter\Ini;
+namespace Phalcon\Tests\Unit\Dispatcher;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
-class MergeCest
+class SetActionNameCest
 {
-    use ConfigTrait;
-
     /**
-     * Tests Phalcon\Config\Adapter\Ini :: merge()
+     * Tests Phalcon\Dispatcher :: setActionName()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function configAdapterIniMerge(UnitTester $I)
+    public function dispatcherSetActionName(UnitTester $I)
     {
-        $I->wantToTest("Config\Adapter\Ini - merge()");
+        $I->wantToTest('Dispatcher - setActionName()');
 
-        $this->checkMergeException($I, 'Ini');
+        $I->skipTest('Need implementation');
     }
 }

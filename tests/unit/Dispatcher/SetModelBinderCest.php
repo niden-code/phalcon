@@ -11,25 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Config\Adapter\Yaml;
+namespace Phalcon\Tests\Unit\Dispatcher;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
-class MergeCest
+class SetModelBinderCest
 {
-    use ConfigTrait;
-
     /**
-     * Tests Phalcon\Config\Adapter\Yaml :: merge()
+     * Tests Phalcon\Dispatcher :: setModelBinder()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function configAdapterYamlMerge(UnitTester $I)
+    public function dispatcherSetModelBinder(UnitTester $I)
     {
-        $I->wantToTest("Config\Adapter\Yaml - merge()");
+        $I->wantToTest('Dispatcher - setModelBinder()');
 
-        $this->checkMergeException($I, 'Yaml');
+        $I->skipTest('Need implementation');
     }
 }

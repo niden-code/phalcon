@@ -28,8 +28,10 @@ use Phalcon\Html\TagFactory;
 use Phalcon\Http\Request;
 use Phalcon\Http\Response;
 use Phalcon\Http\Response\Cookies;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\Model\MetaData\Memory;
 use Phalcon\Mvc\Model\Transaction\Manager;
+use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Url;
 use Phalcon\Support\HelperFactory;
 use UnitTester;
@@ -102,10 +104,10 @@ class ConstructCest
                 'service' => 'cookies',
                 'class'   => Cookies::class,
             ],
-            //            [
-            //                'service' => 'dispatcher',
-            //                'class'   => Dispatcher::class,
-            //            ],
+            [
+                'service' => 'dispatcher',
+                'class'   => Dispatcher::class,
+            ],
             [
                 'service' => 'escaper',
                 'class'   => Escaper::class,
@@ -146,10 +148,10 @@ class ConstructCest
                 'service' => 'response',
                 'class'   => Response::class,
             ],
-            //            [
-            //                'service' => 'router',
-            //                'class'   => Router::class,
-            //            ],
+            [
+                'service' => 'router',
+                'class'   => Router::class,
+            ],
             [
                 'service' => 'security',
                 'class'   => Security::class,
