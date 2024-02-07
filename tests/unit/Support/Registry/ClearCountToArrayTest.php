@@ -14,20 +14,18 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Registry;
 
 use Phalcon\Support\Registry;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class GetIteratorCest
+final class ClearCountToArrayTest extends TestCase
 {
     /**
-     * Tests Phalcon\Support\Registry :: getIterator()
+     * Tests Phalcon\Support\Registry :: clear()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function registryGetIterator(UnitTester $I)
+    public function testRegistryClearCountToArray(): void
     {
-        $I->wantToTest('Registry - getIterator()');
-
         $data = [
             'one'   => 'two',
             'three' => 'four',
@@ -36,11 +34,18 @@ class GetIteratorCest
 
         $registry = new Registry($data);
 
-        foreach ($registry as $key => $value) {
-            $I->assertSame(
-                $data[$key],
-                $registry[$key]
-            );
-        }
+        $expected = $data;
+        $actual   = $registry->toArray();
+        $this->assertSame($expected, $actual);
+
+        $expected = 3;
+        $actual   = $registry->count();
+        $this->assertSame($expected, $actual);
+
+        $registry->clear();
+
+        $expected = 0;
+        $actual   = $registry->count();
+        $this->assertSame($expected, $actual);
     }
 }

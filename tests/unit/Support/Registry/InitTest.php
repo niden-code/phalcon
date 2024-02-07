@@ -14,38 +14,37 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Registry;
 
 use Phalcon\Support\Registry;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class ClearCest
+final class InitTest extends TestCase
 {
     /**
-     * Tests Phalcon\Support\Registry :: clear()
+     * Tests Phalcon\Support\Registry :: init()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function registryClear(UnitTester $I)
+    public function testRegistryInit(): void
     {
-        $I->wantToTest('Registry - clear()');
-
         $data = [
             'one'   => 'two',
             'three' => 'four',
             'five'  => 'six',
         ];
 
-        $registry = new Registry($data);
+        $registry = new Registry();
 
-        $I->assertSame(
-            $data,
-            $registry->toArray()
-        );
-
-        $registry->clear();
-
-        $I->assertSame(
+        $this->assertSame(
             0,
             $registry->count()
         );
+
+        $registry->init($data);
+
+        $expected = $data;
+        $actual   = $registry->toArray();
+        $this->assertSame($expected, $actual);
     }
 }

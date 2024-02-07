@@ -13,69 +13,62 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Version;
 
-use Codeception\Example;
-use Phalcon\Tests\Fixtures\Traits\VersionTrait;
 use Phalcon\Tests\Fixtures\Version\VersionAlphaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionBetaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionRcFixture;
 use Phalcon\Tests\Fixtures\Version\VersionStableFixture;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function is_string;
 
-class GetIdCest
+final class GetIdTest extends TestCase
 {
-    use VersionTrait;
-
-    /**
-     * Tests get()
-     *
-     * @dataProvider getExamples
-     *
-     * @param UnitTester $I
-     * @param Example    $example
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function supportVersionGetId(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Version - getId() - ' . $example[0]);
-
-        $version = new $example[1]();
-
-        $expected = $example[2];
-        $actual   = $version->getId();
-        $I->assertTrue(is_string($actual));
-        $I->assertSame($expected, $actual);
-    }
-
     /**
      * @return string[][]
      */
-    private function getExamples(): array
+    public static function providerGetId(): array
     {
         return [
             [
-                'alpha',
                 VersionAlphaFixture::class,
                 '5000011',
             ],
             [
-                'beta',
                 VersionBetaFixture::class,
                 '5000022',
             ],
             [
-                'rc',
                 VersionRcFixture::class,
                 '5000033',
             ],
             [
-                'stable',
                 VersionStableFixture::class,
                 '5000000',
             ],
         ];
+    }
+
+    /**
+     * Tests getId()
+     *
+     * @dataProvider providerGetId
+     *
+     * @param string $method
+     * @param string $expected
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testSupportVersionGetId(
+        string $method,
+        string $expected
+    ): void {
+        $version = new $method();
+
+        $actual = $version->getId();
+        $this->assertTrue(is_string($actual));
+        $this->assertSame($expected, $actual);
     }
 }

@@ -14,28 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Registry;
 
 use Phalcon\Support\Registry;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class UnderscoreSetCest
+final class ConstructTest extends TestCase
 {
     /**
-     * Unit Tests Phalcon\Support\Registry :: __set()
+     * Tests Phalcon\Support\Registry :: __construct()
      *
-     * @author Sid Roberts <https://github.com/SidRoberts>
-     * @since  2019-05-25
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
      */
-    public function registryUnderscoreSet(UnitTester $I)
+    public function testRegistryConstruct(): void
     {
-        $I->wantToTest('Registry - __set()');
-
         $registry = new Registry();
 
-
-        $registry->three = 'Phalcon';
-
-        $I->assertSame(
-            'Phalcon',
-            $registry->get('three')
-        );
+        $this->assertInstanceOf(Registry::class, $registry);
     }
 }

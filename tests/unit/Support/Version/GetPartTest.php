@@ -14,23 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Version;
 
 use Phalcon\Support\Version;
-use Phalcon\Tests\Fixtures\Traits\VersionTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class GetPartCest
+use function intval;
+
+final class GetPartTest extends TestCase
 {
-    use VersionTrait;
-
     /**
      * Tests Phalcon\Support\Version :: getPart()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function supportVersionGetPart(UnitTester $I)
+    public function testSupportVersionGetPart(): void
     {
-        $I->wantToTest('Version - getPart()');
-
         /*
          * Note: getId() returns a version string in the format ABBCCDE
          * where A is the major version, BB is the medium version (2 digits)
@@ -44,30 +43,51 @@ class GetPartCest
         // The major version is the first digit
         $expected = (string)$id[0];
         $actual   = $version->getPart(Version::VERSION_MAJOR);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         // The medium version is the second and third digits
         // This is int to string because we might end up with "00"
         $expected = (string)intval($id[1] . $id[2]);
         $actual   = $version->getPart(Version::VERSION_MEDIUM);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         // The minor version is the fourth and fifth digits
         $expected = (string)intval($id[3] . $id[4]);
         $actual   = $version->getPart(Version::VERSION_MINOR);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = $this->numberToSpecial((string)$id[5]);
         $actual   = $version->getPart(Version::VERSION_SPECIAL);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $special  = $this->numberToSpecial((string)$id[6]);
         $expected = (string)(($special) ? $id[6] : 0);
         $actual   = $version->getPart(Version::VERSION_SPECIAL_NUMBER);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = $version->get();
         $actual   = $version->getPart(7);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Translates a number to a special version string (alpha, beta, RC)
+     *
+     * @param string $number
+     *
+     * @return string
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    private function numberToSpecial(string $number): string
+    {
+        $map = [
+            '1' => 'alpha',
+            '2' => 'beta',
+            '3' => 'RC',
+        ];
+
+        return $map[$number] ?? '';
     }
 }

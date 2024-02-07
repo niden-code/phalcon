@@ -13,66 +13,62 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Version;
 
-use Codeception\Example;
 use Phalcon\Tests\Fixtures\Version\VersionAlphaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionBetaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionRcFixture;
 use Phalcon\Tests\Fixtures\Version\VersionStableFixture;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function is_string;
 
-class GetCest
+final class GetTest extends TestCase
 {
-    /**
-     * Tests get()
-     *
-     * @dataProvider getExamples
-     *
-     * @param UnitTester $I
-     * @param Example    $example
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function supportVersionGet(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Version - get() - ' . $example[0]);
-
-        $version = new $example[1]();
-
-        $expected = $example[2];
-        $actual   = $version->get();
-        $I->assertTrue(is_string($actual));
-        $I->assertSame($expected, $actual);
-    }
-
     /**
      * @return string[][]
      */
-    private function getExamples(): array
+    public static function providerGet(): array
     {
         return [
             [
-                'alpha',
                 VersionAlphaFixture::class,
                 '5.0.0alpha1',
             ],
             [
-                'beta',
                 VersionBetaFixture::class,
                 '5.0.0beta2',
             ],
             [
-                'rc',
                 VersionRcFixture::class,
                 '5.0.0RC3',
             ],
             [
-                'stable',
                 VersionStableFixture::class,
                 '5.0.0',
             ],
         ];
+    }
+
+    /**
+     * Tests get()
+     *
+     * @dataProvider providerGet
+     *
+     * @param string $method
+     * @param string $expected
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testSupportVersionGet(
+        string $method,
+        string $expected
+    ): void {
+        $version = new $method();
+
+        $actual = $version->get();
+        $this->assertTrue(is_string($actual));
+        $this->assertSame($expected, $actual);
     }
 }
