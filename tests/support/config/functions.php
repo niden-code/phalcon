@@ -20,7 +20,7 @@ declare(strict_types=1);
 if (!function_exists('rootDir')) {
     function rootDir(string $fileName = ''): string
     {
-        return dirname(dirname(dirname(dirname(__FILE__)))) . $fileName;
+        return dirname(dirname(dirname(dirname(__FILE__)))) . '/' . $fileName;
     }
 }
 
