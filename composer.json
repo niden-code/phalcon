@@ -39,6 +39,7 @@
       "Phalcon\\Tests\\Unit\\": "tests/unit/",
       "Phalcon\\Tests\\Controllers\\": "tests/_data/fixtures/controllers/",
       "Phalcon\\Tests\\Fixtures\\": "tests/_data/fixtures/",
+      "Phalcon\\Tests1\\Fixtures\\": "tests/support/data/fixtures/",
       "Phalcon\\Tests\\Listener\\": "tests/_data/listener/",
       "Phalcon\\Tests\\Models\\": "tests/_data/fixtures/models/",
       "Phalcon\\Tests\\Module\\": "tests/_support/Module/"
@@ -63,6 +64,7 @@
     "friendsofphp/php-cs-fixer": "^3.13",
     "pds/skeleton": "^1.0",
     "phpstan/phpstan": "^1.10",
+    "phpunit/phpunit": "^10.5",
     "squizlabs/php_codesniffer": "^3.7",
     "vimeo/psalm": "^5.4",
     "vlucas/phpdotenv": "^5.5"
@@ -80,6 +82,6 @@
     "test-db-sqlite": "php vendor/bin/codecept run --ext DotReporter database --env sqlite -g sqlite",
     "test-db": "test-db-common && test-db-mysql && test-db-pgsql && test-db-sqlite",
     "test-all": "test-unit && test-cli && test-integration && test-db",
-    "test-unit-html": "./vendor/bin/phpunit --coverage-html=./tests/support/output/"
+    "test-unit-html": "./vendor/bin/phpunit --coverage-html=./tests/support/output/ --display-deprecations"
   }
 }

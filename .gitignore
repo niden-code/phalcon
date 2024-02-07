@@ -1,6 +1,7 @@
 .env
 .php_cs.cache
 .php-cs-fixer.cache
+.phpunit.result.cache
 boxfile.yml
 tests/_output/
 tests/_support/_generated/

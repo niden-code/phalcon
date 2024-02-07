@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Translate\Adapter;
 
 use ArrayAccess;
+use Exception as BaseException;
 use Phalcon\Traits\Php\InfoTrait;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
@@ -68,14 +69,14 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     protected string $defaultDomain;
 
     /**
-     * @var string|array
+     * @var array|string
      */
-    protected $directory;
+    protected array|string $directory;
 
     /**
-     * @var string|false
+     * @var false|string
      */
-    protected $locale;
+    protected false|string $locale;
 
     /**
      * Gettext constructor.
@@ -124,15 +125,15 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * @return array|string
      */
-    public function getDirectory()
+    public function getDirectory(): array|string
     {
         return $this->directory;
     }
 
     /**
-     * @return string|false
+     * @return false|string
      */
-    public function getLocale()
+    public function getLocale(): false|string
     {
         return $this->locale;
     }
@@ -143,6 +144,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      * @param string $index
      *
      * @return bool
+     * @throws BaseException
      */
     public function has(string $index): bool
     {
@@ -163,6 +165,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      * @param string|null $domain
      *
      * @return string
+     * @throws BaseException
      */
     public function nquery(
         string $msgid1,
@@ -191,6 +194,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      * @param array  $placeholders
      *
      * @return string
+     * @throws BaseException
      */
     public function query(string $translateKey, array $placeholders = []): string
     {
@@ -237,7 +241,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      *
      * @param string|array $directory
      */
-    public function setDirectory($directory): void
+    public function setDirectory(array|string $directory): void
     {
         if (true !== empty($directory)) {
             $this->directory = $directory;
@@ -283,7 +287,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      *
      * @return false|string
      */
-    public function setLocale(int $category, array $localeArray = [])
+    public function setLocale(int $category, array $localeArray = []): false|string
     {
         $this->category = $category;
         $this->locale   = setlocale($category, $localeArray);

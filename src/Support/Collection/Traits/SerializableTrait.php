@@ -18,6 +18,29 @@ use function unserialize;
 
 trait SerializableTrait
 {
+    /**
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->init($data);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
     abstract public function init(array $data = []): void;
 
     /**
