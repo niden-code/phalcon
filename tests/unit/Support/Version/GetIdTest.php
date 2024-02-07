@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Version;
 
-use Phalcon\Tests\Fixtures\Version\VersionAlphaFixture;
-use Phalcon\Tests\Fixtures\Version\VersionBetaFixture;
-use Phalcon\Tests\Fixtures\Version\VersionRcFixture;
-use Phalcon\Tests\Fixtures\Version\VersionStableFixture;
+use Phalcon\Tests1\Fixtures\Support\Version\VersionAlphaFixture;
+use Phalcon\Tests1\Fixtures\Support\Version\VersionBetaFixture;
+use Phalcon\Tests1\Fixtures\Support\Version\VersionRcFixture;
+use Phalcon\Tests1\Fixtures\Support\Version\VersionStableFixture;
 use PHPUnit\Framework\TestCase;
 
 use function is_string;

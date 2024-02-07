@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Support\Debug\Dump;
+
+use Phalcon\Support\Debug\Dump;
+use PHPUnit\Framework\TestCase;
+use ReflectionException;
+
+final class SetStylesTest extends TestCase
+{
+    /**
+     * Tests Phalcon\Support\Debug\Dump :: getStyle()
+     *
+     * @return void
+     *
+     * @throws ReflectionException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testSupportDebugDumpGetStyle()
+    {
+        $dump = new Dump(
+            [],
+            true
+        );
+
+        $expected = 'color:gray';
+        $actual   = callProtectedMethod($dump, 'getStyle', 'unknown');
+        $this->assertSame($expected, $actual);
+
+        $expected = 'color:blue';
+        $actual   = callProtectedMethod($dump, 'getStyle', 'int');
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Support\Debug\Dump :: setStyles()
+     *
+     * @return void
+     *
+     * @throws ReflectionException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testSupportDebugDumpSetStyles(): void
+    {
+        $dump = new Dump(
+            [],
+            true
+        );
+
+        $expected = 'color:blue';
+        $actual   = callProtectedMethod($dump, 'getStyle', 'int');
+        $this->assertSame($expected, $actual);
+
+        $dump->setStyles(
+            [
+                'int' => 'color:indigo',
+            ]
+        );
+
+        $expected = 'color:indigo';
+        $actual   = callProtectedMethod($dump, 'getStyle', 'int');
+        $this->assertSame($expected, $actual);
+    }
+}
