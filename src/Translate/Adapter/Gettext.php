@@ -71,12 +71,12 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * @var array|string
      */
-    protected array|string $directory;
+    protected array | string $directory;
 
     /**
      * @var false|string
      */
-    protected false|string $locale;
+    protected false | string $locale;
 
     /**
      * Gettext constructor.
@@ -125,7 +125,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * @return array|string
      */
-    public function getDirectory(): array|string
+    public function getDirectory(): array | string
     {
         return $this->directory;
     }
@@ -133,7 +133,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * @return false|string
      */
-    public function getLocale(): false|string
+    public function getLocale(): false | string
     {
         return $this->locale;
     }
@@ -241,7 +241,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      *
      * @param string|array $directory
      */
-    public function setDirectory(array|string $directory): void
+    public function setDirectory(array | string $directory): void
     {
         if (true !== empty($directory)) {
             $this->directory = $directory;
@@ -287,7 +287,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      *
      * @return false|string
      */
-    public function setLocale(int $category, array $localeArray = []): false|string
+    public function setLocale(int $category, array $localeArray = []): false | string
     {
         $this->category = $category;
         $this->locale   = setlocale($category, $localeArray);
