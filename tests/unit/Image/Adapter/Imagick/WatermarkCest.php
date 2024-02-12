@@ -15,33 +15,34 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class WatermarkCest
+#[RequiresPhpExtension('imagick')]
+final class WatermarkTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: watermark()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickWatermark(UnitTester $I)
+    public function imageAdapterImagickWatermark(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - watermark()');
-
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         $mark = new Imagick(
-            dataDir('assets/images/example-png.png')
+            dataDir2('assets/images/example-png.png')
         );
 
         // Add a watermark to the bottom right of the image
@@ -49,22 +50,18 @@ class WatermarkCest
               ->save(outputDir('tests/image/imagick/watermark.jpg'))
         ;
 
-        $I->amInPath(
-            outputDir('tests/image/imagick/')
-        );
+        $outputFile = outputDir('tests/image/imagick/')
+            . 'watermark.jpg';
+        $this->assertFileExists($outputFile);
 
-        $I->seeFileFound('watermark.jpg');
+        $expected = 200;
+        $actual   = $image->getWidth();
+        $this->assertGreaterThan($expected,$actual);
 
-        $I->assertGreaterThan(
-            200,
-            $image->getWidth()
-        );
+        $expected = 200;
+        $actual   = $image->getHeight();
+        $this->assertGreaterThan($expected,$actual);
 
-        $I->assertGreaterThan(
-            200,
-            $image->getHeight()
-        );
-
-        $I->safeDeleteFile('watermark.jpg');
+        safeDeleteFile2($outputFile);
     }
 }

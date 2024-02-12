@@ -13,78 +13,95 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
-use Codeception\Example;
 use Phalcon\Image\Adapter\Gd;
-use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Image\Exception;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class TextCest
+#[RequiresPhpExtension('gd')]
+final class TextTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: text()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param int         $index
+     * @param string      $text
+     * @param bool        $offsetX
+     * @param bool        $offsetY
+     * @param int         $opacity
+     * @param string      $color
+     * @param int         $size
+     * @param string|null $font
+     * @param string      $hash
+     *
+     * @return void
+     * @throws Exception
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdText(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Image\Adapter\Gd - text()');
-
-        $this->checkJpegSupport($I);
+    public function imageAdapterGdText(
+        int $index,
+        string $text,
+        false|int $offsetX,
+        false|int $offsetY,
+        int $opacity,
+        string $color,
+        int $size,
+        ?string $font,
+        string $hash
+    ): void {
+        $this->checkJpegSupport($this);
 
         $outputDir   = 'tests/image/gd';
-        $image       = new Gd(dataDir('assets/images/example-jpg.jpg'));
-        $index       = $example['index'];
+        $image       = new Gd(dataDir2('assets/images/example-jpg.jpg'));
         $outputImage = $index . 'text.jpg';
         $output      = outputDir($outputDir . '/' . $outputImage);
 
         $image
             ->text(
-                $example['text'],
-                $example['offsetX'],
-                $example['offsetY'],
-                $example['opacity'],
-                $example['color'],
-                $example['size'],
-                $example['font']
+                $text,
+                $offsetX,
+                $offsetY,
+                $opacity,
+                $color,
+                $size,
+                $font
             )
             ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-        $I->seeFileFound($outputImage);
+        $this->assertFileExists($outputImage);
 
-        $I->assertTrue($this->checkImageHash($output, $example['hash']));
-        $I->safeDeleteFile($outputImage);
+        $actual = $this->checkImageHash($output, $hash);
+        $this->assertTrue($actual);
+
+        safeDeleteFile2($outputImage);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: text()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-04-20
      * @issue  15188
      */
-    public function imageAdapterGdTextWithFont(UnitTester $I)
+    public function imageAdapterGdTextWithFont(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - text() - with font');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $outputDir = 'tests/image/gd';
 
-
-        $image       = dataDir('assets/images/example-jpg.jpg');
+        $image       = dataDir2('assets/images/example-jpg.jpg');
         $outputImage = '15188-text.jpg';
         $output      = outputDir($outputDir . '/' . $outputImage);
         $text        = 'Hello Phalcon!';
@@ -93,7 +110,7 @@ class TextCest
         $opacity     = 60;
         $color       = '0000FF';
         $size        = 24;
-        $font        = dataDir('assets/fonts/Roboto-Light.ttf');
+        $font        = dataDir2('assets/fonts/Roboto-Light.ttf');
         $hash        = 'fbf9f3e3c3c18183';
 
         $object = new Gd($image);
@@ -102,17 +119,16 @@ class TextCest
             ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-        $I->seeFileFound($outputImage);
+        $this->assertFileExists($outputImage);
 
-        $I->assertTrue($this->checkImageHash($output, $hash));
-        $I->safeDeleteFile($outputImage);
+        $this->assertTrue($this->checkImageHash($output, $hash));
+        safeDeleteFile2($outputImage);
     }
 
     /**
      * @return array[]
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [

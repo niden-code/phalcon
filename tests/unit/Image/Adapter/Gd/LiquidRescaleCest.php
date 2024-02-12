@@ -14,22 +14,24 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class LiquidRescaleCest
+#[RequiresPhpExtension('gd')]
+final class LiquidRescaleTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: liquidRescale()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdLiquidRescale(UnitTester $I)
+    public function imageAdapterGdLiquidRescale(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - liquidRescale()');
-
-        $I->skipTest('Need implementation on GD adapter first');
+        $this->markTestSkipped('Need implementation on GD adapter first');
     }
 }

@@ -16,30 +16,34 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class WatermarkCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class WatermarkTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: watermark()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkJpgInsideJpg(UnitTester $I)
+    public function imageAdapterGdWatermarkJpgInsideJpg(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - watermark() - jpg inside jpg');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $watermark = new Gd(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
         $watermark->resize(250, null, Enum::WIDTH);
 
@@ -57,37 +61,32 @@ class WatermarkCest
               ->save($output)
         ;
 
-        $I->amInPath(
-            outputDir($outputDir)
-        );
+        $this->assertFileExists($output);
 
-        $I->seeFileFound($outputImage);
+        $actual = $this->checkImageHash($output, $hash);
+        $this->assertTrue($actual);
 
-        $I->assertTrue(
-            $this->checkImageHash($output, $hash)
-        );
-
-        $I->safeDeleteFile($outputImage);
+        safeDeleteFile2($output);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: watermark()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkPngInsideJpg(UnitTester $I)
+    public function imageAdapterGdWatermarkPngInsideJpg(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - watermark() - png inside jpg');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $watermark = new Gd(
-            dataDir('assets/images/example-png.png')
+            dataDir2('assets/images/example-png.png')
         );
 
         $outputDir   = 'tests/image/gd';
@@ -102,37 +101,32 @@ class WatermarkCest
               ->save($output)
         ;
 
-        $I->amInPath(
-            outputDir($outputDir)
-        );
+        $this->assertFileExists($output);
 
-        $I->seeFileFound($outputImage);
+        $actual = $this->checkImageHash($output, $hash);
+        $this->assertTrue($actual);
 
-        $I->assertTrue(
-            $this->checkImageHash($output, $hash)
-        );
-
-        $I->safeDeleteFile($outputImage);
+        safeDeleteFile2($output);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: watermark()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkJpgInsidePng(UnitTester $I)
+    public function imageAdapterGdWatermarkJpgInsidePng(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - watermark() - jpg inside png');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir('assets/images/example-png.png')
+            dataDir2('assets/images/example-png.png')
         );
 
         $watermark = new Gd(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
         $watermark->resize(50, 50, Enum::NONE);
 
@@ -150,35 +144,30 @@ class WatermarkCest
               ->save($output)
         ;
 
-        $I->amInPath(
-            outputDir($outputDir)
-        );
+        $this->assertFileExists($output);
 
-        $I->seeFileFound($outputImage);
+        $actual = $this->checkImageHash($output, $hash);
+        $this->assertTrue($actual);
 
-        $I->assertTrue(
-            $this->checkImageHash($output, $hash)
-        );
-
-        $I->safeDeleteFile($outputImage);
+        safeDeleteFile2($output);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: watermark()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkPngInsidePng(UnitTester $I)
+    public function imageAdapterGdWatermarkPngInsidePng(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - watermark() - png inside png');
-
         $image = new Gd(
-            dataDir('assets/images/example-png.png')
+            dataDir2('assets/images/example-png.png')
         );
 
         $watermark = new Gd(
-            dataDir('assets/images/example-png.png')
+            dataDir2('assets/images/example-png.png')
         );
         $watermark->resize(null, 30, Enum::HEIGHT);
 
@@ -195,16 +184,11 @@ class WatermarkCest
               ->save($output)
         ;
 
-        $I->amInPath(
-            outputDir($outputDir)
-        );
+        $this->assertFileExists($output);
 
-        $I->seeFileFound($outputImage);
+        $actual = $this->checkImageHash($output, $hash);
+        $this->assertTrue($actual);
 
-        $I->assertTrue(
-            $this->checkImageHash($output, $hash)
-        );
-
-        $I->safeDeleteFile($outputImage);
+        safeDeleteFile2($output);
     }
 }

@@ -15,27 +15,28 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class TextCest
+#[RequiresPhpExtension('imagick')]
+final class TextTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: text()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickText(UnitTester $I)
+    public function imageAdapterImagickText(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - text()');
-
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
@@ -47,26 +48,24 @@ class TextCest
             100,
             '000099',
             12,
-            dataDir('assets/fonts/Roboto-Thin.ttf')
+            dataDir2('assets/fonts/Roboto-Thin.ttf')
         )
               ->save(outputDir('tests/image/imagick/text.jpg'))
         ;
 
-        $I->amInPath(
-            outputDir('tests/image/imagick/')
-        );
+        $outputFile = outputDir('tests/image/imagick/')
+            . 'text.jpg';
 
-        $I->seeFileFound('text.jpg');
+        $this->assertFileExists($outputFile);
 
-        $I->assertSame(
-            1820,
-            $image->getWidth()
-        );
-        $I->assertSame(
-            694,
-            $image->getHeight()
-        );
+        $expected = 1820;
+        $actual   = $image->getWidth();
+        $this->assertSame($expected, $actual);
 
-        $I->safeDeleteFile('text.jpg');
+        $expected = 694;
+        $actual   = $image->getHeight();
+        $this->assertSame($expected, $actual);
+
+        safeDeleteFile2($outputFile);
     }
 }

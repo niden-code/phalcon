@@ -15,8 +15,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Codeception\Example;
 use Phalcon\Image\Adapter\Gd;
+use Phalcon\Image\Exception;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
 use const IMAGETYPE_GIF;
 use const IMAGETYPE_JPEG;
@@ -25,71 +27,67 @@ use const IMAGETYPE_WBMP;
 use const IMAGETYPE_WEBP;
 use const IMAGETYPE_XBM;
 
-class GetTypeCest
+#[RequiresPhpExtension('gd')]
+final class GetTypeTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: getType()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param string $source
+     * @param int $expected
      *
      * @return void
-     * @since        2022-07-19
      *
+     * @throws Exception
+     * @since        2022-07-19
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function imageAdapterGdGetType(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Image\Adapter\Gd - getType() - ' . $example['label']);
-
-        $this->checkJpegSupport($I);
-        $source   = $example['source'];
-        $expected = $example['expected'];
+    /**
+     */
+    public function imageAdapterGdGetType(
+        string $source,
+        int $expected
+    ): void {
+        $this->checkJpegSupport($this);
 
         $gd = new Gd($source);
 
         $actual = $gd->getType();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * @return array[]
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [
-                'label'    => 'gif',
-                'source'   => dataDir('assets/images/example-gif.gif'),
+                'source'   => dataDir2('assets/images/example-gif.gif'),
                 'expected' => IMAGETYPE_GIF,
             ],
             [
-                'label'    => 'jpg',
-                'source'   => dataDir('assets/images/example-jpg.jpg'),
+                'source'   => dataDir2('assets/images/example-jpg.jpg'),
                 'expected' => IMAGETYPE_JPEG,
             ],
             [
-                'label'    => 'png',
-                'source'   => dataDir('assets/images/example-png.png'),
+                'source'   => dataDir2('assets/images/example-png.png'),
                 'expected' => IMAGETYPE_PNG,
             ],
             [
-                'label'    => 'wbmp',
-                'source'   => dataDir('assets/images/example-wbmp.wbmp'),
+                'source'   => dataDir2('assets/images/example-wbmp.wbmp'),
                 'expected' => IMAGETYPE_WBMP,
             ],
             [
-                'label'    => 'webp',
-                'source'   => dataDir('assets/images/example-webp.webp'),
+                'source'   => dataDir2('assets/images/example-webp.webp'),
                 'expected' => IMAGETYPE_WEBP,
             ],
             [
-                'label'    => 'xbm',
-                'source'   => dataDir('assets/images/example-xbm.xbm'),
+                'source'   => dataDir2('assets/images/example-xbm.xbm'),
                 'expected' => IMAGETYPE_XBM,
             ],
         ];

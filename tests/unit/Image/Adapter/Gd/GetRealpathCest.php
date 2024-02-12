@@ -15,30 +15,32 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class GetRealpathCest
+#[RequiresPhpExtension('gd')]
+final class GetRealpathTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: getRealpath()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdGetRealpath(UnitTester $I)
+    public function imageAdapterGdGetRealpath(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - getRealpath()');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         foreach ($this->getImages() as $image) {
             $image = str_replace("/", DIRECTORY_SEPARATOR, $image);
             $gd    = new Gd($image);
 
             $actual = $gd->getRealpath();
-            $I->assertSame($image, $actual);
+            $this->assertSame($image, $actual);
         }
     }
 }

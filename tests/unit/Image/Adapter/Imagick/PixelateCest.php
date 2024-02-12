@@ -14,22 +14,24 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
-class PixelateCest
+#[RequiresPhpExtension('imagick')]
+final class PixelateTest extends TestCase
 {
     use ImagickTrait;
 
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: pixelate()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickPixelate(UnitTester $I)
+    public function imageAdapterImagickPixelate(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - pixelate()');
-
-        $I->skipTest('Need implementation');
+        $this->markTestSkipped('Need implementation');
     }
 }

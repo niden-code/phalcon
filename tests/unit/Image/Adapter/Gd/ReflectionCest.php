@@ -15,22 +15,26 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class ReflectionCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class ReflectionTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: reflection()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdReflection(UnitTester $I)
+    public function imageAdapterGdReflection(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - reflection()');
-
         $params = [
             'gif'  => [
                 [100, 75, false, 'ffffffffffffffff'],
@@ -67,7 +71,16 @@ class ReflectionCest
         $outputDir = 'tests/image/gd';
 
         foreach ($this->getImages() as $type => $imagePath) {
-            foreach ($params[$type] as [$height, $opacity, $fade, $hash]) {
+            foreach ($params[$type] as $element) {
+                /** @var int $height */
+                $height = $element[0];
+                /** @var int $opacity */
+                $opacity= $element[1];
+                /** @var bool $fade */
+                $fade = $element[2];
+                /** @var string $hash */
+                $hash = $element[0];
+
                 $resultImage = 'reflection-' . $height . '-' . $opacity . '-' . ((int)$fade) . '.' . $type;
                 $output      = outputDir($outputDir . '/' . $resultImage);
 
@@ -77,13 +90,12 @@ class ReflectionCest
                       ->save($output)
                 ;
 
-                $I->amInPath(outputDir($outputDir));
-                $I->seeFileFound($resultImage);
+                $this->assertFileExists($output);
 
                 $actual = $this->checkImageHash($output, $hash);
-                $I->assertTrue($actual);
+                $this->assertTrue($actual);
 
-                $I->safeDeleteFile($output);
+                safeDeleteFile2($output);
             }
         }
     }

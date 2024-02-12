@@ -14,22 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
-class RenderCest
+#[RequiresPhpExtension('imagick')]
+final class RenderTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: render()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickRender(UnitTester $I)
+    public function imageAdapterImagickRender(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - render()');
-
-        $I->skipTest('Need implementation');
+        $this->markTestSkipped('Need implementation');
     }
 }

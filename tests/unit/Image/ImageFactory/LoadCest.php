@@ -16,29 +16,30 @@ namespace Phalcon\Tests\Unit\Image\ImageFactory;
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\ImageFactory;
 use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
-class LoadCest
+#[RequiresPhpExtension('imagick')]
+final class LoadTest extends TestCase
 {
-    use FactoryTrait;
+    use FactoryTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
-        $I->checkExtensionIsLoaded('imagick');
-
         $this->init();
     }
 
     /**
      * Tests Phalcon\Image\ImageFactory :: load()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryLoad(UnitTester $I)
+    public function imageImageFactoryLoad(): void
     {
-        $I->wantToTest('Image\ImageFactory - load()');
-
         $options = $this->config->image;
         $factory = new ImageFactory();
 
@@ -46,23 +47,23 @@ class LoadCest
         $image = $factory->load($options);
 
         $class = Imagick::class;
-        $I->assertInstanceOf($class, $image);
+        $this->assertInstanceOf($class, $image);
 
         $expected = realpath($options->file);
         $actual   = $image->getRealpath();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Image\ImageFactory :: load()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryLoadArray(UnitTester $I)
+    public function imageImageFactoryLoadArray(): void
     {
-        $I->wantToTest('Image\ImageFactory - load()');
-
         $options = $this->arrayConfig['image'];
         $factory = new ImageFactory();
 
@@ -70,10 +71,10 @@ class LoadCest
         $image = $factory->load($options);
 
         $class = Imagick::class;
-        $I->assertInstanceOf($class, $image);
+        $this->assertInstanceOf($class, $image);
 
         $expected = realpath($options['file']);
         $actual   = $image->getRealpath();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

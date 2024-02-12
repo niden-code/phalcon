@@ -15,54 +15,50 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class LiquidRescaleCest
+#[RequiresPhpExtension('imagick')]
+final class LiquidRescaleTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: liquidRescale()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickLiquidRescale(UnitTester $I)
+    public function imageAdapterImagickLiquidRescale(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - liquidRescale()');
-
-        $I->skipTest('Check library support');
+        $this->markTestSkipped('Check library support');
 
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Resize to 200 pixels on the shortest side
+        $outputFile = outputDir('tests/image/imagick/liquidRescale.jpg');
         $image->liquidRescale(200, 200)
-              ->save(outputDir('tests/image/imagick/liquidRescale.jpg'))
+              ->save($outputFile)
         ;
 
-        $I->amInPath(
-            outputDir('tests/image/imagick/')
-        );
+        $this->assertFileExists($outputFile);
 
-        $I->seeFileFound('liquidRescale.jpg');
+        $expected = 200;
+        $actual   = $image->getWidth();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame(
-            200,
-            $image->getWidth()
-        );
+        $expected = 200;
+        $actual   = $image->getHeight();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame(
-            200,
-            $image->getHeight()
-        );
-
-        $I->safeDeleteFile('liquidRescale.jpg');
+        safeDeleteFile2($outputFile);
     }
 }

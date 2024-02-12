@@ -15,25 +15,29 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class CropCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class CropTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: crop()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdCropJpg(UnitTester $I)
+    public function imageAdapterGdCropJpg()
     {
-        $I->wantToTest('Image\Adapter\Gd - crop()');
+        $this->checkJpegSupport($this);
 
-        $this->checkJpegSupport($I);
-
-        $image = new Gd(dataDir('assets/images/example-jpg.jpg'));
+        $image = new Gd(dataDir2('assets/images/example-jpg.jpg'));
 
         $outputDir = 'tests/image/gd';
         $width     = 200;
@@ -47,35 +51,33 @@ class CropCest
               ->save(outputDir($outputDir . '/' . $cropImage))
         ;
 
-        $I->amInPath(outputDir($outputDir));
-
-        $I->seeFileFound($cropImage);
+        $this->assertFileExists($output);
 
         $actual = $image->getWidth();
-        $I->assertSame($width, $actual);
+        $this->assertSame($width, $actual);
 
         $actual = $image->getHeight();
-        $I->assertSame($height, $actual);
+        $this->assertSame($height, $actual);
 
         $actual = $this->checkImageHash($output, $hash);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteFile($cropImage);
+        safeDeleteFile2($output);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: crop()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdCropJpgWithOffset(UnitTester $I)
+    public function imageAdapterGdCropJpgWithOffset(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - crop()');
+        $this->checkJpegSupport($this);
 
-        $this->checkJpegSupport($I);
-
-        $image = new Gd(dataDir('assets/images/example-jpg.jpg'));
+        $image = new Gd(dataDir2('assets/images/example-jpg.jpg'));
 
         $outputDir = 'tests/image/gd';
         $width     = 200;
@@ -91,19 +93,17 @@ class CropCest
               ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-
-        $I->seeFileFound($cropImage);
+        $this->assertFileExists($output);
 
         $actual = $image->getWidth();
-        $I->assertSame($width, $actual);
+        $this->assertSame($width, $actual);
 
         $actual = $image->getHeight();
-        $I->assertSame($height, $actual);
+        $this->assertSame($height, $actual);
 
         $actual = $this->checkImageHash($output, $hash);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteFile($cropImage);
+        safeDeleteFile2($output);
     }
 }

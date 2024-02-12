@@ -16,22 +16,26 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class FlipCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class FlipTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: flip()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdFlip(UnitTester $I)
+    public function imageAdapterGdFlip(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - flip()');
-
         $params = [
             'gif'  => [
                 [4, 'ffffffffdfffffff'], // Unknown direction: revert to HORIZONTAL
@@ -73,13 +77,12 @@ class FlipCest
                       ->save($output)
                 ;
 
-                $I->amInPath(outputDir($outputDir));
-                $I->seeFileFound($resultImage);
+                $this->assertFileExists($output);
 
                 $actual = $this->checkImageHash($output, $hash);
-                $I->assertTrue($actual);
+                $this->assertTrue($actual);
 
-                $I->safeDeleteFile($output);
+                safeDeleteFile2($output);
             }
         }
     }

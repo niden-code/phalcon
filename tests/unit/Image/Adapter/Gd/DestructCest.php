@@ -14,22 +14,24 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class DestructCest
+#[RequiresPhpExtension('gd')]
+final class DestructTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: __destruct()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdDestruct(UnitTester $I)
+    public function imageAdapterGdDestruct(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - __destruct()');
-
-        $I->skipTest('Need implementation');
+        $this->markTestSkipped('Need implementation');
     }
 }

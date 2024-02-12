@@ -15,51 +15,48 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class CropCest
+#[RequiresPhpExtension('imagick')]
+final class CropTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: crop()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickCrop(UnitTester $I)
+    public function imageAdapterImagickCrop(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - crop()');
-
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Crop the image to 200x200 pixels, from the center
+        $outputFile = outputDir('tests/image/imagick/crop.jpg');
         $image->crop(200, 200)
-              ->save(outputDir('tests/image/imagick/crop.jpg'))
+              ->save($outputFile)
         ;
 
-        $I->amInPath(
-            outputDir('tests/image/imagick/')
-        );
+        $this->assertFileExists($outputFile);
 
-        $I->seeFileFound('crop.jpg');
+        $expected = 200;
+        $actual   = $image->getWidth();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame(
-            200,
-            $image->getWidth()
-        );
-        $I->assertSame(
-            200,
-            $image->getHeight()
-        );
+        $expected = 200;
+        $actual   = $image->getHeight();
+        $this->assertSame($expected, $actual);
 
-        $I->safeDeleteFile('crop.jpg');
+        safeDeleteFile2($outputFile);
     }
 }

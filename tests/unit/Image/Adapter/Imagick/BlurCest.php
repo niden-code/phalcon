@@ -14,22 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
-class BlurCest
+#[RequiresPhpExtension('imagick')]
+final class BlurTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: blur()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickBlur(UnitTester $I)
+    public function imageAdapterImagickBlur(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - blur()');
-
-        $I->skipTest('Need implementation');
+        $this->markTestSkipped('Need implementation');
     }
 }

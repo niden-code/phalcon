@@ -15,26 +15,30 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class MaskCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class MaskTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: mask()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdMask(UnitTester $I)
+    public function imageAdapterGdMask(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - mask()');
+        $this->checkJpegSupport($this);
 
-        $this->checkJpegSupport($I);
-
-        $image = new Gd(dataDir('assets/images/example-png.png'));
-        $mask  = new Gd(dataDir('assets/images/example-jpg.jpg'));
+        $image = new Gd(dataDir2('assets/images/example-png.png'));
+        $mask  = new Gd(dataDir2('assets/images/example-jpg.jpg'));
 
         $outputDir   = 'tests/image/gd';
         $outputImage = 'mask.png';
@@ -47,12 +51,11 @@ class MaskCest
              ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-        $I->seeFileFound($outputImage);
+        $this->assertFileExists($output);
 
         $actual = $this->checkImageHash($output, $hash);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteFile($output);
+        safeDeleteFile2($output);
     }
 }

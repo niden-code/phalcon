@@ -16,57 +16,55 @@ namespace Phalcon\Tests\Unit\Image\ImageFactory;
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Exception;
 use Phalcon\Image\ImageFactory;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function uniqid;
 
-class NewInstanceCest
+#[RequiresPhpExtension('imagick')]
+final class NewInstanceTest extends TestCase
 {
     /**
      * Tests Phalcon\Image\ImageFactory :: newInstance()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryNewInstance(UnitTester $I)
+    public function imageImageFactoryNewInstance(): void
     {
-        $I->checkExtensionIsLoaded('imagick');
-        $I->wantToTest('Image\ImageFactory - newInstance()');
-
         $factory = new ImageFactory();
-        $file    = dataDir('assets/images/example-jpg.jpg');
+        $file    = dataDir2('assets/images/example-jpg.jpg');
         $file    = str_replace("/", DIRECTORY_SEPARATOR, $file);
         $name    = 'imagick';
 
         $image = $factory->newInstance($name, $file);
 
         $class = Imagick::class;
-        $I->assertInstanceOf($class, $image);
+        $this->assertInstanceOf($class, $image);
 
         $expected = $file;
         $actual   = $image->getRealPath();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Image\ImageFactory :: newInstance() - exception
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-08-02
      */
-    public function imageImageFactoryNewInstanceException(UnitTester $I)
+    public function imageImageFactoryNewInstanceException(): void
     {
-        $I->checkExtensionIsLoaded('imagick');
-        $I->wantToTest('Image\ImageFactory - newInstance() - exception');
-
         $name = uniqid('service-');
-        $I->expectThrowable(
-            new Exception('Service ' . $name . ' is not registered'),
-            function () use ($name) {
-                $factory = new ImageFactory();
-                $factory->newInstance($name, uniqid('file-'));
-            }
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service ' . $name . ' is not registered');
+
+        $factory = new ImageFactory();
+        $factory->newInstance($name, uniqid('file-'));
     }
 }

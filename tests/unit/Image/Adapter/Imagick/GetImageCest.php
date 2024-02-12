@@ -15,30 +15,30 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 
-class GetImageCest
+#[RequiresPhpExtension('imagick')]
+final class GetImageTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: getImage()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickGetImage(UnitTester $I)
+    public function imageAdapterImagickGetImage(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - getImage()');
-
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $class  = \Imagick::class;
         $actual = $image->getImage();
-        $I->assertInstanceOf($class, $actual);
+        $this->assertInstanceOf($class, $actual);
     }
 }

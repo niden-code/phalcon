@@ -15,52 +15,48 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
-use UnitTester;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 use function outputDir;
+use function safeDeleteFile2;
 
-class RotateCest
+#[RequiresPhpExtension('imagick')]
+final class RotateTest extends TestCase
 {
-    use ImagickTrait;
-
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: rotate()
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickRotate(UnitTester $I)
+    public function imageAdapterImagickRotate(): void
     {
-        $I->wantToTest('Image\Adapter\Imagick - rotate()');
-
         $image = new Imagick(
-            dataDir('assets/images/example-jpg.jpg')
+            dataDir2('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
+        $outputFile = outputDir('tests/image/imagick/rotate.jpg');
 
         // Rotate 45 degrees clockwise
         $image->rotate(45)
-              ->save(outputDir('tests/image/imagick/rotate.jpg'))
+              ->save($outputFile)
         ;
 
-        $I->amInPath(
-            outputDir('tests/image/imagick/')
-        );
+        $this->assertFileExists($outputFile);
 
-        $I->seeFileFound('rotate.jpg');
+        $expected = 200;
+        $actual   = $image->getWidth();
+        $this->assertGreaterThan($expected, $actual);
 
-        $I->assertGreaterThan(
-            200,
-            $image->getWidth()
-        );
+        $expected = 200;
+        $actual   = $image->getHeight();
+        $this->assertGreaterThan($expected, $actual);
 
-        $I->assertGreaterThan(
-            200,
-            $image->getHeight()
-        );
-
-        $I->safeDeleteFile('rotate.jpg');
+        safeDeleteFile2($outputFile);
     }
 }

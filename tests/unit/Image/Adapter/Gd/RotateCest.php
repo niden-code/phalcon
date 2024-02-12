@@ -17,19 +17,24 @@ use Codeception\Example;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Exception;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class RotateCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class RotateTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: rotate()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param int    $degrees
+     * @param string $hash
+     * @param string $type
      *
      * @return void
      * @throws Exception
@@ -37,17 +42,14 @@ class RotateCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdRotate(UnitTester $I, Example $example)
-    {
-        $type    = $example['label'];
-        $degrees = $example['degrees'];
-        $hash    = $example['hash'];
-
-        $I->wantToTest(
-            'Image\Adapter\Gd - rotate() - ' . $type . ' - ' . $degrees
-        );
-
-        $this->checkJpegSupport($I);
+    /**
+     */
+    public function imageAdapterGdRotate(
+        string $type,
+        int $degrees,
+        string $hash
+    ): void {
+        $this->checkJpegSupport($this);
         $images    = $this->getImages();
         $outputDir = 'tests/image/gd';
         $imagePath = $images[$type];
@@ -61,19 +63,18 @@ class RotateCest
               ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-        $I->seeFileFound($resultImage);
+        $this->assertFileExists($output);
 
         $actual = $this->checkImageHash($output, $hash);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteFile($output);
+        safeDeleteFile2($output);
     }
 
     /**
      * @return array[]
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [

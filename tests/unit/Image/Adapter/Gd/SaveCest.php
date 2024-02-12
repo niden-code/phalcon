@@ -15,23 +15,27 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class SaveCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class SaveTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: save()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdSave(UnitTester $I)
+    public function imageAdapterGdSave(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - save()');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $outputDir   = 'tests/image/gd';
         $resultImage = 'save.';
@@ -41,12 +45,11 @@ class SaveCest
 
             $output = outputDir($outputDir . '/' . $resultImage . $type);
             $actual = $image->save($output);
-            $I->assertInstanceOf(Gd::class, $actual);
+            $this->assertInstanceOf(Gd::class, $actual);
 
-            $I->amInPath(outputDir($outputDir));
-            $I->seeFileFound($resultImage . $type);
+            $this->assertFileExists($output);
 
-            $I->safeDeleteFile($resultImage . $type);
+            safeDeleteFile2($output);
         }
     }
 }

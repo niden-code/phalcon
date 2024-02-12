@@ -15,23 +15,27 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class SharpenCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class SharpenTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: sharpen()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdSharpen(UnitTester $I)
+    public function imageAdapterGdSharpen(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - sharpen()');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $outputDir = 'tests/image/gd';
         $params    = [
@@ -43,7 +47,7 @@ class SharpenCest
 
         foreach ($params as [$amount, $hash]) {
             $image = new Gd(
-                dataDir('assets/images/example-jpg.jpg')
+                dataDir2('assets/images/example-jpg.jpg')
             );
 
             $outputImage = $i++ . 'sharpen.jpg';
@@ -53,12 +57,12 @@ class SharpenCest
                   ->save($output)
             ;
 
-            $I->amInPath(outputDir($outputDir));
-            $I->seeFileFound($outputImage);
+            $this->assertFileExists($outputImage);
 
             $actual = $this->checkImageHash($output, $hash);
-            $I->assertTrue($actual);
-            $I->safeDeleteFile($outputImage);
+            $this->assertTrue($actual);
+
+            safeDeleteFile2($outputImage);
         }
     }
 }

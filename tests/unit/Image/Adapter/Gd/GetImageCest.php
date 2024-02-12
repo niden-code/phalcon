@@ -15,32 +15,29 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class GetImageCest
+#[RequiresPhpExtension('gd')]
+final class GetImageTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: getImage()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdGetImage(UnitTester $I)
+    public function imageAdapterGdGetImage(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - getImage()');
-
         foreach ($this->getImages() as $image) {
             $gd = new Gd($image);
+            $actual = is_object($gd->getImage());
 
-            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
-                $actual = is_object($gd->getImage());
-            } else {
-                $actual = is_resource($gd->getImage());
-            }
-
-            $I->assertTrue($actual);
+            $this->assertTrue($actual);
         }
     }
 }

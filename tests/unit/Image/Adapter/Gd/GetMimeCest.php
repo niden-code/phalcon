@@ -15,77 +15,72 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Codeception\Example;
 use Phalcon\Image\Adapter\Gd;
+use Phalcon\Image\Exception;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
 
-class GetMimeCest
+#[RequiresPhpExtension('gd')]
+final class GetMimeTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: getMime()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param string $source
+     * @param string $expected
      *
      * @return void
      *
+     * @throws Exception
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdGetMime(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Image\Adapter\Gd - getMime() - ' . $example['label']);
-
-        $this->checkJpegSupport($I);
-
-        $source   = $example['source'];
-        $expected = $example['expected'];
+    public function imageAdapterGdGetMime(
+        string $source,
+        string $expected
+    ): void {
+        $this->checkJpegSupport($this);
 
         $gd = new Gd($source);
 
         $actual = $gd->getMime();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * @return array[]
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [
-                'label'    => 'GIF',
-                'source'   => dataDir('assets/images/example-gif.gif'),
+                'source'   => dataDir2('assets/images/example-gif.gif'),
                 'expected' => 'image/gif',
             ],
             [
-                'label'    => 'JPEG',
-                'source'   => dataDir('assets/images/example-jpg.jpg'),
+                'source'   => dataDir2('assets/images/example-jpg.jpg'),
                 'expected' => 'image/jpeg',
             ],
             [
-                'label'    => 'PNG',
-                'source'   => dataDir('assets/images/example-png.png'),
+                'source'   => dataDir2('assets/images/example-png.png'),
                 'expected' => 'image/png',
             ],
             [
-                'label'    => 'WBMP',
-                'source'   => dataDir('assets/images/example-wbmp.wbmp'),
+                'source'   => dataDir2('assets/images/example-wbmp.wbmp'),
                 'expected' => 'image/vnd.wap.wbmp',
             ],
             [
-                'label'    => 'WEBP',
-                'source'   => dataDir('assets/images/example-webp.webp'),
+                'source'   => dataDir2('assets/images/example-webp.webp'),
                 'expected' => 'image/webp',
             ],
             [
-                'label'    => 'XBM',
-                'source'   => dataDir('assets/images/example-xbm.xbm'),
+                'source'   => dataDir2('assets/images/example-xbm.xbm'),
                 'expected' => 'image/xbm',
             ],
         ];

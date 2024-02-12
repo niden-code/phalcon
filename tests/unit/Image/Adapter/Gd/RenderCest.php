@@ -15,22 +15,25 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class RenderCest
+#[RequiresPhpExtension('gd')]
+final class RenderTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: render()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdRender(UnitTester $I)
+    public function imageAdapterGdRender(): void
     {
-        $I->skipTest("Test need to be refactored to handle GD 2.2 hashes");
-        $I->wantToTest('Image\Adapter\Gd - render()');
+        $this->markTestSkipped("Test need to be refactored to handle GD 2.2 hashes");
 
         $params = [
             'gif'  => [8087, 'fffffffffbffffff'],
@@ -46,10 +49,10 @@ class RenderCest
 
             [$length, $hash] = $params[$type];
 
-            $I->assertSame($length, mb_strlen($image->render()));
+            $this->assertSame($length, mb_strlen($image->render()));
 
             $actual = $this->checkImageHash($imagePath, $hash);
-            $I->assertTrue($actual);
+            $this->assertTrue($actual);
         }
     }
 }

@@ -15,23 +15,27 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class BlurCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class BlurTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: blur()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdBlur(UnitTester $I)
+    public function imageAdapterGdBlur(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - blur()');
-
-        $this->checkJpegSupport($I);
+        $this->checkJpegSupport($this);
 
         $params = [
             'gif'  => [
@@ -78,13 +82,12 @@ class BlurCest
                 $image->blur($level)
                       ->save($output)
                 ;
-                $I->amInPath(outputDir($outputDir));
-                $I->seeFileFound($resultImage);
+                $this->assertFileExists($output);
 
                 $actual = $this->checkImageHash($output, $hash);
-                $I->assertTrue($actual);
+                $this->assertTrue($actual);
 
-                $I->safeDeleteFile($output);
+                safeDeleteFile2($output);
             }
         }
     }

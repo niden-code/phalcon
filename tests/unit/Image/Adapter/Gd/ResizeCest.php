@@ -18,38 +18,42 @@ use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Image\Exception;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function dataDir;
+use function safeDeleteFile2;
 
-class ResizeCest
+#[RequiresPhpExtension('gd')]
+final class ResizeTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: resize()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param string $file
+     * @param string $source
+     * @param int    $width
+     * @param int    $height
+     * @param string $hash
      *
      * @return void
      *
+     * @throws Exception
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdResize(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Image\Adapter\Gd - resize() - ' . $example['label']);
-
-        $this->checkJpegSupport($I);
-
-        $file   = $example['file'];
-        $source = $example['source'];
-        $width  = $example['width'];
-        $height = $example['height'];
-        $hash   = $example['hash'];
+    public function imageAdapterGdResize(
+        string $file,
+        string $source,
+        int $width,
+        int $height,
+        string $hash
+    ): void {
+        $this->checkJpegSupport($this);
 
         $outputDir = 'tests/image/gd';
         $output    = outputDir($outputDir . '/' . $file);
@@ -60,73 +64,68 @@ class ResizeCest
               ->save($output)
         ;
 
-        $I->amInPath(outputDir($outputDir));
-        $I->seeFileFound($file);
+        $this->assertFileExists($output);
 
         $actual = $image->getWidth();
-        $I->assertSame($width, $actual);
+        $this->assertSame($width, $actual);
 
         $actual = $image->getHeight();
-        $I->assertSame($height, $actual);
+        $this->assertSame($height, $actual);
 
         $actual = $this->checkImageHash($output, $hash);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteFile($file);
+        safeDeleteFile2($output);
     }
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: resize()
      *
-     * @dataProvider getExamplesExceptions
+     * @dataProvider providerExceptions
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @param string $master
+     * @param int    $width
+     * @param int    $height
+     * @param string $message
      *
      * @return void
      *
+     * @throws Exception
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdResizeExceptions(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Image\Adapter\Gd - resize() - exceptions - ' . $example['label']);
+    public function imageAdapterGdResizeExceptions(
+        int $master,
+        int $width,
+        int $height,
+        string $message
+    ): void {
+        $this->checkJpegSupport($this);
 
-        $this->checkJpegSupport($I);
-
-        $master  = $example['master'];
-        $width   = $example['width'];
-        $height  = $example['height'];
-        $message = $example['message'];
-
-        $source = dataDir('assets/images/example-jpg.jpg');
+        $source = dataDir2('assets/images/example-jpg.jpg');
         $image  = new Gd($source);
 
-        $I->expectThrowable(
-            new Exception($message),
-            function () use ($image, $width, $height, $master) {
-                $image->resize($width, $height, $master);
-            }
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage($message);
+
+        $image->resize($width, $height, $master);
     }
 
     /**
      * @return array[]
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [
-                'label'  => 'jpg',
-                'source' => dataDir('assets/images/example-jpg.jpg'),
+                'source' => dataDir2('assets/images/example-jpg.jpg'),
                 'file'   => 'resize.jpg',
                 'height' => 75,
                 'width'  => 197,
                 'hash'   => 'fbf9f3e3c3c1c183',
             ],
             [
-                'label'  => 'png',
-                'source' => dataDir('assets/images/example-png.png'),
+                'source' => dataDir2('assets/images/example-png.png'),
                 'file'   => 'resize.jpg',
                 'height' => 50,
                 'width'  => 50,
@@ -138,74 +137,64 @@ class ResizeCest
     /**
      * @return array[]
      */
-    private function getExamplesExceptions(): array
+    public static function providerExceptions(): array
     {
         return [
             [
-                'label'   => 'TENSILE',
                 'master'  => Enum::TENSILE,
                 'height'  => null,
                 'width'   => 199,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'TENSILE',
                 'master'  => Enum::TENSILE,
                 'height'  => 199,
                 'width'   => null,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'AUTO',
                 'master'  => Enum::AUTO,
                 'height'  => null,
                 'width'   => 199,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'AUTO',
                 'master'  => Enum::AUTO,
                 'height'  => 199,
                 'width'   => null,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'INVERSE',
                 'master'  => Enum::INVERSE,
                 'height'  => null,
                 'width'   => 199,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'INVERSE',
                 'master'  => Enum::INVERSE,
                 'height'  => 199,
                 'width'   => null,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'PRECISE',
                 'master'  => Enum::PRECISE,
                 'height'  => null,
                 'width'   => 199,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'PRECISE',
                 'master'  => Enum::PRECISE,
                 'height'  => 199,
                 'width'   => null,
                 'message' => 'width and height must be specified',
             ],
             [
-                'label'   => 'WIDTH',
                 'master'  => Enum::WIDTH,
                 'height'  => 199,
                 'width'   => null,
                 'message' => 'width must be specified',
             ],
             [
-                'label'   => 'HEIGHT',
                 'master'  => Enum::HEIGHT,
                 'height'  => null,
                 'width'   => 199,

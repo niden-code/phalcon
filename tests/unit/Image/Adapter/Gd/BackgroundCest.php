@@ -16,22 +16,26 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests\Fixtures\Traits\GdTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
+use PHPUnit\Framework\TestCase;
 
-class BackgroundCest
+use function safeDeleteFile2;
+
+#[RequiresPhpExtension('gd')]
+final class BackgroundTest extends TestCase
 {
-    use GdTrait;
+    use GdTrait2;
 
     /**
      * Tests Phalcon\Image\Adapter\Gd :: background()
      *
+     * @return void
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdBackground(UnitTester $I)
+    public function imageAdapterGdBackground(): void
     {
-        $I->wantToTest('Image\Adapter\Gd - background()');
-
         $params = [
             [200, null, Enum::WIDTH, '000000', 30, '10787c3c1e1c3818'],
             [null, 150, Enum::HEIGHT, '00FF00', 75, '10787c3c1e1c3818'],
@@ -42,21 +46,19 @@ class BackgroundCest
         foreach ($params as [$width, $height, $master, $color, $opacity, $hash]) {
             $resultImage = $color . 'bg.png';
             $output      = outputDir($outputDir . '/' . $resultImage);
-            $image       = new Gd(dataDir('assets/images/example-png.png'));
+            $image       = new Gd(dataDir2('assets/images/example-png.png'));
 
             $image->background($color, $opacity)
                   ->resize($width, $height, $master)
                   ->save($output)
             ;
 
-            $I->amInPath(outputDir($outputDir));
-
-            $I->seeFileFound($resultImage);
+            $this->assertFileExists($output);
 
             $actual = $this->checkImageHash($output, $hash);
-            $I->assertTrue($actual);
+            $this->assertTrue($actual);
 
-            $I->safeDeleteFile($resultImage);
+            safeDeleteFile2($output);
         }
     }
 }
