@@ -56,11 +56,11 @@ final class WatermarkTest extends TestCase
 
         $expected = 200;
         $actual   = $image->getWidth();
-        $this->assertGreaterThan($expected,$actual);
+        $this->assertGreaterThan($expected, $actual);
 
         $expected = 200;
         $actual   = $image->getHeight();
-        $this->assertGreaterThan($expected,$actual);
+        $this->assertGreaterThan($expected, $actual);
 
         safeDeleteFile2($outputFile);
     }

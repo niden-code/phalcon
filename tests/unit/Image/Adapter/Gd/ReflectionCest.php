@@ -75,7 +75,7 @@ final class ReflectionTest extends TestCase
                 /** @var int $height */
                 $height = $element[0];
                 /** @var int $opacity */
-                $opacity= $element[1];
+                $opacity = $element[1];
                 /** @var bool $fade */
                 $fade = $element[2];
                 /** @var string $hash */
