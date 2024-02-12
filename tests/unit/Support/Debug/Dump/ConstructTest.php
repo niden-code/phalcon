@@ -47,7 +47,7 @@ final class ConstructTest extends TestCase
         $actual = callProtectedMethod($dump, 'output', $class);
 
         $expected = file_get_contents(
-            dataDir('fixtures/Support/Dump/class_properties.txt')
+            dataDir2('fixtures/Support/Dump/class_properties.txt')
         );
 
         // Test without HTML

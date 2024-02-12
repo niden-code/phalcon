@@ -16,23 +16,21 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 use Phalcon\Messages\Exception;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class OffsetGetSetCest
+final class OffsetGetSetTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: offsetGet()/offsetSet()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      * @since  2020-09-09
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function messagesMessagesOffsetGetSet(UnitTester $I): void
+    public function testMessagesMessagesOffsetGetSet(): void
     {
-        $I->wantToTest('Messages\Messages - offsetGet()/offsetSet()');
-
         $messages = new Messages(
             [
                 0 => new Message(
@@ -68,40 +66,50 @@ class OffsetGetSetCest
                 ]
             )
         );
-        $I->assertCount(3, $messages);
+        $this->assertCount(3, $messages);
 
         $message = $messages->offsetGet(2);
-        $I->assertInstanceOf(Message::class, $message);
+        $this->assertInstanceOf(Message::class, $message);
 
 
-        $I->assertSame('This is a message #3', $message->getMessage());
-        $I->assertSame('MyField3', $message->getField());
-        $I->assertSame('MyType3', $message->getType());
-        $I->assertSame(777, $message->getCode());
-        $I->assertSame(['My3' => 'Metadata3'], $message->getMetaData());
+        $expected = 'This is a message #3';
+        $actual   = $message->getMessage();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyField3';
+        $actual   = $message->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyType3';
+        $actual   = $message->getType();
+        $this->assertSame($expected, $actual);
+
+        $expected = 777;
+        $actual   = $message->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = ['My3' => 'Metadata3'];
+        $actual   = $message->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Messages\Messages :: offsetSet() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesOffsetSetException(UnitTester $I): void
+    public function testMessagesMessagesOffsetSetException(): void
     {
-        $I->wantToTest('Messages\Messages - offsetSet() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The message must be an object');
 
-        $I->expectThrowable(
-            new Exception('The message must be an object'),
-            function () {
-                $messages = new Messages();
+        $messages = new Messages();
 
-                $messages->offsetSet(2, 'message');
-            }
-        );
+        $messages->offsetSet(2, 'message');
     }
 }

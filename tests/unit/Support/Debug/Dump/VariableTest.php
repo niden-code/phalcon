@@ -36,7 +36,7 @@ final class VariableTest extends TestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir('fixtures/Support/Dump/variable_name_output.txt')
+                dataDir2('fixtures/Support/Dump/variable_name_output.txt')
             )
         );
 
@@ -59,7 +59,7 @@ final class VariableTest extends TestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir('fixtures/Support/Dump/variable_output.txt')
+                dataDir2('fixtures/Support/Dump/variable_output.txt')
             )
         );
         $actual   = $dump->variable($test);

@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class OffsetUnsetCest
+final class OffsetUnsetTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: offsetUnset()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesOffsetUnset(UnitTester $I): void
+    public function testMessagesMessagesOffsetUnset(): void
     {
-        $I->wantToTest('Messages\Messages - offsetUnset()');
-
         $messages = new Messages(
             [
                 0 => new Message(
@@ -54,7 +52,7 @@ class OffsetUnsetCest
             ]
         );
 
-        $I->assertCount(2, $messages);
+        $this->assertCount(2, $messages);
 
         $messages->offsetUnset(0);
 
@@ -63,15 +61,26 @@ class OffsetUnsetCest
          */
         $message = $messages->offsetGet(0);
 
-        $I->assertInstanceOf(
-            Message::class,
-            $message
-        );
+        $this->assertInstanceOf(Message::class, $message);
 
-        $I->assertSame('This is a message #2', $message->getMessage());
-        $I->assertSame('MyField2', $message->getField());
-        $I->assertSame('MyType2', $message->getType());
-        $I->assertSame(222, $message->getCode());
-        $I->assertSame(['My2' => 'Metadata2'], $message->getMetaData());
+        $expected = 'This is a message #2';
+        $actual   = $message->getMessage();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyField2';
+        $actual   = $message->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyType2';
+        $actual   = $message->getType();
+        $this->assertSame($expected, $actual);
+
+        $expected = 222;
+        $actual   = $message->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = ['My2' => 'Metadata2'];
+        $actual   = $message->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 }

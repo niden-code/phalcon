@@ -17,20 +17,30 @@ declare(strict_types=1);
 /**
  * Returns the root folder
  */
-if (!function_exists('rootDir')) {
-    function rootDir(string $fileName = ''): string
+if (!function_exists('rootDir2')) {
+    function rootDir2(string $fileName = ''): string
     {
         return dirname(dirname(dirname(dirname(__FILE__)))) . '/' . $fileName;
     }
 }
 
 /**
+ * Returns the data folder
+ */
+if (!function_exists('dataDir2')) {
+    function dataDir2(string $fileName = ''): string
+    {
+        return rootDir2() . 'tests/support/data/' . $fileName;
+    }
+}
+
+/**
  * Returns the output folder
  */
-if (!function_exists('dataDir')) {
-    function dataDir(string $fileName = ''): string
+if (!function_exists('outputDir2')) {
+    function outputDir2(string $fileName = ''): string
     {
-        return rootDir() . 'tests/support/data/' . $fileName;
+        return rootDir2() . 'tests/support/output/' . $fileName;
     }
 }
 

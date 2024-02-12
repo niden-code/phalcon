@@ -14,11 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Interpolator;
 
 use Phalcon\Translate\Adapter\NativeArray;
-use Phalcon\Translate\Interpolator\AssociativeArray;
 use Phalcon\Translate\Interpolator\IndexedArray;
 use Phalcon\Translate\InterpolatorFactory;
 use PHPUnit\Framework\TestCase;
-use UnitTester;
 
 final class IndexedArrayTest extends TestCase
 {
@@ -99,9 +97,9 @@ final class IndexedArrayTest extends TestCase
     {
         $interpolator = new IndexedArray();
 
-        $source = 'Hello, %s %s %s!';
+        $source   = 'Hello, %s %s %s!';
         $expected = $source;
-        $actual = $interpolator->replacePlaceholders('Hello, %s %s %s!', []);
+        $actual   = $interpolator->replacePlaceholders('Hello, %s %s %s!', []);
         $this->assertSame($expected, $actual);
     }
 }

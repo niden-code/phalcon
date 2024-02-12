@@ -13,15 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Translate\Interpolator;
 
-use ArrayAccess;
-use Phalcon\Tests1\Fixtures\Translate\Adapter\CsvFixture;
-use Phalcon\Translate\Adapter\AdapterInterface;
-use Phalcon\Translate\Adapter\Csv;
-use Phalcon\Translate\Exception;
 use Phalcon\Translate\Interpolator\AssociativeArray;
-use Phalcon\Translate\InterpolatorFactory;
 use PHPUnit\Framework\TestCase;
-use UnitTester;
 
 final class AssociativeArrayTest extends TestCase
 {

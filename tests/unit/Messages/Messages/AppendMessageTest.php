@@ -15,30 +15,28 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class AppendMessageCest
+final class AppendMessageTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: appendMessage()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesAppendMessage(UnitTester $I): void
+    public function testMessagesMessagesAppendMessage(): void
     {
-        $I->wantToTest('Messages\Messages - appendMessage()');
-
         $messages = new Messages();
 
-        $I->assertCount(0, $messages);
+        $this->assertCount(0, $messages);
 
         $messages->appendMessage(
             new Message('error a', 'myField', 'MyValidator')
         );
 
-        $I->assertCount(1, $messages);
+        $this->assertCount(1, $messages);
     }
 }

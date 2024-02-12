@@ -18,14 +18,24 @@ use Phalcon\Translate\Interpolator\AssociativeArray;
 use Phalcon\Translate\Interpolator\IndexedArray;
 use Phalcon\Translate\InterpolatorFactory;
 use PHPUnit\Framework\TestCase;
-use UnitTester;
 
 final class InterpolatorFactoryTest extends TestCase
 {
     /**
+     * @return string[][]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            ['associativeArray', AssociativeArray::class],
+            ['indexedArray', IndexedArray::class],
+        ];
+    }
+
+    /**
      * Tests Phalcon\Translate\InterpolatorFactory :: newInstance()
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      * @return void
      *
      * @author       Phalcon Team <team@phalcon.io>
@@ -56,16 +66,5 @@ final class InterpolatorFactoryTest extends TestCase
 
         $adapter = new InterpolatorFactory();
         $adapter->newInstance('unknown');
-    }
-
-    /**
-     * @return string[][]
-     */
-    public static function getExamples(): array
-    {
-        return [
-            ['associativeArray', AssociativeArray::class],
-            ['indexedArray', IndexedArray::class],
-        ];
     }
 }

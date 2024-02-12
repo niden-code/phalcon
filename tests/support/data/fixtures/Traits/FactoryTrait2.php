@@ -27,7 +27,7 @@ use function outputDir;
  * @property ConfigInterface   $config
  * @property array $arrayConfig
  */
-trait FactoryTrait
+trait FactoryTrait2
 {
     /**
      * @var ConfigInterface
@@ -46,7 +46,7 @@ trait FactoryTrait
      */
     protected function init(): void
     {
-        $configFile = dataDir('assets/config/factory.ini');
+        $configFile = dataDir2('assets/config/factory.ini');
 
         $this->config = new Ini($configFile, INI_SCANNER_NORMAL);
 
@@ -66,12 +66,12 @@ trait FactoryTrait
                 'adapters' => [
                     0 => [
                         'adapter' => 'stream',
-                        'name'    => outputDir('tests/logs/factory.log'),
+                        'name'    => outputDir2('tests/logs/factory.log'),
 
                     ],
                     1 => [
                         'adapter' => 'stream',
-                        'name'    => outputDir('tests/logs/factory.log'),
+                        'name'    => outputDir2('tests/logs/factory.log'),
 
                     ],
                 ],

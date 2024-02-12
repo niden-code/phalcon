@@ -14,22 +14,20 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Messages\Message;
 
 use Phalcon\Messages\Message;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class ToStringCest
+final class ToStringTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Message :: __toString()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessageToString(UnitTester $I): void
+    public function testMessagesMessageToString(): void
     {
-        $I->wantToTest('Messages\Message - __toString()');
-
         $message = new Message(
             'This is a message #1',
             'MyField',
@@ -39,21 +37,19 @@ class ToStringCest
 
         $expected = 'This is a message #1';
         $actual   = $message->__toString();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Messages\Message :: __toString() - cast
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessageToStringCast(UnitTester $I): void
+    public function testMessagesMessageToStringCast(): void
     {
-        $I->wantToTest('Messages\Message - __toString() - cast');
-
         $message = new Message(
             'This is a message #1',
             'MyField',
@@ -63,6 +59,6 @@ class ToStringCest
 
         $expected = 'This is a message #1';
         $actual   = (string)$message;
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

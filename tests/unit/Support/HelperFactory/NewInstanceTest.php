@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\HelperFactory;
 
-use Codeception\Example;
 use Exception as BaseException;
 use Phalcon\Support\Exception;
 use Phalcon\Support\Helper\Arr\Blacklist;
@@ -77,7 +76,6 @@ use Phalcon\Support\Helper\Str\Underscore;
 use Phalcon\Support\Helper\Str\Upper;
 use Phalcon\Support\HelperFactory;
 use PHPUnit\Framework\TestCase;
-use UnitTester;
 
 use function uniqid;
 

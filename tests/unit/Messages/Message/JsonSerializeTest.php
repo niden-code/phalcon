@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Message;
 
 use JsonSerializable;
 use Phalcon\Messages\Message;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class JsonSerializeCest
+final class JsonSerializeTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Message :: jsonSerialize()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessageJsonSerialize(UnitTester $I): void
+    public function testMessagesMessageJsonSerialize(): void
     {
-        $I->wantToTest('Messages\Message - jsonSerialize()');
-
         $message = new Message(
             'This is a message #1',
             'MyField',
@@ -42,7 +40,7 @@ class JsonSerializeCest
         );
 
 
-        $I->assertInstanceOf(JsonSerializable::class, $message);
+        $this->assertInstanceOf(JsonSerializable::class, $message);
 
         $expected = [
             'field'    => 'MyField',
@@ -54,6 +52,6 @@ class JsonSerializeCest
             ],
         ];
         $actual   = $message->jsonSerialize();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class CurrentCest
+final class NextTest extends TestCase
 {
     /**
-     * Tests Phalcon\Messages\Messages :: current()
+     * Tests Phalcon\Messages\Messages :: next()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesCurrent(UnitTester $I): void
+    public function testMessagesMessagesNext(): void
     {
-        $I->wantToTest('Messages\Messages - current()');
-
         $messages = new Messages(
             [
                 new Message(
@@ -54,18 +52,30 @@ class CurrentCest
             ]
         );
 
+        $messages->next();
+
         $message = $messages->current();
 
-        $I->assertInstanceOf(
-            Message::class,
-            $message
-        );
+        $this->assertInstanceOf(Message::class, $message);
 
+        $expected = 'This is a message #2';
+        $actual   = $message->getMessage();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame('This is a message #1', $message->getMessage());
-        $I->assertSame('MyField1', $message->getField());
-        $I->assertSame('MyType1', $message->getType());
-        $I->assertSame(111, $message->getCode());
-        $I->assertSame(['My1' => 'Metadata1'], $message->getMetaData());
+        $expected = 'MyField2';
+        $actual   = $message->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyType2';
+        $actual   = $message->getType();
+        $this->assertSame($expected, $actual);
+
+        $expected = 222;
+        $actual   = $message->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = ['My2' => 'Metadata2'];
+        $actual   = $message->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 }

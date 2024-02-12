@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Support\HelperFactory;
 
 use Phalcon\Support\HelperFactory;
 use PHPUnit\Framework\TestCase;
-use UnitTester;
 
 final class CallTest extends TestCase
 {

@@ -22,7 +22,7 @@ use Phalcon\Translate\InterpolatorFactory;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 
-use function dataDir;
+use function dataDir2;
 use function setlocale;
 
 use const LC_ALL;
@@ -306,20 +306,20 @@ final class GettextTest extends TestCase
         $params     = $this->getConfig();
         $translator = new Gettext(new InterpolatorFactory(), $params);
 
-        $expected = dataDir('assets/translation/gettext');
+        $expected = dataDir2('assets/translation/gettext');
         $actual   = $translator->getDirectory();
         $this->assertSame($expected, $actual);
 
-        $translator->setDirectory(dataDir());
+        $translator->setDirectory(dataDir2());
 
-        $expected = dataDir();
+        $expected = dataDir2();
         $actual   = $translator->getDirectory();
         $this->assertSame($expected, $actual);
 
         $directories = [
-            'en_US.utf8' => dataDir(),
-            'es_ES.utf8' => dataDir(),
-            'fr_FR.utf8' => dataDir(),
+            'en_US.utf8' => dataDir2(),
+            'es_ES.utf8' => dataDir2(),
+            'fr_FR.utf8' => dataDir2(),
         ];
         $translator->setDirectory($directories);
 
@@ -613,7 +613,7 @@ final class GettextTest extends TestCase
         return [
             'locale'        => ['en_US.utf8'],
             'defaultDomain' => 'messages',
-            'directory'     => dataDir('assets/translation/gettext'),
+            'directory'     => dataDir2('assets/translation/gettext'),
             'category'      => LC_MESSAGES,
         ];
     }

@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class CountCest
+final class ValidTest extends TestCase
 {
     /**
-     * Tests Phalcon\Messages\Messages :: count()
+     * Tests Phalcon\Messages\Messages :: valid()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesCount(UnitTester $I): void
+    public function testMessagesMessagesValid(): void
     {
-        $I->wantToTest('Messages\Messages - count()');
-
         $messages = new Messages(
             [
                 new Message('This is a message #1', 'MyField1', 'MyType1', 111),
@@ -38,9 +36,20 @@ class CountCest
             ]
         );
 
-        $I->assertSame(
-            2,
-            $messages->count()
-        );
+
+        $messages->rewind();
+
+        $actual = $messages->valid();
+        $this->assertTrue($actual);
+
+        $messages->next();
+
+        $actual = $messages->valid();
+        $this->assertTrue($actual);
+
+        $messages->next();
+
+        $actual = $messages->valid();
+        $this->assertFalse($actual);
     }
 }

@@ -17,22 +17,20 @@ use JsonSerializable;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\Fixtures\Messages\MessageFixture;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class JsonSerializeCest
+final class JsonSerializeTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: jsonSerialize()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesJsonSerialize(UnitTester $I): void
+    public function testMessagesMessagesJsonSerialize(): void
     {
-        $I->wantToTest('Messages\Messages - jsonSerialize()');
-
         $messages = new Messages(
             [
                 new Message(
@@ -56,26 +54,24 @@ class JsonSerializeCest
             ]
         );
 
-        $I->assertInstanceOf(JsonSerializable::class, $messages);
+        $this->assertInstanceOf(JsonSerializable::class, $messages);
 
         $data = $messages->jsonSerialize();
-        $I->assertIsArray($data);
+        $this->assertIsArray($data);
 
-        $I->assertCount(2, $data);
+        $this->assertCount(2, $data);
     }
 
     /**
      * Tests Phalcon\Messages\Messages :: jsonSerialize() - no jsonSerialize
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesJsonSerializeNoJsonSerialize(UnitTester $I): void
+    public function testMessagesMessagesJsonSerializeNoJsonSerialize(): void
     {
-        $I->wantToTest('Messages\Messages - jsonSerialize() - no jsonSerialize');
-
         $fixture = new MessageFixture(
             'This is a message #1',
             'MyField1',
@@ -92,10 +88,10 @@ class JsonSerializeCest
             ]
         );
 
-        $I->assertInstanceOf(JsonSerializable::class, $messages);
+        $this->assertInstanceOf(JsonSerializable::class, $messages);
 
         $actual   = $messages->jsonSerialize();
         $expected = [$fixture];
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

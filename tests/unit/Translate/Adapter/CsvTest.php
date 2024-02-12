@@ -299,7 +299,7 @@ final class CsvTest extends TestCase
     public function testTranslateAdapterCsvErrorLoadingFile(): void
     {
         $message  = "Error opening translation file '"
-            . dataDir('assets/translation/csv/en.csv') . "'";
+            . dataDir2('assets/translation/csv/en.csv') . "'";
         $language = $this->getCsvConfig()['en'];
 
         $this->expectException(Exception::class);
@@ -573,18 +573,18 @@ final class CsvTest extends TestCase
     {
         return [
             'en' => [
-                'content' => dataDir('assets/translation/csv/en.csv'),
+                'content' => dataDir2('assets/translation/csv/en.csv'),
             ],
             'es' => [
-                'content' => dataDir('assets/translation/csv/es_ES.csv'),
+                'content' => dataDir2('assets/translation/csv/es_ES.csv'),
             ],
             'fr' => [
-                'content'   => dataDir('assets/translation/csv/fr_FR.csv'),
+                'content'   => dataDir2('assets/translation/csv/fr_FR.csv'),
                 'delimiter' => '|',
                 'enclosure' => "'",
             ],
             'ru' => [
-                'content' => dataDir('assets/translation/csv/ru_RU.csv'),
+                'content' => dataDir2('assets/translation/csv/ru_RU.csv'),
             ],
         ];
     }

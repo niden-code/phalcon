@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class OffsetExistsCest
+class OffsetExistsTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: offsetExists()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesOffsetExists(UnitTester $I): void
+    public function testMessagesMessagesOffsetExists(): void
     {
-        $I->wantToTest('Messages\Messages - offsetExists()');
-
         $messages = new Messages(
             [
                 1 => new Message(
@@ -48,16 +46,14 @@ class OffsetExistsCest
             ]
         );
 
-        $I->assertFalse(
-            $messages->offsetExists(0)
-        );
 
-        $I->assertTrue(
-            $messages->offsetExists(1)
-        );
+        $actual = $messages->offsetExists(0);
+        $this->assertFalse($actual);
 
-        $I->assertTrue(
-            $messages->offsetExists(2)
-        );
+        $actual = $messages->offsetExists(1);
+        $this->assertTrue($actual);
+
+        $actual = $messages->offsetExists(2);
+        $this->assertTrue($actual);
     }
 }

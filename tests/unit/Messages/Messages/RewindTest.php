@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class RewindCest
+final class RewindTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: rewind()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesRewind(UnitTester $I): void
+    public function testMessagesMessagesRewind(): void
     {
-        $I->wantToTest('Messages\Messages - rewind()');
-
         $messages = new Messages(
             [
                 new Message(
@@ -56,31 +54,38 @@ class RewindCest
 
         $messages->next();
 
-        $actual = $messages->current();
+        $message = $messages->current();
 
-        $I->assertInstanceOf(
-            Message::class,
-            $actual
-        );
+        $this->assertInstanceOf(Message::class, $message);
 
-        $I->assertSame(
-            'This is a message #2',
-            $actual->__toString()
-        );
+        $expected = 'This is a message #2';
+        $actual   = $message->__toString();
+        $this->assertSame($expected, $actual);
 
         $messages->rewind();
 
-        $actual = $messages->current();
+        $message = $messages->current();
 
-        $I->assertInstanceOf(
-            Message::class,
-            $actual
-        );
+        $this->assertInstanceOf(Message::class, $message);
 
-        $I->assertSame('This is a message #1', $actual->getMessage());
-        $I->assertSame('MyField1', $actual->getField());
-        $I->assertSame('MyType1', $actual->getType());
-        $I->assertSame(111, $actual->getCode());
-        $I->assertSame(['My1' => 'Metadata1'], $actual->getMetaData());
+        $expected = 'This is a message #1';
+        $actual   = $message->getMessage();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyField1';
+        $actual   = $message->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyType1';
+        $actual   = $message->getType();
+        $this->assertSame($expected, $actual);
+
+        $expected = 111;
+        $actual   = $message->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = ['My1' => 'Metadata1'];
+        $actual   = $message->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 }

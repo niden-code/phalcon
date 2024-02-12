@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class NextCest
+final class CurrentTest extends TestCase
 {
     /**
-     * Tests Phalcon\Messages\Messages :: next()
+     * Tests Phalcon\Messages\Messages :: current()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesNext(UnitTester $I): void
+    public function testMessagesMessagesCurrent(): void
     {
-        $I->wantToTest('Messages\Messages - next()');
-
         $messages = new Messages(
             [
                 new Message(
@@ -54,20 +52,30 @@ class NextCest
             ]
         );
 
-        $messages->next();
-
         $message = $messages->current();
 
-        $I->assertInstanceOf(
-            Message::class,
-            $message
-        );
+        $this->assertInstanceOf(Message::class, $message);
 
+        $expected = 'This is a message #1';
+        $actual   = $message->getMessage();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame('This is a message #2', $message->getMessage());
-        $I->assertSame('MyField2', $message->getField());
-        $I->assertSame('MyType2', $message->getType());
-        $I->assertSame(222, $message->getCode());
-        $I->assertSame(['My2' => 'Metadata2'], $message->getMetaData());
+        $expected = 'MyField1';
+        $actual   = $message->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'MyType1';
+        $actual   = $message->getType();
+        $this->assertSame($expected, $actual);
+
+        $expected = 111;
+        $actual   = $message->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = [
+            'My1' => 'Metadata1',
+        ];
+        $actual   = $message->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 }

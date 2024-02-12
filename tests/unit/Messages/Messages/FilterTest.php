@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class FilterCest
+final class FilterTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: filter()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesFilter(UnitTester $I): void
+    public function testMessagesMessagesFilter(): void
     {
-        $I->wantToTest('Messages\Messages - filter()');
-
         $messages = new Messages(
             [
                 new Message(
@@ -63,28 +61,53 @@ class FilterCest
             ]
         );
 
-        $I->assertCount(3, $messages);
+        $this->assertCount(3, $messages);
 
         $actual = $messages->filter('Password');
 
-        $I->assertIsArray($actual);
+        $this->assertIsArray($actual);
 
-        $I->assertCount(2, $actual);
+        $this->assertCount(2, $actual);
 
         /** @var Message $message1 */
         /** @var Message $message2 */
         [$message1, $message2] = $actual;
 
-        $I->assertSame('Password: no number present', $message1->getMessage());
-        $I->assertSame('Password', $message1->getField());
-        $I->assertSame('Password', $message1->getField());
-        $I->assertSame(111, $message1->getCode());
-        $I->assertSame(['My1' => 'Metadata1'], $message1->getMetaData());
+        $expected = 'Password: no number present';
+        $actual   = $message1->getMessage();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame('Password: no uppercase letter present', $message2->getMessage());
-        $I->assertSame('Password', $message2->getField());
-        $I->assertSame('Password', $message2->getField());
-        $I->assertSame(222, $message2->getCode());
-        $I->assertSame(['My2' => 'Metadata2'], $message2->getMetaData());
+        $expected = 'Password';
+        $actual   = $message1->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 'Password';
+        $actual   = $message1->getField();
+        $this->assertSame($expected, $actual);
+
+        $expected = 111;
+        $actual   = $message1->getCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = ['My1' => 'Metadata1'];
+        $actual   = $message1->getMetaData();
+        $this->assertSame($expected, $actual);
+
+
+        $expected = 'Password: no uppercase letter present';
+        $actual   = $message2->getMessage();
+        $this->assertSame($expected, $actual);
+        $expected = 'Password';
+        $actual   = $message2->getField();
+        $this->assertSame($expected, $actual);
+        $expected = 'Password';
+        $actual   = $message2->getField();
+        $this->assertSame($expected, $actual);
+        $expected = 222;
+        $actual   = $message2->getCode();
+        $this->assertSame($expected, $actual);
+        $expected = ['My2' => 'Metadata2'];
+        $actual   = $message2->getMetaData();
+        $this->assertSame($expected, $actual);
     }
 }

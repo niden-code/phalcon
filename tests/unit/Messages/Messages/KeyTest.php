@@ -15,22 +15,20 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class KeyCest
+final class KeyTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: key()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesKey(UnitTester $I): void
+    public function testMessagesMessagesKey(): void
     {
-        $I->wantToTest('Messages\Messages - key()');
-
         $messages = new Messages(
             [
                 0 => new Message(
@@ -50,9 +48,8 @@ class KeyCest
 
         $messages->next();
 
-        $I->assertSame(
-            1,
-            $messages->key()
-        );
+        $expected = 1;
+        $actual   = $messages->key();
+        $this->assertSame($expected, $actual);
     }
 }

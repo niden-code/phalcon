@@ -16,23 +16,21 @@ namespace Phalcon\Tests\Unit\Messages\Messages;
 use Phalcon\Messages\Exception;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class AppendMessagesCest
+final class AppendMessagesTest extends TestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: appendMessages() - array
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesAppendMessagesArray(UnitTester $I): void
+    public function testMessagesMessagesAppendMessagesArray(): void
     {
-        $I->wantToTest('Messages\Messages - appendMessages()');
-
         $messages = new Messages();
 
         $messages->appendMessage(
@@ -44,7 +42,7 @@ class AppendMessagesCest
             )
         );
 
-        $I->assertCount(1, $messages);
+        $this->assertCount(1, $messages);
 
         $newMessages = new Messages();
 
@@ -66,11 +64,11 @@ class AppendMessagesCest
             )
         );
 
-        $I->assertCount(2, $newMessages);
+        $this->assertCount(2, $newMessages);
 
         $messages->appendMessages($newMessages);
 
-        $I->assertCount(3, $messages);
+        $this->assertCount(3, $messages);
 
         /**
          * Array of messages
@@ -97,26 +95,22 @@ class AppendMessagesCest
         ];
 
         $messages->appendMessages($arrayMessages);
-        $I->assertCount(6, $messages);
+        $this->assertCount(6, $messages);
     }
 
     /**
      * Tests Phalcon\Messages\Messages :: appendMessages() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function messagesMessagesAppendMessagesException(UnitTester $I): void
+    public function testMessagesMessagesAppendMessagesException(): void
     {
-        $I->wantToTest('Messages\Messages - appendMessage() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The messages must be iterable');
 
-        $I->expectThrowable(
-            new Exception('The messages must be iterable'),
-            function () {
-                (new Messages())->appendMessages(true);
-            }
-        );
+        (new Messages())->appendMessages(true);
     }
 }
