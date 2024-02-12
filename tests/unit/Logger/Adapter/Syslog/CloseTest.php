@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
+
+use Phalcon\Logger\Adapter\Syslog;
+use Phalcon\Logger\Exception;
+use PHPUnit\Framework\TestCase;
+use UnitTester;
+
+final class CloseTest extends TestCase
+{
+    /**
+     * Tests Phalcon\Logger\Adapter\Syslog :: close()
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testLoggerAdapterSyslogClose(): void
+    {
+        $streamName = getNewFileName2('log');
+
+        $adapter = new Syslog($streamName);
+
+        $actual = $adapter->close();
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * Tests Phalcon\Logger\Adapter\Syslog :: close() - exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2021-09-03
+     * @issue  15638
+     */
+    public function testLoggerAdapterSyslogCloseException(): void
+    {
+        $streamName = getNewFileName2('log');
+        $adapter = new Syslog($streamName);
+
+        $adapter->begin();
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('There is an active transaction');
+
+        $adapter->close();
+    }
+}

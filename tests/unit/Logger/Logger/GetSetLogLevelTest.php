@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Logger\Logger;
+
+use Phalcon\Logger\Enum;
+use Phalcon\Logger\Logger;
+use PHPUnit\Framework\TestCase;
+use UnitTester;
+
+final class GetSetLogLevelTest extends TestCase
+{
+    /**
+     * Tests Phalcon\Logger :: getLogLevel()/setLogLevel()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testLoggerGetSetLogLevel(): void
+    {
+        $logger = new Logger('my-name');
+
+        $this->assertSame(Enum::CUSTOM, $logger->getLogLevel());
+
+        $object = $logger->setLogLevel(Enum::INFO);
+        $this->assertInstanceOf(Logger::class, $object);
+
+        $expected = Enum::INFO;
+        $actual   = $logger->getLogLevel();
+        $this->assertSame($expected, $actual);
+
+        $logger->setLogLevel(99);
+        $expected = Enum::CUSTOM;
+        $actual = $logger->getLogLevel();
+        $this->assertSame($expected, $actual);
+    }
+}

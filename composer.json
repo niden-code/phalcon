@@ -90,6 +90,6 @@
     "test-db-sqlite": "php vendor/bin/codecept run --ext DotReporter database --env sqlite -g sqlite",
     "test-db": "test-db-common && test-db-mysql && test-db-pgsql && test-db-sqlite",
     "test-all": "test-unit && test-cli && test-integration && test-db",
-    "test-unit-html": "./vendor/bin/phpunit --coverage-html=./tests/support/output/ --display-deprecations"
+    "test-unit-html": "./vendor/bin/phpunit --coverage-html=./tests/support/output/coverage/ --display-deprecations"
   }
 }
