@@ -32,7 +32,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Phalcon\\": "src/",
+      "Phalcon\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MyLibrary\\Tests\\": "tests/",
       "Phalcon\\Tests\\Benchmarks\\": "tests/benchmarks/",
       "Phalcon\\Tests\\Cli\\": "tests/cli/",
       "Phalcon\\Tests\\Integration\\": "tests/integration/",
@@ -43,7 +48,10 @@
       "Phalcon\\Tests\\Listener\\": "tests/_data/listener/",
       "Phalcon\\Tests\\Models\\": "tests/_data/fixtures/models/",
       "Phalcon\\Tests\\Module\\": "tests/_support/Module/"
-    }
+    },
+    "files": [
+      "tests/support/config/functions.php"
+    ]
   },
   "config": {
     "optimize-autoloader": true,
