@@ -588,5 +588,4 @@ final class CsvTest extends TestCase
             ],
         ];
     }
-
 }
