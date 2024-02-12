@@ -28,7 +28,7 @@ final class RenderTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickRender(): void
+    public function testImageAdapterImagickRender(): void
     {
         $this->markTestSkipped('Need implementation');
     }

@@ -31,7 +31,7 @@ final class GetVersionTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
-    public function imageAdapterGdGetVersion(): void
+    public function testImageAdapterGdGetVersion(): void
     {
         $this->checkJpegSupport($this);
 

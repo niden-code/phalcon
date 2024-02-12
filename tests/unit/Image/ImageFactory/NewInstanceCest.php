@@ -33,7 +33,7 @@ final class NewInstanceTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryNewInstance(): void
+    public function testImageImageFactoryNewInstance(): void
     {
         $factory = new ImageFactory();
         $file    = dataDir2('assets/images/example-jpg.jpg');
@@ -58,7 +58,7 @@ final class NewInstanceTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-08-02
      */
-    public function imageImageFactoryNewInstanceException(): void
+    public function testImageImageFactoryNewInstanceException(): void
     {
         $name = uniqid('service-');
         $this->expectException(Exception::class);

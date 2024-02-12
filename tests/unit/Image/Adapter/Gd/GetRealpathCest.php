@@ -31,7 +31,7 @@ final class GetRealpathTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdGetRealpath(): void
+    public function testImageAdapterGdGetRealpath(): void
     {
         $this->checkJpegSupport($this);
 

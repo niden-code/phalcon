@@ -47,7 +47,7 @@ final class TextTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdText(
+    public function testImageAdapterGdText(
         int $index,
         string $text,
         false|int $offsetX,
@@ -95,7 +95,7 @@ final class TextTest extends TestCase
      * @since  2021-04-20
      * @issue  15188
      */
-    public function imageAdapterGdTextWithFont(): void
+    public function testImageAdapterGdTextWithFont(): void
     {
         $this->checkJpegSupport($this);
 

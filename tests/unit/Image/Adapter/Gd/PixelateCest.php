@@ -33,7 +33,7 @@ final class PixelateTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdPixelate(): void
+    public function testImageAdapterGdPixelate(): void
     {
         $this->checkJpegSupport($this);
 

@@ -33,7 +33,7 @@ final class SaveTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdSave(): void
+    public function testImageAdapterGdSave(): void
     {
         $this->checkJpegSupport($this);
 

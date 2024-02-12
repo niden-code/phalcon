@@ -33,7 +33,7 @@ final class MaskTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdMask(): void
+    public function testImageAdapterGdMask(): void
     {
         $this->checkJpegSupport($this);
 

@@ -34,7 +34,7 @@ final class FlipTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickFlip(): void
+    public function testImageAdapterImagickFlip(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

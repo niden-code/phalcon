@@ -34,7 +34,7 @@ final class BackgroundTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdBackground(): void
+    public function testImageAdapterGdBackground(): void
     {
         $params = [
             [200, null, Enum::WIDTH, '000000', 30, '10787c3c1e1c3818'],

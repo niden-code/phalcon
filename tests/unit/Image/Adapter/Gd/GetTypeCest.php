@@ -48,7 +48,7 @@ final class GetTypeTest extends TestCase
      */
     /**
      */
-    public function imageAdapterGdGetType(
+    public function testImageAdapterGdGetType(
         string $source,
         int $expected
     ): void {

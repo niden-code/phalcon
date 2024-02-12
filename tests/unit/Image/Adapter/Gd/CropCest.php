@@ -33,7 +33,7 @@ final class CropTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdCropJpg()
+    public function testImageAdapterGdCropJpg()
     {
         $this->checkJpegSupport($this);
 
@@ -73,7 +73,7 @@ final class CropTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdCropJpgWithOffset(): void
+    public function testImageAdapterGdCropJpgWithOffset(): void
     {
         $this->checkJpegSupport($this);
 

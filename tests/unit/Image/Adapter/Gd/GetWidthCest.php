@@ -39,7 +39,7 @@ final class GetWidthTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdGetWidth(
+    public function testImageAdapterGdGetWidth(
         string $source,
         int $expected
     ): void {

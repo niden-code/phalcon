@@ -31,7 +31,7 @@ final class ConstructTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdConstruct(): void
+    public function testImageAdapterGdConstruct(): void
     {
         foreach ($this->getImages() as $image) {
             $gd = new Gd($image);

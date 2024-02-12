@@ -34,7 +34,7 @@ final class FlipTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdFlip(): void
+    public function testImageAdapterGdFlip(): void
     {
         $params = [
             'gif'  => [

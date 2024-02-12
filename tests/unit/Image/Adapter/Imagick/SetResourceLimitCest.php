@@ -32,7 +32,7 @@ final class SetResourceLimitTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-08-02
      */
-    public function imageAdapterImagickSetResourceLimitException(): void
+    public function testImageAdapterImagickSetResourceLimitException(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Cannot set the Resource Type for this image');

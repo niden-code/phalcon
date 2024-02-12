@@ -33,7 +33,7 @@ final class LiquidRescaleTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickLiquidRescale(): void
+    public function testImageAdapterImagickLiquidRescale(): void
     {
         $this->markTestSkipped('Check library support');
 

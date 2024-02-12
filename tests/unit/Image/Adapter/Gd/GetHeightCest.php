@@ -41,7 +41,7 @@ final class GetHeightTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdGetHeight(
+    public function testImageAdapterGdGetHeight(
         string $source,
         int $expected
     ): void {

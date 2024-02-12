@@ -46,7 +46,7 @@ final class ResizeTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdResize(
+    public function testImageAdapterGdResize(
         string $file,
         string $source,
         int $width,
@@ -94,7 +94,7 @@ final class ResizeTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdResizeExceptions(
+    public function testImageAdapterGdResizeExceptions(
         int $master,
         int $width,
         int $height,

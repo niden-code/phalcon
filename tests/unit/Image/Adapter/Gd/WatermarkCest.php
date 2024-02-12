@@ -34,7 +34,7 @@ final class WatermarkTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkJpgInsideJpg(): void
+    public function testImageAdapterGdWatermarkJpgInsideJpg(): void
     {
         $this->checkJpegSupport($this);
 
@@ -77,7 +77,7 @@ final class WatermarkTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkPngInsideJpg(): void
+    public function testImageAdapterGdWatermarkPngInsideJpg(): void
     {
         $this->checkJpegSupport($this);
 
@@ -117,7 +117,7 @@ final class WatermarkTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkJpgInsidePng(): void
+    public function testImageAdapterGdWatermarkJpgInsidePng(): void
     {
         $this->checkJpegSupport($this);
 
@@ -160,7 +160,7 @@ final class WatermarkTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdWatermarkPngInsidePng(): void
+    public function testImageAdapterGdWatermarkPngInsidePng(): void
     {
         $image = new Gd(
             dataDir2('assets/images/example-png.png')

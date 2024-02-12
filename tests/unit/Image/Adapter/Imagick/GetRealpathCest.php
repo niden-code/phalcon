@@ -28,7 +28,7 @@ final class GetRealpathTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickGetRealpath(): void
+    public function testImageAdapterImagickGetRealpath(): void
     {
         $this->markTestSkipped('Need implementation');
     }

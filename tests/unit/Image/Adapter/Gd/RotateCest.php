@@ -44,7 +44,7 @@ final class RotateTest extends TestCase
      */
     /**
      */
-    public function imageAdapterGdRotate(
+    public function testImageAdapterGdRotate(
         string $type,
         int $degrees,
         string $hash

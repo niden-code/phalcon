@@ -28,7 +28,7 @@ final class BlurTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickBlur(): void
+    public function testImageAdapterImagickBlur(): void
     {
         $this->markTestSkipped('Need implementation');
     }

@@ -28,7 +28,7 @@ final class GetMimeTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickGetMime(): void
+    public function testImageAdapterImagickGetMime(): void
     {
         $this->markTestSkipped('Need implementation');
     }

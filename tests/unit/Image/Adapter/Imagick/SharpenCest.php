@@ -33,7 +33,7 @@ final class SharpenTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickSharpen(): void
+    public function testImageAdapterImagickSharpen(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

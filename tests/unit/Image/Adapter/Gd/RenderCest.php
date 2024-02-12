@@ -31,7 +31,7 @@ final class RenderTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdRender(): void
+    public function testImageAdapterGdRender(): void
     {
         $this->markTestSkipped("Test need to be refactored to handle GD 2.2 hashes");
 

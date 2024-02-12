@@ -33,7 +33,7 @@ final class CropTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickCrop(): void
+    public function testImageAdapterImagickCrop(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

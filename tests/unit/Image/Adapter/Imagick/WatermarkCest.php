@@ -33,7 +33,7 @@ final class WatermarkTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickWatermark(): void
+    public function testImageAdapterImagickWatermark(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

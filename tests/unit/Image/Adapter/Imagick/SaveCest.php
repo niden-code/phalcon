@@ -32,7 +32,7 @@ final class SaveTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickSave(): void
+    public function testImageAdapterImagickSave(): void
     {
 
         $outputFile = outputDir('tests/image/imagick/new.jpg');

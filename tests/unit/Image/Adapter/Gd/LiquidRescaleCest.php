@@ -30,7 +30,7 @@ final class LiquidRescaleTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function imageAdapterGdLiquidRescale(): void
+    public function testImageAdapterGdLiquidRescale(): void
     {
         $this->markTestSkipped('Need implementation on GD adapter first');
     }

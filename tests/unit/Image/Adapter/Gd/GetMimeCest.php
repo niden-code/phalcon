@@ -41,7 +41,7 @@ final class GetMimeTest extends TestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2018-11-13
      */
-    public function imageAdapterGdGetMime(
+    public function testImageAdapterGdGetMime(
         string $source,
         string $expected
     ): void {

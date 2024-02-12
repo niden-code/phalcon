@@ -33,7 +33,7 @@ final class TextTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickText(): void
+    public function testImageAdapterImagickText(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

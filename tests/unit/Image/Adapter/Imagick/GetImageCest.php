@@ -31,7 +31,7 @@ final class GetImageTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickGetImage(): void
+    public function testImageAdapterImagickGetImage(): void
     {
         $image = new Imagick(
             dataDir2('assets/images/example-jpg.jpg')

@@ -38,7 +38,7 @@ final class LoadTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryLoad(): void
+    public function testImageImageFactoryLoad(): void
     {
         $options = $this->config->image;
         $factory = new ImageFactory();
@@ -62,7 +62,7 @@ final class LoadTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function imageImageFactoryLoadArray(): void
+    public function testImageImageFactoryLoadArray(): void
     {
         $options = $this->arrayConfig['image'];
         $factory = new ImageFactory();

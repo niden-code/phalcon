@@ -30,7 +30,7 @@ final class PixelateTest extends TestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-02-19
      */
-    public function imageAdapterImagickPixelate(): void
+    public function testImageAdapterImagickPixelate(): void
     {
         $this->markTestSkipped('Need implementation');
     }
