@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Support\Collection\Collection;
 
 use Phalcon\Support\Collection;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 final class GetKeysValuesTest extends TestCase
 {
@@ -42,7 +41,7 @@ final class GetKeysValuesTest extends TestCase
             1 => 'three',
             2 => 'five',
         ];
-        $actual = $collection->getKeys();
+        $actual   = $collection->getKeys();
         $this->assertSame($expected, $actual);
 
         $expected = [
@@ -50,7 +49,7 @@ final class GetKeysValuesTest extends TestCase
             1 => 'three',
             2 => 'FIVE',
         ];
-        $actual = $collection->getKeys(false);
+        $actual   = $collection->getKeys(false);
         $this->assertSame($expected, $actual);
 
         /**
@@ -63,7 +62,7 @@ final class GetKeysValuesTest extends TestCase
             1 => 'three',
             2 => 'FIVE',
         ];
-        $actual = $collection->getKeys();
+        $actual   = $collection->getKeys();
         $this->assertSame($expected, $actual);
     }
 
@@ -90,7 +89,7 @@ final class GetKeysValuesTest extends TestCase
             1 => 'four',
             2 => 'SIX',
         ];
-        $actual = $collection->getValues();
+        $actual   = $collection->getValues();
         $this->assertSame($expected, $actual);
     }
 }

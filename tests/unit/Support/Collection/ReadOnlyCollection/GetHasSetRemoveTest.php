@@ -84,15 +84,14 @@ final class GetHasSetRemoveTest extends TestCase
     }
 
     /**
-     * Tests Phalcon\Support\Collection ::
-     * get()/__get()/offsetGet()/has()/__isset()/offsetExists()
+     * Tests Phalcon\Support\Collection :: offsetSet()
      *
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function testCollectionClearGetHast(): void
+    public function testCollectionClearGetHasOffsetSet(): void
     {
         $data = [
             'one'   => 'two',
@@ -102,24 +101,9 @@ final class GetHasSetRemoveTest extends TestCase
 
         $collection = new ReadOnlyCollection($data);
 
-        $actual = $collection->has('three');
-        $this->assertTrue($actual);
-
-        $actual = $collection->has('one');
-        $this->assertTrue($actual);
-
-        $actual = $collection->has('five');
-        $this->assertTrue($actual);
-
-        $expected = 3;
-        $actual   = $collection->count();
-        $this->assertSame($expected, $actual);
-
-        $collection->clear();
-
-        $expected = 0;
-        $actual   = $collection->count();
-        $this->assertSame($expected, $actual);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The object is read only');
+        $collection->offsetSet('ten', 'eleven');
     }
 
     /**
@@ -169,52 +153,6 @@ final class GetHasSetRemoveTest extends TestCase
     }
 
     /**
-     * Tests Phalcon\Support\Collection :: unset()
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testCollectionClearGetHasUnset(): void
-    {
-        $data = [
-            'one'   => 'two',
-            'three' => 'four',
-            'five'  => 'six',
-        ];
-
-        $collection = new ReadOnlyCollection($data);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('The object is read only');
-        unset($collection->ten);
-    }
-
-    /**
-     * Tests Phalcon\Support\Collection :: offsetSet()
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testCollectionClearGetHasOffsetSet(): void
-    {
-        $data = [
-            'one'   => 'two',
-            'three' => 'four',
-            'five'  => 'six',
-        ];
-
-        $collection = new ReadOnlyCollection($data);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('The object is read only');
-        $collection->offsetSet('ten', 'eleven');
-    }
-
-    /**
      * Tests Phalcon\Support\Collection :: set()
      *
      * @return void
@@ -258,6 +196,68 @@ final class GetHasSetRemoveTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('The object is read only');
         $collection->ten = 'eleven';
+    }
+
+    /**
+     * Tests Phalcon\Support\Collection :: unset()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testCollectionClearGetHasUnset(): void
+    {
+        $data = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new ReadOnlyCollection($data);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The object is read only');
+        unset($collection->ten);
+    }
+
+    /**
+     * Tests Phalcon\Support\Collection ::
+     * get()/__get()/offsetGet()/has()/__isset()/offsetExists()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testCollectionClearGetHast(): void
+    {
+        $data = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new ReadOnlyCollection($data);
+
+        $actual = $collection->has('three');
+        $this->assertTrue($actual);
+
+        $actual = $collection->has('one');
+        $this->assertTrue($actual);
+
+        $actual = $collection->has('five');
+        $this->assertTrue($actual);
+
+        $expected = 3;
+        $actual   = $collection->count();
+        $this->assertSame($expected, $actual);
+
+        $collection->clear();
+
+        $expected = 0;
+        $actual   = $collection->count();
+        $this->assertSame($expected, $actual);
     }
 
     /**
