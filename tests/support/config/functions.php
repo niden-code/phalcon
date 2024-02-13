@@ -126,11 +126,11 @@ if (!function_exists('loadFolders2')) {
 //            'assets',
 //            'cache',
 //            'cache/models',
-            'coverage',
-//            'image',
-//            'image/gd',
-//            'image/imagick',
-            'logs',
+'coverage',
+'image',
+'image/gd',
+'image/imagick',
+'logs',
 //            'session',
 //            'stream',
         ];
@@ -161,7 +161,7 @@ if (!function_exists('callProtectedMethod')) {
      * @return mixed
      * @throws ReflectionException
      */
-    function callProtectedMethod(string|object $obj, string $method)
+    function callProtectedMethod(string | object $obj, string $method)
     {
         $reflectionClass = new ReflectionClass($obj);
 
@@ -197,7 +197,7 @@ if (!function_exists('getProtectedProperty')) {
      * @throws ReflectionException
      */
     function getProtectedProperty(
-        object|string $objectOrString,
+        object | string $objectOrString,
         string $propertyName
     ): mixed {
         $reflection = new ReflectionClass($objectOrString);
@@ -209,7 +209,61 @@ if (!function_exists('getProtectedProperty')) {
     }
 }
 
+/*******************************************************************************
+ * Environment
+ *******************************************************************************/
+/**
+ * Converts ENV variables to defined for tests to work
+ */
+if (!function_exists('loadDefined')) {
+    function loadDefined()
+    {
+        defineFromEnv('DATA_MYSQL_CHARSET');
+        defineFromEnv('DATA_MYSQL_HOST');
+        defineFromEnv('DATA_MYSQL_NAME');
+        defineFromEnv('DATA_MYSQL_PASS');
+        defineFromEnv('DATA_MYSQL_PORT');
+        defineFromEnv('DATA_MYSQL_USER');
+
+        if (!defined('PATH_DATA')) {
+            define('PATH_DATA', dataDir2());
+        }
+
+        if (!defined('PATH_OUTPUT')) {
+            define('PATH_OUTPUT', outputDir2());
+        }
+    }
+}
+
+if (!function_exists('env')) {
+    function env(string $key, $default = null)
+    {
+        if (defined($key)) {
+            return constant($key);
+        }
+
+        if (getenv($key) !== false) {
+            return getenv($key);
+        }
+
+        return $_ENV[$key] ?? $default;
+    }
+}
+
+if (!function_exists('defineFromEnv')) {
+    function defineFromEnv(string $name)
+    {
+        if (defined($name)) {
+            return;
+        }
+
+        define($name, env($name));
+    }
+}
+
+
 /**
  * Create necessary folders
  */
 loadFolders2();
+loadDefined();

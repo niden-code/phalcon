@@ -14,9 +14,30 @@ declare(strict_types=1);
 namespace Phalcon\Tests1\Fixtures\Traits;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\TestSuite;
 
+use function array_fill;
+use function bindec;
 use function dataDir2;
+use function dechex;
+use function file_get_contents;
+use function floor;
+use function gd_info;
+use function imagecolorat;
+use function imagecopyresampled;
+use function imagecopyresized;
+use function imagecreatefromstring;
+use function imagecreatetruecolor;
+use function imagedestroy;
+use function imagesx;
+use function imagesy;
+use function implode;
+use function is_array;
+use function is_string;
+use function round;
+use function rtrim;
+use function strlen;
+use function substr;
+use function trim;
 
 /**
  * Trait GdTrait
