@@ -112,7 +112,7 @@ final class AddRoleTest extends TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-                'Role must be either a string or implement RoleInterface'
+            'Role must be either a string or implement RoleInterface'
         );
 
         $acl = new Memory();
