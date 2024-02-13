@@ -57,7 +57,7 @@ if (!function_exists('safeDeleteFile2')) {
 if (!function_exists('rootDir2')) {
     function rootDir2(string $fileName = ''): string
     {
-        return dirname(dirname(dirname(dirname(__FILE__)))) . '/' . $fileName;
+        return dirname(__FILE__, 4) . '/' . $fileName;
     }
 }
 
@@ -102,7 +102,7 @@ if (!function_exists('safeDeleteDirectory2')) {
     {
         $files = glob($directory . '*', GLOB_MARK);
         foreach ($files as $file) {
-            if (substr($file, -1) == '/') {
+            if (str_ends_with($file, '/')) {
                 safeDeleteDirectory2($file);
             } else {
                 unlink($file);
@@ -119,20 +119,20 @@ if (!function_exists('safeDeleteDirectory2')) {
  * Ensures that certain folders are always ready for us.
  */
 if (!function_exists('loadFolders2')) {
-    function loadFolders2()
+    function loadFolders2(): void
     {
         $folders = [
-//            'annotations',
-//            'assets',
-//            'cache',
-//            'cache/models',
-'coverage',
-'image',
-'image/gd',
-'image/imagick',
-'logs',
-//            'session',
-//            'stream',
+            'annotations',
+            'assets',
+            'cache',
+            'cache/models',
+            'coverage',
+            'image',
+            'image/gd',
+            'image/imagick',
+            'logs',
+            'session',
+            'stream',
         ];
 
         foreach ($folders as $folder) {
@@ -161,7 +161,7 @@ if (!function_exists('callProtectedMethod')) {
      * @return mixed
      * @throws ReflectionException
      */
-    function callProtectedMethod(string | object $obj, string $method)
+    function callProtectedMethod(string | object $obj, string $method): mixed
     {
         $reflectionClass = new ReflectionClass($obj);
 
@@ -216,27 +216,27 @@ if (!function_exists('getProtectedProperty')) {
  * Converts ENV variables to defined for tests to work
  */
 if (!function_exists('loadDefined')) {
-    function loadDefined()
+    function loadDefined(): void
     {
-        defineFromEnv('DATA_MYSQL_CHARSET');
-        defineFromEnv('DATA_MYSQL_HOST');
-        defineFromEnv('DATA_MYSQL_NAME');
-        defineFromEnv('DATA_MYSQL_PASS');
-        defineFromEnv('DATA_MYSQL_PORT');
-        defineFromEnv('DATA_MYSQL_USER');
-
-        if (!defined('PATH_DATA')) {
-            define('PATH_DATA', dataDir2());
+//        defineFromEnv('DATA_MYSQL_CHARSET');
+//        defineFromEnv('DATA_MYSQL_HOST');
+//        defineFromEnv('DATA_MYSQL_NAME');
+//        defineFromEnv('DATA_MYSQL_PASS');
+//        defineFromEnv('DATA_MYSQL_PORT');
+//        defineFromEnv('DATA_MYSQL_USER');
+//
+        if (!defined('PATH_DATA2')) {
+            define('PATH_DATA2', dataDir2());
         }
 
-        if (!defined('PATH_OUTPUT')) {
-            define('PATH_OUTPUT', outputDir2());
+        if (!defined('PATH_OUTPUT2')) {
+            define('PATH_OUTPUT2', outputDir2());
         }
     }
 }
 
 if (!function_exists('env')) {
-    function env(string $key, $default = null)
+    function env(string $key, $default = null): mixed
     {
         if (defined($key)) {
             return constant($key);
@@ -251,7 +251,7 @@ if (!function_exists('env')) {
 }
 
 if (!function_exists('defineFromEnv')) {
-    function defineFromEnv(string $name)
+    function defineFromEnv(string $name): void
     {
         if (defined($name)) {
             return;
