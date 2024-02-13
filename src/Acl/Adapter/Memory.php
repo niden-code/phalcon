@@ -789,7 +789,8 @@ class Memory extends AbstractAdapter
                         "You did not provide any parameters when '" .
                         $roleName . "' can '" . $access .
                         "' '" . $componentName .
-                        "'. We will use default action when no arguments."
+                        "'. We will use default action when no arguments.",
+                        E_USER_WARNING
                     );
 
                     return $haveAccess == Enum::ALLOW &&

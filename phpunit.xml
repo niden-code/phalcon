@@ -4,14 +4,17 @@
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
         bootstrap="./phpunit.php"
         cacheResultFile="./tests/support/output/coverage/.phpunit.result.cache"
+        colors="true"
+        displayDetailsOnTestsThatTriggerWarnings="true"
         processIsolation="true"
 >
     <coverage includeUncoveredFiles="true" />
     <testsuites>
-        <testsuite name="Phalcon v6">
-            <directory>./tests</directory>
+        <testsuite name="unit">
+            <directory>./tests/unit</directory>
         </testsuite>
     </testsuites>
+
     <source>
         <include>
             <directory suffix=".php">./src</directory>
