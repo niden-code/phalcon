@@ -15,27 +15,20 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetRolesCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetRolesCest
+final class GetRolesTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getRoles()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetRoles(UnitTester $I)
+    public function testAclAdapterMemoryGetRoles(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getRoles()');
-
         $acl   = new Memory();
         $role1 = new Role('Admin');
         $role2 = new Role('Guest');
@@ -48,6 +41,6 @@ class GetRolesCest
             'Guest' => $role2,
         ];
         $actual   = $acl->getRoles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

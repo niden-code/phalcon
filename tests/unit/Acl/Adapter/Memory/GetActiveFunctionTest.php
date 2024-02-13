@@ -17,27 +17,20 @@ use Closure;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetActiveFunctionCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetActiveFunctionCest
+final class GetActiveFunctionTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getActiveFunction()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2017-01-13
      */
-    public function aclAdapterMemoryGetActiveFunction(UnitTester $I)
+    public function testAclAdapterMemoryGetActiveFunction(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getActiveFunction()');
-
         $function = function ($a) {
             return $a;
         };
@@ -59,20 +52,20 @@ class GetActiveFunctionCest
                 'a' => 1,
             ]
         );
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $returnedFunction = $acl->getActiveFunction();
 
         $class = Closure::class;
         $actual = $returnedFunction;
-        $I->assertInstanceOf($class, $actual);
+        $this->assertInstanceOf($class, $actual);
 
         $expected = 1;
         $actual   = $function(1);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = 1;
         $actual   = $acl->getActiveFunctionCustomArgumentsCount();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

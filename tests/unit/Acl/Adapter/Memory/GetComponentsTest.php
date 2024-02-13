@@ -15,27 +15,20 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetComponentsCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetComponentsCest
+final class GetComponentsTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getComponents()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetComponents(UnitTester $I)
+    public function testAclAdapterMemoryGetComponents(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getComponents()');
-
         $acl        = new Memory();
         $component1 = new Component('Posts');
         $component2 = new Component('Tags');
@@ -48,6 +41,6 @@ class GetComponentsCest
             'Tags'  => $component2,
         ];
         $actual   = $acl->getComponents();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

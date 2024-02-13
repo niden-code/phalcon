@@ -17,27 +17,20 @@ use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class AddInheritCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class AddInheritCest
+final class AddInheritTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddInherit(UnitTester $I)
+    public function testAclAdapterMemoryAddInherit(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addInherit()');
-
         $acl = new Memory();
 
         $acl->addRole(new Role('administrator'));
@@ -45,21 +38,19 @@ class AddInheritCest
 
         $addedInherit = $acl->addInherit('administrator', 'apprentice');
 
-        $I->assertTrue($addedInherit);
+        $this->assertTrue($addedInherit);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author <jenovateurs>
      * @since  2019-12-05
      */
-    public function aclAdapterMemoryAddInheritIsAllow(UnitTester $I)
+    public function testAclAdapterMemoryAddInheritIsAllow(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addInherit() - check access');
-
         $acl = new Memory();
 
         //New role
@@ -72,11 +63,11 @@ class AddInheritCest
 
         //Add Inherit
         $actual = $acl->addInherit('administrator', 'apprentice');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         // Add Inherit twice to ensure that we have no duplicates
         $actual = $acl->addInherit('administrator', 'apprentice');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         //Allow access
         $acl->allow('apprentice', 'folder', 'list');
@@ -84,30 +75,28 @@ class AddInheritCest
 
         //Check access
         $actual = $acl->isAllowed('apprentice', 'folder', 'list');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed('administrator', 'folder', 'add');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed('apprentice', 'folder', 'add');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed('administrator', 'folder', 'list');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit() - same name
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2021-09-27
      */
-    public function aclAdapterMemoryAddInheritSameName(UnitTester $I)
+    public function testAclAdapterMemoryAddInheritSameName(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addInherit() - same name');
-
         $acl = new Memory();
 
         // New role
@@ -120,65 +109,58 @@ class AddInheritCest
 
         // Add Inherit
         $actual = $acl->addInherit('administrator', 'administrator');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit() - unknown role exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2021-09-27
      */
-    public function aclAdapterMemoryAddInheritUnknownRole(UnitTester $I)
+    public function testAclAdapterMemoryAddInheritUnknownRole(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addInherit() - unknown role exception');
+        $acl = new Memory();
+        $acl->addRole(new Role('administrator'));
 
-        $I->expectThrowable(
-            new Exception(
-                "Role 'unknown' (to inherit) does not exist in the role list"
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->addRole(new Role('administrator'));
-
-                //Add Inherit
-                $actual = $acl->addInherit('administrator', 'unknown');
-            }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "Role 'unknown' (to inherit) does not exist in the role list"
         );
+
+        // Add Inherit
+        $actual = $acl->addInherit('administrator', 'unknown');
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit() - infinite loop
      * exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2021-09-27
      */
-    public function aclAdapterMemoryAddInheritInfiniteLoopException(UnitTester $I)
+    public function testAclAdapterMemoryAddInheritInfiniteLoopException(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addInherit() - infinite loop exception');
+        $acl = new Memory();
 
-        $I->expectThrowable(
-            new Exception(
-                "Role 'administrator' (to inherit) produces an infinite loop"
-            ),
-            function () {
-                $acl = new Memory();
+        $acl->addRole(new Role('administrator'));
+        $acl->addRole(new Role('member'));
+        $acl->addRole(new Role('guest'));
 
-                $acl->addRole(new Role('administrator'));
-                $acl->addRole(new Role('member'));
-                $acl->addRole(new Role('guest'));
+        $acl->addInherit('administrator', 'member');
+        // Twice to ensure it gets ignored
+        $acl->addInherit('administrator', 'member');
+        $acl->addInherit('member', 'guest');
 
-                $acl->addInherit('administrator', 'member');
-                // Twice to ensure it gets ignored
-                $acl->addInherit('administrator', 'member');
-                $acl->addInherit('member', 'guest');
-                $acl->addInherit('guest', 'administrator');
-            }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "Role 'administrator' (to inherit) produces an infinite loop"
         );
+
+        $acl->addInherit('guest', 'administrator');
     }
 }

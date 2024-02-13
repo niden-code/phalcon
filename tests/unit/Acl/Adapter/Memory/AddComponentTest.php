@@ -15,69 +15,58 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class AddComponentCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class AddComponentCest
+final class AddComponentTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addComponent() - string
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddComponentString(UnitTester $I)
+    public function testAclAdapterMemoryAddComponentString(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addComponent() - string');
-
         $acl = new Memory();
 
         $actual = $acl->addComponent('Customer', ['index']);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addComponent() - object
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddComponentObject(UnitTester $I)
+    public function testAclAdapterMemoryAddComponentObject(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addComponent() - object');
-
         $acl       = new Memory();
         $component = new Component('Customer', 'Customer component');
         $actual    = $acl->addComponent($component, ['index']);
 
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addComponent() - numeric key
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddComponentNumericKey(UnitTester $I)
+    public function testAclAdapterMemoryAddComponentNumericKey(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addComponent() - numeric key');
-
         $acl       = new Memory();
         $component = new Component('11', 'Customer component');
         $actual    = $acl->addComponent($component, ['index']);
 
-        $I->assertTrue($actual);
-        $I->assertTrue($acl->isComponent('11'));
+        $this->assertTrue($actual);
+        $this->assertTrue($acl->isComponent('11'));
     }
 }

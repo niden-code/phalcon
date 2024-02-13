@@ -16,28 +16,21 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetActiveFunctionCustomArgumentsCountCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetActiveFunctionCustomArgumentsCountCest
+final class GetActiveFunctionCustomArgumentsCountTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory ::
      * getActiveFunctionCustomArgumentsCount()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetActiveFunctionCustomArgumentsCount(UnitTester $I)
+    public function testAclAdapterMemoryGetActiveFunctionCustomArgumentsCount(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getActiveFunctionCustomArgumentsCount()');
-
         $acl = new Memory();
 
         $acl->addRole(new Role('member'));
@@ -65,10 +58,10 @@ class GetActiveFunctionCustomArgumentsCountCest
             ]
         );
 
-        $I->assertTrue($isAllowed);
+        $this->assertTrue($isAllowed);
 
         $expected = 2;
         $actual   = $acl->getActiveFunctionCustomArgumentsCount();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

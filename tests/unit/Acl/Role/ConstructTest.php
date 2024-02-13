@@ -15,49 +15,39 @@ namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class ConstructCest
- *
- * @package Phalcon\Tests\Unit\Acl\Role
- */
-class ConstructCest
+final class ConstructTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: __construct()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclRoleConstruct(UnitTester $I)
+    public function testAclRoleConstruct(): void
     {
-        $I->wantToTest('Acl\Role - __construct()');
+        $name = 'Administrator';
+        $role = new Role($name);
 
-        $role = new Role('Administrator');
-
-        $I->assertInstanceOf(Role::class, $role);
+        $this->assertInstanceOf(Role::class, $role);
     }
 
     /**
      * Tests Phalcon\Acl\Role :: __construct() - wildcard
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclRoleConstructWithWildcardThrowsException(UnitTester $I)
+    public function testAclRoleConstructWithWildcardThrowsException(): void
     {
-        $I->wantToTest('Acl\Role - __construct() - exception with "*"');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Role name cannot be '*'");
 
-        $I->expectThrowable(
-            new Exception("Role name cannot be '*'"),
-            function () {
-                $role = new Role('*');
-            }
-        );
+        $role = new Role('*');
     }
 }

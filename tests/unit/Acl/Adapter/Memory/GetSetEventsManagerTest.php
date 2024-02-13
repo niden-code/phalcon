@@ -15,27 +15,20 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Events\Manager;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetEventsManagerCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetSetEventsManagerCest
+final class GetSetEventsManagerTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getEventsManager()/setEventsManager()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetSetEventsManager(UnitTester $I)
+    public function testAclAdapterMemoryGetSetEventsManager(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getEventsManager()/setEventsManager()');
-
         $acl     = new Memory();
         $manager = new Manager();
 
@@ -43,7 +36,7 @@ class GetSetEventsManagerCest
 
         $class  = Manager::class;
         $actual = $acl->getEventsManager();
-        $I->assertInstanceOf($class, $actual);
-        $I->assertSame($manager, $actual);
+        $this->assertInstanceOf($class, $actual);
+        $this->assertSame($manager, $actual);
     }
 }

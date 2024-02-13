@@ -62,12 +62,28 @@ if (!function_exists('rootDir2')) {
 }
 
 /**
+ * Returns the cache folder
+ */
+if (!function_exists('cacheDir2')) {
+    function cacheDir2(string $fileName = ''): string
+    {
+        return outputDir2()
+            . 'cache' . DIRECTORY_SEPARATOR
+            . $fileName;
+    }
+}
+
+/**
  * Returns the data folder
  */
 if (!function_exists('dataDir2')) {
     function dataDir2(string $fileName = ''): string
     {
-        return rootDir2() . 'tests/support/data/' . $fileName;
+        return rootDir2()
+            . 'tests' . DIRECTORY_SEPARATOR
+            . 'support' . DIRECTORY_SEPARATOR
+            . 'data' . DIRECTORY_SEPARATOR
+            . $fileName;
     }
 }
 
@@ -77,7 +93,7 @@ if (!function_exists('dataDir2')) {
 if (!function_exists('logsDir2')) {
     function logsDir2(string $fileName = ''): string
     {
-        return outputDir2() . 'logs/' . $fileName;
+        return outputDir2() . 'logs' . DIRECTORY_SEPARATOR . $fileName;
     }
 }
 
@@ -87,7 +103,11 @@ if (!function_exists('logsDir2')) {
 if (!function_exists('outputDir2')) {
     function outputDir2(string $fileName = ''): string
     {
-        return rootDir2() . 'tests/support/output/' . $fileName;
+        return rootDir2()
+            . 'tests' . DIRECTORY_SEPARATOR
+            . 'support'  . DIRECTORY_SEPARATOR
+            . 'output' . DIRECTORY_SEPARATOR
+            . $fileName;
     }
 }
 

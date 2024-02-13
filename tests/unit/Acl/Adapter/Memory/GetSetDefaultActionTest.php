@@ -15,51 +15,42 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Enum;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetDefaultActionCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetSetDefaultActionCest
+final class GetSetDefaultActionTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getDefaultAction()/setDefaultAction()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetSetDefaultAction(UnitTester $I)
+    public function testAclAdapterMemoryGetSetDefaultAction(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getDefaultAction()/setDefaultAction()');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::ALLOW);
 
         $expected = Enum::ALLOW;
         $actual   = $acl->getDefaultAction();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getDefaultAction()/setDefaultAction()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryGetSetDefaultActionDefault(UnitTester $I)
+    public function testAclAdapterMemoryGetSetDefaultActionDefault(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getDefaultAction()/setDefaultAction() - default');
-
         $acl = new Memory();
 
         $expected = Enum::DENY;
         $actual   = $acl->getDefaultAction();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

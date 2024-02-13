@@ -14,46 +14,43 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetDescriptionCest
- *
- * @package Phalcon\Tests\Unit\Acl\Role
- */
-class GetDescriptionCest
+final class GetDescriptionTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: getDescription()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclRoleGetDescription(UnitTester $I)
+    public function testAclRoleGetDescription(): void
     {
-        $I->wantToTest('Acl\Role - getDescription()');
+        $name = 'Administrator';
+        $description = 'The admin unit';
+        $role = new Role($name, $description);
 
-        $role = new Role('Administrators', 'The admin unit');
-
-        $I->assertSame('The admin unit', $role->getDescription());
+        $expected = $description;
+        $actual   = $role->getDescription();
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Acl\Role :: getDescription() - empty
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclRoleGetDescriptionEmpty(UnitTester $I)
+    public function testAclRoleGetDescriptionEmpty(): void
     {
-        $I->wantToTest('Acl\Role - getDescription()');
+        $name = 'Administrator';
+        $role = new Role($name);
 
-        $role = new Role('Administrators');
-
-        $I->assertEmpty($role->getDescription());
+        $actual   = $role->getDescription();
+        $this->assertEmpty($actual);
     }
 }

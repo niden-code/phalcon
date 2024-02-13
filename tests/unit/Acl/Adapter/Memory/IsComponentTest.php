@@ -15,54 +15,45 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class IsComponentCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class IsComponentCest
+final class IsComponentTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isComponent()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryIsComponent(UnitTester $I)
+    public function testAclAdapterMemoryIsComponent(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isComponent()');
-
         $acl          = new Memory();
         $aclComponent = new Component('Customers', 'Customer management');
 
         $acl->addComponent($aclComponent, 'search');
 
         $actual = $acl->isComponent('Customers');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isComponent() - unknown
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryIsComponentUnknown(UnitTester $I)
+    public function testAclAdapterMemoryIsComponentUnknown(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isComponent() - unknown');
-
         $acl          = new Memory();
         $aclComponent = new Component('Customers', 'Customer management');
 
         $acl->addComponent($aclComponent, 'search');
 
         $actual = $acl->isComponent('unknown');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 }

@@ -21,27 +21,26 @@ use Phalcon\Acl\Exception as AclException;
 use Phalcon\Acl\Role;
 use Phalcon\Tests\Fixtures\Acl\TestComponentAware;
 use Phalcon\Tests\Fixtures\Acl\TestRoleAware;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
-/**
- * Class AllowCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class AllowCest
+use function restore_error_handler;
+use function set_error_handler;
+
+use const E_USER_WARNING;
+
+final class AllowTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: allow()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAllow(UnitTester $I)
+    public function testAclAdapterMemoryAllow(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - allow()');
-
         $acl = new Memory();
 
         $acl->setDefaultAction(Enum::DENY);
@@ -52,27 +51,25 @@ class AllowCest
         $acl->allow('Member', 'Post', 'update');
 
         $actual = $acl->isAllowed('Guest', 'Post', 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed('Guest', 'Post', 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed('Member', 'Post', 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: allow() - wildcard
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-16
      */
-    public function aclAdapterMemoryAllowWildcard(UnitTester $I)
+    public function testAclAdapterMemoryAllowWildcard(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - allow() - wildcard');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
         $acl->addRole('Member');
@@ -81,7 +78,7 @@ class AllowCest
         $acl->allow('Member', 'Post', '*');
 
         $actual = $acl->isAllowed('Member', 'Post', 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
@@ -90,7 +87,7 @@ class AllowCest
 
         $acl->allow('Member', '*', '*');
         $actual = $acl->isAllowed('Member', 'Post', 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
@@ -101,7 +98,7 @@ class AllowCest
 
         $acl->allow('Member', '*', '*');
         $actual = $acl->isAllowed('Guest', 'Post', 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
@@ -128,79 +125,41 @@ class AllowCest
 
         foreach ($aclRoles as $Role => $object) {
             $actual = $acl->isAllowed($Role, 'welcome', 'index');
-            $I->assertTrue($actual);
+            $this->assertTrue($actual);
         }
 
         $acl->deny('*', 'welcome', 'index');
         foreach ($aclRoles as $Role => $object) {
             $actual = $acl->isAllowed($Role, 'welcome', 'index');
-            $I->assertFalse($actual);
+            $this->assertFalse($actual);
         }
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: allow() - exception
      *
-     * @param UnitTester $I
+     * @dataProvider providerExceptions
+     *
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-16
      */
-    public function aclAdapterMemoryAllowException(UnitTester $I)
-    {
-        $I->wantToTest('Acl\Adapter\Memory - allow() - exception');
+    public function testAclAdapterMemoryAllowException(
+        string $message,
+        string $role,
+        string $component,
+        array|string $access
+    ): void {
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::DENY);
+        $acl->addRole('Member');
+        $acl->addComponent('Post', ['update']);
 
-        $I->expectThrowable(
-            new AclException(
-                "Role 'Unknown' does not exist in the ACL"
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Unknown', 'Post', 'update');
-            }
-        );
+        $this->expectException(AclException::class);
+        $this->expectExceptionMessage($message);
 
-        $I->expectThrowable(
-            new AclException(
-                "Component 'Unknown' does not exist in the ACL"
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Member', 'Unknown', 'update');
-            }
-        );
-
-        $I->expectThrowable(
-            new AclException(
-                "Access 'Unknown' does not exist in component 'Post'"
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Member', 'Post', 'Unknown');
-            }
-        );
-
-        $I->expectThrowable(
-            new AclException(
-                "Access 'Unknown' does not exist in component 'Post'"
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Member', 'Post', ['Unknown']);
-            }
-        );
+        $acl->allow($role, $component, $access);
     }
 
     /**
@@ -208,15 +167,13 @@ class AllowCest
      *
      * @issue   https://github.com/phalcon/cphalcon/issues/11235
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2015-12-16
      */
-    public function aclAdapterMemoryAllowFunction(UnitTester $I)
+    public function testAclAdapterMemoryAllowFunction(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - allow() - function');
-
         $acl = new Memory();
 
         $acl->setDefaultAction(Enum::DENY);
@@ -247,16 +204,16 @@ class AllowCest
         $acl->allow('Admins', 'Post', 'update');
 
         $actual = $acl->isAllowed($guest, $model, 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed($member, $model, 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed($anotherMember, $model, 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed($admin, $model, 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
@@ -264,71 +221,106 @@ class AllowCest
      *
      * @issue   https://github.com/phalcon/cphalcon/issues/11235
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2016-06-05
      */
-    public function aclAdapterMemoryAllowFunctionException(UnitTester $I)
+    public function testAclAdapterMemoryAllowFunctionException(): void
     {
-        $errorMessage = "You did not provide any parameters when 'Guests' can "
+        set_error_handler(
+            function ($number, $message, $file, $line) {
+                throw new RuntimeException($message);
+            },
+            E_USER_WARNING
+        );
+
+        $message = "You did not provide any parameters when 'Guests' can "
             . "'update' 'Post'. We will use default action when no arguments.";
 
-        $code   = 0;
-        $actual = '';
-        try {
-            $acl = new Memory();
-            $acl->setDefaultAction(Enum::ALLOW);
-            $acl->setNoArgumentsDefaultAction(Enum::DENY);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($message);
 
-            $acl->addRole('Guests');
-            $acl->addRole('Members', 'Guests');
-            $acl->addRole('Admins', 'Members');
-            $acl->addComponent('Post', ['update']);
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::ALLOW);
+        $acl->setNoArgumentsDefaultAction(Enum::DENY);
 
-            $guest         = new TestRoleAware(1, 'Guests');
-            $member        = new TestRoleAware(2, 'Members');
-            $anotherMember = new TestRoleAware(3, 'Members');
-            $admin         = new TestRoleAware(4, 'Admins');
-            $model         = new TestComponentAware(2, 'Post');
+        $acl->addRole('Guests');
+        $acl->addRole('Members', 'Guests');
+        $acl->addRole('Admins', 'Members');
+        $acl->addComponent('Post', ['update']);
 
-            $acl->allow(
-                'Guests',
+        $guest         = new TestRoleAware(1, 'Guests');
+        $member        = new TestRoleAware(2, 'Members');
+        $anotherMember = new TestRoleAware(3, 'Members');
+        $admin         = new TestRoleAware(4, 'Admins');
+        $model         = new TestComponentAware(2, 'Post');
+
+        $acl->allow(
+            'Guests',
+            'Post',
+            'update',
+            function ($parameter) {
+                return $parameter % 2 == 0;
+            }
+        );
+
+        $acl->allow(
+            'Members',
+            'Post',
+            'update',
+            function ($parameter) {
+                return $parameter % 2 == 0;
+            }
+        );
+
+        $acl->allow('Admins', 'Post', 'update');
+
+        $actual = $acl->isAllowed($guest, $model, 'update');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed($member, $model, 'update');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed($anotherMember, $model, 'update');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed($admin, $model, 'update');
+        $this->assertTrue($actual);
+
+        restore_error_handler();
+    }
+
+    /**
+     * @return array
+     */
+    public static function providerExceptions(): array
+    {
+        return [
+            [
+                "Role 'Unknown' does not exist in the ACL",
+                'Unknown',
                 'Post',
-                'update',
-                function ($parameter) {
-                    return $parameter % 2 == 0;
-                }
-            );
-
-            $acl->allow(
-                'Members',
+                'update'
+            ],
+            [
+                "Component 'Unknown' does not exist in the ACL",
+                'Member',
+                'Unknown',
+                'update'
+            ],
+            [
+                "Access 'Unknown' does not exist in component 'Post'",
+                'Member',
                 'Post',
-                'update',
-                function ($parameter) {
-                    return $parameter % 2 == 0;
-                }
-            );
-
-            $acl->allow('Admins', 'Post', 'update');
-
-            $actual = $acl->isAllowed($guest, $model, 'update');
-            $I->assertFalse($actual);
-
-            $actual = $acl->isAllowed($member, $model, 'update');
-            $I->assertFalse($actual);
-
-            $actual = $acl->isAllowed($anotherMember, $model, 'update');
-            $I->assertFalse($actual);
-
-            $actual = $acl->isAllowed($admin, $model, 'update');
-            $I->assertTrue($actual);
-        } catch (Exception $ex) {
-            $actual = $ex->getMessage();
-            $code   = $ex->getCode();
-        }
-
-        $I->assertStringContainsString($errorMessage, $actual);
-        $I->assertSame(1024, $code);
+                'Unknown'
+            ],
+            [
+                "Access 'Unknown' does not exist in component 'Post'",
+                'Member',
+                'Post',
+                ['Unknown']
+            ],
+        ];
     }
 }

@@ -15,28 +15,21 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetInheritedRolesCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class GetInheritedRolesCest
+final class GetInheritedRolesTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getInheritedRoles()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-02
      * @issue  https://github.com/phalcon/cphalcon/issues/15154
      */
-    public function aclAdapterMemoryGetInheritedRoles(UnitTester $I)
+    public function testAclAdapterMemoryGetInheritedRoles(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - getInheritedRoles()');
-
         $acl = new Memory();
 
         $acl->addRole(new Role('administrator'));
@@ -49,24 +42,24 @@ class GetInheritedRolesCest
          * Inheritance
          */
         $actual = $acl->addInherit('administrator', 'memberOne');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $acl->addInherit('administrator', 'memberTwo');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $acl->addInherit('memberTwo', 'guestOne');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $acl->addInherit('memberTwo', 'guestTwo');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $expected = [];
         $actual   = $acl->getInheritedRoles('unknown');
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [
             'memberOne',
             'memberTwo',
         ];
         $actual   = $acl->getInheritedRoles('administrator');
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [
             'administrator' => [
@@ -79,6 +72,6 @@ class GetInheritedRolesCest
             ],
         ];
         $actual   = $acl->getInheritedRoles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

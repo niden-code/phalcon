@@ -14,29 +14,26 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
-use UnitTester;
+use Phalcon\Tests\Models\Customers;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetNameCest
- *
- * @package Phalcon\Tests\Unit\Acl\Component
- */
-class GetNameCest
+final class GetNameTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: getName()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclComponentGetName(UnitTester $I)
+    public function testAclComponentGetName(): void
     {
-        $I->wantToTest('Acl\Component - getName()');
+        $source = 'Customer';
+        $component = new Component($source);
 
-        $component = new Component('Customers');
-
-        $I->assertSame('Customers', $component->getName());
+        $expected = $source;
+        $actual   = $component->getName();
+        $this->assertSame($expected, $actual);
     }
 }

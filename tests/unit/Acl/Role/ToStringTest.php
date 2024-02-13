@@ -14,30 +14,29 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class ToStringCest
- *
- * @package Phalcon\Tests\Unit\Acl\Role
- */
-class ToStringCest
+final class ToStringTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: __toString()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclRoleToString(UnitTester $I)
+    public function testAclRoleToString(): void
     {
-        $I->wantToTest('Acl\Role - __toString()');
+        $source = 'Administrator';
+        $role = new Role($source);
 
-        $role = new Role('Administrator');
+        $expected = $source;
+        $actual   = $role->__toString();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame('Administrator', $role->__toString());
-        $I->assertSame('Administrator', (string)$role);
+        $expected = $source;
+        $actual   = (string) $role;
+        $this->assertSame($expected, $actual);
     }
 }

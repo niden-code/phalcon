@@ -23,30 +23,32 @@ use Phalcon\Acl\Role;
 use Phalcon\Tests\Fixtures\Acl\TestComponentAware;
 use Phalcon\Tests\Fixtures\Acl\TestRoleAware;
 use Phalcon\Tests\Fixtures\Acl\TestRoleComponentAware;
+use RuntimeException;
 use stdClass;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class IsAllowedCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class IsAllowedCest
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_start;
+
+use function restore_error_handler;
+
+use const E_USER_WARNING;
+
+final class IsAllowedTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - default
      *
      * @issue   https://github.com/phalcon/cphalcon/issues/12573
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2017-01-25
      */
-    public function aclAdapterMemoryIsAllowedDefault(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedDefault(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - default');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
 
@@ -62,24 +64,22 @@ class IsAllowedCest
         $acl->allow('Guests', 'Post', 'index');
 
         $actual = $acl->isAllowed('Guests', 'Post', 'index');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed('Guests', 'Post', 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - objects
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2017-02-15
      */
-    public function aclAdapterMemoryIsAllowedObjects(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedObjects(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - objects');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
 
@@ -98,24 +98,22 @@ class IsAllowedCest
         $acl->allow('Guests', 'Post', 'index');
 
         $actual = $acl->isAllowed($role, $component, 'index');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed($role, $component, 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - same class
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Wojciech Slawski <jurigag@gmail.com>
      * @since   2017-02-15
      */
-    public function aclAdapterMemoryIsAllowedSameClass(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedSameClass(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - same class');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
 
@@ -137,27 +135,25 @@ class IsAllowedCest
         );
 
         $actual = $acl->isAllowed($role, $component, 'update');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $acl->isAllowed($role, $role, 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $acl->isAllowed($component, $component, 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - function no parameters
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2019-06-16
      */
-    public function aclAdapterMemoryIsAllowedFunctionNoParameters(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedFunctionNoParameters(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - no parameters');
-
         $acl = new Memory();
         $acl->setDefaultAction(Enum::DENY);
 
@@ -173,179 +169,177 @@ class IsAllowedCest
         );
 
         $actual = $acl->isAllowed('Admin', 'User', 'update');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - function more
      * parameters
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2021-09-27
      */
-    public function aclAdapterMemoryIsAllowedFunctionMoreParameters(
-        UnitTester $I
-    ) {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - more parameters');
+    public function testAclAdapterMemoryIsAllowedFunctionMoreParameters(): void
+    {
+        set_error_handler(
+            function ($number, $message, $file, $line) {
+                throw new RuntimeException($message);
+            },
+            E_USER_WARNING
+        );
 
-        $errorMessage = "Number of parameters in array is higher than the "
+        $message = "Number of parameters in array is higher than the "
             . "number of parameters in defined function when checking if "
-            . "'Members' can 'update' 'Post'. Extra parameters will be ignored.";
+            . "'Members' can 'update' 'Post'. Extra parameters will be ignored."
+        ;
 
-        $code   = 0;
-        $actual = '';
-        try {
-            $acl = new Memory();
-            $acl->setDefaultAction(Enum::ALLOW);
-            $acl->setNoArgumentsDefaultAction(Enum::DENY);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($message);
 
-            $acl->addRole('Members');
-            $acl->addComponent('Post', ['update']);
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::ALLOW);
+        $acl->setNoArgumentsDefaultAction(Enum::DENY);
 
-            $member = new TestRoleAware(2, 'Members');
-            $model  = new TestComponentAware(2, 'Post');
+        $acl->addRole('Members');
+        $acl->addComponent('Post', ['update']);
 
-            $acl->allow(
-                'Members',
-                'Post',
-                'update',
-                function ($parameter) {
-                    return $parameter % 2 == 0;
-                }
-            );
+        $member = new TestRoleAware(2, 'Members');
+        $model  = new TestComponentAware(2, 'Post');
 
-            $acl->isAllowed(
-                $member,
-                $model,
-                'update',
-                [
-                    'parameter' => 1,
-                    'one'       => 2,
-                ]
-            );
-        } catch (Exception $ex) {
-            $actual = $ex->getMessage();
-            $code   = $ex->getCode();
-        }
+        $acl->allow(
+            'Members',
+            'Post',
+            'update',
+            function ($parameter) {
+                return $parameter % 2 == 0;
+            }
+        );
 
-        $I->assertStringContainsString($errorMessage, $actual);
-        $I->assertSame(512, $code);
+        $acl->isAllowed(
+            $member,
+            $model,
+            'update',
+            [
+                'parameter' => 1,
+                'one'       => 2,
+            ]
+        );
+
+        $this->assertSame(1, 1);
+
+        restore_error_handler();
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - function not enough
      * parameters
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2019-06-16
      */
-    public function aclAdapterMemoryIsAllowedFunctionNotEnoughParameters(
-        UnitTester $I
-    ) {
-        $I->wantToTest(
-            'Acl\Adapter\Memory - isAllowed() - not enough parameters'
+    public function testAclAdapterMemoryIsAllowedFunctionNotEnoughParameters(): void
+    {
+        $acl = new Memory();
+
+        $acl->setDefaultAction(Enum::ALLOW);
+        $acl->setNoArgumentsDefaultAction(Enum::DENY);
+
+        $acl->addRole('Members');
+        $acl->addComponent('Post', ['update']);
+
+        $member = new TestRoleAware(2, 'Members');
+        $model  = new TestComponentAware(2, 'Post');
+
+        $acl->allow(
+            'Members',
+            'Post',
+            'update',
+            function ($parameter, $value) {
+                return $parameter % $value == 0;
+            }
         );
 
-        $I->expectThrowable(
-            new AclException(
-                "You did not provide all necessary parameters for the " .
-                "defined function when checking if 'Members' can 'update' for 'Post'."
-            ),
-            function () {
-                $acl = new Memory();
+        $this->expectException(AclException::class);
+        $this->expectExceptionMessage(
+            "You did not provide all necessary parameters for the " .
+            "defined function when checking if 'Members' can 'update' for 'Post'."
+        );
 
-                $acl->setDefaultAction(Enum::ALLOW);
-                $acl->setNoArgumentsDefaultAction(Enum::DENY);
-
-                $acl->addRole('Members');
-                $acl->addComponent('Post', ['update']);
-
-                $member = new TestRoleAware(2, 'Members');
-                $model  = new TestComponentAware(2, 'Post');
-
-                $acl->allow(
-                    'Members',
-                    'Post',
-                    'update',
-                    function ($parameter, $value) {
-                        return $parameter % $value == 0;
-                    }
-                );
-
-                $acl->isAllowed(
-                    $member,
-                    $model,
-                    'update',
-                    [
-                        'parameter' => 1,
-                        'one'       => 2,
-                    ]
-                );
-            }
+        $acl->isAllowed(
+            $member,
+            $model,
+            'update',
+            [
+                'parameter' => 1,
+                'one'       => 2,
+            ]
         );
     }
 
     /**
-     * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - exception
+     * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - RoleInterface exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2019-06-16
      */
-    public function aclAdapterMemoryIsAllowedException(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedRoleInterfaceException(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - isAllowed() - exception');
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::DENY);
+        $acl->addRole('Member');
+        $acl->addComponent('Post', ['update']);
+        $acl->allow('Member', 'Post', 'update');
 
-        $I->expectThrowable(
-            new AclException(
-                'Object passed as roleName must implement ' .
-                'Phalcon\Acl\RoleAwareInterface or Phalcon\Acl\RoleInterface'
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Member', 'Post', 'update');
-                $acl->isAllowed(new stdClass(), 'Post', 'update');
-            }
+        $this->expectException(AclException::class);
+        $this->expectExceptionMessage(
+            'Object passed as roleName must implement ' .
+            'Phalcon\Acl\RoleAwareInterface or Phalcon\Acl\RoleInterface'
         );
 
-        $I->expectThrowable(
-            new AclException(
-                'Object passed as componentName must implement ' .
-                'Phalcon\Acl\ComponentAwareInterface or Phalcon\Acl\ComponentInterface'
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->setDefaultAction(Enum::DENY);
-                $acl->addRole('Member');
-                $acl->addComponent('Post', ['update']);
-                $acl->allow('Member', 'Post', 'update');
-                $acl->isAllowed('Member', new stdClass(), 'update');
-            }
+        $acl->isAllowed(new stdClass(), 'Post', 'update');
+    }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - ComponentInterface exception
+     *
+     * @return void
+     *
+     * @author  Phalcon Team <team@phalcon.io>
+     * @since   2019-06-16
+     */
+    public function testAclAdapterMemoryIsAllowedComponentInterfaceException(): void
+    {
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::DENY);
+        $acl->addRole('Member');
+        $acl->addComponent('Post', ['update']);
+        $acl->allow('Member', 'Post', 'update');
+
+        $this->expectException(AclException::class);
+        $this->expectExceptionMessage(
+            'Object passed as componentName must implement ' .
+            'Phalcon\Acl\ComponentAwareInterface or Phalcon\Acl\ComponentInterface'
         );
+
+        $acl->isAllowed('Member', new stdClass(), 'update');
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - fireEvent returns false
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2021-09-27
      */
-    public function aclAdapterMemoryIsAllowedFireEventFalse(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedFireEventFalse(): void
     {
-        $I->wantToTest(
-            'Acl\Adapter\Memory - isAllowed() - fireEvent returns false'
-        );
-
         $acl = Stub::make(
             Memory::class,
             [
@@ -358,23 +352,19 @@ class IsAllowedCest
         $acl->allow('Member', 'Post', 'update');
         $actual = $acl->isAllowed('Member', 'Post', 'update');
 
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - documentation example
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author  Phalcon Team <team@phalcon.io>
      * @since   2022-12-09
      */
-    public function aclAdapterMemoryIsAllowedDocumentationExample(UnitTester $I)
+    public function testAclAdapterMemoryIsAllowedDocumentationExample(): void
     {
-        $I->wantToTest(
-            'Acl\Adapter\Memory - isAllowed() - documentation example'
-        );
-
         $acl = new Memory();
 
         /**
@@ -415,22 +405,22 @@ class IsAllowedCest
 
         // true - defined explicitly
         $actual = $acl->isAllowed('manager', 'admin', 'dashboard');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         // true - defined with wildcard
         $actual = $acl->isAllowed('manager', 'session', 'login');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         // true - defined with wildcard
         $actual = $acl->isAllowed('accounting', 'reports', 'view');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         // false - defined explicitly
         $actual = $acl->isAllowed('guest', 'reports', 'view');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         // false - default access level
         $actual = $acl->isAllowed('guest', 'reports', 'add');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 }

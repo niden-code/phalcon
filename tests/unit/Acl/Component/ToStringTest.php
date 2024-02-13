@@ -14,30 +14,29 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class ToStringCest
- *
- * @package Phalcon\Tests\Unit\Acl\Component
- */
-class ToStringCest
+final class ToStringTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: __toString()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclComponentToString(UnitTester $I)
+    public function testAclComponentToString(): void
     {
-        $I->wantToTest('Acl\Component - __toString()');
+        $source = 'Customer';
+        $component = new Component($source);
 
-        $component = new Component('Customers');
+        $expected = $source;
+        $actual   = $component->__toString();
+        $this->assertSame($expected, $actual);
 
-        $I->assertSame('Customers', $component->__toString());
-        $I->assertSame('Customers', (string)$component);
+        $expected = $source;
+        $actual   = (string) $component;
+        $this->assertSame($expected, $actual);
     }
 }

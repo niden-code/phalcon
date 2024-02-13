@@ -16,125 +16,106 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class AddRoleCest
- *
- * @package Phalcon\Tests\Unit\Acl\Adapter\Memory
- */
-class AddRoleCest
+final class AddRoleTest extends TestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - string
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleString(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleString(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - string');
-
         $acl = new Memory();
 
-        $I->assertTrue($acl->addRole('Administrators'));
+        $this->assertTrue($acl->addRole('Administrators'));
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - object
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleObject(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleObject(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - object');
-
         $acl  = new Memory();
         $role = new Role('Administrators', 'Super User access');
 
-        $I->assertTrue($acl->addRole($role));
+        $this->assertTrue($acl->addRole($role));
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - twice string
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleTwiceString(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleTwiceString(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - twice string');
-
         $acl = new Memory();
 
-        $I->assertTrue($acl->addRole('Administrators'));
-        $I->assertFalse($acl->addRole('Administrators'));
+        $this->assertTrue($acl->addRole('Administrators'));
+        $this->assertFalse($acl->addRole('Administrators'));
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - twice object
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleTwiceObject(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleTwiceObject(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - twice object');
-
         $acl  = new Memory();
         $role = new Role('Administrators', 'Super User access');
 
-        $I->assertTrue($acl->addRole($role));
-        $I->assertFalse($acl->addRole($role));
+        $this->assertTrue($acl->addRole($role));
+        $this->assertFalse($acl->addRole($role));
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - numeric key
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleNumericKey(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleNumericKey(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - numeric key');
-
         $acl = new Memory();
 
-        $I->assertTrue($acl->addRole('11'));
-        $I->assertTrue($acl->isRole('11'));
+        $this->assertTrue($acl->addRole('11'));
+        $this->assertTrue($acl->isRole('11'));
     }
 
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addRole() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function aclAdapterMemoryAddRoleException(UnitTester $I)
+    public function testAclAdapterMemoryAddRoleException(): void
     {
-        $I->wantToTest('Acl\Adapter\Memory - addRole() - numeric key');
-
-        $I->expectThrowable(
-            new Exception(
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
                 'Role must be either a string or implement RoleInterface'
-            ),
-            function () {
-                $acl = new Memory();
-                $acl->addRole(true);
-            }
         );
+
+        $acl = new Memory();
+        $acl->addRole(true);
     }
 }
