@@ -283,26 +283,6 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * Returns true or false if collection exists.
-     *
-     * ```php
-     * if ($manager->exists("jsHeader")) {
-     *     // \Phalcon\Assets\Collection
-     *     $collection = $manager->get("jsHeader");
-     * }
-     * ```
-     *
-     * @param string $name
-     *
-     * @return bool
-     * @deprecated
-     */
-    public function exists(string $name): bool
-    {
-        return $this->has($name);
-    }
-
-    /**
      * Returns a collection by its id.
      *
      * ```php

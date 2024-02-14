@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Assets\Filters;
 
+use MatthiasMullie\Minify\CSS;
 use Phalcon\Assets\FilterInterface;
 
 /**
@@ -27,7 +28,6 @@ class CssMin implements FilterInterface
 {
     /**
      * Filters the content using CSSMIN
-     * NOTE: This functionality is not currently available
      *
      * @param string $content
      *
@@ -35,6 +35,9 @@ class CssMin implements FilterInterface
      */
     public function filter(string $content): string
     {
-        return $content;
+        $minifier = new CSS();
+        $minifier->add($content);
+
+        return $minifier->minify();
     }
 }

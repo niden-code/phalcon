@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Assets\Filters;
 
+use MatthiasMullie\Minify\CSS;
+use MatthiasMullie\Minify\JS;
 use Phalcon\Assets\FilterInterface;
 
 /**
@@ -28,10 +30,12 @@ class JsMin implements FilterInterface
 {
     /**
      * Filters the content using JSMIN
-     * NOTE: This functionality is not currently available
      */
     public function filter(string $content): string
     {
-        return $content;
+        $minifier = new JS();
+        $minifier->add($content);
+
+        return $minifier->minify();
     }
 }
