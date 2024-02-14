@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
-use Exception;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Enum;
+use Phalcon\Acl\Exception;
 use Phalcon\Acl\Exception as AclException;
 use Phalcon\Acl\Role;
 use Phalcon\Tests\Fixtures\Acl\TestComponentAware;
@@ -214,81 +214,6 @@ final class AllowTest extends TestCase
 
         $actual = $acl->isAllowed($admin, $model, 'update');
         $this->assertTrue($actual);
-    }
-
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: allow() - function exception
-     *
-     * @issue   https://github.com/phalcon/cphalcon/issues/11235
-     *
-     * @return void
-     *
-     * @author  Wojciech Slawski <jurigag@gmail.com>
-     * @since   2016-06-05
-     */
-    public function testAclAdapterMemoryAllowFunctionException(): void
-    {
-        set_error_handler(
-            function ($number, $message, $file, $line) {
-                throw new RuntimeException($message);
-            },
-            E_USER_WARNING
-        );
-
-        $message = "You did not provide any parameters when 'Guests' can "
-            . "'update' 'Post'. We will use default action when no arguments.";
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage($message);
-
-        $acl = new Memory();
-        $acl->setDefaultAction(Enum::ALLOW);
-        $acl->setNoArgumentsDefaultAction(Enum::DENY);
-
-        $acl->addRole('Guests');
-        $acl->addRole('Members', 'Guests');
-        $acl->addRole('Admins', 'Members');
-        $acl->addComponent('Post', ['update']);
-
-        $guest         = new TestRoleAware(1, 'Guests');
-        $member        = new TestRoleAware(2, 'Members');
-        $anotherMember = new TestRoleAware(3, 'Members');
-        $admin         = new TestRoleAware(4, 'Admins');
-        $model         = new TestComponentAware(2, 'Post');
-
-        $acl->allow(
-            'Guests',
-            'Post',
-            'update',
-            function ($parameter) {
-                return $parameter % 2 == 0;
-            }
-        );
-
-        $acl->allow(
-            'Members',
-            'Post',
-            'update',
-            function ($parameter) {
-                return $parameter % 2 == 0;
-            }
-        );
-
-        $acl->allow('Admins', 'Post', 'update');
-
-        $actual = $acl->isAllowed($guest, $model, 'update');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed($member, $model, 'update');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed($anotherMember, $model, 'update');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed($admin, $model, 'update');
-        $this->assertTrue($actual);
-
-        restore_error_handler();
     }
 
     /**

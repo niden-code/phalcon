@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Assets\Manager;
+
+use Phalcon\Assets\Manager;
+use Phalcon\Html\Escaper;
+use Phalcon\Html\TagFactory;
+use PHPUnit\Framework\TestCase;
+
+final class GetSetOptionsTest extends TestCase
+{
+    /**
+     * @return array
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                'empty',
+                [],
+                [],
+                [],
+            ],
+            [
+                'constructor',
+                [
+                    'one'   => 'two',
+                    'three' => 'four',
+                ],
+                [
+                    'one'   => 'two',
+                    'three' => 'four',
+                ],
+                [],
+            ],
+            [
+                'setOptions',
+                [],
+                [
+                    'one'   => 'two',
+                    'three' => 'four',
+                ],
+                [
+                    'one'   => 'two',
+                    'three' => 'four',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Tests Phalcon\Assets\Manager :: getOptions()/setOptions()
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-03-19
+     *
+     * @dataProvider providerExamples
+     */
+    public function testAssetsManagerGetSetOptions(
+        string $label,
+        array $options,
+        array $expected,
+        array $set
+    ) {
+        $manager = new Manager(new TagFactory(new Escaper()), $options);
+
+        if (!empty($set)) {
+            $manager->setOptions($set);
+        }
+
+        $actual = $manager->getOptions();
+        $this->assertSame($expected, $actual);
+    }
+}

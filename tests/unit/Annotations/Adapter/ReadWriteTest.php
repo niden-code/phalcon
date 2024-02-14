@@ -13,16 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Annotations\Adapter;
 
-use MyLibrary\Tests\support\data\fixtures\Annotations\Adapter\StreamEmptyDataFixture;
-use MyLibrary\Tests\support\data\fixtures\Annotations\Adapter\StreamWrongDataFixture;
 use Phalcon\Annotations\Adapter\Stream;
 use Phalcon\Annotations\Exception;
 use Phalcon\Annotations\Reflection;
+use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamEmptyDataFixture;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFileExistsFixture;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFixture;
 use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use TestClass;
 
 use function dataDir2;

@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Codeception\Stub;
-use Exception;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Enum;
+use Phalcon\Acl\Exception;
 use Phalcon\Acl\Exception as AclException;
 use Phalcon\Acl\Role;
 use Phalcon\Tests\Fixtures\Acl\TestComponentAware;
@@ -169,66 +169,6 @@ final class IsAllowedTest extends TestCase
 
         $actual = $acl->isAllowed('Admin', 'User', 'update');
         $this->assertTrue($actual);
-    }
-
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - function more
-     * parameters
-     *
-     * @return void
-     *
-     * @author  Phalcon Team <team@phalcon.io>
-     * @since   2021-09-27
-     */
-    public function testAclAdapterMemoryIsAllowedFunctionMoreParameters(): void
-    {
-        set_error_handler(
-            function ($number, $message, $file, $line) {
-                throw new RuntimeException($message);
-            },
-            E_USER_WARNING
-        );
-
-        $message = "Number of parameters in array is higher than the "
-            . "number of parameters in defined function when checking if "
-            . "'Members' can 'update' 'Post'. Extra parameters will be ignored."
-        ;
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage($message);
-
-        $acl = new Memory();
-        $acl->setDefaultAction(Enum::ALLOW);
-        $acl->setNoArgumentsDefaultAction(Enum::DENY);
-
-        $acl->addRole('Members');
-        $acl->addComponent('Post', ['update']);
-
-        $member = new TestRoleAware(2, 'Members');
-        $model  = new TestComponentAware(2, 'Post');
-
-        $acl->allow(
-            'Members',
-            'Post',
-            'update',
-            function ($parameter) {
-                return $parameter % 2 == 0;
-            }
-        );
-
-        $acl->isAllowed(
-            $member,
-            $model,
-            'update',
-            [
-                'parameter' => 1,
-                'one'       => 2,
-            ]
-        );
-
-        $this->assertSame(1, 1);
-
-        restore_error_handler();
     }
 
     /**

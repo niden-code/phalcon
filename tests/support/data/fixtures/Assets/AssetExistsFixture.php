@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -11,11 +9,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Phalcon\Tests1\Fixtures\Annotations\Adapter;
+declare(strict_types=1);
 
-use Phalcon\Annotations\Adapter\Stream;
+namespace Phalcon\Tests1\Fixtures\Assets;
 
-class StreamEmptyDataFixture extends Stream
+use Phalcon\Assets\Asset;
+
+class AssetExistsFixture extends Asset
 {
     /**
      * @param string $filename
@@ -26,18 +26,6 @@ class StreamEmptyDataFixture extends Stream
      */
     protected function phpFileExists(string $filename)
     {
-        return true;
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @return string|false
-     *
-     * @link https://php.net/manual/en/function.file-get-contents.php
-     */
-    protected function phpFileGetContents(string $filename)
-    {
-        return '';
+        return false;
     }
 }
