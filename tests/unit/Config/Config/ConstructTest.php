@@ -20,11 +20,8 @@ use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Config;
 use Phalcon\Config\Exception;
 use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
-
 use Phalcon\Tests1\Fixtures\Config\Adapter\IniCannotReadFixture;
-
 use Phalcon\Tests1\Fixtures\Config\Adapter\YamlExtensionLoadedFixture;
-
 use Phalcon\Tests1\Fixtures\Config\Adapter\YamlParseFileFixture;
 
 use function basename;

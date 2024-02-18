@@ -18,7 +18,6 @@ use Example\Namespaces\Adapter\Mongo;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
 use PHPUnit\Framework\TestCase;
-
 use UnitTester;
 
 use function dataDir2;
