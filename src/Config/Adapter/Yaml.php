@@ -89,7 +89,7 @@ class Yaml extends Config
 
         if (false === $yamlConfig) {
             throw new Exception(
-                'Configuration file ' . basename($filePath) . ' can\'t be loaded'
+                'Configuration file ' . basename($filePath) . ' cannot be loaded'
             );
         }
 

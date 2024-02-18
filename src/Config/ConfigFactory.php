@@ -111,7 +111,7 @@ class ConfigFactory
      */
     public function newInstance(
         string $name,
-        string $fileName,
+        string|array $fileNameOrOptions,
         $params = null
     ): ConfigInterface {
         $definition = $this->getService($name);
@@ -119,14 +119,14 @@ class ConfigFactory
         switch ($definition) {
             case Grouped::class:
                 $adapter = null === $params ? 'php' : $params;
-                return new $definition($fileName, $adapter);
+                return new $definition($fileNameOrOptions, $adapter);
             case Ini::class:
                 $mode = null === $params ? INI_SCANNER_RAW : $params;
-                return new $definition($fileName, $mode);
+                return new $definition($fileNameOrOptions, $mode);
             case Yaml::class:
-                return new $definition($fileName, $params);
+                return new $definition($fileNameOrOptions, $params);
             default:
-                return new $definition($fileName);
+                return new $definition($fileNameOrOptions);
         }
     }
 
