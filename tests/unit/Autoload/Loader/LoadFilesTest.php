@@ -15,36 +15,34 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-use function dataDir;
+use function dataDir2;
 use function function_exists;
 
-class LoadFilesCest
+final class LoadFilesTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderLoadFiles(UnitTester $I)
+    public function testAutoloaderLoaderLoadFiles(): void
     {
-        $I->wantToTest('Autoload\Loader - loadFiles()');
-
         $loader = new Loader();
 
         $actual = function_exists('noClass2Foo');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = function_exists('noClass2Bar');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $loader
             ->addFile(
-                dataDir('fixtures/Loader/Example/Functions/FunctionsNoClassTwo.php')
+                dataDir2('fixtures/Autoload/Example/Functions/FunctionsNoClassTwo.php')
             )
             ->addFile(
                 '/path/to/unknown/file'
@@ -54,9 +52,9 @@ class LoadFilesCest
         $loader->loadFiles();
 
         $actual = function_exists('noClass2Foo');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = function_exists('noClass2Bar');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 }

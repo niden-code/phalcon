@@ -16,33 +16,31 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-use function dataDir;
+use function dataDir2;
 
-class GetCheckedPathCest
+final class GetCheckedPathTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
      * Tests Phalcon\Autoload\Loader :: getCheckedPath()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      * @since  2020-09-09
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function autoloaderLoaderGetCheckedPath(UnitTester $I)
+    public function testAutoloaderLoaderGetCheckedPath(): void
     {
-        $I->wantToTest('Autoload\Loader - getCheckedPath()');
-
         if (PHP_OS_FAMILY === 'Windows') {
-            $I->markTestSkipped('Need to fix Windows new lines...');
+            $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
         $loader    = new Loader(true);
-        $directory = dataDir('fixtures/Loader/Example/Folders/Types/');
+        $directory = dataDir2('fixtures/Autoload/Example/Folders/Types/');
         $loader->addDirectory($directory);
 
         $loader->autoload('Integer');
@@ -55,10 +53,10 @@ class GetCheckedPathCest
             'Directories: ' . $directory . 'Integer.php',
         ];
         $actual   = $loader->getDebug();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = $directory . 'Integer.php';
         $actual   = $loader->getCheckedPath();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

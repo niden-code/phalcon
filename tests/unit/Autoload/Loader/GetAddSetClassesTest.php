@@ -15,29 +15,27 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class GetAddSetClassesCest
+final class GetAddSetClassesTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
      * Tests Phalcon\Autoload\Loader :: getClasses()/addClass()/setClass()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderGetAddSetClasses(UnitTester $I)
+    public function testAutoloaderLoaderGetAddSetClasses(): void
     {
-        $I->wantToTest('Autoload\Loader - getClasses()/addClass()/setClass()');
-
         $loader = new Loader();
 
         $expected = [];
         $actual   = $loader->getClasses();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $source = [
             'one' => 'classOne.php',
@@ -47,7 +45,7 @@ class GetAddSetClassesCest
 
         $expected = $source;
         $actual   = $loader->getClasses();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear
@@ -56,7 +54,7 @@ class GetAddSetClassesCest
 
         $expected = [];
         $actual   = $loader->getClasses();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader
             ->addClass('one', 'classOne.php')
@@ -65,6 +63,6 @@ class GetAddSetClassesCest
         ;
         $expected = $source;
         $actual   = $loader->getClasses();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

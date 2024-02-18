@@ -15,31 +15,29 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function hash;
 
-class GetAddSetFilesCest
+final class GetAddSetFilesTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
      * Tests Phalcon\Autoload\Loader :: getFiles()/addFile()/setFile()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderGetAddSetFiles(UnitTester $I)
+    public function testAutoloaderLoaderGetAddSetFiles(): void
     {
-        $I->wantToTest('Autoload\Loader - getFiles()/addFile()/setFile()');
-
         $loader = new Loader();
 
         $expected = [];
         $actual   = $loader->getFiles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader->setFiles(
             [
@@ -50,7 +48,7 @@ class GetAddSetFilesCest
         );
         $expected = [hash("sha256", 'classOne.php') => 'classOne.php'];
         $actual   = $loader->getFiles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear
@@ -59,7 +57,7 @@ class GetAddSetFilesCest
 
         $expected = [];
         $actual   = $loader->getFiles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader
             ->addFile('classOne.php')
@@ -72,6 +70,6 @@ class GetAddSetFilesCest
             hash("sha256", 'classTwo.php') => 'classTwo.php',
         ];
         $actual   = $loader->getFiles();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

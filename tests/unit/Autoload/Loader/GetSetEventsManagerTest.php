@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class GetSetEventsManagerCest
+final class GetSetEventsManagerTest extends AbstractLoaderTestCase
 {
     /**
      * Tests Phalcon\Autoload\Loader :: getEventsManager() / setEventsManager()
@@ -25,10 +25,8 @@ class GetSetEventsManagerCest
      * @author Jeremy PASTOURET <https://github.com/jenovateurs>
      * @since  2020-01-19
      */
-    public function autoloaderLoaderGetSetEventsManager(UnitTester $I)
+    public function testAutoloaderLoaderGetSetEventsManager(): void
     {
-        $I->wantToTest('Autoload\Loader - getEventsManager() / setEventsManager()');
-
         $loader  = new Loader();
         $manager = new Manager();
 
@@ -36,7 +34,7 @@ class GetSetEventsManagerCest
 
         $class  = Manager::class;
         $actual = $loader->getEventsManager();
-        $I->assertInstanceOf($class, $actual);
-        $I->assertSame($manager, $actual);
+        $this->assertInstanceOf($class, $actual);
+        $this->assertSame($manager, $actual);
     }
 }

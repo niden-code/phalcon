@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function hash;
 
-class GetAddSetDirectoriesCest
+final class GetAddSetDirectoriesTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
@@ -27,20 +27,18 @@ class GetAddSetDirectoriesCest
      * Tests Phalcon\Autoload\Loader ::
      * getDirectories()/addDirectory()/setDirectories()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderGetAddSetDirectories(UnitTester $I)
+    public function testAutoloaderLoaderGetAddSetDirectories(): void
     {
-        $I->wantToTest('Autoload\Loader - getDirectories()/addDirectory()/setDirectories()');
-
         $loader = new Loader();
 
         $expected = [];
         $actual   = $loader->getDirectories();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader->setDirectories(
             [
@@ -51,7 +49,7 @@ class GetAddSetDirectoriesCest
         );
         $expected = [hash("sha256", '/phalcon/public/css') => '/phalcon/public/css'];
         $actual   = $loader->getDirectories();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear
@@ -60,7 +58,7 @@ class GetAddSetDirectoriesCest
 
         $expected = [];
         $actual   = $loader->getDirectories();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader
             ->addDirectory('/phalcon/public/css')
@@ -73,6 +71,6 @@ class GetAddSetDirectoriesCest
             hash("sha256", '/phalcon/public/js')  => '/phalcon/public/js',
         ];
         $actual   = $loader->getDirectories();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

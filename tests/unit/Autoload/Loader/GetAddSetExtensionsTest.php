@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function hash;
 
-class GetAddSetExtensionsCest
+final class GetAddSetExtensionsTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
@@ -27,20 +27,18 @@ class GetAddSetExtensionsCest
      * Tests Phalcon\Autoload\Loader ::
      * getExtensions()/addExtension()/setExtension()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderGetAddSetExtensions(UnitTester $I)
+    public function testAutoloaderLoaderGetAddSetExtensions(): void
     {
-        $I->wantToTest('Autoload\Loader - getExtensions()/addExtension()/setExtension()');
-
         $loader = new Loader();
 
         $expected = [hash("sha256", 'php') => 'php'];
         $actual   = $loader->getExtensions();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader->setExtensions(
             [
@@ -55,7 +53,7 @@ class GetAddSetExtensionsCest
             hash("sha256", 'inc') => 'inc',
         ];
         $actual   = $loader->getExtensions();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear
@@ -63,7 +61,7 @@ class GetAddSetExtensionsCest
         $loader->setExtensions([]);
         $expected = [hash("sha256", 'php') => 'php'];
         $actual   = $loader->getExtensions();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
 
         $loader
@@ -77,6 +75,6 @@ class GetAddSetExtensionsCest
             hash("sha256", 'phpt') => 'phpt',
         ];
         $actual   = $loader->getExtensions();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

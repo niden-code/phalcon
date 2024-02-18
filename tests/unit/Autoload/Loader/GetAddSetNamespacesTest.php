@@ -16,11 +16,11 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function hash;
 
-class GetAddSetNamespacesCest
+final class GetAddSetNamespacesTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
@@ -28,25 +28,23 @@ class GetAddSetNamespacesCest
      * Tests Phalcon\Autoload\Loader ::
      * getNamespaces()/addNamespace()/setNamespace()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      * @since  2020-09-09
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function autoloaderLoaderGetAddSetNamespaces(UnitTester $I)
+    public function testAutoloaderLoaderGetAddSetNamespaces(): void
     {
-        $I->wantToTest('Autoload\Loader - getNamespaces()/addNamespace()/setNamespace()');
-
         if (PHP_OS_FAMILY === 'Windows') {
-            $I->markTestSkipped('Need to fix Windows new lines...');
+            $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
         $loader = new Loader();
 
         $expected = [];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader->setNamespaces(
             [
@@ -68,7 +66,7 @@ class GetAddSetNamespacesCest
             ],
         ];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear
@@ -77,7 +75,7 @@ class GetAddSetNamespacesCest
 
         $expected = [];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader
             ->addNamespace(
@@ -107,7 +105,7 @@ class GetAddSetNamespacesCest
             ],
         ];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * Clear - prepend
@@ -116,7 +114,7 @@ class GetAddSetNamespacesCest
 
         $expected = [];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $loader
             ->addNamespace(
@@ -146,6 +144,6 @@ class GetAddSetNamespacesCest
             ],
         ];
         $actual   = $loader->getNamespaces();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

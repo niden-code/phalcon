@@ -17,36 +17,34 @@ use LoaderEvent;
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use function array_pop;
-use function dataDir;
+use function dataDir2;
 use function spl_autoload_functions;
 
-class RegisterUnregisterCest
+final class RegisterUnregisterTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
      * Tests Phalcon\Autoload\Loader :: register()/unregister()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderRegisterUnregister(UnitTester $I)
+    public function testAutoloaderLoaderRegisterUnregister(): void
     {
-        $I->wantToTest('Autoload\Loader - register()/unregister()');
-
         $loader = new Loader();
         $loader->register();
 
         $functions = spl_autoload_functions();
         $item      = array_pop($functions);
 
-        $I->assertSame($loader, $item[0]);
-        $I->assertSame('autoload', $item[1]);
+        $this->assertSame($loader, $item[0]);
+        $this->assertSame('autoload', $item[1]);
 
         $loader->unregister();
     }
@@ -54,17 +52,15 @@ class RegisterUnregisterCest
     /**
      * Tests Phalcon\Autoload\Loader :: events
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function autoloaderLoaderEvents(UnitTester $I)
+    public function testAutoloaderLoaderEvents(): void
     {
-        $I->wantToTest('Autoload\Loader - events');
-
         if (PHP_OS_FAMILY === 'Windows') {
-            $I->markTestSkipped('Need to fix Windows new lines...');
+            $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
         $trace   = [];
@@ -74,17 +70,17 @@ class RegisterUnregisterCest
         $loader
             ->setDirectories(
                 [
-                    dataDir('fixtures/Loader/Example/Events/'),
+                    dataDir2('fixtures/Autoload/Example/Events/'),
                 ]
             )
             ->setClasses(
                 [
-                    'OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'OtherClass' => dataDir2('fixtures/Autoload/Example/Events/Other/'),
                 ]
             )
             ->setNamespaces(
                 [
-                    'Other\OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'Other\OtherClass' => dataDir2('fixtures/Autoload/Example/Events/Other/'),
                 ]
             )
         ;
@@ -106,21 +102,21 @@ class RegisterUnregisterCest
 
         $loader->register();
 
-        $I->assertInstanceOf(LoaderEvent::class, new LoaderEvent());
+        $this->assertInstanceOf(LoaderEvent::class, new LoaderEvent());
 
         $expected = [
             'beforeCheckClass' => [
                 0 => null,
             ],
             'beforeCheckPath'  => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => dataDir2('fixtures/Autoload/Example/Events/LoaderEvent.php'),
             ],
             'pathFound'        => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => dataDir2('fixtures/Autoload/Example/Events/LoaderEvent.php'),
             ],
         ];
 
-        $I->assertSame($expected, $trace);
+        $this->assertSame($expected, $trace);
 
         $loader->unregister();
     }

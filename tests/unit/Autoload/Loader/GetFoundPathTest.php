@@ -16,43 +16,41 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-use function dataDir;
+use function dataDir2;
 use function function_exists;
 
-class GetFoundPathCest
+final class GetFoundPathTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
 
     /**
      * Tests Phalcon\Autoload\Loader :: getFoundPath()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @throws Exception
      * @since  2020-09-09
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function autoloaderLoaderGetFoundPath(UnitTester $I)
+    public function testAutoloaderLoaderGetFoundPath(): void
     {
-        $I->wantToTest('Autoload\Loader - getFoundPath()');
-
         if (PHP_OS_FAMILY === 'Windows') {
-            $I->markTestSkipped('Need to fix Windows new lines...');
+            $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
         $loader = new Loader();
-        $file   = dataDir('fixtures/Loader/Example/Functions/FunctionsNoClass.php');
+        $file   = dataDir2('fixtures/Autoload/Example/Functions/FunctionsNoClass.php');
         $loader->addFile($file);
 
         $loader->loadFiles();
 
         $actual = function_exists('noClassFoo');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $expected = $file;
         $actual   = $loader->getFoundPath();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }
