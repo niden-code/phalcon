@@ -3,10 +3,7 @@
   "description": "Phalcon Framework",
   "keywords": [
     "php",
-    "framework",
-    "psr-7",
-    "psr-15",
-    "psr-17"
+    "framework"
   ],
   "license": "MIT",
   "require": {
