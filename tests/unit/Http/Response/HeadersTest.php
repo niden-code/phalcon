@@ -17,7 +17,7 @@ use Phalcon\Http\Response\HeadersInterface;
 use Phalcon\Tests\Unit\Http\AbstractHttpTestCase;
 use Phalcon\Tests1\Fixtures\Page\Http;
 
-use function getProtectedProperty;
+use function getProtectedProperty2;
 use function setProtectedProperty2;
 use function uniqid;
 
@@ -65,7 +65,7 @@ final class HeadersTest extends AbstractHttpTestCase
         $headers = new Headers();
 
         $headers->set(Http::STATUS, $code);
-        $headers = getProtectedProperty($headers, 'headers');
+        $headers = getProtectedProperty2($headers, 'headers');
 
         $expected = 1;
         $this->assertCount($expected, $headers);

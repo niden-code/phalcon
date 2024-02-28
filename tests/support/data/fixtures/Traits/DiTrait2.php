@@ -44,13 +44,13 @@ use Phalcon\Storage\AdapterFactory as StorageAdapterFactory;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 
-use function getOptionsLibmemcached;
-use function getOptionsModelCacheStream;
-use function getOptionsMysql;
-use function getOptionsPostgresql;
-use function getOptionsRedis;
-use function getOptionsSessionStream;
-use function getOptionsSqlite;
+use function getOptionsLibmemcached2;
+use function getOptionsModelCacheStream2;
+use function getOptionsMysql2;
+use function getOptionsPostgresql2;
+use function getOptionsRedis2;
+use function getOptionsSessionStream2;
+use function getOptionsSqlite2;
 
 /**
  * Trait DiTrait
@@ -93,14 +93,14 @@ trait DiTrait2
     {
         switch ($driver) {
             case 'mysql':
-                $options = getOptionsMysql();
+                $options = getOptionsMysql2();
                 break;
             case 'pgsql':
-                $options = getOptionsPostgresql();
+                $options = getOptionsPostgresql2();
                 $driver = 'postgresql';
                 break;
             case 'sqlite':
-                $options = getOptionsSqlite();
+                $options = getOptionsSqlite2();
                 break;
             case 'sqlsrv':
             default:
@@ -169,12 +169,12 @@ trait DiTrait2
             case 'modelsCacheLibmemcached':
                 return new StorageLibmemcached(
                     new SerializerFactory(),
-                    getOptionsLibmemcached()
+                    getOptionsLibmemcached2()
                 );
             case 'modelsCacheStream':
                 return new StorageStream(
                     new SerializerFactory(),
-                    getOptionsModelCacheStream()
+                    getOptionsModelCacheStream2()
                 );
             case 'phpSerializer':
                 return (new SerializerFactory())->newInstance('php');
@@ -185,13 +185,13 @@ trait DiTrait2
             case 'response':
                 return new Response();
             case 'sessionStream':
-                return new SessionStream(getOptionsSessionStream());
+                return new SessionStream(getOptionsSessionStream2());
             case 'sessionLibmemcached':
                 return new SessionLibmemcached(
                     new StorageAdapterFactory(
                         new SerializerFactory()
                     ),
-                    getOptionsLibmemcached()
+                    getOptionsLibmemcached2()
                 );
             case 'sessionNoop':
                 return new SessionNoop();
@@ -200,7 +200,7 @@ trait DiTrait2
                     new StorageAdapterFactory(
                         new SerializerFactory()
                     ),
-                    getOptionsRedis()
+                    getOptionsRedis2()
                 );
             case 'url':
                 return new Url();
@@ -314,7 +314,7 @@ trait DiTrait2
                 $this->container->set(
                     $service,
                     function () use ($class) {
-                        $class->setViewsDir(dataDir('fixtures/views/'));
+                        $class->setViewsDir(dataDir2('fixtures/views/'));
 
                         return $class;
                     }

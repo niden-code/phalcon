@@ -223,7 +223,7 @@ if (!function_exists('callProtectedMethod')) {
 /**
  * Returns the value of a protected property
  */
-if (!function_exists('getProtectedProperty')) {
+if (!function_exists('getProtectedProperty2')) {
     /**
      * @param object|string $objectOrString
      * @param string        $propertyName
@@ -231,7 +231,7 @@ if (!function_exists('getProtectedProperty')) {
      * @return mixed
      * @throws ReflectionException
      */
-    function getProtectedProperty(
+    function getProtectedProperty2(
         object | string $objectOrString,
         string $propertyName
     ): mixed {
@@ -247,7 +247,7 @@ if (!function_exists('getProtectedProperty')) {
 /**
  * @throws ReflectionException
  */
-if (!function_exists('getProtectedProperty2')) {
+if (!function_exists('setProtectedProperty2')) {
     function setProtectedProperty2($objectOrClass, string $property, mixed $value)
     {
         $reflection = new ReflectionClass($objectOrClass);
@@ -265,8 +265,8 @@ if (!function_exists('getProtectedProperty2')) {
 /**
  * Converts ENV variables to defined for tests to work
  */
-if (!function_exists('loadDefined')) {
-    function loadDefined(): void
+if (!function_exists('loadDefined2')) {
+    function loadDefined2(): void
     {
 //        defineFromEnv('DATA_MYSQL_CHARSET');
 //        defineFromEnv('DATA_MYSQL_HOST');
@@ -285,8 +285,8 @@ if (!function_exists('loadDefined')) {
     }
 }
 
-if (!function_exists('env')) {
-    function env(string $key, $default = null): mixed
+if (!function_exists('env2')) {
+    function env2(string $key, $default = null): mixed
     {
         if (defined($key)) {
             return constant($key);
@@ -300,25 +300,25 @@ if (!function_exists('env')) {
     }
 }
 
-if (!function_exists('defineFromEnv')) {
-    function defineFromEnv(string $name): void
+if (!function_exists('defineFromEnv2')) {
+    function defineFromEnv2(string $name): void
     {
         if (defined($name)) {
             return;
         }
 
-        define($name, env($name));
+        define($name, env2($name));
     }
 }
 
 /*******************************************************************************
  * Options
  *******************************************************************************/
-if (!function_exists('getOptionsModelCacheStream')) {
+if (!function_exists('getOptionsModelCacheStream2')) {
     /**
      * Get Model cache options - Stream
      */
-    function getOptionsModelCacheStream(): array
+    function getOptionsModelCacheStream2(): array
     {
         if (!is_dir(cacheDir2('models'))) {
             mkdir(
@@ -333,72 +333,72 @@ if (!function_exists('getOptionsModelCacheStream')) {
     }
 }
 
-if (!function_exists('getOptionsLibmemcached')) {
-    function getOptionsLibmemcached(): array
+if (!function_exists('getOptionsLibmemcached2')) {
+    function getOptionsLibmemcached2(): array
     {
         return [
             'client'  => [],
             'servers' => [
                 [
-                    'host'   => env('DATA_MEMCACHED_HOST', '127.0.0.1'),
-                    'port'   => env('DATA_MEMCACHED_PORT', 11211),
-                    'weight' => env('DATA_MEMCACHED_WEIGHT', 0),
+                    'host'   => env2('DATA_MEMCACHED_HOST', '127.0.0.1'),
+                    'port'   => env2('DATA_MEMCACHED_PORT', 11211),
+                    'weight' => env2('DATA_MEMCACHED_WEIGHT', 0),
                 ],
             ],
         ];
     }
 }
 
-if (!function_exists('getOptionsMysql')) {
+if (!function_exists('getOptionsMysql2')) {
     /**
      * Get mysql db options
      */
-    function getOptionsMysql(): array
+    function getOptionsMysql2(): array
     {
         return [
-            'host'     => env('DATA_MYSQL_HOST'),
-            'username' => env('DATA_MYSQL_USER'),
-            'password' => env('DATA_MYSQL_PASS'),
-            'dbname'   => env('DATA_MYSQL_NAME'),
-            'port'     => env('DATA_MYSQL_PORT'),
-            'charset'  => env('DATA_MYSQL_CHARSET'),
+            'host'     => env2('DATA_MYSQL_HOST'),
+            'username' => env2('DATA_MYSQL_USER'),
+            'password' => env2('DATA_MYSQL_PASS'),
+            'dbname'   => env2('DATA_MYSQL_NAME'),
+            'port'     => env2('DATA_MYSQL_PORT'),
+            'charset'  => env2('DATA_MYSQL_CHARSET'),
         ];
     }
 }
 
-if (!function_exists('getOptionsPostgresql')) {
+if (!function_exists('getOptionsPostgresql2')) {
     /**
      * Get postgresql db options
      */
-    function getOptionsPostgresql(): array
+    function getOptionsPostgresql2(): array
     {
         return [
-            'host'     => env('DATA_POSTGRES_HOST'),
-            'username' => env('DATA_POSTGRES_USER'),
-            'password' => env('DATA_POSTGRES_PASS'),
-            'port'     => env('DATA_POSTGRES_PORT'),
-            'dbname'   => env('DATA_POSTGRES_NAME'),
-            'schema'   => env('DATA_POSTGRES_SCHEMA'),
+            'host'     => env2('DATA_POSTGRES_HOST'),
+            'username' => env2('DATA_POSTGRES_USER'),
+            'password' => env2('DATA_POSTGRES_PASS'),
+            'port'     => env2('DATA_POSTGRES_PORT'),
+            'dbname'   => env2('DATA_POSTGRES_NAME'),
+            'schema'   => env2('DATA_POSTGRES_SCHEMA'),
         ];
     }
 }
 
-if (!function_exists('getOptionsRedis')) {
-    function getOptionsRedis(): array
+if (!function_exists('getOptionsRedis2')) {
+    function getOptionsRedis2(): array
     {
         return [
-            'host'  => env('DATA_REDIS_HOST'),
-            'port'  => env('DATA_REDIS_PORT'),
-            'index' => env('DATA_REDIS_NAME'),
+            'host'  => env2('DATA_REDIS_HOST'),
+            'port'  => env2('DATA_REDIS_PORT'),
+            'index' => env2('DATA_REDIS_NAME'),
         ];
     }
 }
 
-if (!function_exists('getOptionsSessionStream')) {
+if (!function_exists('getOptionsSessionStream2')) {
     /**
      * Get Session Stream options
      */
-    function getOptionsSessionStream(): array
+    function getOptionsSessionStream2(): array
     {
         if (!is_dir(cacheDir2('sessions'))) {
             mkdir(cacheDir2('sessions'));
@@ -410,14 +410,14 @@ if (!function_exists('getOptionsSessionStream')) {
     }
 }
 
-if (!function_exists('getOptionsSqlite')) {
+if (!function_exists('getOptionsSqlite2')) {
     /**
      * Get sqlite db options
      */
-    function getOptionsSqlite(): array
+    function getOptionsSqlite2(): array
     {
         return [
-            'dbname' => rootDir2(env('DATA_SQLITE_NAME')),
+            'dbname' => rootDir2(env2('DATA_SQLITE_NAME')),
         ];
     }
 }
@@ -426,4 +426,4 @@ if (!function_exists('getOptionsSqlite')) {
  * Create necessary folders
  */
 loadFolders2();
-loadDefined();
+loadDefined2();

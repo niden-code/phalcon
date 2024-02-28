@@ -79,6 +79,7 @@ if (!function_exists('loadFolders')) {
             'assets',
             'cache',
             'cache/models',
+            'cache/sessions',
             'image',
             'image/gd',
             'image/imagick',
