@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Http\Response;
+
+use Phalcon\Tests\Unit\Http\AbstractHttpTestCase;
+use Phalcon\Tests1\Fixtures\Page\Http;
+
+final class SetNotModifiedTest extends AbstractHttpTestCase
+{
+    /**
+     * Tests Phalcon\Http\Response :: setNotModified()
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-04-17
+     */
+    public function testHttpResponseSetNotModified()
+    {
+        $response = $this->getResponseObject();
+        $response->setNotModified();
+
+        $expected = Http::CODE_304;
+        $actual   = $response->getStatusCode();
+        $this->assertSame($expected, $actual);
+
+        $expected = Http::NOT_MODIFIED;
+        $actual   = $response->getReasonPhrase();
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests setNotModified
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-10-08
+     */
+    public function testHttpResponseSetNotModified304()
+    {
+        $response = $this->getResponseObject();
+        $response->resetHeaders();
+        $response->setNotModified();
+
+        $headers = $response->getHeaders();
+
+        $actual = $headers->get(Http::HTTP_304_NOT_MODIFIED);
+        $this->assertNull($actual);
+
+        $expected = Http::MESSAGE_304_NOT_MODIFIED;
+        $actual   = $headers->get(Http::STATUS);
+        $this->assertSame($expected, $actual);
+    }
+}

@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+ini_set('max_execution_time', '0');
+
 /*******************************************************************************
  * Files
  *******************************************************************************/
@@ -69,6 +71,19 @@ if (!function_exists('cacheDir2')) {
     {
         return outputDir2()
             . 'cache' . DIRECTORY_SEPARATOR
+            . $fileName;
+    }
+}
+
+/**
+ * Returns the cache models folder
+ */
+if (!function_exists('cacheModelsDir2')) {
+    function cacheModelsDir2(string $fileName = ''): string
+    {
+        return outputDir2()
+            . 'cache' . DIRECTORY_SEPARATOR
+            . 'models' . DIRECTORY_SEPARATOR
             . $fileName;
     }
 }
@@ -229,6 +244,21 @@ if (!function_exists('getProtectedProperty')) {
     }
 }
 
+/**
+ * @throws ReflectionException
+ */
+if (!function_exists('getProtectedProperty2')) {
+    function setProtectedProperty2($objectOrClass, string $property, mixed $value)
+    {
+        $reflection = new ReflectionClass($objectOrClass);
+
+        $property = $reflection->getProperty($property);
+
+        $property->setAccessible(true);
+        $property->setValue($objectOrClass, $value);
+    }
+}
+
 /*******************************************************************************
  * Environment
  *******************************************************************************/
@@ -281,6 +311,116 @@ if (!function_exists('defineFromEnv')) {
     }
 }
 
+/*******************************************************************************
+ * Options
+ *******************************************************************************/
+if (!function_exists('getOptionsModelCacheStream')) {
+    /**
+     * Get Model cache options - Stream
+     */
+    function getOptionsModelCacheStream(): array
+    {
+        if (!is_dir(cacheDir2('models'))) {
+            mkdir(
+                cacheDir2('models')
+            );
+        }
+
+        return [
+            'lifetime'   => 3600,
+            'storageDir' => cacheModelsDir(),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsLibmemcached')) {
+    function getOptionsLibmemcached(): array
+    {
+        return [
+            'client'  => [],
+            'servers' => [
+                [
+                    'host'   => env('DATA_MEMCACHED_HOST', '127.0.0.1'),
+                    'port'   => env('DATA_MEMCACHED_PORT', 11211),
+                    'weight' => env('DATA_MEMCACHED_WEIGHT', 0),
+                ],
+            ],
+        ];
+    }
+}
+
+if (!function_exists('getOptionsMysql')) {
+    /**
+     * Get mysql db options
+     */
+    function getOptionsMysql(): array
+    {
+        return [
+            'host'     => env('DATA_MYSQL_HOST'),
+            'username' => env('DATA_MYSQL_USER'),
+            'password' => env('DATA_MYSQL_PASS'),
+            'dbname'   => env('DATA_MYSQL_NAME'),
+            'port'     => env('DATA_MYSQL_PORT'),
+            'charset'  => env('DATA_MYSQL_CHARSET'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsPostgresql')) {
+    /**
+     * Get postgresql db options
+     */
+    function getOptionsPostgresql(): array
+    {
+        return [
+            'host'     => env('DATA_POSTGRES_HOST'),
+            'username' => env('DATA_POSTGRES_USER'),
+            'password' => env('DATA_POSTGRES_PASS'),
+            'port'     => env('DATA_POSTGRES_PORT'),
+            'dbname'   => env('DATA_POSTGRES_NAME'),
+            'schema'   => env('DATA_POSTGRES_SCHEMA'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsRedis')) {
+    function getOptionsRedis(): array
+    {
+        return [
+            'host'  => env('DATA_REDIS_HOST'),
+            'port'  => env('DATA_REDIS_PORT'),
+            'index' => env('DATA_REDIS_NAME'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsSessionStream')) {
+    /**
+     * Get Session Stream options
+     */
+    function getOptionsSessionStream(): array
+    {
+        if (!is_dir(cacheDir2('sessions'))) {
+            mkdir(cacheDir2('sessions'));
+        }
+
+        return [
+            'savePath' => cacheDir2('sessions'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsSqlite')) {
+    /**
+     * Get sqlite db options
+     */
+    function getOptionsSqlite(): array
+    {
+        return [
+            'dbname' => rootDir2(env('DATA_SQLITE_NAME')),
+        ];
+    }
+}
 
 /**
  * Create necessary folders
