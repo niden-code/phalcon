@@ -15,20 +15,16 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function uniqid;
 
-/**
- * Class ClearHasCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class ClearHasCest
+final class ClearHasTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
@@ -37,15 +33,13 @@ class ClearHasCest
     /**
      * Tests Phalcon\Flash\Session :: clear()/has()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionClearHas(UnitTester $I)
+    public function testFlashSessionClearHas(): void
     {
-        $I->wantToTest('Flash\Session - clear()/has');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -58,32 +52,32 @@ class ClearHasCest
         $flash->error($message2);
 
         $actual = $flash->has();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $flash->has('success');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $flash->has('error');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $flash->has('warning');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $flash->has('notice');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $expected = [$message1];
         $actual   = $flash->getMessages('success', false);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [$message2];
         $actual   = $flash->getMessages('error', false);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $flash->clear();
 
         $actual = $flash->getMessages();
-        $I->assertEmpty($actual);
+        $this->assertEmpty($actual);
 
         $session->destroy();
     }

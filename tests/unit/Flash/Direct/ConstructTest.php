@@ -15,28 +15,21 @@ namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Flash\Direct;
 use Phalcon\Flash\FlashInterface;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class ConstructCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class ConstructCest
+final class ConstructTest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: __construct()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectConstruct(UnitTester $I)
+    public function testFlashDirectConstruct(): void
     {
-        $I->wantToTest('Flash\Direct - __construct()');
-
         $flash = new Direct();
-        $I->assertInstanceOf(FlashInterface::class, $flash);
+        $this->assertInstanceOf(FlashInterface::class, $flash);
     }
 }

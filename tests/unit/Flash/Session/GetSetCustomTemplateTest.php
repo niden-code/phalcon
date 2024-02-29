@@ -15,49 +15,44 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetAutoescapeCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class GetSetAutoescapeCest
+final class GetSetCustomTemplateTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
     }
 
     /**
-     * Tests Phalcon\Flash\Session :: getAutoescape()/setAutoescape()
+     * Tests Phalcon\Flash\Session :: getCustomTemplate()/setCustomTemplate()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetSetAutoescape(UnitTester $I)
+    public function testFlashSessionGetSetCustomTemplate(): void
     {
-        $I->wantToTest('Flash\Session - getAutoescape()/setAutoescape()');
-
         $session = $this->container->getShared('session');
         $session->start();
 
         $flash = new Session();
         $flash->setDI($this->container);
 
-        $actual = $flash->getAutoescape();
-        $I->assertTrue($actual);
+        $actual = $flash->getCustomTemplate();
+        $this->assertEmpty($actual);
 
-        $actual = $flash->setAutoescape(false);
-        $I->assertInstanceOf(Session::class, $actual);
+        $template = '<span class="{cssClasses}">{message}</span>';
+        $actual   = $flash->setCustomTemplate($template);
+        $this->assertInstanceOf(Session::class, $actual);
 
-        $actual = $flash->getAutoescape();
-        $I->assertFalse($actual);
+        $actual = $flash->getCustomTemplate();
+        $this->assertSame($template, $actual);
 
         $session->destroy();
     }

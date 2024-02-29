@@ -15,66 +15,50 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
-use function ksort;
-
-/**
- * Class GetSetCssClassesCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class GetSetCssClassesCest
+final class GetSetCssIconClassesTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
     }
 
     /**
-     * Tests Phalcon\Flash\Session :: getCssClasses()/setCssClasses()
+     * Tests Phalcon\Flash\Session :: getCssIconClasses()/setCssIconClasses()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetSetCssClasses(UnitTester $I)
+    public function testFlashSessionGetSetCssIconClasses(): void
     {
-        $I->wantToTest('Flash\Session - getCssClasses()/setCssClasses()');
-
         $session = $this->container->getShared('session');
         $session->start();
 
         $flash = new Session();
         $flash->setDI($this->container);
 
-        $expected   = [
-            'error'   => 'errorMessage',
-            'notice'  => 'noticeMessage',
-            'success' => 'successMessage',
-            'warning' => 'warningMessage',
-        ];
         $newClasses = [
             'error'   => 'alert alert-error',
-            'notice'  => 'alert alert-notice',
             'success' => 'alert alert-success',
+            'notice'  => 'alert alert-notice',
             'warning' => 'alert alert-warning',
         ];
 
-        $actual = $flash->getCssClasses();
-        ksort($actual);
-        $I->assertSame($expected, $actual);
+        $actual = $flash->getCssIconClasses();
+        $this->assertEmpty($actual);
 
-        $flash->setCssClasses($newClasses);
+        $flash->setCssIconClasses($newClasses);
 
         $expected = $newClasses;
-        $actual   = $flash->getCssClasses();
-        ksort($actual);
-        $I->assertSame($expected, $actual);
+        $actual   = $flash->getCssIconClasses();
+        $this->assertSame($expected, $actual);
 
         $session->destroy();
     }

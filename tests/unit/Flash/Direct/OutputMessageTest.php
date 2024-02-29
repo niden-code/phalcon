@@ -17,74 +17,62 @@ use Codeception\Example;
 use Phalcon\Flash\Direct;
 use Phalcon\Flash\Exception;
 use Phalcon\Html\Escaper;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
 use const PHP_EOL;
 
-/**
- * Class OutputMessageCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class OutputMessageCest
+final class OutputMessageTest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: outputMessage() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectOutputMessageException(UnitTester $I)
+    public function testFlashDirectOutputMessageException(): void
     {
-        $I->wantToTest('Flash\Direct - outputMessage() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The message must be an array or a string');
 
-        $I->expectThrowable(
-            new Exception('The message must be an array or a string'),
-            function () {
-                $flash   = new Direct(new Escaper());
-                $message = $flash->outputMessage('success', false);
-            }
-        );
+        $flash   = new Direct(new Escaper());
+        $message = $flash->outputMessage('success', false);
     }
 
     /**
      * Tests Phalcon\Flash\Direct :: outputMessage() - exception
      *
-     * @dataProvider getExamples
+     * @dataProvider providerExamples
      *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @return void
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function flashDirectOutputMessage(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Flash\Direct - outputMessage() - ' . $example[0]);
-
+    public function testFlashDirectOutputMessage(
+        string $type
+    ): void {
         $flash = new Direct(new Escaper());
         $flash->setImplicitFlush(false);
 
         $source   = 'sample <phalcon> message';
-        $type     = $example[0];
         $expected = '<div class="' . $type . 'Message">'
             . 'sample &lt;phalcon&gt; message</div>' . PHP_EOL;
         $actual   = $flash->outputMessage($type, $source);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $flash->message($type, $source);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $flash->$type($source);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * @return array
      */
-    private function getExamples(): array
+    public static function providerExamples(): array
     {
         return [
             [

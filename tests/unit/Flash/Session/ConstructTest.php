@@ -17,58 +17,47 @@ use Phalcon\Flash\Exception;
 use Phalcon\Flash\FlashInterface;
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class ConstructCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class ConstructCest
+final class ConstructTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
     /**
      * Tests Phalcon\Flash\Session :: __construct()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionConstruct(UnitTester $I)
+    public function testFlashSessionConstruct(): void
     {
-        $I->wantToTest('Flash\Session - __construct()');
-
-
         $flash = new Session();
-        $I->assertInstanceOf(FlashInterface::class, $flash);
+        $this->assertInstanceOf(FlashInterface::class, $flash);
     }
 
     /**
      * Tests Phalcon\Flash\Session :: __construct() - no session service
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionConstructNoSessionService(UnitTester $I)
+    public function testFlashSessionConstructNoSessionService(): void
     {
-        $I->wantToTest('Flash\Session - __construct() - no session service');
-
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
 
-        $I->expectThrowable(
-            new Exception(
-                'A dependency injection container is required to ' .
-                "access the 'session' service"
-            ),
-            function () {
-                $flash = new Session();
-                $flash->getMessages();
-            }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'A dependency injection container is required to ' .
+            "access the 'session' service"
         );
+
+        $flash = new Session();
+        $flash->getMessages();
     }
 }

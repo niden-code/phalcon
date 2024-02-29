@@ -15,20 +15,16 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function uniqid;
 
-/**
- * Class GetMessagesCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class GetMessagesCest
+final class GetMessagesTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
@@ -37,15 +33,13 @@ class GetMessagesCest
     /**
      * Tests Phalcon\Flash\Session :: getMessages()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetMessages(UnitTester $I)
+    public function testFlashSessionGetMessages(): void
     {
-        $I->wantToTest('Flash\Session - getMessages()');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -62,7 +56,7 @@ class GetMessagesCest
             'error'   => [$message2],
         ];
         $actual   = $flash->getMessages();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $message1 = uniqid('m-');
         $message2 = uniqid('m-');
@@ -73,22 +67,22 @@ class GetMessagesCest
 
         $expected = [$message1];
         $actual   = $flash->getMessages('success', false);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [$message2];
         $actual   = $flash->getMessages('error', false);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [$message3];
         $actual   = $flash->getMessages('warning', true);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [
             'success' => [$message1],
             'error'   => [$message2],
         ];
         $actual   = $flash->getMessages();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $session->destroy();
     }

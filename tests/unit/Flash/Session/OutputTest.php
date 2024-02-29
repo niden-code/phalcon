@@ -15,7 +15,8 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function ob_end_clean;
 use function ob_get_contents;
@@ -24,16 +25,11 @@ use function uniqid;
 
 use const PHP_EOL;
 
-/**
- * Class OutputCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class OutputCest
+final class OutputTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
@@ -42,15 +38,13 @@ class OutputCest
     /**
      * Tests Phalcon\Flash\Session :: output() - empty session
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionOutput(UnitTester $I)
+    public function testFlashSessionOutput(): void
     {
-        $I->wantToTest('Flash\Session - output() - empty session');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -64,7 +58,7 @@ class OutputCest
         $result = ob_get_contents();
         ob_end_clean();
 
-        $I->assertEmpty($result);
+        $this->assertEmpty($result);
 
         $session->destroy();
     }
@@ -72,15 +66,13 @@ class OutputCest
     /**
      * Tests Phalcon\Flash\Session :: output() - types
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionOutputTypes(UnitTester $I)
+    public function testFlashSessionOutputTypes(): void
     {
-        $I->wantToTest('Flash\Session - output() - types');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -98,14 +90,14 @@ class OutputCest
         ob_end_clean();
         $expected = '<div class="successMessage">' . $message1 . '</div>' . PHP_EOL
             . '<div class="errorMessage">' . $message2 . '</div>' . PHP_EOL;
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         ob_start();
         $flash->output();
         $actual = ob_get_contents();
         ob_end_clean();
         $expected = '';
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $session->destroy();
     }
@@ -113,15 +105,13 @@ class OutputCest
     /**
      * Tests Phalcon\Flash\Session :: output() - with custom template
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-06-21
      */
-    public function flashSessionOutputWithCustomTemplate(UnitTester $I)
+    public function testFlashSessionOutputWithCustomTemplate(): void
     {
-        $I->wantToTest('Flash\Session - output() - types');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -152,14 +142,14 @@ class OutputCest
     </button>
     {$message1}
 </div>";
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         ob_start();
         $flash->output();
         $actual = ob_get_contents();
         ob_end_clean();
         $expected = '';
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $session->destroy();
     }

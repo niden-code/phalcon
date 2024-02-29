@@ -14,37 +14,30 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Flash\Direct;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetCustomTemplateCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class GetSetCustomTemplateCest
+final class GetSetCustomTemplateTest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getCustomTemplate()/setCustomTemplate()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectGetSetCustomTemplate(UnitTester $I)
+    public function testFlashDirectGetSetCustomTemplate(): void
     {
-        $I->wantToTest('Flash\Direct - getCustomTemplate()/setCustomTemplate()');
-
         $flash = new Direct();
 
         $actual = $flash->getCustomTemplate();
-        $I->assertEmpty($actual);
+        $this->assertEmpty($actual);
 
         $template = '<span class="{cssClasses}">{message}</span>';
         $actual   = $flash->setCustomTemplate($template);
-        $I->assertInstanceOf(Direct::class, $actual);
+        $this->assertInstanceOf(Direct::class, $actual);
 
         $actual = $flash->getCustomTemplate();
-        $I->assertSame($template, $actual);
+        $this->assertSame($template, $actual);
     }
 }

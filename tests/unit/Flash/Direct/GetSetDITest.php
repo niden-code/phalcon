@@ -15,33 +15,26 @@ namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Di\Di;
 use Phalcon\Flash\Direct;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetDICest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class GetSetDICest
+final class GetSetDITest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getDI()/setDI()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectGetSetDI(UnitTester $I)
+    public function testFlashDirectGetSetDI(): void
     {
-        $I->wantToTest('Flash\Direct - getDI()/setDI()');
-
         $container = new Di();
         $flash     = new Direct();
         $flash->setDI($container);
 
         $actual = $flash->getDI();
-        $I->assertSame($container, $actual);
-        $I->assertInstanceOf(Di::class, $actual);
+        $this->assertSame($container, $actual);
+        $this->assertInstanceOf(Di::class, $actual);
     }
 }

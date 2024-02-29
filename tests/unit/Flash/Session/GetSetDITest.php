@@ -15,33 +15,26 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 
 use Phalcon\Di\Di;
 use Phalcon\Flash\Session;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetDICest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class GetSetDICest
+final class GetSetDITest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Session :: getDI()/setDI()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetSetDI(UnitTester $I)
+    public function testFlashSessionGetSetDI(): void
     {
-        $I->wantToTest('Flash\Session - getDI()/setDI()');
-
         $container = new Di();
         $flash     = new Session();
         $flash->setDI($container);
 
         $actual = $flash->getDI();
-        $I->assertSame($container, $actual);
-        $I->assertInstanceOf(Di::class, $actual);
+        $this->assertSame($container, $actual);
+        $this->assertInstanceOf(Di::class, $actual);
     }
 }

@@ -14,35 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Flash\Direct;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetSetCssClassesCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class GetSetCssIconClassesCest
+final class GetSetCssIconClassesTest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getCssIconClasses()/setCssIconClasses()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectGetSetCssIconClasses(UnitTester $I)
+    public function testFlashDirectGetSetCssIconClasses(): void
     {
-        $I->wantToTest('Flash\Direct - getCssIconClasses()/setCssIconClasses()');
-
         $flash = new Direct();
 
-        $expected   = [
-            'error'   => 'errorMessage',
-            'success' => 'successMessage',
-            'notice'  => 'noticeMessage',
-            'warning' => 'warningMessage',
-        ];
         $newClasses = [
             'error'   => 'alert alert-error',
             'success' => 'alert alert-success',
@@ -51,12 +38,12 @@ class GetSetCssIconClassesCest
         ];
 
         $actual = $flash->getCssIconClasses();
-        $I->assertEmpty($actual);
+        $this->assertEmpty($actual);
 
         $flash->setCssIconClasses($newClasses);
 
         $expected = $newClasses;
         $actual   = $flash->getCssIconClasses();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

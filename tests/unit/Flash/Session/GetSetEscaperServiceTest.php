@@ -17,20 +17,16 @@ use Phalcon\Flash\Exception;
 use Phalcon\Flash\Session;
 use Phalcon\Html\Escaper;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function spl_object_hash;
 
-/**
- * Class GetSetEscaperServiceCest
- *
- * @package Phalcon\Tests\Unit\Flash\Session
- */
-class GetSetEscaperServiceCest
+final class GetSetEscaperServiceTest extends TestCase
 {
-    use DiTrait;
+    use DiTrait2;
 
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
         $this->newDi();
         $this->setDiService('sessionStream');
@@ -39,15 +35,13 @@ class GetSetEscaperServiceCest
     /**
      * Tests Phalcon\Flash\Session :: getEscaperService()/setEscaperService()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetSetEscaperService(UnitTester $I)
+    public function testFlashSessionGetSetEscaperService(): void
     {
-        $I->wantToTest('Flash\Session - getEscaperService()/setEscaperService()');
-
         $session = $this->container->getShared('session');
         $session->start();
 
@@ -55,14 +49,14 @@ class GetSetEscaperServiceCest
         $flash   = new Session($escaper);
 
         $actual = $flash->getEscaperService();
-        $I->assertSame(spl_object_hash($escaper), spl_object_hash($actual));
+        $this->assertSame(spl_object_hash($escaper), spl_object_hash($actual));
 
         $newEscaper = new Escaper();
         $actual     = $flash->setEscaperService($newEscaper);
-        $I->assertInstanceOf(Session::class, $actual);
+        $this->assertInstanceOf(Session::class, $actual);
 
         $actual = $flash->getEscaperService();
-        $I->assertSame(spl_object_hash($newEscaper), spl_object_hash($actual));
+        $this->assertSame(spl_object_hash($newEscaper), spl_object_hash($actual));
 
         $session->destroy();
     }
@@ -70,15 +64,13 @@ class GetSetEscaperServiceCest
     /**
      * Tests Phalcon\Flash\Session :: getEscaperService() - container
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetSetEscaperServiceContainer(UnitTester $I)
+    public function testFlashSessionGetSetEscaperServiceContainer(): void
     {
-        $I->wantToTest('Flash\Session - getEscaperService() - Container');
-
         $escaper = new Escaper();
         $this->container->setShared('escaper', $escaper);
 
@@ -86,31 +78,27 @@ class GetSetEscaperServiceCest
         $flash->setDI($this->container);
 
         $actual = $flash->getEscaperService();
-        $I->assertSame(spl_object_hash($escaper), spl_object_hash($actual));
+        $this->assertSame(spl_object_hash($escaper), spl_object_hash($actual));
     }
 
     /**
      * Tests Phalcon\Flash\Session :: getEscaperService() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashSessionGetEscaperServiceException(UnitTester $I)
+    public function testFlashSessionGetEscaperServiceException(): void
     {
-        $I->wantToTest('Flash\Session - getEscaperService() - exception');
-
-        $I->expectThrowable(
-            new Exception(
-                "A dependency injection container is required to " .
-                "access the 'escaper' service"
-            ),
-            function () {
-                $flash = new Session();
-
-                $actual = $flash->getEscaperService();
-            }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "A dependency injection container is required to " .
+            "access the 'escaper' service"
         );
+
+        $flash = new Session();
+
+        $actual = $flash->getEscaperService();
     }
 }

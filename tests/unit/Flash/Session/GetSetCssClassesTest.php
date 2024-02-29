@@ -11,33 +11,40 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Flash\Direct;
+namespace Phalcon\Tests\Unit\Flash\Session;
 
-use Phalcon\Flash\Direct;
-use UnitTester;
+use Phalcon\Flash\Session;
+use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
+use PHPUnit\Framework\TestCase;
 
 use function ksort;
 
-/**
- * Class GetSetCssClassesCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class GetSetCssClassesCest
+final class GetSetCssClassesTest extends TestCase
 {
+    use DiTrait2;
+
+    public function setUp(): void
+    {
+        $this->setNewFactoryDefault();
+        $this->setDiService('sessionStream');
+    }
+
     /**
-     * Tests Phalcon\Flash\Direct :: getCssClasses()/setCssClasses()
+     * Tests Phalcon\Flash\Session :: getCssClasses()/setCssClasses()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectGetSetCssClasses(UnitTester $I)
+    public function testFlashSessionGetSetCssClasses(): void
     {
-        $I->wantToTest('Flash\Direct - getCssClasses()/setCssClasses()');
+        $session = $this->container->getShared('session');
+        $session->start();
 
-        $flash = new Direct();
+        $flash = new Session();
+        $flash->setDI($this->container);
 
         $expected   = [
             'error'   => 'errorMessage',
@@ -54,13 +61,15 @@ class GetSetCssClassesCest
 
         $actual = $flash->getCssClasses();
         ksort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $flash->setCssClasses($newClasses);
 
         $expected = $newClasses;
         $actual   = $flash->getCssClasses();
         ksort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
+
+        $session->destroy();
     }
 }

@@ -14,36 +14,29 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Flash\Direct;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class GetAutoescapeCest
- *
- * @package Phalcon\Tests\Unit\Flash\Direct
- */
-class GetSetAutoescapeCest
+final class GetSetAutoescapeTest extends TestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getAutoescape()/setAutoescape()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function flashDirectGetSetAutoescape(UnitTester $I)
+    public function testFlashDirectGetSetAutoescape(): void
     {
-        $I->wantToTest('Flash\Direct - getAutoescape()/setAutoescape()');
-
         $flash = new Direct();
 
         $actual = $flash->getAutoescape();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $flash->setAutoescape(false);
-        $I->assertInstanceOf(Direct::class, $actual);
+        $this->assertInstanceOf(Direct::class, $actual);
 
         $actual = $flash->getAutoescape();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 }
