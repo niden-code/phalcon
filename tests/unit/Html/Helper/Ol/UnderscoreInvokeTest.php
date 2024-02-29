@@ -38,7 +38,6 @@ final class UnderscoreInvokeTest extends TestCase
         array $attributes,
         array $addOptions,
         string $expected
-
     ): void {
         $escaper = new Escaper();
         $helper  = new Ol($escaper);
