@@ -18,13 +18,13 @@ use Phalcon\Http\Message\Exception\RuntimeException;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function file_get_contents;
 use function getNewFileName2;
 use function outputDir2;
 
-final class MoveToTest extends TestCase
+final class MoveToTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: moveTo()
@@ -39,8 +39,8 @@ final class MoveToTest extends TestCase
         $stream->write('Phalcon Framework');
 
         $file   = new UploadedFile($stream, 0);
-        $target = getNewFileName2();
-        $target = outputDir2('stream/' . $target);
+        $target = $this->getNewFileName();
+        $target = self::outputDir('stream/' . $target);
 
         $file->moveTo($target);
         $this->assertFileExists($target);
@@ -64,9 +64,9 @@ final class MoveToTest extends TestCase
         $stream->write('Phalcon Framework');
 
         $file   = new UploadedFile($stream, 0);
-        $target = getNewFileName2();
+        $target = $this->getNewFileName();
 
-        $target = outputDir2('stream/' . $target);
+        $target = self::outputDir('stream/' . $target);
 
         $file->moveTo($target);
         $file->moveTo($target);
@@ -87,8 +87,8 @@ final class MoveToTest extends TestCase
 
         $stream->write('Phalcon Framework');
 
-        $target = getNewFileName2();
-        $target = outputDir2('stream/' . $target);
+        $target = $this->getNewFileName();
+        $target = self::outputDir('stream/' . $target);
         $file   = new UploadedFile($stream, 0, UPLOAD_ERR_CANT_WRITE);
 
         $file->moveTo($target);

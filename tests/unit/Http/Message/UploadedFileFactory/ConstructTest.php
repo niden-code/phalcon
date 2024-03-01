@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\UploadedFileFactory;
 
 use Phalcon\Http\Message\Factories\UploadedFileFactory;
 use Phalcon\Http\Message\Interfaces\UploadedFileFactoryInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerUploadedFileFactory :: __construct()

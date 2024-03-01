@@ -13,9 +13,9 @@ namespace Phalcon\Tests\Unit\Html\Helper\Link;
 
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Link;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Helper\Link :: __toString() - empty

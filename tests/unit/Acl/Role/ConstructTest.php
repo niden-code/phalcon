@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: __construct()

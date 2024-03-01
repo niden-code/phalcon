@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Exception;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('imagick')]
-final class SetResourceLimitTest extends TestCase
+final class SetResourceLimitTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Image\Adapter\Imagick :: setResourceLimit() -
@@ -35,7 +35,7 @@ final class SetResourceLimitTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Cannot set the Resource Type for this image');
 
-        $source = dataDir2('assets/images/example-jpg.jpg');
+        $source = self::dataDir('assets/images/example-jpg.jpg');
         $image  = new Imagick($source);
 
         $image->setResourceLimit(100, 1);

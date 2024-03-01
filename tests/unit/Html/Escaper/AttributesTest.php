@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Escaper;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const ENT_HTML401;
 use const ENT_HTML5;
@@ -24,30 +23,8 @@ use const ENT_SUBSTITUTE;
 use const ENT_XHTML;
 use const ENT_XML1;
 
-final class AttributesTest extends TestCase
+final class AttributesTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Escaper :: attributes()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlEscaperAttributes(
-        int $flags,
-        string $expected,
-        mixed $text
-    ): void {
-        $escaper = new Escaper();
-        $escaper->setFlags($flags);
-
-        $actual   = $escaper->attributes($text);
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array[]
      */
@@ -127,5 +104,27 @@ final class AttributesTest extends TestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Escaper :: attributes()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlEscaperAttributes(
+        int $flags,
+        string $expected,
+        mixed $text
+    ): void {
+        $escaper = new Escaper();
+        $escaper->setFlags($flags);
+
+        $actual = $escaper->attributes($text);
+        $this->assertSame($expected, $actual);
     }
 }

@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class SaveTest extends TestCase
+final class SaveTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: save()
@@ -32,13 +32,13 @@ final class SaveTest extends TestCase
      */
     public function testImageAdapterImagickSave(): void
     {
-        $outputFile = outputDir2('image/imagick/new.jpg');
+        $outputFile = self::outputDir('image/imagick/new.jpg');
         $image      = new Imagick($outputFile, 100, 100);
         $image->setResourceLimit(6, 1);
         $image->save();
 
         $this->assertFileExists($outputFile);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

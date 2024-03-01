@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class PixelateTest extends TestCase
+final class PixelateTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -43,11 +43,11 @@ final class PixelateTest extends TestCase
             [60, 'fbfbf3e3c3c3c383'],
         ];
         foreach ($params as [$amount, $hash]) {
-            $image = new Gd(dataDir2('assets/images/example-jpg.jpg'));
+            $image = new Gd(self::dataDir('assets/images/example-jpg.jpg'));
 
             $outputDir   = 'image/gd';
             $outputImage = $amount . '-pixelate.jpg';
-            $output      = outputDir2($outputDir . '/' . $outputImage);
+            $output      = self::outputDir($outputDir . '/' . $outputImage);
 
             $image->pixelate($amount)
                   ->save($output)
@@ -58,7 +58,7 @@ final class PixelateTest extends TestCase
             $actual = $this->checkImageHash($output, $hash);
             $this->assertTrue($actual);
 
-            safeDeleteFile2($output);
+            $this->safeDeleteFile($output);
         }
     }
 }

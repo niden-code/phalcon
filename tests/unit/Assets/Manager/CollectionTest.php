@@ -19,9 +19,9 @@ use Phalcon\Assets\Collection;
 use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CollectionTest extends TestCase
+final class CollectionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Manager :: collection()

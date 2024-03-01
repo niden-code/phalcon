@@ -18,14 +18,14 @@ use Phalcon\Http\Message\Interfaces\StreamInterface;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function getNewFileName2;
 use function outputDir2;
 
 use const UPLOAD_ERR_CANT_WRITE;
 
-final class GetStreamTest extends TestCase
+final class GetStreamTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getStream()
@@ -88,8 +88,8 @@ final class GetStreamTest extends TestCase
         $stream->write('Phalcon Framework');
 
         $file   = new UploadedFile($stream, 0);
-        $target = getNewFileName2();
-        $target = outputDir2(
+        $target = $this->getNewFileName();
+        $target = self::outputDir(
             'stream/' . $target
         );
 

@@ -16,11 +16,11 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class GetSizeTest extends TestCase
+final class GetSizeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: getSize()
@@ -30,7 +30,7 @@ final class GetSizeTest extends TestCase
      */
     public function testHttpMessageStreamGetSize()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $expected = filesize($fileName);
         $stream   = new Stream($fileName, 'rb');
         $actual   = $stream->getSize();

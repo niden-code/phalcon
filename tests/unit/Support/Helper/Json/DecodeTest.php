@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Support\Helper\Json;
 
 use InvalidArgumentException;
 use Phalcon\Support\Helper\Json\Decode;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class DecodeTest extends TestCase
+final class DecodeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Helper\Json :: decode()

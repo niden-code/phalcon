@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Debug;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class DebugVarTest extends TestCase
+final class DebugVarTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Debug :: debugVar()

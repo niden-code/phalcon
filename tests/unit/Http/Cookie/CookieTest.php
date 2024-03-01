@@ -58,7 +58,7 @@ final class CookieTest extends AbstractHttpTestCase
 
         $cookie->send();
 
-        setProtectedProperty2($cookie, 'isRead', false);
+        $this->setProtectedProperty($cookie, 'isRead', false);
 
         $rawCookie = $this->getCookie($name);
         $rawValue  = explode(';', $rawCookie)[0];
@@ -107,7 +107,7 @@ final class CookieTest extends AbstractHttpTestCase
 
         $cookie->send();
 
-        setProtectedProperty2($cookie, 'isRead', false);
+        $this->setProtectedProperty($cookie, 'isRead', false);
 
         $rawCookie = $this->getCookie($cookieName);
         $rawValue  = explode(';', $rawCookie)[0];

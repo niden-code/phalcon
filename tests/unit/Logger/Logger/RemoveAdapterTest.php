@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class RemoveAdapterTest extends TestCase
+final class RemoveAdapterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: removeAdapter()
@@ -31,9 +31,9 @@ final class RemoveAdapterTest extends TestCase
      */
     public function testLoggerRemoveAdapter(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
 
@@ -54,8 +54,8 @@ final class RemoveAdapterTest extends TestCase
         $adapters = $logger->getAdapters();
         $this->assertCount($expected, $adapters);
 
-        safeDeleteFile2($outputPath . $fileName1);
-        safeDeleteFile2($outputPath . $fileName2);
+        $this->safeDeleteFile($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName2);
     }
 
     /**
@@ -68,8 +68,8 @@ final class RemoveAdapterTest extends TestCase
      */
     public function testLoggerRemoveAdapterUnknown(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
 
         try {
             $adapter1 = new Stream($outputPath . $fileName1);
@@ -92,6 +92,6 @@ final class RemoveAdapterTest extends TestCase
             $this->assertSame($expected, $actual);
         }
 
-        safeDeleteFile2($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName1);
     }
 }

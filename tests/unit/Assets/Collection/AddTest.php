@@ -15,14 +15,14 @@ namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Asset;
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class AddTest extends TestCase
+ * Class AddTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class AddTest extends TestCase
+final class AddTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: add()

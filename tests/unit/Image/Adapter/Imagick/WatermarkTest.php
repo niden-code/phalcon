@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class WatermarkTest extends TestCase
+final class WatermarkTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: watermark()
@@ -33,21 +33,21 @@ final class WatermarkTest extends TestCase
     public function testImageAdapterImagickWatermark(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         $mark = new Imagick(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
 
         // Add a watermark to the bottom right of the image
         $image->watermark($mark, 10, 10)
-              ->save(outputDir2('image/imagick/watermark.jpg'))
+              ->save(self::outputDir('image/imagick/watermark.jpg'))
         ;
 
-        $outputFile = outputDir2('image/imagick/')
+        $outputFile = self::outputDir('image/imagick/')
             . 'watermark.jpg';
         $this->assertFileExists($outputFile);
 
@@ -59,6 +59,6 @@ final class WatermarkTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

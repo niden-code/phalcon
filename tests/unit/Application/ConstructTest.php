@@ -17,9 +17,9 @@ use Phalcon\Application\AbstractApplication;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Events\EventsAwareInterface;
 use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Application\* :: __construct()

@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function hash;
 

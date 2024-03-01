@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function file_get_contents;
 
-final class ExcludeAdaptersTest extends TestCase
+final class ExcludeAdaptersTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: excludeAdapters()
@@ -32,9 +32,9 @@ final class ExcludeAdaptersTest extends TestCase
      */
     public function testLoggerExcludeAdapters(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
 
@@ -77,7 +77,7 @@ final class ExcludeAdaptersTest extends TestCase
         $adapter1->close();
         $adapter2->close();
 
-        safeDeleteFile2($fileName1);
-        safeDeleteFile2($fileName2);
+        $this->safeDeleteFile($fileName1);
+        $this->safeDeleteFile($fileName2);
     }
 }

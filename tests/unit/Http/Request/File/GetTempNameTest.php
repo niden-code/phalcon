@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Request\File;
 
 use Phalcon\Http\Request\File;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class GetTempNameTest extends TestCase
+final class GetTempNameTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Request\File :: getTempName()
@@ -33,13 +33,13 @@ final class GetTempNameTest extends TestCase
             [
                 'name'     => 'test',
                 'type'     => Http::CONTENT_TYPE_PLAIN,
-                'tmp_name' => dataDir2('/assets/images/example-jpg.jpg'),
+                'tmp_name' => self::dataDir('/assets/images/example-jpg.jpg'),
                 'size'     => 1,
                 'error'    => 0,
             ]
         );
 
-        $expected = dataDir2('/assets/images/example-jpg.jpg');
+        $expected = self::dataDir('/assets/images/example-jpg.jpg');
         $actual   = $file->getTempName();
         $this->assertSame($expected, $actual);
     }

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Request;
 
 use Phalcon\Http\Message\Request;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithMethodTest extends TestCase
+final class WithMethodTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Request :: withMethod()

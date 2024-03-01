@@ -37,7 +37,7 @@ final class HeadersTest extends AbstractHttpTestCase
     ) {
         $headers = new Headers();
 
-        setProtectedProperty2(
+        $this->setProtectedProperty(
             $headers,
             'headers',
             [
@@ -65,7 +65,7 @@ final class HeadersTest extends AbstractHttpTestCase
         $headers = new Headers();
 
         $headers->set(Http::STATUS, $code);
-        $headers = getProtectedProperty2($headers, 'headers');
+        $headers = $this->getProtectedProperty($headers, 'headers');
 
         $expected = 1;
         $this->assertCount($expected, $headers);

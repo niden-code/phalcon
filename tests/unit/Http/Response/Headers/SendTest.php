@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Response\Headers;
 
 use Phalcon\Http\Response\Headers;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SendTest extends TestCase
+final class SendTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response\Headers :: send()

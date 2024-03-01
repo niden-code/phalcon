@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\UploadedFile;
 
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSizeTest extends TestCase
+final class GetSizeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getSize()

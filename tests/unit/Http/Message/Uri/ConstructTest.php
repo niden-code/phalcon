@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Uri;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Interfaces\UriInterface;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Uri :: __construct()

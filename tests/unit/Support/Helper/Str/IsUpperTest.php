@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\Str;
 
 use Phalcon\Support\Helper\Str\IsUpper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class IsUpperTest extends TestCase
+final class IsUpperTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Helper\Str :: isUpper()

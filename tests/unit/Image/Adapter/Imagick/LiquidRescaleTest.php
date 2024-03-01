@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class LiquidRescaleTest extends TestCase
+final class LiquidRescaleTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: liquidRescale()
@@ -35,13 +35,13 @@ final class LiquidRescaleTest extends TestCase
         $this->markTestSkipped('Check library support');
 
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Resize to 200 pixels on the shortest side
-        $outputFile = outputDir2('image/imagick/liquidRescale.jpg');
+        $outputFile = self::outputDir('image/imagick/liquidRescale.jpg');
         $image->liquidRescale(200, 200)
               ->save($outputFile)
         ;
@@ -56,6 +56,6 @@ final class LiquidRescaleTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertSame($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

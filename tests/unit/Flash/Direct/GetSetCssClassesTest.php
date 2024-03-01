@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Flash\Direct;
 
 use Phalcon\Flash\Direct;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function ksort;
 
-final class GetSetCssClassesTest extends TestCase
+final class GetSetCssClassesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getCssClasses()/setCssClasses()

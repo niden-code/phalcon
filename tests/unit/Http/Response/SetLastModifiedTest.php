@@ -17,9 +17,9 @@ use DateTime;
 use DateTimeZone;
 use Phalcon\Http\Response;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetLastModifiedTest extends TestCase
+final class SetLastModifiedTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response :: setLastModified()

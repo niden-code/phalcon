@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Translate;
 
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\Interpolator\AssociativeArray;
 use Phalcon\Translate\Interpolator\IndexedArray;
 use Phalcon\Translate\InterpolatorFactory;
-use PHPUnit\Framework\TestCase;
 
-final class InterpolatorFactoryTest extends TestCase
+final class InterpolatorFactoryTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

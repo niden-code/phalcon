@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 
 use Phalcon\Logger\Adapter\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class InTransactionTest extends TestCase
+final class InTransactionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: inTransaction()
@@ -29,8 +29,8 @@ final class InTransactionTest extends TestCase
      */
     public function testLoggerAdapterStreamInTransaction(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
         $adapter->begin();
@@ -44,6 +44,6 @@ final class InTransactionTest extends TestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 }

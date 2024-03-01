@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Response;
 
 use Phalcon\Http\Message\Response;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetHeaderLineTest extends TestCase
+final class GetHeaderLineTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Response :: getHeaderLine()

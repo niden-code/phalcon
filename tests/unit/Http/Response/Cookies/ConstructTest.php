@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Response\Cookies;
 
 use Phalcon\Http\Response\Cookies;
 use Phalcon\Http\Response\CookiesInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response\Cookies :: __construct()

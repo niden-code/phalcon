@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Request;
 
 use Phalcon\Http\Message\Request;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithoutHeaderTest extends TestCase
+final class WithoutHeaderTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Request :: withoutHeader()

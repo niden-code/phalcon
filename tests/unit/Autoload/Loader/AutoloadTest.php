@@ -39,11 +39,11 @@ final class AutoloadTest extends AbstractLoaderTestCase
         $loader
             ->addClass(
                 'One',
-                dataDir2('fixtures/Autoload/Example/Classes/One.php')
+                self::dataDir('fixtures/Autoload/Example/Classes/One.php')
             )
             ->addClass(
                 'Two',
-                dataDir2('fixtures/Autoload/Example/Classes/Two.php')
+                self::dataDir('fixtures/Autoload/Example/Classes/Two.php')
             )
         ;
 
@@ -51,8 +51,8 @@ final class AutoloadTest extends AbstractLoaderTestCase
 
         $expected = [
             'Loading: One',
-            'Require: ' . dataDir2('fixtures/Autoload/Example/Classes/One.php'),
-            'Class: load: ' . dataDir2('fixtures/Autoload/Example/Classes/One.php'),
+            'Require: ' . self::dataDir('fixtures/Autoload/Example/Classes/One.php'),
+            'Class: load: ' . self::dataDir('fixtures/Autoload/Example/Classes/One.php'),
         ];
         $actual   = $loader->getDebug();
         $this->assertSame($expected, $actual);
@@ -61,8 +61,8 @@ final class AutoloadTest extends AbstractLoaderTestCase
 
         $expected = [
             'Loading: Two',
-            'Require: ' . dataDir2('fixtures/Autoload/Example/Classes/Two.php'),
-            'Class: load: ' . dataDir2('fixtures/Autoload/Example/Classes/Two.php'),
+            'Require: ' . self::dataDir('fixtures/Autoload/Example/Classes/Two.php'),
+            'Class: load: ' . self::dataDir('fixtures/Autoload/Example/Classes/Two.php'),
         ];
         $actual   = $loader->getDebug();
         $this->assertSame($expected, $actual);
@@ -97,15 +97,15 @@ final class AutoloadTest extends AbstractLoaderTestCase
         $loader
             ->addNamespace(
                 'Example\Namespaces\Base',
-                dataDir2('fixtures/Autoload/Example/Namespaces/Base/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/Base/')
             )
             ->addNamespace(
                 'Example\Namespaces\Adapter',
-                dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/')
             )
             ->addNamespace(
                 'Example\Namespaces',
-                dataDir2('fixtures/Autoload/Example/Namespaces/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/')
             )
         ;
 
@@ -115,10 +115,10 @@ final class AutoloadTest extends AbstractLoaderTestCase
             'Loading: Example\Namespaces\Adapter\Mongo',
             'Class: 404: Example\Namespaces\Adapter\Mongo',
             'Require: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/') .
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/') .
             'Mongo.php',
             'Namespace: Example\Namespaces\Adapter\ - ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/') .
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/') .
             'Mongo.php',
         ];
         $actual   = $loader->getDebug();
@@ -142,23 +142,23 @@ final class AutoloadTest extends AbstractLoaderTestCase
         $loader
             ->addNamespace(
                 'Example\Namespaces\Base',
-                dataDir2('fixtures/Autoload/Example/Namespaces/Base/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/Base/')
             )
             ->addNamespace(
                 'Example\Namespaces\Adapter',
-                dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/')
             )
             ->addNamespace(
                 'Example\Namespaces',
-                dataDir2('fixtures/Autoload/Example/Namespaces/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/')
             )
         ;
         $loader
             ->setNamespaces(
                 [
                     'Example\Namespaces\Adapter' => [
-                        dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/'),
-                        dataDir2('fixtures/Autoload/Example/Namespaces/Plugin/'),
+                        self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/'),
+                        self::dataDir('fixtures/Autoload/Example/Namespaces/Plugin/'),
                     ],
                 ]
             )
@@ -170,11 +170,11 @@ final class AutoloadTest extends AbstractLoaderTestCase
             'Loading: Example\Namespaces\Adapter\Another',
             'Class: 404: Example\Namespaces\Adapter\Another',
             'Require: 404: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/Another.php'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/Another.php'),
             'Require: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Plugin/Another.php'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Plugin/Another.php'),
             'Namespace: Example\Namespaces\Adapter\ - ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Plugin/Another.php'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Plugin/Another.php'),
         ];
         $actual   = $loader->getDebug();
         $this->assertSame($expected, $actual);
@@ -228,7 +228,7 @@ final class AutoloadTest extends AbstractLoaderTestCase
         $loader
             ->addNamespace(
                 'Example\Namespaces\Adapter',
-                dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/')
+                self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/')
             )
         ;
 
@@ -238,7 +238,7 @@ final class AutoloadTest extends AbstractLoaderTestCase
             'Loading: Example\Namespaces\Adapter\Unknown',
             'Class: 404: Example\Namespaces\Adapter\Unknown',
             'Require: 404: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Adapter/Unknown.php'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Adapter/Unknown.php'),
             'Namespace: 404: Example\Namespaces\Adapter\Unknown',
             'Directories: 404: Example\Namespaces\Adapter\Unknown',
         ];
@@ -269,9 +269,9 @@ final class AutoloadTest extends AbstractLoaderTestCase
             )
             ->setNamespaces(
                 [
-                    'Example\Namespaces\Base' => dataDir2('fixtures/Autoload/Example/Namespaces/Base/'),
-                    'Example\Namespaces'      => dataDir2('fixtures/Autoload/Example/Namespaces/'),
-                    'Example'                 => dataDir2('fixtures/Autoload/Example/Namespaces/'),
+                    'Example\Namespaces\Base' => self::dataDir('fixtures/Autoload/Example/Namespaces/Base/'),
+                    'Example\Namespaces'      => self::dataDir('fixtures/Autoload/Example/Namespaces/'),
+                    'Example'                 => self::dataDir('fixtures/Autoload/Example/Namespaces/'),
                 ]
             )
         ;
@@ -282,11 +282,11 @@ final class AutoloadTest extends AbstractLoaderTestCase
             'Loading: Example\Namespaces\Engines\Alcohol',
             'Class: 404: Example\Namespaces\Engines\Alcohol',
             'Require: 404: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.php'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.php'),
             'Require: ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.inc'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.inc'),
             'Namespace: Example\Namespaces\ - ' .
-            dataDir2('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.inc'),
+            self::dataDir('fixtures/Autoload/Example/Namespaces/Engines/Alcohol.inc'),
         ];
         $actual   = $loader->getDebug();
         $this->assertSame($expected, $actual);

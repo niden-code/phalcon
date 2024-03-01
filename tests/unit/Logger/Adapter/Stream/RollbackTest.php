@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class RollbackTest extends TestCase
+final class RollbackTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: rollback()
@@ -31,8 +31,8 @@ final class RollbackTest extends TestCase
      */
     public function testLoggerAdapterStreamRollback(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
         $adapter->begin();
@@ -46,7 +46,7 @@ final class RollbackTest extends TestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -57,8 +57,8 @@ final class RollbackTest extends TestCase
      */
     public function testLoggerAdapterStreamRollbackException(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
         $this->expectException(Exception::class);

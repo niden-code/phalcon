@@ -17,12 +17,12 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class GetContextTest extends TestCase
+final class GetContextTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Item :: getContext()

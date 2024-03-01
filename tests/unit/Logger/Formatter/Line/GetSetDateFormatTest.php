@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Logger\Formatter\Line;
 
 use Phalcon\Logger\Formatter\Line;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class GetSetDateFormatTest extends TestCase
+final class GetSetDateFormatTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Formatter\Line :: setDateFormat()

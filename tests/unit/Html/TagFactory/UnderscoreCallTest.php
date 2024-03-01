@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\TagFactory;
 
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UnderscoreCallTest extends TestCase
+final class UnderscoreCallTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Helper\TagFactory :: __call()

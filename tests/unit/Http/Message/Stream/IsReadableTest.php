@@ -17,13 +17,13 @@ use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\Stream\Input;
 use Phalcon\Http\Message\Stream\Memory;
 use Phalcon\Http\Message\Stream\Temp;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function getNewFileName2;
 use function logsDir2;
 
-final class IsReadableTest extends TestCase
+final class IsReadableTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]
@@ -73,8 +73,8 @@ final class IsReadableTest extends TestCase
         string $mode,
         bool $expected
     ) {
-        $fileName = getNewFileName2();
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName();
+        $fileName = $this->logsDir($fileName);
 
         $stream = new Stream($fileName, $mode);
 
@@ -86,7 +86,7 @@ final class IsReadableTest extends TestCase
      */
     private function providerData(): array
     {
-        $fileName = dataDir2('assets/stream/mit-empty.txt');
+        $fileName = self::dataDir('assets/stream/mit-empty.txt');
 
         return [
             [

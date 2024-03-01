@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Filters\CssMin;
 
 use Phalcon\Assets\Filters\CssMin;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function file_get_contents;
 
-final class FilterTest extends TestCase
+final class FilterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Filters\CssMin :: filter()
@@ -33,7 +33,7 @@ final class FilterTest extends TestCase
     {
         $cssmin = new Cssmin();
 
-        $source   = file_get_contents(dataDir2('assets/assets/cssmin-01.css'));
+        $source   = file_get_contents(self::dataDir('assets/assets/cssmin-01.css'));
         $expected = ".h2:after,.h2:after{content:'';"
             . "display:block;height:1px;width:100%;"
             . "border-color:silver;border-style:solid none;"

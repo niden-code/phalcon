@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetVersionTest extends TestCase
+ * Class GetSetVersionTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetSetVersionTest extends TestCase
+final class GetSetVersionTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Assets\Collection :: getVersion() / setVersion()

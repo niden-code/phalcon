@@ -19,13 +19,13 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 use function file_get_contents;
 
-final class CloseTest extends TestCase
+final class CloseTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: close()
@@ -37,8 +37,8 @@ final class CloseTest extends TestCase
      */
     public function testLoggerAdapterStreamClose(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $timezone   = date_default_timezone_get();
         $datetime   = new DateTimeImmutable('now', new DateTimeZone($timezone));
         $adapter    = new Stream($outputPath . $fileName);
@@ -58,7 +58,7 @@ final class CloseTest extends TestCase
         $expected = 'Message 1';
         $this->assertStringContainsString($expected, $content);
 
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -72,8 +72,8 @@ final class CloseTest extends TestCase
      */
     public function testLoggerAdapterStreamCloseException(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
         $adapter->begin();

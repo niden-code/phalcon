@@ -17,10 +17,10 @@ use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\ImageFactory;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('imagick')]
-final class LoadTest extends TestCase
+final class LoadTest extends AbstractUnitTestCase
 {
     use FactoryTrait2;
 

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function is_resource;
 
-final class CloseTest extends TestCase
+final class CloseTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: close()
@@ -28,7 +28,7 @@ final class CloseTest extends TestCase
      */
     public function testHttpMessageStreamClose()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 
@@ -45,7 +45,7 @@ final class CloseTest extends TestCase
      */
     public function testHttpMessageStreamCloseDetach()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
 
         $handle = fopen($fileName, 'rb');
 

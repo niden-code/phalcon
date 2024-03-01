@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class CommitTest extends TestCase
+final class CommitTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: commit()
@@ -30,8 +30,8 @@ final class CommitTest extends TestCase
      */
     public function testLoggerAdapterStreamCommit(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
         $adapter->begin();
@@ -45,7 +45,7 @@ final class CommitTest extends TestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -53,8 +53,8 @@ final class CommitTest extends TestCase
      */
     public function testLoggerAdapterStreamCommitNoTransaction()
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
 
         try {
             $adapter = new Stream($outputPath . $fileName);
@@ -70,6 +70,6 @@ final class CommitTest extends TestCase
             $this->assertSame($expected, $actual);
         }
 
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 }

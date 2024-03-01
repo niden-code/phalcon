@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\ServerRequest;
 
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\ServerRequest;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithParsedBodyTest extends TestCase
+final class WithParsedBodyTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withParsedBody()

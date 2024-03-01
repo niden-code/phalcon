@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Filter\Filter;
 
 use Phalcon\Filter\Exception;
 use Phalcon\Filter\Filter;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Filter\Locator :: __construct() - empty

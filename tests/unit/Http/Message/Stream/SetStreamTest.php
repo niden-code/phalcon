@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class SetStreamTest extends TestCase
+final class SetStreamTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Http\Message\Stream :: setStream()
@@ -32,13 +32,13 @@ final class SetStreamTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('assets/stream/mit-empty.txt');
+        $fileName = self::dataDir('assets/stream/mit-empty.txt');
         $stream   = new Stream($fileName, 'rb');
 
         $actual = $stream->read(10);
         $this->assertEmpty($actual);
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream->setStream($fileName, 'rb');
 
         $stream->seek(64);

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Debug;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetShowFilesTest extends TestCase
+final class SetShowFilesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Debug :: setShowFiles()

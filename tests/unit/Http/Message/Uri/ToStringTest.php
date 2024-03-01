@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Uri;
 
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Uri :: __toString()

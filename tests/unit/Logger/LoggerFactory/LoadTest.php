@@ -21,10 +21,10 @@ use Phalcon\Logger\LoggerFactory;
 use Phalcon\Logger\LoggerInterface;
 use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class LoadTest extends TestCase
+final class LoadTest extends AbstractUnitTestCase
 {
     use FactoryTrait2;
 

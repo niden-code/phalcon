@@ -15,13 +15,13 @@ namespace Phalcon\Tests\Unit\Translate\Adapter;
 
 use ArrayAccess;
 use Phalcon\Tests\Fixtures\Translate\Adapter\NativeAdapter;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\NativeArray;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
-use PHPUnit\Framework\TestCase;
 
-final class NativeArrayTest extends TestCase
+final class NativeArrayTest extends AbstractUnitTestCase
 {
     /**
      * Data provider for the query tests

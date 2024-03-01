@@ -94,8 +94,8 @@ final class GetRealTargetPathTest extends AbstractAssetCase
             ]
         );
 
-        $expected = dataDir2($file);
-        $actual   = $asset->getRealTargetPath(dataDir2());
+        $expected = self::dataDir($file);
+        $actual   = $asset->getRealTargetPath(self::dataDir());
         $this->assertSame($expected, $actual);
     }
 

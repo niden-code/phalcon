@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Application;
 
 use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetDefaultModuleTest extends TestCase
+final class GetSetDefaultModuleTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Application\* :: getDefaultModule()/setDefaultModule()

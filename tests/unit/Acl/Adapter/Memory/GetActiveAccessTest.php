@@ -15,25 +15,10 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Enum;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetActiveAccessTest extends TestCase
+final class GetActiveAccessTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: getActiveAccess() - default
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testAclAdapterMemoryGetActiveAccessDefault(): void
-    {
-        $acl = new Memory();
-
-        $this->assertNull($acl->getActiveAccess());
-    }
-
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getActiveAccess() - default
      *
@@ -54,5 +39,20 @@ final class GetActiveAccessTest extends TestCase
         $this->assertTrue($actual);
 
         $this->assertSame('index', $acl->getActiveAccess());
+    }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: getActiveAccess() - default
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testAclAdapterMemoryGetActiveAccessDefault(): void
+    {
+        $acl = new Memory();
+
+        $this->assertNull($acl->getActiveAccess());
     }
 }

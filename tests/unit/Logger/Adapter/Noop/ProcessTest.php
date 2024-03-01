@@ -18,12 +18,12 @@ use DateTimeZone;
 use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class ProcessTest extends TestCase
+final class ProcessTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Noop :: process()

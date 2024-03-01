@@ -14,16 +14,16 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
 /**
- * Class GetSetSourcePathTest extends TestCase
+ * Class GetSetSourcePathTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetSetSourcePathTest extends TestCase
+final class GetSetSourcePathTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: getSourcePath() / setSourcePath()
@@ -36,7 +36,7 @@ final class GetSetSourcePathTest extends TestCase
     public function testAssetsCollectionGetSetSourcePath(): void
     {
         $collection = new Collection();
-        $sourcePath = dataDir2('assets');
+        $sourcePath = self::dataDir('assets');
         $collection->setSourcePath($sourcePath);
 
         $this->assertSame($sourcePath, $collection->getSourcePath());

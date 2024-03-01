@@ -55,6 +55,29 @@ class SetCest
     }
 
     /**
+     * Unit Tests Phalcon\Di :: set() - alias
+     *
+     * @param UnitTester $I
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-09-09
+     */
+    public function diSetAlias(UnitTester $I)
+    {
+        $I->wantToTest('Di - set() - alias');
+
+        $container = new Di();
+        $escaper   = new Escaper();
+
+        $container->set('alias', Escaper::class);
+        $container->set(Escaper::class, $escaper);
+
+        $class  = Escaper::class;
+        $actual = $container->get('alias');
+        $I->assertInstanceOf($class, $actual);
+    }
+
+    /**
      * Unit Tests Phalcon\Di :: set() - shared
      *
      * @param UnitTester $I
@@ -91,30 +114,6 @@ class SetCest
         $collection = $container->getService('collection');
         $actual     = $collection->isShared();
         $I->assertTrue($actual);
-    }
-
-
-    /**
-     * Unit Tests Phalcon\Di :: set() - alias
-     *
-     * @param UnitTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-09
-     */
-    public function diSetAlias(UnitTester $I)
-    {
-        $I->wantToTest('Di - set() - alias');
-
-        $container = new Di();
-        $escaper   = new Escaper();
-
-        $container->set('alias', Escaper::class);
-        $container->set(Escaper::class, $escaper);
-
-        $class  = Escaper::class;
-        $actual = $container->get('alias');
-        $I->assertInstanceOf($class, $actual);
     }
 
     /**

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetNameTest extends TestCase
+final class GetNameTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: getName()
@@ -29,7 +29,7 @@ final class GetNameTest extends TestCase
     public function testAclRoleGetName(): void
     {
         $source = 'Administrator';
-        $role = new Role($source);
+        $role   = new Role($source);
 
         $expected = $source;
         $actual   = $role->getName();

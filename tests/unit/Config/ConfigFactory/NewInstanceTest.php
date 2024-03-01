@@ -21,13 +21,13 @@ use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\ConfigFactory;
 use Phalcon\Config\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function dataDir;
 use function dataDir2;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\LoggerFactory :: newInstance()
@@ -59,7 +59,7 @@ final class NewInstanceTest extends TestCase
         $factory = new ConfigFactory();
         $options = [
             [
-                'filePath' => dataDir2('assets/config/config.json'),
+                'filePath' => self::dataDir('assets/config/config.json'),
             ],
             [
                 'adapter' => 'array',
@@ -99,22 +99,22 @@ final class NewInstanceTest extends TestCase
         return [
             [
                 'ini',
-                dataDir2('assets/config/config.ini'),
+                self::dataDir('assets/config/config.ini'),
                 Ini::class,
             ],
             [
                 'json',
-                dataDir2('assets/config/config.json'),
+                self::dataDir('assets/config/config.json'),
                 Json::class,
             ],
             [
                 'php',
-                dataDir2('assets/config/config.php'),
+                self::dataDir('assets/config/config.php'),
                 Php::class,
             ],
             [
                 'yaml',
-                dataDir2('assets/config/config.yml'),
+                self::dataDir('assets/config/config.yml'),
                 Yaml::class,
             ],
         ];

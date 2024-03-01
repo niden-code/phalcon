@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class WatermarkTest extends TestCase
+final class WatermarkTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -38,17 +38,17 @@ final class WatermarkTest extends TestCase
         $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $watermark = new Gd(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
         $watermark->resize(250, null, Enum::WIDTH);
 
         $outputDir   = 'image/gd';
         $outputImage = 'watermark.jpg';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
         $offsetX     = 200;
         $offsetY     = 200;
         $opacity     = 50;
@@ -65,7 +65,7 @@ final class WatermarkTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -81,17 +81,17 @@ final class WatermarkTest extends TestCase
         $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
 
         $watermark = new Gd(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
         $watermark->resize(50, 50, Enum::NONE);
 
         $outputDir   = 'image/gd';
         $outputImage = 'watermark.png';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
         $offsetX     = 10;
         $offsetY     = 10;
         $opacity     = 50;
@@ -108,7 +108,7 @@ final class WatermarkTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -124,16 +124,16 @@ final class WatermarkTest extends TestCase
         $this->checkJpegSupport($this);
 
         $image = new Gd(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $watermark = new Gd(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
 
         $outputDir   = 'image/gd';
         $outputImage = 'watermark.jpg';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
         $offsetX     = 200;
         $offsetY     = 200;
 
@@ -148,7 +148,7 @@ final class WatermarkTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -162,17 +162,17 @@ final class WatermarkTest extends TestCase
     public function testImageAdapterGdWatermarkPngInsidePng(): void
     {
         $image = new Gd(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
 
         $watermark = new Gd(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
         $watermark->resize(null, 30, Enum::HEIGHT);
 
         $outputDir   = 'image/gd';
         $outputImage = 'watermark.png';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
         $offsetX     = 20;
         $offsetY     = 20;
         $opacity     = 75;
@@ -188,6 +188,6 @@ final class WatermarkTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 }

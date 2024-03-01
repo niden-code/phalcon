@@ -20,13 +20,13 @@ use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Assets\TrimFilter;
 use Phalcon\Tests\Fixtures\Assets\UppercaseFilter;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function file_get_contents;
 use function getNewFileName2;
 use function safeDeleteFile2;
 
-final class OutputCssTest extends TestCase
+final class OutputCssTest extends AbstractUnitTestCase
 {
     use DiTrait;
 
@@ -53,9 +53,9 @@ final class OutputCssTest extends TestCase
      */
     public function testAssetsManagerOutputCssFilterChainCustomFilterWithCssmin(): void
     {
-        $fileName = getNewFileName2('assets_', 'css');
-        $fileName = outputDir2('assets/' . $fileName);
-        $cssFile  = dataDir2('assets/assets/1198.css');
+        $fileName = $this->getNewFileName('assets_', 'css');
+        $fileName = self::outputDir('assets/' . $fileName);
+        $cssFile  = self::dataDir('assets/assets/1198.css');
         $manager  = new Manager(new TagFactory(new Escaper()));
 
         $manager->useImplicitOutput(false);
@@ -77,7 +77,7 @@ final class OutputCssTest extends TestCase
         $expected = 'A{TEXT-DECORATION:NONE;}B{FONT-WEIGHT:BOLD;}';
         $this->assertStringContainsString($expected, $content);
 
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 
     /**

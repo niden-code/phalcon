@@ -16,14 +16,14 @@ namespace Phalcon\Tests\Unit\Logger\AdapterFactory;
 use Phalcon\Logger\Adapter\AdapterInterface;
 use Phalcon\Logger\AdapterFactory;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function logsDir2;
 use function outputDir;
 use function outputDir2;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\AdapterFactory :: newInstance()
@@ -36,8 +36,8 @@ final class NewInstanceTest extends TestCase
      */
     public function testLoggerAdapterFactoryNewInstance(): void
     {
-        $fileName = getNewFileName2();
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName();
+        $fileName = $this->logsDir($fileName);
         $factory  = new AdapterFactory();
 
         $logger = $factory->newInstance('stream', $fileName);

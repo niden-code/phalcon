@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Attributes;
 
 use Phalcon\Html\Attributes;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetIteratorTest extends TestCase
+final class GetIteratorTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Attributes :: getIterator()

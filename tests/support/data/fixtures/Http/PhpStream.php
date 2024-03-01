@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests1\Fixtures\Http;
 
+use Phalcon\Tests\Support\DirTrait;
+
 use function outputDir2;
 
 /**
@@ -23,20 +25,27 @@ use function outputDir2;
  */
 class PhpStream
 {
-    /**
-     * @var int
-     */
-    protected $index = 0;
+    use DirTrait;
 
     /**
      * @var int
      */
-    protected $length = 0;
+    protected int $index = 0;
+
+    /**
+     * @var int
+     */
+    protected int $length = 0;
 
     /**
      * @var string
      */
-    protected $data = '';
+    protected string $data = '';
+
+    /**
+     * @var string
+     */
+    protected string $outputDir = '';
 
     /**
      * Constructor
@@ -162,6 +171,6 @@ class PhpStream
 
     protected function getBufferFilename(): string
     {
-        return outputDir2('stream/php_input.txt');
+        return $this->outputDir('stream/php_input.txt');
     }
 }

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: __toString()
@@ -26,7 +26,7 @@ final class ToStringTest extends TestCase
      */
     public function testHttpMessageStreamToString()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $expected = file_get_contents($fileName);
         $stream   = new Stream($fileName, 'rb');
 

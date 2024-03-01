@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Registry;
 
 use Phalcon\Support\Registry;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
-final class GetHasSetRemoveTest extends TestCase
+final class GetHasSetRemoveTest extends AbstractUnitTestCase
 {
     /**
      * @return array

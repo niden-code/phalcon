@@ -17,9 +17,9 @@ use Phalcon\Http\Message\Factories\UploadedFileFactory;
 use Phalcon\Http\Message\Interfaces\UploadedFileInterface;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CreateUploadedFileTest extends TestCase
+final class CreateUploadedFileTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\UploadedFileFactory :: createUploadedFile()

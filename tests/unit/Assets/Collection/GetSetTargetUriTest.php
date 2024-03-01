@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetTargetUriTest extends TestCase
+ * Class GetSetTargetUriTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetSetTargetUriTest extends TestCase
+final class GetSetTargetUriTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: getTargetUri() / setTargetUri()

@@ -19,12 +19,12 @@ use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class AddTest extends TestCase
+final class AddTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Noop :: add()

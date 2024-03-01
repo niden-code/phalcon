@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetPrefixTest extends TestCase
+ * Class GetSetPrefixTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetSetPrefixTest extends TestCase
+final class GetSetPrefixTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: getPrefix() / setPrefix()

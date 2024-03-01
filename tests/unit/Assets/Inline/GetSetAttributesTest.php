@@ -16,14 +16,14 @@ namespace Phalcon\Tests\Unit\Assets\Inline;
 use Phalcon\Assets\Inline;
 use Phalcon\Assets\Inline\Css;
 use Phalcon\Assets\Inline\Js;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetAttributesTest extends TestCase
+ * Class GetSetAttributesTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Inline
  */
-final class GetSetAttributesTest extends TestCase
+final class GetSetAttributesTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

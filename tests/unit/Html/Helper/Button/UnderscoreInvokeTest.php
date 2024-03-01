@@ -11,44 +11,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Button;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Button;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Html\Helper\Button :: __invoke()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlHelperButtonUnderscoreInvoke(
-        string $expected,
-        string $href,
-        array $attributes,
-        bool $raw,
-    ): void {
-        $escaper = new Escaper();
-        $helper  = new Button($escaper);
-
-        $actual   = $helper($href, $attributes, $raw);
-        $this->assertSame($expected, $actual);
-
-        $factory  = new TagFactory($escaper);
-        $locator  = $factory->newInstance('button');
-
-        $actual   = $locator($href, $attributes, $raw);
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array
      */
@@ -130,5 +99,34 @@ final class UnderscoreInvokeTest extends TestCase
                 true,
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Button :: __invoke()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlHelperButtonUnderscoreInvoke(
+        string $expected,
+        string $href,
+        array $attributes,
+        bool $raw,
+    ): void {
+        $escaper = new Escaper();
+        $helper  = new Button($escaper);
+
+        $actual = $helper($href, $attributes, $raw);
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('button');
+
+        $actual = $locator($href, $attributes, $raw);
+        $this->assertSame($expected, $actual);
     }
 }

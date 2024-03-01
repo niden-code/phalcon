@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class SaveTest extends TestCase
+final class SaveTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -42,13 +42,13 @@ final class SaveTest extends TestCase
         foreach ($this->getImages() as $type => $imagePath) {
             $image = new Gd($imagePath);
 
-            $output = outputDir2($outputDir . '/' . $resultImage . $type);
+            $output = self::outputDir($outputDir . '/' . $resultImage . $type);
             $actual = $image->save($output);
             $this->assertInstanceOf(Gd::class, $actual);
 
             $this->assertFileExists($output);
 
-            safeDeleteFile2($output);
+            $this->safeDeleteFile($output);
         }
     }
 }

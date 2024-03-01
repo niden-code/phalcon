@@ -16,23 +16,43 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class AddRoleTest extends TestCase
+final class AddRoleTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - string
+     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - exception
      *
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function testAclAdapterMemoryAddRoleString(): void
+    public function testAclAdapterMemoryAddRoleException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Role must be either a string or implement RoleInterface'
+        );
+
+        $acl = new Memory();
+        $acl->addRole(true);
+    }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - numeric key
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testAclAdapterMemoryAddRoleNumericKey(): void
     {
         $acl = new Memory();
 
-        $this->assertTrue($acl->addRole('Administrators'));
+        $this->assertTrue($acl->addRole('11'));
+        $this->assertTrue($acl->isRole('11'));
     }
 
     /**
@@ -52,19 +72,18 @@ final class AddRoleTest extends TestCase
     }
 
     /**
-     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - twice string
+     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - string
      *
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function testAclAdapterMemoryAddRoleTwiceString(): void
+    public function testAclAdapterMemoryAddRoleString(): void
     {
         $acl = new Memory();
 
         $this->assertTrue($acl->addRole('Administrators'));
-        $this->assertFalse($acl->addRole('Administrators'));
     }
 
     /**
@@ -85,37 +104,18 @@ final class AddRoleTest extends TestCase
     }
 
     /**
-     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - numeric key
+     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - twice string
      *
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function testAclAdapterMemoryAddRoleNumericKey(): void
+    public function testAclAdapterMemoryAddRoleTwiceString(): void
     {
         $acl = new Memory();
 
-        $this->assertTrue($acl->addRole('11'));
-        $this->assertTrue($acl->isRole('11'));
-    }
-
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: addRole() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testAclAdapterMemoryAddRoleException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            'Role must be either a string or implement RoleInterface'
-        );
-
-        $acl = new Memory();
-        $acl->addRole(true);
+        $this->assertTrue($acl->addRole('Administrators'));
+        $this->assertFalse($acl->addRole('Administrators'));
     }
 }

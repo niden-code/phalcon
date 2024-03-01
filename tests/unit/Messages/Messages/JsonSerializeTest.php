@@ -17,9 +17,9 @@ use JsonSerializable;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\Fixtures\Messages\MessageFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class JsonSerializeTest extends TestCase
+final class JsonSerializeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Messages\Messages :: jsonSerialize()

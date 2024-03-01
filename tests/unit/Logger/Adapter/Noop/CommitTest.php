@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Noop;
 
 use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class CommitTest extends TestCase
+final class CommitTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Noop :: commit()

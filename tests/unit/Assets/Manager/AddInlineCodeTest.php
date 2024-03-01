@@ -18,7 +18,7 @@ use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function ob_end_clean;
 use function ob_get_contents;
@@ -26,7 +26,7 @@ use function ob_start;
 
 use const PHP_EOL;
 
-final class AddInlineCodeTest extends TestCase
+final class AddInlineCodeTest extends AbstractUnitTestCase
 {
     use DiTrait;
 

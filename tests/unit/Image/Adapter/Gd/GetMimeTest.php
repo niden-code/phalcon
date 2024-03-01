@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Exception;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('gd')]
-final class GetMimeTest extends TestCase
+final class GetMimeTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -30,27 +30,27 @@ final class GetMimeTest extends TestCase
     {
         return [
             [
-                'source'   => dataDir2('assets/images/example-gif.gif'),
+                'source'   => self::dataDir('assets/images/example-gif.gif'),
                 'expected' => 'image/gif',
             ],
             [
-                'source'   => dataDir2('assets/images/example-jpg.jpg'),
+                'source'   => self::dataDir('assets/images/example-jpg.jpg'),
                 'expected' => 'image/jpeg',
             ],
             [
-                'source'   => dataDir2('assets/images/example-png.png'),
+                'source'   => self::dataDir('assets/images/example-png.png'),
                 'expected' => 'image/png',
             ],
             [
-                'source'   => dataDir2('assets/images/example-wbmp.wbmp'),
+                'source'   => self::dataDir('assets/images/example-wbmp.wbmp'),
                 'expected' => 'image/vnd.wap.wbmp',
             ],
             [
-                'source'   => dataDir2('assets/images/example-webp.webp'),
+                'source'   => self::dataDir('assets/images/example-webp.webp'),
                 'expected' => 'image/webp',
             ],
             [
-                'source'   => dataDir2('assets/images/example-xbm.xbm'),
+                'source'   => self::dataDir('assets/images/example-xbm.xbm'),
                 'expected' => 'image/xbm',
             ],
         ];

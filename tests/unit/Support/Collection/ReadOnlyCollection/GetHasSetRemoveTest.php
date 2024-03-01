@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Support\Collection\ReadOnlyCollection;
 use Phalcon\Support\Collection;
 use Phalcon\Support\Collection\Exception;
 use Phalcon\Support\Collection\ReadOnlyCollection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
-final class GetHasSetRemoveTest extends TestCase
+final class GetHasSetRemoveTest extends AbstractUnitTestCase
 {
     /**
      * @return array

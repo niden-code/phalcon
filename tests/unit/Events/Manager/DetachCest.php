@@ -47,21 +47,21 @@ class DetachCest
         $handlerTwo = new stdClass();
         $manager->attach($eventType, $handlerOne);
 
-        $events = $I->getProtectedProperty2($manager, 'events');
+        $events = $I->$this->getProtectedProperty($manager, 'events');
 
         $I->assertCount(1, $events);
         $I->assertArrayHasKey($eventType, $events);
         $I->assertCount(1, $events[$eventType]);
 
         $manager->detach($eventType, $handlerTwo);
-        $events = $I->getProtectedProperty2($manager, 'events');
+        $events = $I->$this->getProtectedProperty($manager, 'events');
 
         $I->assertCount(1, $events);
         $I->assertArrayHasKey($eventType, $events);
         $I->assertCount(1, $events[$eventType]);
 
         $manager->detach($eventType, $handlerOne);
-        $events = $I->getProtectedProperty2($manager, 'events');
+        $events = $I->$this->getProtectedProperty($manager, 'events');
 
         $I->assertCount(1, $events);
         $I->assertArrayHasKey($eventType, $events);

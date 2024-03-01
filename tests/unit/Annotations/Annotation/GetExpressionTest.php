@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Annotations\Annotation;
 
 use Phalcon\Annotations\Annotation;
 use Phalcon\Annotations\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
-final class GetExpressionTest extends TestCase
+final class GetExpressionTest extends AbstractUnitTestCase
 {
     private int $PHANNOT_T_ANNOTATION = 300;
     private int $PHANNOT_T_STRING     = 303;

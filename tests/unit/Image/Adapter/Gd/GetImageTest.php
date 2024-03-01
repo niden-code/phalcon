@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('gd')]
-final class GetImageTest extends TestCase
+final class GetImageTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 

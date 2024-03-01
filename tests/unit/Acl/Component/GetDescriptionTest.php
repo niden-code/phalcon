@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetDescriptionTest extends TestCase
+final class GetDescriptionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: getDescription()
@@ -28,9 +28,9 @@ final class GetDescriptionTest extends TestCase
      */
     public function testAclComponentGetDescription(): void
     {
-        $name = 'Customer';
+        $name        = 'Customer';
         $description = 'Customer Management';
-        $component = new Component($name, $description);
+        $component   = new Component($name, $description);
 
         $expected = $description;
         $actual   = $component->getDescription();
@@ -47,10 +47,10 @@ final class GetDescriptionTest extends TestCase
      */
     public function testAclComponentGetDescriptionEmpty(): void
     {
-        $name = 'Customer';
+        $name      = 'Customer';
         $component = new Component($name);
 
-        $actual   = $component->getDescription();
+        $actual = $component->getDescription();
         $this->assertEmpty($actual);
     }
 }

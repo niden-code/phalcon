@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Filter\Filter;
 use Closure;
 use Phalcon\Filter\Filter;
 use Phalcon\Tests\Fixtures\Service\HelloService;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetHasTest extends TestCase
+final class GetSetHasTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Filter :: get()/set()/has() - get() same

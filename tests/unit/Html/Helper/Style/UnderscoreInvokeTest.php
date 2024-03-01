@@ -11,17 +11,100 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Style;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Style;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                '    ',
+                PHP_EOL,
+                false,
+                [
+                    [
+                        "custom.css",
+                        [],
+                    ],
+                    [
+                        "print.css",
+                        ["media" => "print"],
+                    ],
+                ],
+                "    <link rel=\"stylesheet\" type=\"text/css\" "
+                . "href=\"custom.css\" media=\"screen\" />" . PHP_EOL
+                . "    <link rel=\"stylesheet\" type=\"text/css\" "
+                . "href=\"print.css\" media=\"print\" />" . PHP_EOL,
+            ],
+            [
+                '--',
+                '+',
+                false,
+                [
+                    [
+                        "custom.css",
+                        [],
+                    ],
+                    [
+                        "print.css",
+                        ["media" => "print"],
+                    ],
+                ],
+                "--<link rel=\"stylesheet\" type=\"text/css\" "
+                . "href=\"custom.css\" media=\"screen\" />+"
+                . "--<link rel=\"stylesheet\" type=\"text/css\" "
+                . "href=\"print.css\" media=\"print\" />+",
+            ],
+            [
+                '    ',
+                PHP_EOL,
+                true,
+                [
+                    [
+                        "custom.css",
+                        [],
+                    ],
+                    [
+                        "print.css",
+                        ["media" => "print"],
+                    ],
+                ],
+                "    <style type=\"text/css\" "
+                . "href=\"custom.css\" media=\"screen\" />" . PHP_EOL
+                . "    <style type=\"text/css\" "
+                . "href=\"print.css\" media=\"print\" />" . PHP_EOL,
+            ],
+            [
+                '--',
+                '+',
+                true,
+                [
+                    [
+                        "custom.css",
+                        [],
+                    ],
+                    [
+                        "print.css",
+                        ["media" => "print"],
+                    ],
+                ],
+                "--<style type=\"text/css\" "
+                . "href=\"custom.css\" media=\"screen\" />+"
+                . "--<style type=\"text/css\" "
+                . "href=\"print.css\" media=\"print\" />+",
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Html\Helper\Style :: __invoke()
      *
@@ -48,7 +131,7 @@ final class UnderscoreInvokeTest extends TestCase
             $result->add($add[0], $add[1]);
         }
 
-        $actual   = (string)$result;
+        $actual = (string)$result;
         $this->assertSame($expected, $actual);
 
         /**
@@ -65,90 +148,5 @@ final class UnderscoreInvokeTest extends TestCase
 
         $actual = (string)$result;
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return array
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                '    ',
-                PHP_EOL,
-                false,
-                [
-                    [
-                        "custom.css",
-                        [],
-                    ],
-                    [
-                        "print.css",
-                        ["media" => "print"],
-                    ],
-                ],
-                "    <link rel=\"stylesheet\" type=\"text/css\" "
-                    . "href=\"custom.css\" media=\"screen\" />" . PHP_EOL
-                    . "    <link rel=\"stylesheet\" type=\"text/css\" "
-                    . "href=\"print.css\" media=\"print\" />" . PHP_EOL,
-            ],
-            [
-                '--',
-                '+',
-                false,
-                [
-                    [
-                        "custom.css",
-                        [],
-                    ],
-                    [
-                        "print.css",
-                        ["media" => "print"],
-                    ],
-                ],
-                "--<link rel=\"stylesheet\" type=\"text/css\" "
-                    . "href=\"custom.css\" media=\"screen\" />+"
-                    . "--<link rel=\"stylesheet\" type=\"text/css\" "
-                    . "href=\"print.css\" media=\"print\" />+",
-            ],
-            [
-                '    ',
-                PHP_EOL,
-                true,
-                [
-                    [
-                        "custom.css",
-                        [],
-                    ],
-                    [
-                        "print.css",
-                        ["media" => "print"],
-                    ],
-                ],
-                "    <style type=\"text/css\" "
-                    . "href=\"custom.css\" media=\"screen\" />" . PHP_EOL
-                    . "    <style type=\"text/css\" "
-                    . "href=\"print.css\" media=\"print\" />" . PHP_EOL,
-            ],
-            [
-                '--',
-                '+',
-                true,
-                [
-                    [
-                        "custom.css",
-                        [],
-                    ],
-                    [
-                        "print.css",
-                        ["media" => "print"],
-                    ],
-                ],
-                "--<style type=\"text/css\" "
-                    . "href=\"custom.css\" media=\"screen\" />+"
-                    . "--<style type=\"text/css\" "
-                    . "href=\"print.css\" media=\"print\" />+",
-            ],
-        ];
     }
 }

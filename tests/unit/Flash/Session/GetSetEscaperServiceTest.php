@@ -18,11 +18,11 @@ use Phalcon\Flash\Session;
 use Phalcon\Html\Escaper;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function spl_object_hash;
 
-final class GetSetEscaperServiceTest extends TestCase
+final class GetSetEscaperServiceTest extends AbstractUnitTestCase
 {
     use DiTrait2;
 

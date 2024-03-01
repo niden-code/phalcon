@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Attributes;
 
 use Phalcon\Html\Attributes;
 use Phalcon\Support\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Html\Attributes :: __construct()

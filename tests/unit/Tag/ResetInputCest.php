@@ -19,33 +19,36 @@ use UnitTester;
 class ResetInputCest
 {
     /**
-     * Tests Phalcon\Tag :: resetInput()
+     * Tests Phalcon\Tag :: resetInput() - displayTo
      *
-     * Note: The Tag::resetInput should not clear $_POST data.
-     *
-     * @issue  https://github.com/phalcon/cphalcon/issues/11319
-     * @issue  https://github.com/phalcon/cphalcon/issues/12099
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2016-01-20
+     * @since  2014-09-05
      */
-    public function tagResetInputShouldNotClearPOST(UnitTester $I)
+    public function tagResetInputDisplayTo(UnitTester $I)
     {
-        $I->wantToTest('Tag - resetInput() - should not clear POST data');
-
-        $_POST = [
-            'a' => '1',
-            'b' => '2',
-        ];
-
+        $I->wantToTest('Tag - resetInput() - displayTo()');
+        Tag::setDocType(Tag::XHTML10_STRICT);
+        $options  = 'x_name';
+        $expected = '<input type="text" id="x_name" name="x_name" '
+            . 'value="x_other" />';
+        Tag::displayTo('x_name', 'x_other');
+        $actual = Tag::textField($options);
         Tag::resetInput();
-
-        $I->assertSame(
-            [
-                'a' => '1',
-                'b' => '2',
-            ],
-            $_POST
-        );
+        $I->assertSame($expected, $actual);
+        $expected = '<input type="text" id="x_name" name="x_name" />';
+        $actual   = Tag::textField($options);
+        $I->assertSame($expected, $actual);
+        Tag::setDocType(Tag::HTML5);
+        $options  = 'x_name';
+        $expected = '<input type="text" id="x_name" name="x_name" '
+            . 'value="x_other">';
+        Tag::displayTo('x_name', 'x_other');
+        $actual = Tag::textField($options);
+        Tag::resetInput();
+        $I->assertSame($expected, $actual);
+        $expected = '<input type="text" id="x_name" name="x_name">';
+        $actual   = Tag::textField($options);
+        $I->assertSame($expected, $actual);
     }
 
     /**
@@ -100,35 +103,32 @@ class ResetInputCest
     }
 
     /**
-     * Tests Phalcon\Tag :: resetInput() - displayTo
+     * Tests Phalcon\Tag :: resetInput()
      *
+     * Note: The Tag::resetInput should not clear $_POST data.
+     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/11319
+     * @issue  https://github.com/phalcon/cphalcon/issues/12099
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
+     * @since  2016-01-20
      */
-    public function tagResetInputDisplayTo(UnitTester $I)
+    public function tagResetInputShouldNotClearPOST(UnitTester $I)
     {
-        $I->wantToTest('Tag - resetInput() - displayTo()');
-        Tag::setDocType(Tag::XHTML10_STRICT);
-        $options  = 'x_name';
-        $expected = '<input type="text" id="x_name" name="x_name" '
-            . 'value="x_other" />';
-        Tag::displayTo('x_name', 'x_other');
-        $actual = Tag::textField($options);
+        $I->wantToTest('Tag - resetInput() - should not clear POST data');
+
+        $_POST = [
+            'a' => '1',
+            'b' => '2',
+        ];
+
         Tag::resetInput();
-        $I->assertSame($expected, $actual);
-        $expected = '<input type="text" id="x_name" name="x_name" />';
-        $actual   = Tag::textField($options);
-        $I->assertSame($expected, $actual);
-        Tag::setDocType(Tag::HTML5);
-        $options  = 'x_name';
-        $expected = '<input type="text" id="x_name" name="x_name" '
-            . 'value="x_other">';
-        Tag::displayTo('x_name', 'x_other');
-        $actual = Tag::textField($options);
-        Tag::resetInput();
-        $I->assertSame($expected, $actual);
-        $expected = '<input type="text" id="x_name" name="x_name">';
-        $actual   = Tag::textField($options);
-        $I->assertSame($expected, $actual);
+
+        $I->assertSame(
+            [
+                'a' => '1',
+                'b' => '2',
+            ],
+            $_POST
+        );
     }
 }

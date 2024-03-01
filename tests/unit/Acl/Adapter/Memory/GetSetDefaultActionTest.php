@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Enum;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetDefaultActionTest extends TestCase
+final class GetSetDefaultActionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getDefaultAction()/setDefaultAction()

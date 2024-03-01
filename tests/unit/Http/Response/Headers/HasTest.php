@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Http\Response\Headers;
 
 use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Http\Response\Headers;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class HasTest extends TestCase
+final class HasTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response\Headers :: has()

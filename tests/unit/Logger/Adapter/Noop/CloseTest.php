@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Logger\Adapter\Noop;
 
 use Phalcon\Logger\Adapter\Noop;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class CloseTest extends TestCase
+final class CloseTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Noop :: close()

@@ -18,9 +18,9 @@ use Phalcon\Annotations\Adapter\Apcu;
 use Phalcon\Annotations\AnnotationsFactory;
 use Phalcon\Config\Config;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class LoadTest extends TestCase
+final class LoadTest extends AbstractUnitTestCase
 {
     use FactoryTrait2;
 

@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Unit\Support\Debug\Dump;
 
 use Phalcon\Support\Debug\Dump;
 use Phalcon\Tests\Fixtures\Support\Dump\ClassProperties;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function file_get_contents;
 use function strip_tags;
@@ -23,7 +23,7 @@ use function trim;
 
 use const PHP_OS_FAMILY;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Debug\Dump :: __construct() - dump properties
@@ -44,10 +44,10 @@ final class ConstructTest extends TestCase
         $class = new ClassProperties();
         $dump  = new Dump([], true);
 
-        $actual = callProtectedMethod($dump, 'output', $class);
+        $actual = $this->callProtectedMethod($dump, 'output', $class);
 
         $expected = file_get_contents(
-            dataDir2('fixtures/Support/Dump/class_properties.txt')
+            self::dataDir('fixtures/Support/Dump/class_properties.txt')
         );
 
         // Test without HTML

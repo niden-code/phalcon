@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Response;
 
 use Phalcon\Http\Response;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetEtagTest extends TestCase
+final class SetEtagTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response :: setEtag()

@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetTargetPathTest extends TestCase
+ * Class GetSetTargetPathTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetSetTargetPathTest extends TestCase
+final class GetSetTargetPathTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: getTargetPath() / setTargetPath()

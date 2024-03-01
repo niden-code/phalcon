@@ -15,26 +15,10 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Enum;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetActiveRoleTest extends TestCase
+final class GetActiveRoleTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: getActiveRole() - default
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testAclAdapterMemoryGetActiveRoleDefault(): void
-    {
-        $acl = new Memory();
-
-        $actual = $acl->getActiveRole();
-        $this->assertNull($actual);
-    }
-
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getActiveRole() - default
      *
@@ -58,5 +42,21 @@ final class GetActiveRoleTest extends TestCase
         $expected = 'Guests';
         $actual   = $acl->getActiveRole();
         $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: getActiveRole() - default
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testAclAdapterMemoryGetActiveRoleDefault(): void
+    {
+        $acl = new Memory();
+
+        $actual = $acl->getActiveRole();
+        $this->assertNull($actual);
     }
 }

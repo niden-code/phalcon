@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\UploadedFile;
 
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetClientMediaTypeTest extends TestCase
+final class GetClientMediaTypeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getClientMediaType()

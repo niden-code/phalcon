@@ -11,57 +11,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Ol;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Ol;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Html\Helper\Ol :: __invoke()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlHelperOlUnderscoreInvoke(
-        string $indent,
-        string $delimiter,
-        array $attributes,
-        array $addOptions,
-        string $expected
-    ): void {
-        $escaper = new Escaper();
-        $helper  = new Ol($escaper);
-
-        $result = $helper($indent, $delimiter, $attributes);
-        foreach ($addOptions as $add) {
-            $result->add($add[0], $add[1], $add[2]);
-        }
-
-        $actual   = (string)$result;
-        $this->assertSame($expected, $actual);
-
-        $factory = new TagFactory($escaper);
-        $locator = $factory->newInstance('ol');
-
-        $result = $locator($indent, $delimiter, $attributes);
-        foreach ($addOptions as $add) {
-            $result->add($add[0], $add[1], $add[2]);
-        }
-
-        $actual = (string)$result;
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array
      */
@@ -161,7 +119,7 @@ final class UnderscoreInvokeTest extends TestCase
                     ],
                 ],
                 "<ol id=\"carsList\">+--<li class=\"active\">&gt; Ferrari</li>+"
-                    . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ol>",
+                . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ol>",
             ],
             [
                 '    ',
@@ -256,8 +214,48 @@ final class UnderscoreInvokeTest extends TestCase
                     ],
                 ],
                 "<ol id=\"carsList\">+--<li class=\"active\">> Ferrari</li>+"
-                    . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ol>",
+                . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ol>",
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Ol :: __invoke()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlHelperOlUnderscoreInvoke(
+        string $indent,
+        string $delimiter,
+        array $attributes,
+        array $addOptions,
+        string $expected
+    ): void {
+        $escaper = new Escaper();
+        $helper  = new Ol($escaper);
+
+        $result = $helper($indent, $delimiter, $attributes);
+        foreach ($addOptions as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
+
+        $actual = (string)$result;
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('ol');
+
+        $result = $locator($indent, $delimiter, $attributes);
+        foreach ($addOptions as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
+
+        $actual = (string)$result;
+        $this->assertSame($expected, $actual);
     }
 }

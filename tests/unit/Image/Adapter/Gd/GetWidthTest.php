@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Codeception\Example;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('gd')]
-final class GetWidthTest extends TestCase
+final class GetWidthTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -30,27 +30,27 @@ final class GetWidthTest extends TestCase
     {
         return [
             [
-                dataDir2('assets/images/example-gif.gif'),
+                self::dataDir('assets/images/example-gif.gif'),
                 960,
             ],
             [
-                dataDir2('assets/images/example-jpg.jpg'),
+                self::dataDir('assets/images/example-jpg.jpg'),
                 1820,
             ],
             [
-                dataDir2('assets/images/example-png.png'),
+                self::dataDir('assets/images/example-png.png'),
                 82,
             ],
             [
-                dataDir2('assets/images/example-wbmp.wbmp'),
+                self::dataDir('assets/images/example-wbmp.wbmp'),
                 640,
             ],
             [
-                dataDir2('assets/images/example-webp.webp'),
+                self::dataDir('assets/images/example-webp.webp'),
                 1536,
             ],
             [
-                dataDir2('assets/images/example-xbm.xbm'),
+                self::dataDir('assets/images/example-xbm.xbm'),
                 206,
             ],
         ];

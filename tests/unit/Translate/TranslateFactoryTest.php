@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Unit\Translate;
 
 use Exception as BaseException;
 use Phalcon\Support\Exception as SupportException;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Csv;
@@ -23,7 +24,6 @@ use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
 use Phalcon\Translate\TranslateFactory;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
 
 use function strtolower;
 use function uniqid;
@@ -31,7 +31,7 @@ use function uniqid;
 use const PHP_OS;
 
 #[RequiresPhpExtension('gettext')]
-final class TranslateFactoryTest extends TestCase
+final class TranslateFactoryTest extends AbstractUnitTestCase
 {
     use FactoryTrait2;
 
@@ -174,18 +174,18 @@ final class TranslateFactoryTest extends TestCase
     {
         return [
             'en' => [
-                'content' => dataDir2('assets/translation/csv/en.csv'),
+                'content' => self::dataDir('assets/translation/csv/en.csv'),
             ],
             'es' => [
-                'content' => dataDir2('assets/translation/csv/es_ES.csv'),
+                'content' => self::dataDir('assets/translation/csv/es_ES.csv'),
             ],
             'fr' => [
-                'content'   => dataDir2('assets/translation/csv/fr_FR.csv'),
+                'content'   => self::dataDir('assets/translation/csv/fr_FR.csv'),
                 'delimiter' => '|',
                 'enclosure' => "'",
             ],
             'ru' => [
-                'content' => dataDir2('assets/translation/csv/ru_RU.csv'),
+                'content' => self::dataDir('assets/translation/csv/ru_RU.csv'),
             ],
         ];
     }

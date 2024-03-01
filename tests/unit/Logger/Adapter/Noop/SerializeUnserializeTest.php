@@ -15,14 +15,14 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Noop;
 
 use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function dataDir;
 use function file_get_contents;
 use function serialize;
 
-final class SerializeUnserializeTest extends TestCase
+final class SerializeUnserializeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Noop :: serialize()
@@ -50,7 +50,7 @@ final class SerializeUnserializeTest extends TestCase
      */
     public function testLoggerAdapterNoopUnserialize(): void
     {
-        $serialized = file_get_contents(dataDir2('assets/logger/logger.serialized'));
+        $serialized = file_get_contents(self::dataDir('assets/logger/logger.serialized'));
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("This object cannot be unserialized");

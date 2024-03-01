@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class AddCssTest extends TestCase
+ * Class AddCssTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class AddCssTest extends TestCase
+final class AddCssTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: addCss()

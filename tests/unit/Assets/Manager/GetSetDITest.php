@@ -17,9 +17,9 @@ use Phalcon\Assets\Manager;
 use Phalcon\Di\Di;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetDITest extends TestCase
+final class GetSetDITest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Assets\Manager :: getDI() / setDI()

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\StreamFactory;
 
 use Phalcon\Http\Message\Factories\StreamFactory;
 use Phalcon\Http\Message\Interfaces\StreamFactoryInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: __construct()

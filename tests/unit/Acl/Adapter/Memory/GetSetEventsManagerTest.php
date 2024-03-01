@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Events\Manager;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetEventsManagerTest extends TestCase
+final class GetSetEventsManagerTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: getEventsManager()/setEventsManager()

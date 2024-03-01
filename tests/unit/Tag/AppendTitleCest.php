@@ -52,34 +52,34 @@ class AppendTitleCest extends TagSetup
     }
 
     /**
-     * Tests Phalcon\Tag :: appendTitle() - separator
+     * Tests Phalcon\Tag :: appendTitle() - array
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-09-05
      */
-    public function tagAppendTitleSeparator(UnitTester $I)
+    public function tagAppendTitleArray(UnitTester $I)
     {
-        $I->wantToTest('Tag - appendTitle() - separator');
+        $I->wantToTest('Tag - appendTitle() - array');
 
         Tag::resetInput();
 
-        Tag::setTitle('Title');
-        Tag::setTitleSeparator('|');
+        Tag::setTitle('Main');
+        Tag::setTitleSeparator(' - ');
 
-        Tag::appendTitle('Class');
+        Tag::appendTitle(['Category', 'Title']);
 
         $I->assertSame(
-            'Title',
+            'Main',
             Tag::getTitle(false, false)
         );
 
         $I->assertSame(
-            'Title|Class',
+            'Main - Category - Title',
             Tag::getTitle(false, true)
         );
 
         $I->assertSame(
-            '<title>Title|Class</title>' . PHP_EOL,
+            '<title>Main - Category - Title</title>' . PHP_EOL,
             Tag::renderTitle()
         );
     }
@@ -101,39 +101,6 @@ class AppendTitleCest extends TagSetup
 
         Tag::appendTitle('Category');
         Tag::appendTitle('Title');
-
-        $I->assertSame(
-            'Main',
-            Tag::getTitle(false, false)
-        );
-
-        $I->assertSame(
-            'Main - Category - Title',
-            Tag::getTitle(false, true)
-        );
-
-        $I->assertSame(
-            '<title>Main - Category - Title</title>' . PHP_EOL,
-            Tag::renderTitle()
-        );
-    }
-
-    /**
-     * Tests Phalcon\Tag :: appendTitle() - array
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2012-09-05
-     */
-    public function tagAppendTitleArray(UnitTester $I)
-    {
-        $I->wantToTest('Tag - appendTitle() - array');
-
-        Tag::resetInput();
-
-        Tag::setTitle('Main');
-        Tag::setTitleSeparator(' - ');
-
-        Tag::appendTitle(['Category', 'Title']);
 
         $I->assertSame(
             'Main',
@@ -181,6 +148,39 @@ class AppendTitleCest extends TagSetup
 
         $I->assertSame(
             '<title>Main</title>' . PHP_EOL,
+            Tag::renderTitle()
+        );
+    }
+
+    /**
+     * Tests Phalcon\Tag :: appendTitle() - separator
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2012-09-05
+     */
+    public function tagAppendTitleSeparator(UnitTester $I)
+    {
+        $I->wantToTest('Tag - appendTitle() - separator');
+
+        Tag::resetInput();
+
+        Tag::setTitle('Title');
+        Tag::setTitleSeparator('|');
+
+        Tag::appendTitle('Class');
+
+        $I->assertSame(
+            'Title',
+            Tag::getTitle(false, false)
+        );
+
+        $I->assertSame(
+            'Title|Class',
+            Tag::getTitle(false, true)
+        );
+
+        $I->assertSame(
+            '<title>Title|Class</title>' . PHP_EOL,
             Tag::renderTitle()
         );
     }

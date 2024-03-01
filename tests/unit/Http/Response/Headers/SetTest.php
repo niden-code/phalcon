@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Http\Response\Headers;
 
 use Phalcon\Http\Response\Headers;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class SetTest extends TestCase
+final class SetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response\Headers :: set()

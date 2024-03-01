@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class ReflectionTest extends TestCase
+final class ReflectionTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -81,7 +81,7 @@ final class ReflectionTest extends TestCase
                 $hash = $element[3];
 
                 $resultImage = 'reflection-' . $height . '-' . $opacity . '-' . ((int)$fade) . '.' . $type;
-                $output      = outputDir2($outputDir . '/' . $resultImage);
+                $output      = self::outputDir($outputDir . '/' . $resultImage);
 
                 $image = new Gd($imagePath);
 
@@ -94,7 +94,7 @@ final class ReflectionTest extends TestCase
                 $actual = $this->checkImageHash($output, $hash);
                 $this->assertTrue($actual);
 
-                safeDeleteFile2($output);
+                $this->safeDeleteFile($output);
             }
         }
     }

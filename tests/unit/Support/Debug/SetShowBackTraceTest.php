@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Debug;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetShowBackTraceTest extends TestCase
+final class SetShowBackTraceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Debug :: setShowBackTrace()

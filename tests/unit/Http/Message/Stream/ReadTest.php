@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
-final class ReadTest extends TestCase
+final class ReadTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: read()
@@ -31,7 +31,7 @@ final class ReadTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 
@@ -51,7 +51,7 @@ final class ReadTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A valid resource is required.');
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 

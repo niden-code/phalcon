@@ -22,14 +22,14 @@ use Phalcon\Logger\Enum;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
 use Phalcon\Tests1\Fixtures\Logger\Adapter\StreamFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 use function file_get_contents;
 use function logsDir;
 
-final class ProcessTest extends TestCase
+final class ProcessTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: process()
@@ -41,8 +41,8 @@ final class ProcessTest extends TestCase
      */
     public function testLoggerAdapterStreamProcess(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $timezone   = date_default_timezone_get();
         $datetime   = new DateTimeImmutable('now', new DateTimeZone($timezone));
         $adapter    = new Stream($outputPath . $fileName);
@@ -60,7 +60,7 @@ final class ProcessTest extends TestCase
 
         $actual = $adapter->close();
         $this->assertTrue($actual);
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -71,8 +71,8 @@ final class ProcessTest extends TestCase
      */
     public function testLoggerAdapterStreamProcessException(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage(
@@ -94,6 +94,6 @@ final class ProcessTest extends TestCase
         );
         $adapter->process($item);
 
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 }

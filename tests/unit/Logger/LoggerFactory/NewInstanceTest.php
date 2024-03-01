@@ -18,12 +18,12 @@ use Phalcon\Logger\AdapterFactory;
 use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerFactory;
 use Phalcon\Logger\LoggerInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function logsDir;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\LoggerFactory :: newInstance()
@@ -35,8 +35,8 @@ final class NewInstanceTest extends TestCase
      */
     public function testLoggerLoggerFactoryNewInstance(): void
     {
-        $logPath = logsDir2();
-        $fileName = getNewFileName2('log');
+        $logPath = $this->logsDir();
+        $fileName = $this->getNewFileName('log');
         $adapter = new Stream($logPath . $fileName);
         $factory = new LoggerFactory(new AdapterFactory());
         $logger = $factory->newInstance(

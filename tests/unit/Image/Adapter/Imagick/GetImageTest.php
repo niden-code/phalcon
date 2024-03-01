@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('imagick')]
-final class GetImageTest extends TestCase
+final class GetImageTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: getImage()
@@ -31,7 +31,7 @@ final class GetImageTest extends TestCase
     public function testImageAdapterImagickGetImage(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $class  = \Imagick::class;

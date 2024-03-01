@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class SetAdaptersTest extends TestCase
+final class SetAdaptersTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: setAdapters()
@@ -30,9 +30,9 @@ final class SetAdaptersTest extends TestCase
      */
     public function testLoggerSetAdapters(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
 
@@ -57,8 +57,8 @@ final class SetAdaptersTest extends TestCase
         $this->assertInstanceOf($class, $adapters['one']);
         $this->assertInstanceOf($class, $adapters['two']);
 
-        safeDeleteFile2($outputPath . $fileName1);
-        safeDeleteFile2($outputPath . $fileName2);
+        $this->safeDeleteFile($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName2);
     }
 
     /**
@@ -71,9 +71,9 @@ final class SetAdaptersTest extends TestCase
      */
     public function testLoggerSetAdaptersConstructor(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
 
@@ -93,7 +93,7 @@ final class SetAdaptersTest extends TestCase
         $this->assertInstanceOf($class, $adapters['one']);
         $this->assertInstanceOf($class, $adapters['two']);
 
-        safeDeleteFile2($outputPath . $fileName1);
-        safeDeleteFile2($outputPath . $fileName2);
+        $this->safeDeleteFile($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName2);
     }
 }

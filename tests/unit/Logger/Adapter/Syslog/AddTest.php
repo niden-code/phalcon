@@ -23,12 +23,12 @@ use DateTimeZone;
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class AddTest extends TestCase
+final class AddTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: add()
@@ -40,7 +40,7 @@ final class AddTest extends TestCase
      */
     public function testLoggerAdapterSyslogAdd(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
         $timezone   = date_default_timezone_get();
         $datetime   = new DateTimeImmutable('now', new DateTimeZone($timezone));
         $adapter    = new Syslog($streamName);

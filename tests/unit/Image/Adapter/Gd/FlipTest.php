@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class FlipTest extends TestCase
+final class FlipTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -68,7 +68,7 @@ final class FlipTest extends TestCase
         foreach ($this->getImages() as $type => $imagePath) {
             foreach ($params[$type] as [$direction, $hash]) {
                 $resultImage = 'flip-' . $direction . '.' . $type;
-                $output      = outputDir2($outputDir . '/' . $resultImage);
+                $output      = self::outputDir($outputDir . '/' . $resultImage);
 
                 $image = new Gd($imagePath);
 
@@ -81,7 +81,7 @@ final class FlipTest extends TestCase
                 $actual = $this->checkImageHash($output, $hash);
                 $this->assertTrue($actual);
 
-                safeDeleteFile2($output);
+                $this->safeDeleteFile($output);
             }
         }
     }

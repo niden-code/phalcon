@@ -16,11 +16,11 @@ namespace Phalcon\Tests\Unit\Annotations\Reflection;
 use Phalcon\Annotations\Collection;
 use Phalcon\Annotations\Reader;
 use Phalcon\Annotations\Reflection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class GetPropertiesAnnotationsTest extends TestCase
+final class GetPropertiesAnnotationsTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Annotations\Reflection :: getPropertiesAnnotations()
@@ -79,6 +79,6 @@ final class GetPropertiesAnnotationsTest extends TestCase
      */
     protected function setUp(): void
     {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
     }
 }

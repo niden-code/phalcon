@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
 use function file_get_contents;
 
-final class GetContentsTest extends TestCase
+final class GetContentsTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: getContents()
@@ -33,7 +33,7 @@ final class GetContentsTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 
@@ -53,7 +53,7 @@ final class GetContentsTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The resource is not readable.');
 
-        $fileName = dataDir2('assets/stream/mit-empty.txt');
+        $fileName = self::dataDir('assets/stream/mit-empty.txt');
         $stream   = new Stream($fileName, 'wb');
 
         $actual = $stream->getContents();
@@ -71,7 +71,7 @@ final class GetContentsTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
 
         $stream->seek(626);

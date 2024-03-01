@@ -17,11 +17,11 @@ use Phalcon\Annotations\Annotation;
 use Phalcon\Annotations\Collection;
 use Phalcon\Annotations\Reader;
 use Phalcon\Annotations\Reflection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Annotations\Reflection :: __construct()
@@ -181,6 +181,6 @@ final class ConstructTest extends TestCase
      */
     protected function setUp(): void
     {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
     }
 }

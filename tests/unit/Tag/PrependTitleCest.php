@@ -51,34 +51,36 @@ class PrependTitleCest
     }
 
     /**
-     * Tests Phalcon\Tag :: prependTitle() - separator
+     * Tests Phalcon\Tag :: prependTitle() - array
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-09-05
      */
-    public function tagPrependTitleSeparator(UnitTester $I)
+    public function tagPrependTitleArray(UnitTester $I)
     {
-        $I->wantToTest('Tag - prependTitle() - separator');
+        $I->wantToTest('Tag - prependTitle() - array');
 
         Tag::resetInput();
 
-        Tag::setTitle('Title');
-        Tag::setTitleSeparator('|');
+        Tag::setTitle('Main');
+        Tag::setTitleSeparator(' - ');
 
-        Tag::prependTitle('Class');
+        Tag::prependTitle(
+            ['Category', 'Title']
+        );
 
         $I->assertSame(
-            'Title',
+            'Main',
             Tag::getTitle(false, false)
         );
 
         $I->assertSame(
-            'Class|Title',
+            'Title - Category - Main',
             Tag::getTitle(true, false)
         );
 
         $I->assertSame(
-            '<title>Class|Title</title>' . PHP_EOL,
+            '<title>Title - Category - Main</title>' . PHP_EOL,
             Tag::renderTitle()
         );
     }
@@ -100,41 +102,6 @@ class PrependTitleCest
 
         Tag::prependTitle('Category');
         Tag::prependTitle('Title');
-
-        $I->assertSame(
-            'Main',
-            Tag::getTitle(false, false)
-        );
-
-        $I->assertSame(
-            'Title - Category - Main',
-            Tag::getTitle(true, false)
-        );
-
-        $I->assertSame(
-            '<title>Title - Category - Main</title>' . PHP_EOL,
-            Tag::renderTitle()
-        );
-    }
-
-    /**
-     * Tests Phalcon\Tag :: prependTitle() - array
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2012-09-05
-     */
-    public function tagPrependTitleArray(UnitTester $I)
-    {
-        $I->wantToTest('Tag - prependTitle() - array');
-
-        Tag::resetInput();
-
-        Tag::setTitle('Main');
-        Tag::setTitleSeparator(' - ');
-
-        Tag::prependTitle(
-            ['Category', 'Title']
-        );
 
         $I->assertSame(
             'Main',
@@ -185,6 +152,39 @@ class PrependTitleCest
 
         $I->assertSame(
             '<title>Main</title>' . PHP_EOL,
+            Tag::renderTitle()
+        );
+    }
+
+    /**
+     * Tests Phalcon\Tag :: prependTitle() - separator
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2012-09-05
+     */
+    public function tagPrependTitleSeparator(UnitTester $I)
+    {
+        $I->wantToTest('Tag - prependTitle() - separator');
+
+        Tag::resetInput();
+
+        Tag::setTitle('Title');
+        Tag::setTitleSeparator('|');
+
+        Tag::prependTitle('Class');
+
+        $I->assertSame(
+            'Title',
+            Tag::getTitle(false, false)
+        );
+
+        $I->assertSame(
+            'Class|Title',
+            Tag::getTitle(true, false)
+        );
+
+        $I->assertSame(
+            '<title>Class|Title</title>' . PHP_EOL,
             Tag::renderTitle()
         );
     }

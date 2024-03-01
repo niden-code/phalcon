@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class GetNameTest extends TestCase
+final class GetNameTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: getName()

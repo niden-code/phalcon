@@ -17,14 +17,14 @@ use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Image\Exception;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function outputDir2;
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class ResizeTest extends TestCase
+final class ResizeTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -35,14 +35,14 @@ final class ResizeTest extends TestCase
     {
         return [
             [
-                dataDir2('assets/images/example-jpg.jpg'),
+                self::dataDir('assets/images/example-jpg.jpg'),
                 'resize.jpg',
                 75,
                 197,
                 'fbf9f3e3c3c1c183',
             ],
             [
-                dataDir2('assets/images/example-png.png'),
+                self::dataDir('assets/images/example-png.png'),
                 'resize.jpg',
                 50,
                 50,
@@ -147,7 +147,7 @@ final class ResizeTest extends TestCase
         $this->checkJpegSupport($this);
 
         $outputDir = 'image/gd';
-        $output    = outputDir2($outputDir . '/' . $file);
+        $output    = self::outputDir($outputDir . '/' . $file);
 
         $image = new Gd($source);
 
@@ -166,7 +166,7 @@ final class ResizeTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -193,7 +193,7 @@ final class ResizeTest extends TestCase
     ): void {
         $this->checkJpegSupport($this);
 
-        $source = dataDir2('assets/images/example-jpg.jpg');
+        $source = self::dataDir('assets/images/example-jpg.jpg');
         $image  = new Gd($source);
 
         $this->expectException(Exception::class);

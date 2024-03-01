@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
-final class RewindTest extends TestCase
+final class RewindTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: rewind()
@@ -27,7 +27,7 @@ final class RewindTest extends TestCase
      */
     public function testHttpMessageStreamRewind()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName);
 
         $stream->seek(10);
@@ -52,7 +52,7 @@ final class RewindTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A valid resource is required.');
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->detach();
 

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Request;
 
 use Phalcon\Http\Message\Request;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetRequestTargetTest extends TestCase
+final class GetRequestTargetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Request :: getRequestTarget()

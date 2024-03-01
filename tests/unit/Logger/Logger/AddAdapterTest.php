@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function file_get_contents;
 
-final class AddAdapterTest extends TestCase
+final class AddAdapterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: addAdapter()
@@ -32,9 +32,9 @@ final class AddAdapterTest extends TestCase
      */
     public function testLoggerAddAdapter(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
 
@@ -61,10 +61,10 @@ final class AddAdapterTest extends TestCase
 
         $content = file_get_contents($outputPath . $fileName1);
         $this->assertStringContainsString('Hello', $content);
-        safeDeleteFile2($fileName1);
+        $this->safeDeleteFile($fileName1);
 
         $content = file_get_contents($outputPath . $fileName2);
         $this->assertStringContainsString('Hello', $content);
-        safeDeleteFile2($fileName2);
+        $this->safeDeleteFile($fileName2);
     }
 }

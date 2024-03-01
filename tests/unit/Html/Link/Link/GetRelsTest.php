@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Link\Link;
 
 use Phalcon\Html\Link\Link;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetRelsTest extends TestCase
+final class GetRelsTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\Link :: getRels()

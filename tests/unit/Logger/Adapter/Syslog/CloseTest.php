@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class CloseTest extends TestCase
+final class CloseTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: close()
@@ -28,7 +28,7 @@ final class CloseTest extends TestCase
      */
     public function testLoggerAdapterSyslogClose(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
 
         $adapter = new Syslog($streamName);
 
@@ -47,7 +47,7 @@ final class CloseTest extends TestCase
      */
     public function testLoggerAdapterSyslogCloseException(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
         $adapter = new Syslog($streamName);
 
         $adapter->begin();

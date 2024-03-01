@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Html\EscaperFactory;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Escaper\EscaperInterface;
 use Phalcon\Html\EscaperFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\EscaperFactory :: newInstance()

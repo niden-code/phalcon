@@ -19,12 +19,12 @@ use Phalcon\Logger\Exception;
 use Phalcon\Logger\Formatter\Json;
 use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function file_get_contents;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: __construct() - implement PSR
@@ -71,8 +71,8 @@ final class ConstructTest extends TestCase
      */
     public function testLoggerConstructStreamWithJsonConstants(): void
     {
-        $fileName = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter = new Stream($outputPath . $fileName);
 
         $adapter->setFormatter(new Json());
@@ -104,7 +104,7 @@ final class ConstructTest extends TestCase
         $this->assertStringContainsString($expected, $content);
 
         $adapter->close();
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -117,8 +117,8 @@ final class ConstructTest extends TestCase
      */
     public function testLoggerConstructStreamReadOnlyModeException(): void
     {
-        $fileName = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $file = $outputPath . $fileName;
 
         $this->expectException(Exception::class);

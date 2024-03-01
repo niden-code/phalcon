@@ -17,11 +17,11 @@ use Phalcon\Di\Di;
 use Phalcon\Flash\Direct;
 use Phalcon\Flash\Exception;
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function spl_object_hash;
 
-final class GetSetEscaperServiceTest extends TestCase
+final class GetSetEscaperServiceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: getEscaperService()/setEscaperService()

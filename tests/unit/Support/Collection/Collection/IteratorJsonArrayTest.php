@@ -15,13 +15,13 @@ namespace Phalcon\Tests\Unit\Support\Collection\Collection;
 
 use Phalcon\Support\Collection;
 use Phalcon\Tests1\Fixtures\Support\Collection\CollectionFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function json_encode;
 
 use const JSON_PRETTY_PRINT;
 
-final class IteratorJsonArrayTest extends TestCase
+final class IteratorJsonArrayTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Collection :: getIterator()

@@ -17,9 +17,9 @@ use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Exception;
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class AddInheritTest extends TestCase
+final class AddInheritTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addInherit()
@@ -39,6 +39,36 @@ final class AddInheritTest extends TestCase
         $addedInherit = $acl->addInherit('administrator', 'apprentice');
 
         $this->assertTrue($addedInherit);
+    }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: addInherit() - infinite loop
+     * exception
+     *
+     * @return void
+     *
+     * @author  Phalcon Team <team@phalcon.io>
+     * @since   2021-09-27
+     */
+    public function testAclAdapterMemoryAddInheritInfiniteLoopException(): void
+    {
+        $acl = new Memory();
+
+        $acl->addRole(new Role('administrator'));
+        $acl->addRole(new Role('member'));
+        $acl->addRole(new Role('guest'));
+
+        $acl->addInherit('administrator', 'member');
+        // Twice to ensure it gets ignored
+        $acl->addInherit('administrator', 'member');
+        $acl->addInherit('member', 'guest');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "Role 'administrator' (to inherit) produces an infinite loop"
+        );
+
+        $acl->addInherit('guest', 'administrator');
     }
 
     /**
@@ -132,35 +162,5 @@ final class AddInheritTest extends TestCase
 
         // Add Inherit
         $actual = $acl->addInherit('administrator', 'unknown');
-    }
-
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: addInherit() - infinite loop
-     * exception
-     *
-     * @return void
-     *
-     * @author  Phalcon Team <team@phalcon.io>
-     * @since   2021-09-27
-     */
-    public function testAclAdapterMemoryAddInheritInfiniteLoopException(): void
-    {
-        $acl = new Memory();
-
-        $acl->addRole(new Role('administrator'));
-        $acl->addRole(new Role('member'));
-        $acl->addRole(new Role('guest'));
-
-        $acl->addInherit('administrator', 'member');
-        // Twice to ensure it gets ignored
-        $acl->addInherit('administrator', 'member');
-        $acl->addInherit('member', 'guest');
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "Role 'administrator' (to inherit) produces an infinite loop"
-        );
-
-        $acl->addInherit('guest', 'administrator');
     }
 }

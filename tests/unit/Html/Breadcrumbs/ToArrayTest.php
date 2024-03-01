@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Breadcrumbs;
 
 use Phalcon\Html\Breadcrumbs;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToArrayTest extends TestCase
+final class ToArrayTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Breadcrumbs :: toArray()

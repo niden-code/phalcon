@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class BackgroundTest extends TestCase
+final class BackgroundTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: background()
@@ -33,13 +33,13 @@ final class BackgroundTest extends TestCase
     public function testImageAdapterImagickBackground(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Add a watermark to the bottom right of the image
-        $outputFile = outputDir2('image/imagick/background.jpg');
+        $outputFile = self::outputDir('image/imagick/background.jpg');
         $image->background('#000')
               ->save($outputFile)
         ;
@@ -54,6 +54,6 @@ final class BackgroundTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

@@ -16,18 +16,18 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Formatter\FormatterInterface;
 use Phalcon\Logger\Formatter\Line;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class GetSetFormatterTest extends TestCase
+final class GetSetFormatterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: getFormatter()/setFormatter()
      */
     public function testLoggerAdapterStreamGetSetFormatter(): void
     {
-        $fileName = getNewFileName2('log');
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName('log');
+        $fileName = $this->logsDir($fileName);
 
         $adapter = new Stream($fileName);
 
@@ -37,6 +37,6 @@ final class GetSetFormatterTest extends TestCase
         $this->assertInstanceOf(FormatterInterface::class, $actual);
 
         $adapter->close();
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 }

@@ -17,12 +17,12 @@ use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Exception;
 use Phalcon\Image\ImageFactory;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
 #[RequiresPhpExtension('imagick')]
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\ImageFactory :: newInstance()
@@ -35,7 +35,7 @@ final class NewInstanceTest extends TestCase
     public function testImageImageFactoryNewInstance(): void
     {
         $factory = new ImageFactory();
-        $file    = dataDir2('assets/images/example-jpg.jpg');
+        $file    = self::dataDir('assets/images/example-jpg.jpg');
         $file    = str_replace("/", DIRECTORY_SEPARATOR, $file);
         $name    = 'imagick';
 

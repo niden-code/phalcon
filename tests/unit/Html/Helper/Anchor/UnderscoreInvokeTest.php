@@ -11,46 +11,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Anchor;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Anchor;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Html\Helper\Anchor :: __invoke()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlHelperAnchorUnderscoreInvoke(
-        string $expected,
-        array $attributes,
-        bool $useEol
-    ): void {
-        $escaper = new Escaper();
-        $anchor  = new Anchor($escaper);
-
-        $actual   = $anchor('/myurl', 'click<>me', $attributes, $useEol);
-        $this->assertSame($expected, $actual);
-
-        $factory  = new TagFactory($escaper);
-        $locator  = $factory->newInstance('a');
-        $actual   = $locator('/myurl', 'click<>me', $attributes, $useEol);
-        $this->assertSame($expected, $actual);
-
-        $factory  = new TagFactory($escaper);
-        $actual   = $factory->a('/myurl', 'click<>me', $attributes, $useEol);
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array
      */
@@ -116,5 +83,36 @@ final class UnderscoreInvokeTest extends TestCase
                 true,
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Anchor :: __invoke()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlHelperAnchorUnderscoreInvoke(
+        string $expected,
+        array $attributes,
+        bool $useEol
+    ): void {
+        $escaper = new Escaper();
+        $anchor  = new Anchor($escaper);
+
+        $actual = $anchor('/myurl', 'click<>me', $attributes, $useEol);
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('a');
+        $actual  = $locator('/myurl', 'click<>me', $attributes, $useEol);
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $actual  = $factory->a('/myurl', 'click<>me', $attributes, $useEol);
+        $this->assertSame($expected, $actual);
     }
 }

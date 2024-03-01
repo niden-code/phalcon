@@ -14,15 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Annotations\Adapter;
 
 use Phalcon\Annotations\Reader;
-use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
-use PHPUnit\Framework\TestCase;
 
-use function dataDir2;
-
-final class GetSetReaderTest extends TestCase
+final class GetSetReaderTest extends AbstractAnnotationsAdapterTestCase
 {
-    use AnnotationsTrait2;
-
     /**
      * Tests Phalcon\Annotations\Adapter :: getReader()/setReader()
      *
@@ -40,7 +34,7 @@ final class GetSetReaderTest extends TestCase
         string $class,
         array $params
     ): void {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $adapter = new $class($params);
 

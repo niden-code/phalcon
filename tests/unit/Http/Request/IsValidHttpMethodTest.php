@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Request;
 
 use Phalcon\Http\Request;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
-final class IsValidHttpMethodTest extends TestCase
+final class IsValidHttpMethodTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]

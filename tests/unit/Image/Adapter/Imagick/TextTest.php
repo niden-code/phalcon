@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class TextTest extends TestCase
+final class TextTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: text()
@@ -33,7 +33,7 @@ final class TextTest extends TestCase
     public function testImageAdapterImagickText(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
@@ -45,12 +45,12 @@ final class TextTest extends TestCase
             100,
             '000099',
             12,
-            dataDir2('assets/fonts/Roboto-Thin.ttf')
+            self::dataDir('assets/fonts/Roboto-Thin.ttf')
         )
-              ->save(outputDir2('image/imagick/text.jpg'))
+              ->save(self::outputDir('image/imagick/text.jpg'))
         ;
 
-        $outputFile = outputDir2('image/imagick/')
+        $outputFile = self::outputDir('image/imagick/')
             . 'text.jpg';
 
         $this->assertFileExists($outputFile);
@@ -63,6 +63,6 @@ final class TextTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertSame($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

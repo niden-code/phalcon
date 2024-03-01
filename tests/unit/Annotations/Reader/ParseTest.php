@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Unit\Annotations\Reader;
 
 use Phalcon\Annotations\Exception;
 use Phalcon\Annotations\Reader;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use ReflectionException;
 
 use function dataDir2;
@@ -23,7 +23,7 @@ use function str_replace;
 
 use const DIRECTORY_SEPARATOR;
 
-final class ParseTest extends TestCase
+final class ParseTest extends AbstractUnitTestCase
 {
     /**
      * Test throws Phalcon\Annotations\Exception when got class with invalid
@@ -36,13 +36,13 @@ final class ParseTest extends TestCase
     {
         $filename    = 'fixtures' . DIRECTORY_SEPARATOR . 'Annotations'
             . DIRECTORY_SEPARATOR . 'TestInvalid.php';
-        $includeFile = str_replace("/", DIRECTORY_SEPARATOR, dataDir2($filename));
+        $includeFile = str_replace("/", DIRECTORY_SEPARATOR, self::dataDir($filename));
 
         $this->assertFileExists($includeFile);
 
         require_once $includeFile;
 
-        $file = dataDir2($filename);
+        $file = self::dataDir($filename);
 
         //directory based on DIRECTORY_SEPARATOR
         $file = str_replace("/", DIRECTORY_SEPARATOR, $file);
@@ -79,7 +79,7 @@ final class ParseTest extends TestCase
      */
     public function testReaderParse(): void
     {
-        $includeFile = dataDir2('fixtures/Annotations/TestClass.php');
+        $includeFile = self::dataDir('fixtures/Annotations/TestClass.php');
 
         $this->assertFileExists($includeFile);
 

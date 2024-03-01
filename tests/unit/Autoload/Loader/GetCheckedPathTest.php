@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
@@ -40,7 +40,7 @@ final class GetCheckedPathTest extends AbstractLoaderTestCase
         }
 
         $loader    = new Loader(true);
-        $directory = dataDir2('fixtures/Autoload/Example/Folders/Types/');
+        $directory = self::dataDir('fixtures/Autoload/Example/Folders/Types/');
         $loader->addDirectory($directory);
 
         $loader->autoload('Integer');

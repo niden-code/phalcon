@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class EofTest extends TestCase
+final class EofTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: eof()
@@ -26,7 +26,7 @@ final class EofTest extends TestCase
      */
     public function testHttpMessageStreamEof()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
         while (true !== feof($handle)) {
@@ -45,7 +45,7 @@ final class EofTest extends TestCase
      */
     public function testHttpMessageStreamEofDetached()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->detach();
 
@@ -61,7 +61,7 @@ final class EofTest extends TestCase
      */
     public function testHttpMessageStreamEofNotAtEof()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->seek(10);
 

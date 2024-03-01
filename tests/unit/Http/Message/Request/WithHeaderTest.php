@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Request;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Request;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithHeaderTest extends TestCase
+final class WithHeaderTest extends AbstractUnitTestCase
 {
     /**
      * @return array

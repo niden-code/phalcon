@@ -11,9 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Input;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Input\Color;
 use Phalcon\Html\Helper\Input\Date;
 use Phalcon\Html\Helper\Input\DateTime;
@@ -35,10 +33,53 @@ use Phalcon\Html\Helper\Input\Time;
 use Phalcon\Html\Helper\Input\Url;
 use Phalcon\Html\Helper\Input\Week;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                'x_name',
+                null,
+                [],
+                null,
+                '<input type="%s" id="x_name" name="x_name" />',
+            ],
+            [
+                'x_name',
+                null,
+                [
+                    'id' => 'x_new_id',
+                ],
+                null,
+                '<input type="%s" id="x_new_id" name="x_name" />',
+            ],
+            [
+                'x_name',
+                "24",
+                [
+                    'id' => 'x_new_id',
+                ],
+                null,
+                '<input type="%s" id="x_new_id" name="x_name" value="24" />',
+            ],
+            [
+                'x_name',
+                "24",
+                [
+                    'id' => 'x_new_id',
+                ],
+                "48",
+                '<input type="%s" id="x_new_id" name="x_name" value="48" />',
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Html\Helper\Input :: __invoke()
      *
@@ -125,49 +166,6 @@ final class UnderscoreInvokeTest extends TestCase
 
         $actual = (string)$result;
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return array
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                'x_name',
-                null,
-                [],
-                null,
-                '<input type="%s" id="x_name" name="x_name" />',
-            ],
-            [
-                'x_name',
-                null,
-                [
-                    'id' => 'x_new_id',
-                ],
-                null,
-                '<input type="%s" id="x_new_id" name="x_name" />',
-            ],
-            [
-                'x_name',
-                "24",
-                [
-                    'id' => 'x_new_id',
-                ],
-                null,
-                '<input type="%s" id="x_new_id" name="x_name" value="24" />',
-            ],
-            [
-                'x_name',
-                "24",
-                [
-                    'id' => 'x_new_id',
-                ],
-                "48",
-                '<input type="%s" id="x_new_id" name="x_name" value="48" />',
-            ],
-        ];
     }
 
     /**

@@ -13,9 +13,9 @@ namespace Phalcon\Tests\Unit\Html\Helper\Script;
 
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Script;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Helper\Script :: __toString() - empty

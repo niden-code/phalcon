@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
-final class SeekTest extends TestCase
+final class SeekTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: seek()
@@ -32,7 +32,7 @@ final class SeekTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
 
         $stream->seek(64);
@@ -56,7 +56,7 @@ final class SeekTest extends TestCase
      */
     public function testHttpMessageStreamSeekAfterFileSize()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
 
         $stream->seek(10240);
@@ -76,7 +76,7 @@ final class SeekTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The resource is not seekable.');
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new StreamFixture($fileName, 'rb');
 
         $stream->seek(10240);

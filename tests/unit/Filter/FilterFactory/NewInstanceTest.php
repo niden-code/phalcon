@@ -37,9 +37,9 @@ use Phalcon\Filter\Sanitize\Upper;
 use Phalcon\Filter\Sanitize\UpperFirst;
 use Phalcon\Filter\Sanitize\UpperWords;
 use Phalcon\Filter\Sanitize\Url;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Returns the example data

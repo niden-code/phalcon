@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Support\Helper\Str;
 use Phalcon\Support\Helper\Str\KebabCase;
 use Phalcon\Support\Helper\Str\PascalCase;
 use Phalcon\Support\Helper\Str\SnakeCase;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CaseTest extends TestCase
+final class CaseTest extends AbstractUnitTestCase
 {
     /**
      * @return array

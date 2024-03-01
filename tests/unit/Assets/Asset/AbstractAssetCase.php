@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Assets\Asset;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-abstract class AbstractAssetCase extends TestCase
+abstract class AbstractAssetCase extends AbstractUnitTestCase
 {
     /**
      * @return array[]

@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter;
 
 use ArrayAccess;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Translate\Adapter\CsvFixture;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
-use PHPUnit\Framework\TestCase;
 
-final class CsvTest extends TestCase
+final class CsvTest extends AbstractUnitTestCase
 {
     /**
      * Data provider for the query tests
@@ -299,7 +299,7 @@ final class CsvTest extends TestCase
     public function testTranslateAdapterCsvErrorLoadingFile(): void
     {
         $message  = "Error opening translation file '"
-            . dataDir2('assets/translation/csv/en.csv') . "'";
+            . self::dataDir('assets/translation/csv/en.csv') . "'";
         $language = $this->getCsvConfig()['en'];
 
         $this->expectException(Exception::class);
@@ -573,18 +573,18 @@ final class CsvTest extends TestCase
     {
         return [
             'en' => [
-                'content' => dataDir2('assets/translation/csv/en.csv'),
+                'content' => self::dataDir('assets/translation/csv/en.csv'),
             ],
             'es' => [
-                'content' => dataDir2('assets/translation/csv/es_ES.csv'),
+                'content' => self::dataDir('assets/translation/csv/es_ES.csv'),
             ],
             'fr' => [
-                'content'   => dataDir2('assets/translation/csv/fr_FR.csv'),
+                'content'   => self::dataDir('assets/translation/csv/fr_FR.csv'),
                 'delimiter' => '|',
                 'enclosure' => "'",
             ],
             'ru' => [
-                'content' => dataDir2('assets/translation/csv/ru_RU.csv'),
+                'content' => self::dataDir('assets/translation/csv/ru_RU.csv'),
             ],
         ];
     }

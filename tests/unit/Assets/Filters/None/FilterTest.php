@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Filters\None;
 
 use Phalcon\Assets\Filters\None;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class FilterTest extends TestCase
+final class FilterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Filters\None :: filter()

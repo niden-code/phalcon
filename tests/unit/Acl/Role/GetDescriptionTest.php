@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Role;
 
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetDescriptionTest extends TestCase
+final class GetDescriptionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: getDescription()
@@ -28,9 +28,9 @@ final class GetDescriptionTest extends TestCase
      */
     public function testAclRoleGetDescription(): void
     {
-        $name = 'Administrator';
+        $name        = 'Administrator';
         $description = 'The admin unit';
-        $role = new Role($name, $description);
+        $role        = new Role($name, $description);
 
         $expected = $description;
         $actual   = $role->getDescription();
@@ -50,7 +50,7 @@ final class GetDescriptionTest extends TestCase
         $name = 'Administrator';
         $role = new Role($name);
 
-        $actual   = $role->getDescription();
+        $actual = $role->getDescription();
         $this->assertEmpty($actual);
     }
 }

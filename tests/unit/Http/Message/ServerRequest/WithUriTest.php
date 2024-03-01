@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\ServerRequest;
 
 use Phalcon\Http\Message\ServerRequest;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithUriTest extends TestCase
+final class WithUriTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withUri()

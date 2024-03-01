@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
-final class TellTest extends TestCase
+final class TellTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: tell()
@@ -27,7 +27,7 @@ final class TellTest extends TestCase
      */
     public function testHttpMessageStreamTell()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 
@@ -48,7 +48,7 @@ final class TellTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A valid resource is required.');
 
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->detach();
 

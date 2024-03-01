@@ -14,19 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Annotations\Adapter;
 
 use Phalcon\Annotations\Collection;
-use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
-use PHPUnit\Framework\TestCase;
 use TestClass;
 
 use function array_keys;
-use function dataDir2;
-use function outputDir2;
-use function safeDeleteFile2;
 
-final class GetConstantsTest extends TestCase
+final class GetConstantsTest extends AbstractAnnotationsAdapterTestCase
 {
-    use AnnotationsTrait2;
-
     /**
      * Tests Phalcon\Annotations\Adapter :: getMethod()
      *
@@ -44,7 +37,7 @@ final class GetConstantsTest extends TestCase
         string $class,
         array $params
     ): void {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $adapter = new $class($params);
 
@@ -57,7 +50,7 @@ final class GetConstantsTest extends TestCase
         $actual   = $constantAnnotation;
         $this->assertInstanceOf($expected, $actual);
 
-        safeDeleteFile2(outputDir2('annotations/testclass.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 
     /**
@@ -77,7 +70,7 @@ final class GetConstantsTest extends TestCase
         string $class,
         array $params
     ): void {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $adapter = new $class($params);
 
@@ -91,6 +84,6 @@ final class GetConstantsTest extends TestCase
         $actual   = array_keys($constantAnnotations);
         $this->assertSame($expected, $actual);
 
-        safeDeleteFile2(outputDir2('annotations/testclass.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

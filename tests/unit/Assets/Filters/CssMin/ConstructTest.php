@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Assets\Filters\CssMin;
 
 use Phalcon\Assets\FilterInterface;
 use Phalcon\Assets\Filters\CssMin;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Filters\CssMin :: __construct() - no string

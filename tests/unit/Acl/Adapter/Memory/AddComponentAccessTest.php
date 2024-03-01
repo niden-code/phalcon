@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Acl\Adapter\Memory;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class AddComponentAccessTest extends TestCase
+final class AddComponentAccessTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: addComponentAccess()
@@ -32,7 +32,7 @@ final class AddComponentAccessTest extends TestCase
     {
         $acl = new Memory();
 
-        $added     = $acl->addComponent('Customer', ['index']);
+        $added = $acl->addComponent('Customer', ['index']);
         $this->assertTrue($added);
         $accessAdded = $acl->addComponentAccess('Customer', ['new']);
 
@@ -70,7 +70,7 @@ final class AddComponentAccessTest extends TestCase
      */
     public function testAclAdapterMemoryAddComponentAccessWrongAccessList(): void
     {
-        $acl = new Memory();
+        $acl  = new Memory();
         $post = new Component('Post');
 
         $acl->addComponent($post, ['update']);

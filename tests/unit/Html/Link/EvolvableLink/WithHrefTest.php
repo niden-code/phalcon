@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Link\EvolvableLink;
 
 use Phalcon\Html\Link\EvolvableLink;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithHrefTest extends TestCase
+final class WithHrefTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\Link :: withHref()

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\ServerRequestFactory;
 
 use Phalcon\Http\Message\Factories\ServerRequestFactory;
 use Phalcon\Http\Message\Interfaces\ServerRequestInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CreateServerRequestTest extends TestCase
+final class CreateServerRequestTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequestFactory :: createServerRequest()

@@ -15,29 +15,24 @@ namespace Phalcon\Tests1\Fixtures\Traits;
 
 use Phalcon\Config\Adapter\Ini;
 use Phalcon\Config\Config;
-
 use Phalcon\Config\ConfigInterface;
-
-use function dataDir;
-use function outputDir;
 
 /**
  * Trait FactoryTrait
  *
- * @property ConfigInterface   $config
- * @property array $arrayConfig
+ * @property ConfigInterface $config
+ * @property array           $arrayConfig
  */
 trait FactoryTrait2
 {
     /**
-     * @var ConfigInterface
-     */
-    protected ConfigInterface $config;
-
-    /**
      * @var array
      */
     protected array $arrayConfig;
+    /**
+     * @var ConfigInterface
+     */
+    protected ConfigInterface $config;
 
     /**
      * Initializes the main config
@@ -46,7 +41,7 @@ trait FactoryTrait2
      */
     protected function init(): void
     {
-        $configFile = dataDir2('assets/config/factory.ini');
+        $configFile = self::dataDir('assets/config/factory.ini');
 
         $this->config = new Ini($configFile, INI_SCANNER_NORMAL);
 
@@ -66,12 +61,12 @@ trait FactoryTrait2
                 'adapters' => [
                     0 => [
                         'adapter' => 'stream',
-                        'name'    => outputDir2('tests/logs/factory.log'),
+                        'name'    => self::outputDir('tests/logs/factory.log'),
 
                     ],
                     1 => [
                         'adapter' => 'stream',
-                        'name'    => outputDir2('tests/logs/factory.log'),
+                        'name'    => self::outputDir('tests/logs/factory.log'),
 
                     ],
                 ],

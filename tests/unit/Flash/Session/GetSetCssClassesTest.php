@@ -16,11 +16,11 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function ksort;
 
-final class GetSetCssClassesTest extends TestCase
+final class GetSetCssClassesTest extends AbstractUnitTestCase
 {
     use DiTrait2;
 

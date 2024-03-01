@@ -19,14 +19,14 @@ use Phalcon\Config\ConfigFactory;
 use Phalcon\Config\Exception;
 use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function dataDir;
 use function dataDir2;
 use function hash;
 
-final class LoadTest extends TestCase
+final class LoadTest extends AbstractUnitTestCase
 {
     use FactoryTrait2;
 
@@ -56,7 +56,7 @@ final class LoadTest extends TestCase
         $this->assertInstanceOf($class, $ini);
 
         //Issue 14756
-        $configFile = dataDir2('assets/config/config-with.in-file.name.ini');
+        $configFile = self::dataDir('assets/config/config-with.in-file.name.ini');
         $ini        = new Ini($configFile, INI_SCANNER_NORMAL);
         $this->assertInstanceOf($class, $ini);
 
@@ -157,7 +157,7 @@ final class LoadTest extends TestCase
         );
 
         $config = [
-            'filePath' => dataDir2('assets/config/config.ini'),
+            'filePath' => self::dataDir('assets/config/config.ini'),
         ];
         $ini    = (new ConfigFactory())->load($config);
     }
@@ -174,7 +174,7 @@ final class LoadTest extends TestCase
         $factory = new ConfigFactory();
         $config  = [
             'adapter'   => 'yaml',
-            'filePath'  => dataDir2('assets/config/callbacks.yml'),
+            'filePath'  => self::dataDir('assets/config/callbacks.yml'),
             'callbacks' => [
                 '!decrypt' => function ($value) {
                     return hash('sha256', $value);
@@ -202,14 +202,14 @@ final class LoadTest extends TestCase
     {
         $factory = new ConfigFactory();
 
-        $configFile1 = dataDir2('assets/config/config.php');
+        $configFile1 = self::dataDir('assets/config/config.php');
         $config      = $factory->load($configFile1);
 
         $expected = "/phalcon/";
         $actual   = $config->get('phalcon')->baseUri;
         $this->assertSame($expected, $actual);
 
-        $configFile2 = dataDir2('assets/config/config-2.php');
+        $configFile2 = self::dataDir('assets/config/config-2.php');
         $config2     = $factory->load($configFile2);
 
         $expected = "/phalcon4/";

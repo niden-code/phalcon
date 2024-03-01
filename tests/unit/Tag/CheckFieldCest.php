@@ -22,35 +22,6 @@ class CheckFieldCest extends TagHelper
     protected $inputType = 'checkbox';
 
     /**
-     * Tests Phalcon\Tag :: weekField() - setDefault
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagFieldWithSetDefault(UnitTester $I)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Tag - %s() - setDefault()',
-                $this->function
-            )
-        );
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<input type="' . $this->inputType . '" id="x_name" '
-            . 'name="x_other" value="x_value" class="x_class" size="10" checked="checked"';
-
-        $this->testFieldParameter($I, $this->function, $options, $expected, false, 'setDefault');
-        $this->testFieldParameter($I, $this->function, $options, $expected, true, 'setDefault');
-    }
-
-    /**
      * Tests Phalcon\Tag :: weekField() - displayTo
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -80,35 +51,6 @@ class CheckFieldCest extends TagHelper
     }
 
     /**
-     * Tests Phalcon\Tag :: weekField() - setDefault and element not present
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagFieldWithSetDefaultElementNotPresent(UnitTester $I)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Tag - %s() - setDefault() element not present',
-                $this->function
-            )
-        );
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<input type="' . $this->inputType . '" id="x_name" '
-            . 'name="x_other" value="x_value" class="x_class" size="10" checked="checked"';
-
-        $this->testFieldParameter($I, $this->function, $options, $expected, false, 'setDefault');
-        $this->testFieldParameter($I, $this->function, $options, $expected, true, 'setDefault');
-    }
-
-    /**
      * Tests Phalcon\Tag :: weekField() - displayTo and element not present
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -135,5 +77,63 @@ class CheckFieldCest extends TagHelper
 
         $this->testFieldParameter($I, $this->function, $options, $expected, false, 'displayTo');
         $this->testFieldParameter($I, $this->function, $options, $expected, true, 'displayTo');
+    }
+
+    /**
+     * Tests Phalcon\Tag :: weekField() - setDefault
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagFieldWithSetDefault(UnitTester $I)
+    {
+        $I->wantToTest(
+            sprintf(
+                'Tag - %s() - setDefault()',
+                $this->function
+            )
+        );
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<input type="' . $this->inputType . '" id="x_name" '
+            . 'name="x_other" value="x_value" class="x_class" size="10" checked="checked"';
+
+        $this->testFieldParameter($I, $this->function, $options, $expected, false, 'setDefault');
+        $this->testFieldParameter($I, $this->function, $options, $expected, true, 'setDefault');
+    }
+
+    /**
+     * Tests Phalcon\Tag :: weekField() - setDefault and element not present
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagFieldWithSetDefaultElementNotPresent(UnitTester $I)
+    {
+        $I->wantToTest(
+            sprintf(
+                'Tag - %s() - setDefault() element not present',
+                $this->function
+            )
+        );
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<input type="' . $this->inputType . '" id="x_name" '
+            . 'name="x_other" value="x_value" class="x_class" size="10" checked="checked"';
+
+        $this->testFieldParameter($I, $this->function, $options, $expected, false, 'setDefault');
+        $this->testFieldParameter($I, $this->function, $options, $expected, true, 'setDefault');
     }
 }

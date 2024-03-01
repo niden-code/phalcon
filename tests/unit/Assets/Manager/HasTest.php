@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Assets\Manager;
 use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class HasTest extends TestCase
+final class HasTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Manager :: has()

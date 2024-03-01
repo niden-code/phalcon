@@ -17,14 +17,14 @@ use Codeception\Example;
 use Phalcon\Assets\Inline;
 use Phalcon\Assets\Inline\Css;
 use Phalcon\Assets\Inline\Js;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class GetSetFilterTest extends TestCase
+ * Class GetSetFilterTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Inline
  */
-final class GetSetFilterTest extends TestCase
+final class GetSetFilterTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

@@ -120,7 +120,7 @@ final class GetRealSourcePathTest extends AbstractAssetCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $file  = dataDir2('assets/assets/jquery.js');
+        $file  = self::dataDir('assets/assets/jquery.js');
         $asset = new Js($file);
 
         $expected = $file;

@@ -20,7 +20,7 @@ use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function ob_get_clean;
@@ -32,7 +32,7 @@ use function uniqid;
 
 use const PHP_EOL;
 
-final class OutputJsTest extends TestCase
+final class OutputJsTest extends AbstractUnitTestCase
 {
     use DiTrait;
 
@@ -61,14 +61,14 @@ final class OutputJsTest extends TestCase
         $manager->useImplicitOutput(false);
 
         $manager->collection('js')
-                ->addJs(dataDir2('assets/assets/jquery.js'), false, false)
-                ->setTargetPath(outputDir2('assets/combined.js'))
+                ->addJs(self::dataDir('assets/assets/jquery.js'), false, false)
+                ->setTargetPath(self::outputDir('assets/combined.js'))
                 ->setTargetUri('production/combined.js')
         ;
 
         $expected = sprintf(
             '<script type="application/javascript" src="%s"></script>%s',
-            dataDir2('assets/assets/jquery.js'),
+            self::dataDir('assets/assets/jquery.js'),
             PHP_EOL
         );
 
@@ -87,15 +87,15 @@ final class OutputJsTest extends TestCase
         $manager->useImplicitOutput(false);
 
         $manager->collection('js')
-                ->addJs(dataDir2('assets/assets/jquery.js'), false, false)
-                ->setTargetPath(outputDir2('assets/combined.js'))
+                ->addJs(self::dataDir('assets/assets/jquery.js'), false, false)
+                ->setTargetPath(self::outputDir('assets/combined.js'))
                 ->setTargetUri('production/combined.js')
                 ->join(false)
         ;
 
         $expected = sprintf(
             '<script type="application/javascript" src="%s"></script>%s',
-            dataDir2('assets/assets/jquery.js'),
+            self::dataDir('assets/assets/jquery.js'),
             PHP_EOL
         );
 
@@ -115,15 +115,15 @@ final class OutputJsTest extends TestCase
         $manager->useImplicitOutput(false);
 
         $manager->collection('js')
-                ->addJs(dataDir2('assets/assets/jquery.js'), false, false)
-                ->setTargetPath(outputDir2('assets/combined.js'))
+                ->addJs(self::dataDir('assets/assets/jquery.js'), false, false)
+                ->setTargetPath(self::outputDir('assets/combined.js'))
                 ->setTargetUri('production/combined.js')
                 ->join(true)
         ;
 
         $expected = sprintf(
             '<script type="application/javascript" src="%s"></script>%s',
-            dataDir2('assets/assets/jquery.js'),
+            self::dataDir('assets/assets/jquery.js'),
             PHP_EOL
         );
 
@@ -166,13 +166,13 @@ final class OutputJsTest extends TestCase
         }
 
         $manager = new Manager(new TagFactory(new Escaper()));
-        $jsFile  = dataDir2('assets/assets/jquery.js');
+        $jsFile  = self::dataDir('assets/assets/jquery.js');
 
         $manager->useImplicitOutput(false);
 
         $manager->collection('js')
                 ->addJs($jsFile, false, false)
-                ->setTargetPath(outputDir2('assets/combined.js'))
+                ->setTargetPath(self::outputDir('assets/combined.js'))
                 ->setTargetUri('production/combined.js')
                 ->join(false)
                 ->addFilter(new None())
@@ -180,7 +180,7 @@ final class OutputJsTest extends TestCase
 
         $expected = sprintf(
             '<script type="application/javascript" src="%s"></script>%s',
-            dataDir2('assets/assets/jquery.js'),
+            self::dataDir('assets/assets/jquery.js'),
             PHP_EOL
         );
 
@@ -271,7 +271,7 @@ final class OutputJsTest extends TestCase
     public function testAssetsManagerOutputJsTargetLocal(): void
     {
         $file   = uniqid() . '.js';
-        $jsFile = dataDir2('assets/assets/jquery.js');
+        $jsFile = self::dataDir('assets/assets/jquery.js');
 
         $manager = new Manager(new TagFactory(new Escaper()));
         $manager->useImplicitOutput(false);
@@ -280,7 +280,7 @@ final class OutputJsTest extends TestCase
                 ->addJs($jsFile)
                 ->join(true)
                 ->addFilter(new JsMin())
-                ->setTargetPath(outputDir2("assets/{$file}"))
+                ->setTargetPath(self::outputDir("assets/{$file}"))
                 ->setTargetIsLocal(false)
                 ->setPrefix('//phalcon.io/')
                 ->setTargetUri('js/jquery.js')
@@ -292,7 +292,7 @@ final class OutputJsTest extends TestCase
             $manager->outputJs('js')
         );
 
-        $this->assertFileExists(outputDir2("assets/{$file}"));
-        safeDeleteFile2(outputDir2("assets/{$file}"));
+        $this->assertFileExists(self::outputDir("assets/{$file}"));
+        $this->safeDeleteFile(self::outputDir("assets/{$file}"));
     }
 }

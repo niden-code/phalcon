@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Attributes;
 
 use Phalcon\Html\Attributes;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class RenderTest extends TestCase
+final class RenderTest extends AbstractUnitTestCase
 {
     use DiTrait;
 

@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Phalcon\Logger\Adapter\Syslog;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class InTransactionTest extends TestCase
+final class InTransactionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: inTransaction()
@@ -29,7 +29,7 @@ final class InTransactionTest extends TestCase
      */
     public function testLoggerAdapterSyslogInTransaction(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
 
         $adapter = new Syslog($streamName);
 

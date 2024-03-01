@@ -15,14 +15,14 @@ namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
 use Phalcon\Assets\Inline;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class AddInlineTest extends TestCase
+ * Class AddInlineTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class AddInlineTest extends TestCase
+final class AddInlineTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: addInline()

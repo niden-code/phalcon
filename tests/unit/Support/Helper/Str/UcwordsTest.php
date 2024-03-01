@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\Str;
 
 use Phalcon\Support\Helper\Str\Ucwords;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UcwordsTest extends TestCase
+final class UcwordsTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

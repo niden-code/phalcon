@@ -12,9 +12,9 @@
 namespace Phalcon\Tests\Unit\Config\Config;
 
 use Phalcon\Config\Config;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConfigTest extends TestCase
+final class ConfigTest extends AbstractUnitTestCase
 {
     /**
      * Tests converting child array to config object

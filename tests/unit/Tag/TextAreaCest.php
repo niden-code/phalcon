@@ -20,22 +20,6 @@ use UnitTester;
 class TextAreaCest extends TagSetup
 {
     /**
-     * Tests Phalcon\Tag :: textArea() - string as a parameter
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagTextAreaStringParameter(UnitTester $I)
-    {
-        $I->wantToTest('Tag - textArea() - string as a parameter');
-
-        $options  = 'x_name';
-        $expected = '<textarea id="x_name" name="x_name"></textarea';
-
-        $this->testFieldParameter($I, 'textArea', $options, $expected);
-    }
-
-    /**
      * Tests Phalcon\Tag :: textArea() - array as a parameter
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -100,25 +84,19 @@ class TextAreaCest extends TagSetup
     }
 
     /**
-     * Tests Phalcon\Tag :: textArea() - setDefault
+     * Tests Phalcon\Tag :: textArea() - string as a parameter
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    public function tagTextAreaWithSetDefault(UnitTester $I)
+    public function tagTextAreaStringParameter(UnitTester $I)
     {
-        $I->wantToTest('Tag - textArea() - setDefault()');
+        $I->wantToTest('Tag - textArea() - string as a parameter');
 
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
+        $options  = 'x_name';
+        $expected = '<textarea id="x_name" name="x_name"></textarea';
 
-        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
-
-        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'setDefault');
+        $this->testFieldParameter($I, 'textArea', $options, $expected);
     }
 
     /**
@@ -130,50 +108,6 @@ class TextAreaCest extends TagSetup
     public function tagTextAreaWithDisplayTo(UnitTester $I)
     {
         $I->wantToTest('Tag - textArea() - displayTo()');
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
-
-        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'displayTo');
-    }
-
-    /**
-     * Tests Phalcon\Tag :: textArea() - setDefault and element not present
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagTextAreaWithSetDefaultElementNotPresent(UnitTester $I)
-    {
-        $I->wantToTest('Tag - textArea() - setDefault() and element not present');
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
-
-        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'setDefault');
-    }
-
-    /**
-     * Tests Phalcon\Tag :: textArea() - displayTo and element not present
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagTextAreaWithDisplayToElementNotPresent(UnitTester $I)
-    {
-        $I->wantToTest('Tag - textArea() - displayTo() and element not present');
 
         $options = [
             'x_name',
@@ -208,5 +142,71 @@ class TextAreaCest extends TagSetup
         Tag::setDefault('x_name', '');
 
         $I->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: textArea() - displayTo and element not present
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagTextAreaWithDisplayToElementNotPresent(UnitTester $I)
+    {
+        $I->wantToTest('Tag - textArea() - displayTo() and element not present');
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
+
+        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'displayTo');
+    }
+
+    /**
+     * Tests Phalcon\Tag :: textArea() - setDefault
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagTextAreaWithSetDefault(UnitTester $I)
+    {
+        $I->wantToTest('Tag - textArea() - setDefault()');
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
+
+        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'setDefault');
+    }
+
+    /**
+     * Tests Phalcon\Tag :: textArea() - setDefault and element not present
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagTextAreaWithSetDefaultElementNotPresent(UnitTester $I)
+    {
+        $I->wantToTest('Tag - textArea() - setDefault() and element not present');
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<textarea id="x_name" name="x_other" class="x_class" size="10">x_value</textarea';
+
+        $this->testFieldParameter($I, 'textArea', $options, $expected, false, 'setDefault');
     }
 }

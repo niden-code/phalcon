@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Formatter\FormatterInterface;
 use Phalcon\Logger\Formatter\Line;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class GetSetFormatterTest extends TestCase
+final class GetSetFormatterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: getFormatter()/setFormatter()
@@ -29,7 +29,7 @@ final class GetSetFormatterTest extends TestCase
      */
     public function testLoggerAdapterSyslogGetSetFormatter(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
 
         $adapter = new Syslog($streamName);
         $adapter->setFormatter(new Line());

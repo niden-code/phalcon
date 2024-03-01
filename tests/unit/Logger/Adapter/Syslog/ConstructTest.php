@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Codeception\Example;
 use Phalcon\Logger\Adapter\Syslog;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function getProtectedProperty2;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: __construct()
@@ -42,10 +42,10 @@ final class ConstructTest extends TestCase
         string $property,
         int $expected
     ): void {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
 
         $adapter  = new Syslog($streamName, $options);
-        $actual  = getProtectedProperty2($adapter, $property);
+        $actual  = $this->getProtectedProperty($adapter, $property);
 
         $this->assertSame($expected, $actual);
     }

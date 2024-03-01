@@ -93,14 +93,14 @@ trait DiTrait2
     {
         switch ($driver) {
             case 'mysql':
-                $options = getOptionsMysql2();
+                $options = self::getOptionsMysql();
                 break;
             case 'pgsql':
-                $options = getOptionsPostgresql2();
+                $options = self::getOptionsPostgresql();
                 $driver = 'postgresql';
                 break;
             case 'sqlite':
-                $options = getOptionsSqlite2();
+                $options = self::getOptionsSqlite();
                 break;
             case 'sqlsrv':
             default:
@@ -169,12 +169,12 @@ trait DiTrait2
             case 'modelsCacheLibmemcached':
                 return new StorageLibmemcached(
                     new SerializerFactory(),
-                    getOptionsLibmemcached2()
+                    self::getOptionsLibmemcached()
                 );
             case 'modelsCacheStream':
                 return new StorageStream(
                     new SerializerFactory(),
-                    getOptionsModelCacheStream2()
+                    self::getOptionsModelCacheStream()
                 );
             case 'phpSerializer':
                 return (new SerializerFactory())->newInstance('php');
@@ -185,13 +185,13 @@ trait DiTrait2
             case 'response':
                 return new Response();
             case 'sessionStream':
-                return new SessionStream(getOptionsSessionStream2());
+                return new SessionStream(self::getOptionsSessionStream());
             case 'sessionLibmemcached':
                 return new SessionLibmemcached(
                     new StorageAdapterFactory(
                         new SerializerFactory()
                     ),
-                    getOptionsLibmemcached2()
+                    self::getOptionsLibmemcached()
                 );
             case 'sessionNoop':
                 return new SessionNoop();
@@ -200,7 +200,7 @@ trait DiTrait2
                     new StorageAdapterFactory(
                         new SerializerFactory()
                     ),
-                    getOptionsRedis2()
+                    self::getOptionsRedis()
                 );
             case 'url':
                 return new Url();
@@ -314,7 +314,9 @@ trait DiTrait2
                 $this->container->set(
                     $service,
                     function () use ($class) {
-                        $class->setViewsDir(dataDir2('fixtures/views/'));
+                        $class->setViewsDir(
+                            self::dataDir('fixtures/views/')
+                        );
 
                         return $class;
                     }

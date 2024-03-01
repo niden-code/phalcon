@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Request\File;
 
 use Phalcon\Http\Request\File;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
-final class GetExtensionTest extends TestCase
+final class GetExtensionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Request\File :: getExtension()
@@ -34,7 +34,7 @@ final class GetExtensionTest extends TestCase
                 'name'      => 'test.php',
                 'type'      => Http::CONTENT_TYPE_PLAIN,
                 'extension' => 'jpg',
-                'tmp_name'  => dataDir2('/assets/images/example-jpg.jpg'),
+                'tmp_name'  => self::dataDir('/assets/images/example-jpg.jpg'),
                 'size'      => 1,
                 'error'     => 0,
             ]

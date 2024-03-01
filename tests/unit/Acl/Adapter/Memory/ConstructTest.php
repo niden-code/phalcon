@@ -17,32 +17,16 @@ use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Enum;
 use Phalcon\Acl\Role;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function cacheDir2;
 use function file_get_contents;
 use function file_put_contents;
-use function getNewFileName2;
-use function safeDeleteFile2;
 use function serialize;
 use function unserialize;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Acl\Adapter\Memory :: __construct() - constants
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testAclAdapterMemoryConstructConstants(): void
-    {
-        $this->assertSame(1, Enum::ALLOW);
-        $this->assertSame(0, Enum::DENY);
-    }
-
     /**
      * Tests Phalcon\Acl\Adapter\Memory :: __construct()
      *
@@ -59,45 +43,17 @@ final class ConstructTest extends TestCase
     }
 
     /**
-     * Tests serializing the ACL
+     * Tests Phalcon\Acl\Adapter\Memory :: __construct() - constants
      *
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-10-04
+     * @since  2018-11-13
      */
-    public function testAclSerialize(): void
+    public function testAclAdapterMemoryConstructConstants(): void
     {
-        /** @var string $filename */
-        $filename = getNewFileName2('acl');
-
-        $acl          = new Memory();
-        $aclRole      = new Role('Administrators', 'Super User access');
-        $aclComponent = new Component('Customers', 'Customer management');
-
-        $acl->addRole($aclRole);
-        $acl->addComponent($aclComponent, ['search', 'destroy']);
-
-        $acl->allow('Administrators', 'Customers', 'search');
-        $acl->deny('Administrators', 'Customers', 'destroy');
-
-        file_put_contents(cacheDir2($filename), serialize($acl));
-
-        $acl      = null;
-        $contents = file_get_contents(cacheDir2($filename));
-        //safeDeleteFile2(cacheDir2($filename));
-
-        $acl = unserialize($contents);
-
-        $this->assertInstanceOf(Memory::class, $acl);
-        $actual = $acl->isRole('Administrators');
-        $this->assertTrue($actual);
-        $actual = $acl->isComponent('Customers');
-        $this->assertTrue($actual);
-        $actual = $acl->isAllowed('Administrators', 'Customers', 'search');
-        $this->assertTrue($actual);
-        $actual = $acl->isAllowed('Administrators', 'Customers', 'destroy');
-        $this->assertFalse($actual);
+        $this->assertSame(1, Enum::ALLOW);
+        $this->assertSame(0, Enum::DENY);
     }
 
     /**
@@ -131,6 +87,135 @@ final class ConstructTest extends TestCase
         $this->assertTrue($actual);
 
         $actual = $acl->isAllowed('Guests', 'Login', 'help');
+        $this->assertFalse($actual);
+    }
+
+    /**
+     * Tests negation of multilayer inherited Roles
+     *
+     * @return void
+     *
+     * @author  cq-z <64899484@qq.com>
+     * @since   2018-10-10
+     */
+    public function testAclNegationOfMultilayerInheritedRoles(): void
+    {
+        $acl = new Memory();
+
+        $acl->setDefaultAction(Enum::DENY);
+        $acl->addRole('Guests1');
+        $acl->addRole('Guests12', 'Guests1');
+        $acl->addRole('Guests2');
+        $acl->addRole('Guests22', 'Guests2');
+        $acl->addRole('Members', ['Guests12', 'Guests22']);
+
+        $acl->addComponent('Login', ['help', 'index']);
+        $acl->addComponent('Logout', ['help', 'index']);
+
+        $acl->allow('Guests1', 'Login', '*');
+        $acl->deny('Guests12', 'Login', ['help']);
+
+        $acl->deny('Guests2', 'Logout', '*');
+        $acl->allow('Guests22', 'Logout', ['index']);
+
+        $actual = $acl->isAllowed('Members', 'Login', 'index');
+        $this->assertTrue($actual);
+
+        $actual = $acl->isAllowed('Members', 'Login', 'help');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed('Members', 'Logout', 'help');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed('Members', 'Login', 'index');
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * Tests negation of multiple inherited Roles
+     *
+     * @return void
+     *
+     * @author  cq-z <64899484@qq.com>
+     * @since   2018-10-10
+     */
+    public function testAclNegationOfMultipleInheritedRoles(): void
+    {
+        $acl = new Memory();
+
+        $acl->setDefaultAction(Enum::DENY);
+        $acl->addRole('Guests');
+        $acl->addRole('Guests2');
+
+        $acl->addRole(
+            'Members',
+            [
+                'Guests',
+                'Guests2',
+            ]
+        );
+
+        $acl->addComponent(
+            'Login',
+            [
+                'help',
+                'index',
+            ]
+        );
+
+        $acl->allow('Guests', 'Login', '*');
+        $acl->deny('Guests2', 'Login', ['help']);
+        $acl->deny('Members', 'Login', ['index']);
+
+        $actual = $acl->isAllowed('Members', 'Login', 'index');
+        $this->assertFalse($actual);
+
+        $actual = $acl->isAllowed('Guests', 'Login', 'help');
+        $this->assertTrue($actual);
+
+        $actual = $acl->isAllowed('Members', 'Login', 'help');
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * Tests serializing the ACL
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-10-04
+     */
+    public function testAclSerialize(): void
+    {
+        /** @var string $filename */
+        $filename = $this->getNewFileName('acl');
+
+        $acl          = new Memory();
+        $aclRole      = new Role('Administrators', 'Super User access');
+        $aclComponent = new Component('Customers', 'Customer management');
+
+        $acl->addRole($aclRole);
+        $acl->addComponent($aclComponent, ['search', 'destroy']);
+
+        $acl->allow('Administrators', 'Customers', 'search');
+        $acl->deny('Administrators', 'Customers', 'destroy');
+
+        file_put_contents(self::outputCacheDir($filename), serialize($acl));
+
+        $acl      = null;
+        $contents = file_get_contents(self::outputCacheDir($filename));
+        $this->safeDeleteFile(self::outputCacheDir($filename));
+
+        $acl = unserialize($contents);
+
+        $this->assertInstanceOf(Memory::class, $acl);
+        $actual = $acl->isRole('Administrators');
+        $this->assertTrue($actual);
+        $actual = $acl->isComponent('Customers');
+        $this->assertTrue($actual);
+        $actual = $acl->isAllowed('Administrators', 'Customers', 'search');
+        $this->assertTrue($actual);
+        $actual = $acl->isAllowed('Administrators', 'Customers', 'destroy');
         $this->assertFalse($actual);
     }
 
@@ -254,93 +339,6 @@ final class ConstructTest extends TestCase
         $this->assertTrue($actual);
 
         $actual = $acl->isAllowed('Guests', 'Post', 'update');
-        $this->assertTrue($actual);
-    }
-
-    /**
-     * Tests negation of multiple inherited Roles
-     *
-     * @return void
-     *
-     * @author  cq-z <64899484@qq.com>
-     * @since   2018-10-10
-     */
-    public function testAclNegationOfMultipleInheritedRoles(): void
-    {
-        $acl = new Memory();
-
-        $acl->setDefaultAction(Enum::DENY);
-        $acl->addRole('Guests');
-        $acl->addRole('Guests2');
-
-        $acl->addRole(
-            'Members',
-            [
-                'Guests',
-                'Guests2',
-            ]
-        );
-
-        $acl->addComponent(
-            'Login',
-            [
-                'help',
-                'index',
-            ]
-        );
-
-        $acl->allow('Guests', 'Login', '*');
-        $acl->deny('Guests2', 'Login', ['help']);
-        $acl->deny('Members', 'Login', ['index']);
-
-        $actual = $acl->isAllowed('Members', 'Login', 'index');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed('Guests', 'Login', 'help');
-        $this->assertTrue($actual);
-
-        $actual = $acl->isAllowed('Members', 'Login', 'help');
-        $this->assertTrue($actual);
-    }
-
-    /**
-     * Tests negation of multilayer inherited Roles
-     *
-     * @return void
-     *
-     * @author  cq-z <64899484@qq.com>
-     * @since   2018-10-10
-     */
-    public function testAclNegationOfMultilayerInheritedRoles(): void
-    {
-        $acl = new Memory();
-
-        $acl->setDefaultAction(Enum::DENY);
-        $acl->addRole('Guests1');
-        $acl->addRole('Guests12', 'Guests1');
-        $acl->addRole('Guests2');
-        $acl->addRole('Guests22', 'Guests2');
-        $acl->addRole('Members', ['Guests12', 'Guests22']);
-
-        $acl->addComponent('Login', ['help', 'index']);
-        $acl->addComponent('Logout', ['help', 'index']);
-
-        $acl->allow('Guests1', 'Login', '*');
-        $acl->deny('Guests12', 'Login', ['help']);
-
-        $acl->deny('Guests2', 'Logout', '*');
-        $acl->allow('Guests22', 'Logout', ['index']);
-
-        $actual = $acl->isAllowed('Members', 'Login', 'index');
-        $this->assertTrue($actual);
-
-        $actual = $acl->isAllowed('Members', 'Login', 'help');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed('Members', 'Logout', 'help');
-        $this->assertFalse($actual);
-
-        $actual = $acl->isAllowed('Members', 'Login', 'index');
         $this->assertTrue($actual);
     }
 }

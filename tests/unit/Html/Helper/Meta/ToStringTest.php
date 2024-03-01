@@ -13,11 +13,11 @@ namespace Phalcon\Tests\Unit\Html\Helper\Meta;
 
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Meta;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Helper\Meta :: __toString() - empty

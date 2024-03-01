@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class BlurTest extends TestCase
+final class BlurTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -74,7 +74,7 @@ final class BlurTest extends TestCase
         foreach ($this->getImages() as $type => $imagePath) {
             foreach ($params[$type] as [$level, $hash]) {
                 $resultImage = 'blur-' . $level . '.' . $type;
-                $output      = outputDir2($outputDir . '/' . $resultImage);
+                $output      = self::outputDir($outputDir . '/' . $resultImage);
 
                 $image = new Gd($imagePath);
 
@@ -86,7 +86,7 @@ final class BlurTest extends TestCase
                 $actual = $this->checkImageHash($output, $hash);
                 $this->assertTrue($actual);
 
-                safeDeleteFile2($output);
+                $this->safeDeleteFile($output);
             }
         }
     }

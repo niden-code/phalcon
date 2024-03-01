@@ -11,104 +11,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Input;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Input\Select;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class SelectUnderscoreInvokeTest extends TestCase
+final class SelectUnderscoreInvokeTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Html\Helper\Input\Select :: __invoke()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlHelperInputUnderscoreInvoke(
-        string $indent,
-        ?string $delimiter,
-        ?string $selected,
-        array $attributes,
-        array $addOptions,
-        array $placeholder,
-        array $optgroup,
-        string $expected
-    ): void {
-        $escaper = new Escaper();
-        $helper  = new Select($escaper);
-
-        $result = $helper($indent, $delimiter, $attributes);
-
-        if (!empty($selected)) {
-            $result->selected($selected);
-        }
-
-        if (!empty($optgroup)) {
-            $result->optGroup($optgroup[0], $optgroup[1]);
-        }
-
-        if (!empty($placeholder)) {
-            $result->addPlaceholder(
-                $placeholder[0],
-                $placeholder[1],
-                $placeholder[2],
-                $placeholder[3]
-            );
-        }
-
-        foreach ($addOptions as $add) {
-            $result->add($add[0], $add[1], $add[2], $add[3]);
-        }
-
-        if (!empty($optgroup)) {
-            $result->optGroup($optgroup[0], $optgroup[1]);
-        }
-
-        $actual   = (string)$result;
-        $this->assertSame($expected, $actual);
-
-        $factory = new TagFactory($escaper);
-        $locator = $factory->newInstance('inputSelect');
-
-        $result = $locator($indent, $delimiter, $attributes);
-
-        if (!empty($selected)) {
-            $result->selected($selected);
-        }
-
-        if (!empty($optgroup)) {
-            $result->optGroup($optgroup[0], $optgroup[1]);
-        }
-
-        if (!empty($placeholder)) {
-            $result->addPlaceholder(
-                $placeholder[0],
-                $placeholder[1],
-                $placeholder[2],
-                $placeholder[3]
-            );
-        }
-
-        foreach ($addOptions as $add) {
-            $result->add($add[0], $add[1], $add[2], $add[3]);
-        }
-
-        if (!empty($optgroup)) {
-            $result->optGroup($optgroup[0], $optgroup[1]);
-        }
-
-        $actual = (string)$result;
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array
      */
@@ -326,12 +237,12 @@ final class SelectUnderscoreInvokeTest extends TestCase
                 ],
                 [],
                 "<select id=\"carsList\">+"
-                    . "--<option>Choose &amp; Car...</option>+"
-                    . "--<option class=\"active\">&gt; Ferrari</option>+"
-                    . "--<option>&gt; Ford</option>+"
-                    . "--<option>&gt; Dodge</option>+"
-                    . "--<option>&gt; Toyota</option>+"
-                    . "</select>",
+                . "--<option>Choose &amp; Car...</option>+"
+                . "--<option class=\"active\">&gt; Ferrari</option>+"
+                . "--<option>&gt; Ford</option>+"
+                . "--<option>&gt; Dodge</option>+"
+                . "--<option>&gt; Toyota</option>+"
+                . "</select>",
             ],
             [
                 '    ',
@@ -452,12 +363,12 @@ final class SelectUnderscoreInvokeTest extends TestCase
                 ],
                 [],
                 "<select id=\"carsList\">+"
-                    . "--<option value=\"0\">Choose & Car...</option>+"
-                    . "--<option value=\"1\" class=\"active\">> Ferrari</option>+"
-                    . "--<option value=\"2\">> Ford</option>+"
-                    . "--<option value=\"3\">> Dodge</option>+"
-                    . "--<option value=\"4\">> Toyota</option>+"
-                    . "</select>",
+                . "--<option value=\"0\">Choose & Car...</option>+"
+                . "--<option value=\"1\" class=\"active\">> Ferrari</option>+"
+                . "--<option value=\"2\">> Ford</option>+"
+                . "--<option value=\"3\">> Dodge</option>+"
+                . "--<option value=\"4\">> Toyota</option>+"
+                . "</select>",
             ],
             [
                 '    ',
@@ -559,5 +470,92 @@ final class SelectUnderscoreInvokeTest extends TestCase
 </select>",
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Input\Select :: __invoke()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlHelperInputUnderscoreInvoke(
+        string $indent,
+        ?string $delimiter,
+        ?string $selected,
+        array $attributes,
+        array $addOptions,
+        array $placeholder,
+        array $optgroup,
+        string $expected
+    ): void {
+        $escaper = new Escaper();
+        $helper  = new Select($escaper);
+
+        $result = $helper($indent, $delimiter, $attributes);
+
+        if (!empty($selected)) {
+            $result->selected($selected);
+        }
+
+        if (!empty($optgroup)) {
+            $result->optGroup($optgroup[0], $optgroup[1]);
+        }
+
+        if (!empty($placeholder)) {
+            $result->addPlaceholder(
+                $placeholder[0],
+                $placeholder[1],
+                $placeholder[2],
+                $placeholder[3]
+            );
+        }
+
+        foreach ($addOptions as $add) {
+            $result->add($add[0], $add[1], $add[2], $add[3]);
+        }
+
+        if (!empty($optgroup)) {
+            $result->optGroup($optgroup[0], $optgroup[1]);
+        }
+
+        $actual = (string)$result;
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('inputSelect');
+
+        $result = $locator($indent, $delimiter, $attributes);
+
+        if (!empty($selected)) {
+            $result->selected($selected);
+        }
+
+        if (!empty($optgroup)) {
+            $result->optGroup($optgroup[0], $optgroup[1]);
+        }
+
+        if (!empty($placeholder)) {
+            $result->addPlaceholder(
+                $placeholder[0],
+                $placeholder[1],
+                $placeholder[2],
+                $placeholder[3]
+            );
+        }
+
+        foreach ($addOptions as $add) {
+            $result->add($add[0], $add[1], $add[2], $add[3]);
+        }
+
+        if (!empty($optgroup)) {
+            $result->optGroup($optgroup[0], $optgroup[1]);
+        }
+
+        $actual = (string)$result;
+        $this->assertSame($expected, $actual);
     }
 }

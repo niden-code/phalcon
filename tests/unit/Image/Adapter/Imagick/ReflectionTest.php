@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class ReflectionTest extends TestCase
+final class ReflectionTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: reflection()
@@ -33,13 +33,13 @@ final class ReflectionTest extends TestCase
     public function testImageAdapterImagickReflection(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Create a 50 pixel reflection that fades from 0-100% opacity
-        $outputFile = outputDir2('image/imagick/reflection.jpg');
+        $outputFile = self::outputDir('image/imagick/reflection.jpg');
         $image->reflection(50)
               ->save($outputFile)
         ;
@@ -54,6 +54,6 @@ final class ReflectionTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

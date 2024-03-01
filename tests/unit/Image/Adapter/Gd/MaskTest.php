@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class MaskTest extends TestCase
+final class MaskTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -36,12 +36,12 @@ final class MaskTest extends TestCase
     {
         $this->checkJpegSupport($this);
 
-        $image = new Gd(dataDir2('assets/images/example-png.png'));
-        $mask  = new Gd(dataDir2('assets/images/example-jpg.jpg'));
+        $image = new Gd(self::dataDir('assets/images/example-png.png'));
+        $mask  = new Gd(self::dataDir('assets/images/example-jpg.jpg'));
 
         $outputDir   = 'image/gd';
         $outputImage = 'mask.png';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
 
         $hash = '30787c3c3f191810';
 
@@ -55,6 +55,6 @@ final class MaskTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 }

@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
-use Phalcon\Tests\Models\Customers;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetNameTest extends TestCase
+final class GetNameTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: getName()
@@ -29,7 +28,7 @@ final class GetNameTest extends TestCase
      */
     public function testAclComponentGetName(): void
     {
-        $source = 'Customer';
+        $source    = 'Customer';
         $component = new Component($source);
 
         $expected = $source;

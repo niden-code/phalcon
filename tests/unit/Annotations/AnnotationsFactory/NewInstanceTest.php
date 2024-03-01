@@ -18,9 +18,9 @@ use Phalcon\Annotations\Adapter\Memory;
 use Phalcon\Annotations\Adapter\Stream;
 use Phalcon\Annotations\AnnotationsFactory;
 use Phalcon\Annotations\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class NewInstanceTest extends TestCase
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]

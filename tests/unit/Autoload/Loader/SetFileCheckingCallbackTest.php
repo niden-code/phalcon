@@ -17,7 +17,7 @@ use Codeception\Example;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function class_exists;
 use function function_exists;
@@ -48,13 +48,13 @@ final class SetFileCheckingCallbackTest extends AbstractLoaderTestCase
 
         $loader->setFiles(
             [
-                dataDir2('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
+                self::dataDir('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
             ]
         );
 
         $loader->setNamespaces(
             [
-                'Example' => dataDir2('fixtures/Autoload/Example/'),
+                'Example' => self::dataDir('fixtures/Autoload/Example/'),
             ],
             true
         );
@@ -89,13 +89,13 @@ final class SetFileCheckingCallbackTest extends AbstractLoaderTestCase
 
         $loader->setFiles(
             [
-                dataDir2('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
+                self::dataDir('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
             ]
         );
 
         $loader->setNamespaces(
             [
-                'Example\Namespaces' => dataDir2('fixtures/Autoload/Example/Namespaces'),
+                'Example\Namespaces' => self::dataDir('fixtures/Autoload/Example/Namespaces'),
             ],
             true
         );

@@ -15,16 +15,16 @@ namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Codeception\Stub;
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 
 /**
- * Class GetRealTargetPathTest extends TestCase
+ * Class GetRealTargetPathTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class GetRealTargetPathTest extends TestCase
+final class GetRealTargetPathTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: getRealTargetPath()
@@ -38,7 +38,7 @@ final class GetRealTargetPathTest extends TestCase
     {
         $collection        = new Collection();
         $targetPath        = '/assets';
-        $basePath          = dataDir2('assets');
+        $basePath          = self::dataDir('assets');
         $constructRealPath = realpath($basePath . $targetPath);
 
         $collection->setTargetPath($targetPath);
@@ -69,7 +69,7 @@ final class GetRealTargetPathTest extends TestCase
             ]
         );
         $targetPath        = '/assets';
-        $basePath          = dataDir2('assets');
+        $basePath          = self::dataDir('assets');
         $constructRealPath = realpath($basePath . $targetPath);
 
         $collection->setTargetPath($targetPath);

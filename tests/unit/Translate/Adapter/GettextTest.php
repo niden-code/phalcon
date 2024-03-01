@@ -14,22 +14,21 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter;
 
 use ArrayAccess;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Translate\Adapter\GettextFixture;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Gettext;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
 
-use function dataDir2;
 use function setlocale;
 
 use const LC_ALL;
 use const LC_MESSAGES;
 
 #[RequiresPhpExtension('gettext')]
-final class GettextTest extends TestCase
+final class GettextTest extends AbstractUnitTestCase
 {
     /**
      * Data provider for the query tests
@@ -306,20 +305,20 @@ final class GettextTest extends TestCase
         $params     = $this->getConfig();
         $translator = new Gettext(new InterpolatorFactory(), $params);
 
-        $expected = dataDir2('assets/translation/gettext');
+        $expected = self::dataDir('assets/translation/gettext');
         $actual   = $translator->getDirectory();
         $this->assertSame($expected, $actual);
 
-        $translator->setDirectory(dataDir2());
+        $translator->setDirectory(self::dataDir());
 
-        $expected = dataDir2();
+        $expected = self::dataDir();
         $actual   = $translator->getDirectory();
         $this->assertSame($expected, $actual);
 
         $directories = [
-            'en_US.utf8' => dataDir2(),
-            'es_ES.utf8' => dataDir2(),
-            'fr_FR.utf8' => dataDir2(),
+            'en_US.utf8' => self::dataDir(),
+            'es_ES.utf8' => self::dataDir(),
+            'fr_FR.utf8' => self::dataDir(),
         ];
         $translator->setDirectory($directories);
 
@@ -613,7 +612,7 @@ final class GettextTest extends TestCase
         return [
             'locale'        => ['en_US.utf8'],
             'defaultDomain' => 'messages',
-            'directory'     => dataDir2('assets/translation/gettext'),
+            'directory'     => self::dataDir('assets/translation/gettext'),
             'category'      => LC_MESSAGES,
         ];
     }

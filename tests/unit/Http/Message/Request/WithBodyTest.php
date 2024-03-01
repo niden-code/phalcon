@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Message\Request;
 
 use Phalcon\Http\Message\Request;
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function file_get_contents;
 
-final class WithBodyTest extends TestCase
+final class WithBodyTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Request :: withBody()
@@ -33,7 +33,7 @@ final class WithBodyTest extends TestCase
             $this->markTestSkipped('Need to fix Windows new lines...');
         }
 
-        $fileName = dataDir2('/assets/stream/mit.txt');
+        $fileName = self::dataDir('/assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 

@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function ob_end_clean;
 use function ob_get_contents;
@@ -25,7 +25,7 @@ use function uniqid;
 
 use const PHP_EOL;
 
-final class OutputTest extends TestCase
+final class OutputTest extends AbstractUnitTestCase
 {
     use DiTrait2;
 

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\File;
 
 use Phalcon\Support\Helper\File\Basename;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function basename;
 
-final class BasenameTest extends TestCase
+final class BasenameTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

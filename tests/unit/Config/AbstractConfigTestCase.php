@@ -18,13 +18,13 @@ use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Config;
 use Phalcon\Config\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function is_array;
 use function sprintf;
 
-abstract class AbstractConfigTestCase extends TestCase
+abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 {
     /**
      * @var array
@@ -327,30 +327,30 @@ abstract class AbstractConfigTestCase extends TestCase
         switch ($adapter) {
             case 'Ini':
                 return new Ini(
-                    dataDir2('assets/config/config.ini')
+                    self::dataDir('assets/config/config.ini')
                 );
 
             case 'Json':
                 return new Json(
-                    dataDir2('assets/config/config.json')
+                    self::dataDir('assets/config/config.json')
                 );
 
             case 'Php':
                 return new Php(
-                    dataDir2('assets/config/config.php')
+                    self::dataDir('assets/config/config.php')
                 );
 
             case 'Yaml':
                 return new Yaml(
-                    dataDir2('assets/config/config.yml')
+                    self::dataDir('assets/config/config.yml')
                 );
 
             case 'Grouped':
                 $config = [
-                    dataDir2('assets/config/config.php'),
+                    self::dataDir('assets/config/config.php'),
                     [
                         'adapter'  => 'json',
-                        'filePath' => dataDir2('assets/config/config.json'),
+                        'filePath' => self::dataDir('assets/config/config.json'),
                     ],
                     [
                         'adapter' => 'array',

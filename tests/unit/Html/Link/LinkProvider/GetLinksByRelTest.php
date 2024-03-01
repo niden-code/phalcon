@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Link\LinkProvider;
 
 use Phalcon\Html\Link\Link;
 use Phalcon\Html\Link\LinkProvider;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetLinksByRelTest extends TestCase
+final class GetLinksByRelTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\LinkProvider :: getLinksByRel()

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: __construct()
@@ -29,7 +29,7 @@ final class ConstructTest extends TestCase
      */
     public function testAclComponentConstruct(): void
     {
-        $name = 'Customer';
+        $name      = 'Customer';
         $component = new Component($name);
 
         $this->assertInstanceOf(Component::class, $component);

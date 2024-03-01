@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Http\Message\StreamFactory;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Factories\StreamFactory;
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CreateStreamFromResourceTest extends TestCase
+final class CreateStreamFromResourceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: createStreamFromResource()
@@ -28,7 +28,7 @@ final class CreateStreamFromResourceTest extends TestCase
      */
     public function testHttpMessageStreamFactoryCreateStreamFromResource()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $expected = file_get_contents($fileName);
         $resource = fopen($fileName, 'r+b');
         $factory  = new StreamFactory();

@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Application;
 
 use Phalcon\Events\Manager;
 use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function spl_object_hash;
 
-final class GetSetEventsManagerTest extends TestCase
+final class GetSetEventsManagerTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Application\* :: getEventsManager()/setEventsManager()

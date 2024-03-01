@@ -16,11 +16,11 @@ namespace Phalcon\Tests\Unit\Assets\Inline;
 use Phalcon\Assets\Inline;
 use Phalcon\Assets\Inline\Css;
 use Phalcon\Assets\Inline\Js;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function hash;
 
-final class GetAssetKeyTest extends TestCase
+final class GetAssetKeyTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

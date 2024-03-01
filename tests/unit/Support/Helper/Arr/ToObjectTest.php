@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\Arr;
 
 use Phalcon\Support\Helper\Arr\ToObject;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
-final class ToObjectTest extends TestCase
+final class ToObjectTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Support\Helper\Arr :: toObject()

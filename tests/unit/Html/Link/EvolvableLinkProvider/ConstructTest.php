@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Link\EvolvableLinkProvider;
 
 use Phalcon\Html\Link\EvolvableLinkProvider;
 use Phalcon\Html\Link\Interfaces\EvolvableLinkProviderInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: __construct()

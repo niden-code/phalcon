@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class AddInlineJsTest extends TestCase
+ * Class AddInlineJsTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class AddInlineJsTest extends TestCase
+final class AddInlineJsTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: addInlineJs()

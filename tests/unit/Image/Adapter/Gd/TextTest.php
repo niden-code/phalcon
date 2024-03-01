@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Exception;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class TextTest extends TestCase
+final class TextTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -135,9 +135,9 @@ final class TextTest extends TestCase
         $this->checkJpegSupport($this);
 
         $outputDir   = 'image/gd';
-        $image       = new Gd(dataDir2('assets/images/example-jpg.jpg'));
+        $image       = new Gd(self::dataDir('assets/images/example-jpg.jpg'));
         $outputImage = $index . 'text.jpg';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
 
         $image
             ->text(
@@ -157,7 +157,7 @@ final class TextTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -175,16 +175,16 @@ final class TextTest extends TestCase
 
         $outputDir = 'image/gd';
 
-        $image       = dataDir2('assets/images/example-jpg.jpg');
+        $image       = self::dataDir('assets/images/example-jpg.jpg');
         $outputImage = '15188-text.jpg';
-        $output      = outputDir2($outputDir . '/' . $outputImage);
+        $output      = self::outputDir($outputDir . '/' . $outputImage);
         $text        = 'Hello Phalcon!';
         $offsetX     = 50;
         $offsetY     = 75;
         $opacity     = 60;
         $color       = '0000FF';
         $size        = 24;
-        $font        = dataDir2('assets/fonts/Roboto-Light.ttf');
+        $font        = self::dataDir('assets/fonts/Roboto-Light.ttf');
         $hash        = 'fbf9f3e3c3c18183';
 
         $object = new Gd($image);
@@ -196,6 +196,6 @@ final class TextTest extends TestCase
         $this->assertFileExists($output);
 
         $this->assertTrue($this->checkImageHash($output, $hash));
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 }

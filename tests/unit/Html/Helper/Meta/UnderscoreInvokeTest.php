@@ -11,17 +11,70 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Meta;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Meta;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                '    ',
+                PHP_EOL,
+                [
+                    "charset" => 'utf-8',
+                ],
+                [
+                    "X-UA-Compatible",
+                    "IE=edge",
+                ],
+                [
+                    "generator",
+                    "Phalcon",
+                ],
+                [
+                    "org:url",
+                    "https://phalcon.io",
+                ],
+                "    <meta charset=\"utf-8\">" . PHP_EOL
+                . "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">" . PHP_EOL
+                . "    <meta name=\"generator\" content=\"Phalcon\">" . PHP_EOL
+                . "    <meta property=\"org:url\" content=\"https://phalcon.io\">" . PHP_EOL,
+            ],
+            [
+                '--',
+                '+',
+                [
+                    "charset" => 'utf-8',
+                ],
+                [
+                    "X-UA-Compatible",
+                    "IE=edge",
+                ],
+                [
+                    "generator",
+                    "Phalcon",
+                ],
+                [
+                    "org:url",
+                    "https://phalcon.io",
+                ],
+                "--<meta charset=\"utf-8\">+"
+                . "--<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">+"
+                . "--<meta name=\"generator\" content=\"Phalcon\">+"
+                . "--<meta property=\"org:url\" content=\"https://phalcon.io\">+",
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Html\Helper\Meta :: __invoke()
      *
@@ -51,7 +104,7 @@ final class UnderscoreInvokeTest extends TestCase
             ->addProperty($property[0], $property[1])
         ;
 
-        $actual   = (string)$result;
+        $actual = (string)$result;
         $this->assertSame($expected, $actual);
 
         $factory = new TagFactory($escaper);
@@ -65,60 +118,5 @@ final class UnderscoreInvokeTest extends TestCase
 
         $actual = (string)$result;
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return array
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                '    ',
-                PHP_EOL,
-                [
-                    "charset" => 'utf-8',
-                ],
-                [
-                    "X-UA-Compatible",
-                    "IE=edge",
-                ],
-                [
-                    "generator",
-                    "Phalcon",
-                ],
-                [
-                    "org:url",
-                    "https://phalcon.io",
-                ],
-                "    <meta charset=\"utf-8\">" . PHP_EOL
-                    . "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">" . PHP_EOL
-                    . "    <meta name=\"generator\" content=\"Phalcon\">" . PHP_EOL
-                    . "    <meta property=\"org:url\" content=\"https://phalcon.io\">" . PHP_EOL,
-            ],
-            [
-                '--',
-                '+',
-                [
-                    "charset" => 'utf-8',
-                ],
-                [
-                    "X-UA-Compatible",
-                    "IE=edge",
-                ],
-                [
-                    "generator",
-                    "Phalcon",
-                ],
-                [
-                    "org:url",
-                    "https://phalcon.io",
-                ],
-                "--<meta charset=\"utf-8\">+"
-                    . "--<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">+"
-                    . "--<meta name=\"generator\" content=\"Phalcon\">+"
-                    . "--<meta property=\"org:url\" content=\"https://phalcon.io\">+",
-            ],
-        ];
     }
 }

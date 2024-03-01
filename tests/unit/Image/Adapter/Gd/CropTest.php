@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class CropTest extends TestCase
+final class CropTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -36,18 +36,18 @@ final class CropTest extends TestCase
     {
         $this->checkJpegSupport($this);
 
-        $image = new Gd(dataDir2('assets/images/example-jpg.jpg'));
+        $image = new Gd(self::dataDir('assets/images/example-jpg.jpg'));
 
         $outputDir = 'image/gd';
         $width     = 200;
         $height    = 200;
         $cropImage = 'crop.jpg';
-        $output    = outputDir2($outputDir . '/' . $cropImage);
+        $output    = self::outputDir($outputDir . '/' . $cropImage);
         $hash      = 'ffffffb803402030';
 
         // Resize to 200 pixels on the shortest side
         $image->crop($width, $height)
-              ->save(outputDir2($outputDir . '/' . $cropImage))
+              ->save(self::outputDir($outputDir . '/' . $cropImage))
         ;
 
         $this->assertFileExists($output);
@@ -61,7 +61,7 @@ final class CropTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 
     /**
@@ -76,7 +76,7 @@ final class CropTest extends TestCase
     {
         $this->checkJpegSupport($this);
 
-        $image = new Gd(dataDir2('assets/images/example-jpg.jpg'));
+        $image = new Gd(self::dataDir('assets/images/example-jpg.jpg'));
 
         $outputDir = 'image/gd';
         $width     = 200;
@@ -84,7 +84,7 @@ final class CropTest extends TestCase
         $offsetX   = 200;
         $offsetY   = 200;
         $cropImage = 'cropwithoffset.jpg';
-        $output    = outputDir2($outputDir . '/' . $cropImage);
+        $output    = self::outputDir($outputDir . '/' . $cropImage);
         $hash      = 'fffff00000000000';
 
         // Resize to 200 pixels on the shortest side
@@ -103,6 +103,6 @@ final class CropTest extends TestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        safeDeleteFile2($output);
+        $this->safeDeleteFile($output);
     }
 }

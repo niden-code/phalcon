@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\ServerRequest;
 
 use Phalcon\Http\Message\ServerRequest;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetRequestTargetTest extends TestCase
+final class GetRequestTargetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getRequestTarget()

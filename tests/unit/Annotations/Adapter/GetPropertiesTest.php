@@ -14,19 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Annotations\Adapter;
 
 use Phalcon\Annotations\Collection;
-use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
-use PHPUnit\Framework\TestCase;
 use TestClass;
 
 use function array_keys;
-use function dataDir2;
-use function outputDir2;
-use function safeDeleteFile2;
 
-final class GetPropertiesTest extends TestCase
+final class GetPropertiesTest extends AbstractAnnotationsAdapterTestCase
 {
-    use AnnotationsTrait2;
-
     /**
      * Tests Phalcon\Annotations\Adapter :: getProperties()
      *
@@ -44,7 +37,7 @@ final class GetPropertiesTest extends TestCase
         string $class,
         array $params
     ): void {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $adapter = new $class($params);
 
@@ -65,6 +58,6 @@ final class GetPropertiesTest extends TestCase
             $this->assertInstanceOf($expected, $actual);
         }
 
-        safeDeleteFile2(outputDir2('annotations/testclass.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

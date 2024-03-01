@@ -234,14 +234,14 @@ trait GdTrait2
     private function getImages(): array
     {
         $images = [
-            'gif' => dataDir2('assets/images/example-gif.gif'),
-            'png' => dataDir2('assets/images/example-png.png'),
+            'gif' => $this->dataDir('assets/images/example-gif.gif'),
+            'png' => $this->dataDir('assets/images/example-png.png'),
         ];
 
         if (true === $this->hasJpegSupport()) {
-            $images['jpg']  = dataDir2('assets/images/example-jpg.jpg');
-            $images['wbmp'] = dataDir2('assets/images/example-wbmp.wbmp');
-            $images['webp'] = dataDir2('assets/images/example-webp.webp');
+            $images['jpg']  = $this->dataDir('assets/images/example-jpg.jpg');
+            $images['wbmp'] = $this->dataDir('assets/images/example-wbmp.wbmp');
+            $images['webp'] = $this->dataDir('assets/images/example-webp.webp');
         }
 
         return $images;

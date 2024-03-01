@@ -28,62 +28,6 @@ use function spl_object_hash;
 class GetSetSharedCest
 {
     /**
-     * Tests Phalcon\Di\Di :: getShared()/setShared()
-     *
-     * @param UnitTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-09
-     */
-    public function diGetShared(UnitTester $I)
-    {
-        $I->wantToTest('Di - getShared()');
-
-        $container = new Di();
-
-        $class = new Escaper();
-        $container->setShared('escaper', $class);
-
-        $object = $container->getShared('escaper');
-
-        $expected = spl_object_hash($class);
-        $actual   = spl_object_hash($object);
-        $I->assertSame($expected, $actual);
-
-        $objectTwo = $container->getShared('escaper');
-        $actual    = spl_object_hash($objectTwo);
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Di\Di :: getShared() - set
-     *
-     * @param UnitTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-09
-     */
-    public function diGetSetSharedSet(UnitTester $I)
-    {
-        $I->wantToTest('Di - getShared() - set');
-
-        $container = new Di();
-
-        $class = new Escaper();
-        $container->set('escaper', $class, true);
-
-        $object = $container->getShared('escaper');
-
-        $expected = spl_object_hash($class);
-        $actual   = spl_object_hash($object);
-        $I->assertSame($expected, $actual);
-
-        $objectTwo = $container->getShared('escaper');
-        $actual    = spl_object_hash($objectTwo);
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
      * Tests Phalcon\Di\Di :: getShared()/setShared() - class name
      *
      * @param UnitTester $I
@@ -127,5 +71,61 @@ class GetSetSharedCest
 
         $class = Escaper::class;
         $I->assertInstanceOf($class, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Di\Di :: getShared() - set
+     *
+     * @param UnitTester $I
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-09-09
+     */
+    public function diGetSetSharedSet(UnitTester $I)
+    {
+        $I->wantToTest('Di - getShared() - set');
+
+        $container = new Di();
+
+        $class = new Escaper();
+        $container->set('escaper', $class, true);
+
+        $object = $container->getShared('escaper');
+
+        $expected = spl_object_hash($class);
+        $actual   = spl_object_hash($object);
+        $I->assertSame($expected, $actual);
+
+        $objectTwo = $container->getShared('escaper');
+        $actual    = spl_object_hash($objectTwo);
+        $I->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Di\Di :: getShared()/setShared()
+     *
+     * @param UnitTester $I
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-09-09
+     */
+    public function diGetShared(UnitTester $I)
+    {
+        $I->wantToTest('Di - getShared()');
+
+        $container = new Di();
+
+        $class = new Escaper();
+        $container->setShared('escaper', $class);
+
+        $object = $container->getShared('escaper');
+
+        $expected = spl_object_hash($class);
+        $actual   = spl_object_hash($object);
+        $I->assertSame($expected, $actual);
+
+        $objectTwo = $container->getShared('escaper');
+        $actual    = spl_object_hash($objectTwo);
+        $I->assertSame($expected, $actual);
     }
 }

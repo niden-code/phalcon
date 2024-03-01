@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Annotations\Collection;
 
 use Phalcon\Annotations\Annotation;
 use Phalcon\Annotations\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CurrentTest extends TestCase
+final class CurrentTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Annotations\Collection :: current()

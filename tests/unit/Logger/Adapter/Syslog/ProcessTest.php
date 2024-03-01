@@ -21,12 +21,12 @@ use LogicException;
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class ProcessTest extends TestCase
+final class ProcessTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: process()
@@ -38,7 +38,7 @@ final class ProcessTest extends TestCase
      */
     public function testLoggerAdapterSyslogProcess(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
         $timezone   = date_default_timezone_get();
         $datetime   = new DateTimeImmutable('now', new DateTimeZone($timezone));
         $adapter    = new Syslog($streamName);
@@ -64,7 +64,7 @@ final class ProcessTest extends TestCase
      */
     public function testLoggerAdapterSyslogProcessException()
     {
-        $fileName = getNewFileName2('log');
+        $fileName = $this->getNewFileName('log');
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage(

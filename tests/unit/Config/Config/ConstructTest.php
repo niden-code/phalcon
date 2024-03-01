@@ -58,7 +58,7 @@ final class ConstructTest extends AbstractConfigTestCase
     public function testConfigAdapterYamlConstructCallbacks(): void
     {
         $config = new Yaml(
-            dataDir2('assets/config/callbacks.yml'),
+            self::dataDir('assets/config/callbacks.yml'),
             [
                 '!decrypt' => function ($value) {
                     return hash('sha256', $value);
@@ -87,7 +87,7 @@ final class ConstructTest extends AbstractConfigTestCase
      */
     public function testConfigAdapterYamlConstructExceptionExtensionLoaded(): void
     {
-        $filePath = dataDir2('assets/config/callbacks.yml');
+        $filePath = self::dataDir('assets/config/callbacks.yml');
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Yaml extension is not loaded');
@@ -104,7 +104,7 @@ final class ConstructTest extends AbstractConfigTestCase
      */
     public function testConfigAdapterYamlConstructExceptionFileCannotBeParsed(): void
     {
-        $filePath = dataDir2('assets/config/callbacks.yml');
+        $filePath = self::dataDir('assets/config/callbacks.yml');
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
@@ -148,7 +148,7 @@ final class ConstructTest extends AbstractConfigTestCase
         define('TEST_CONST2', 'foo');
 
         $config = new Ini(
-            dataDir2('assets/config/config-with-constants.ini'),
+            self::dataDir('assets/config/config-with-constants.ini'),
             INI_SCANNER_NORMAL
         );
 
@@ -182,7 +182,7 @@ final class ConstructTest extends AbstractConfigTestCase
      */
     public function testConfigAdapterIniConstructExceptions()
     {
-        $filePath = dataDir2('assets/config/config-with-constants.ini');
+        $filePath = self::dataDir('assets/config/config-with-constants.ini');
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
@@ -204,10 +204,10 @@ final class ConstructTest extends AbstractConfigTestCase
         $this->config['test']['property']  = 'blah';
 
         $config = [
-            dataDir2('assets/config/config.php'),
+            self::dataDir('assets/config/config.php'),
             [
                 'adapter' => 'json',
-                'filePath' => dataDir2('assets/config/config.json'),
+                'filePath' => self::dataDir('assets/config/config.json'),
             ],
             [
                 'adapter' => 'array',
@@ -246,7 +246,7 @@ final class ConstructTest extends AbstractConfigTestCase
 
         $config = [
             [
-                'filePath' => dataDir2('assets/config/config.json'),
+                'filePath' => self::dataDir('assets/config/config.json'),
             ],
             [
                 'adapter' => 'array',

@@ -17,9 +17,9 @@ use Phalcon\Http\Message\Interfaces\ServerRequestInterface;
 use Phalcon\Http\Message\ServerRequest;
 use Phalcon\Http\Message\Uri;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: __construct()

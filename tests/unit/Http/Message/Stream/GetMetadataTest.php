@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetMetadataTest extends TestCase
+final class GetMetadataTest extends AbstractUnitTestCase
 {
     public static function getExamples(): array
     {
@@ -31,7 +31,7 @@ final class GetMetadataTest extends TestCase
             ['mode', 'rb',],
             ['unread_bytes', 0,],
             ['seekable', true,],
-            ['uri', dataDir2('assets/stream/mit.txt'),],
+            ['uri', self::dataDir('assets/stream/mit.txt'),],
             ['unknown', [],],
         ];
     }
@@ -44,7 +44,7 @@ final class GetMetadataTest extends TestCase
      */
     public function testHttpMessageStreamGetMetadata()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 
@@ -76,7 +76,7 @@ final class GetMetadataTest extends TestCase
         ?string $key,
         mixed $expected
     ) {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 

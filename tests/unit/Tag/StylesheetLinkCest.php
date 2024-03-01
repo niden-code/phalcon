@@ -20,45 +20,6 @@ use UnitTester;
 class StylesheetLinkCest extends TagSetup
 {
     /**
-     * Tests Phalcon\Tag :: stylesheetLink() - string parameter for a local link
-     *
-     * @issue  https://github.com/phalcon/cphalcon/issues/1486
-     * @author Phalcon Team <team@phalcon.io>
-     * @author Dreamszhu <dreamsxin@qq.com>
-     * @since  2014-09-12
-     */
-    public function tagStylesheetLinkStringParameterLocal(UnitTester $I)
-    {
-        $I->wantToTest('Tag - stylesheetLink() - string parameter for a local link');
-
-        Tag::resetInput();
-
-        $options  = 'css/phalcon.css';
-        $expected = '<link rel="stylesheet" type="text/css" href="/css/phalcon.css" />' . PHP_EOL;
-
-        Tag::setDocType(
-            Tag::XHTML10_STRICT
-        );
-
-        $actual = Tag::stylesheetLink($options);
-
-        $I->assertSame($expected, $actual);
-
-        Tag::resetInput();
-
-        $options  = 'css/phalcon.css';
-        $expected = '<link rel="stylesheet" type="text/css" href="/css/phalcon.css">' . PHP_EOL;
-
-        Tag::setDocType(
-            Tag::HTML5
-        );
-
-        $actual = Tag::stylesheetLink($options);
-
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
      * Tests Phalcon\Tag :: stylesheetLink() - array parameter for a local link
      *
      * @issue  https://github.com/phalcon/cphalcon/issues/1486
@@ -97,44 +58,6 @@ class StylesheetLinkCest extends TagSetup
         );
 
         $actual = Tag::stylesheetLink($options);
-
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Tag :: stylesheetLink() - string parameter for a remote
-     * link
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-12
-     */
-    public function tagStylesheetLinkStringParameterRemote(UnitTester $I)
-    {
-        $I->wantToTest('Tag - stylesheetLink() - string parameter for a remote');
-
-        Tag::resetInput();
-
-        $options  = 'http://phalcon.io/css/phalcon.css';
-        $expected = '<link rel="stylesheet" type="text/css" href="http://phalcon.io/css/phalcon.css" />' . PHP_EOL;
-
-        Tag::setDocType(
-            Tag::XHTML10_STRICT
-        );
-
-        $actual = Tag::stylesheetLink($options, false);
-
-        $I->assertSame($expected, $actual);
-
-        Tag::resetInput();
-
-        $options  = 'http://phalcon.io/css/phalcon.css';
-        $expected = '<link rel="stylesheet" type="text/css" href="http://phalcon.io/css/phalcon.css">' . PHP_EOL;
-
-        Tag::setDocType(
-            Tag::HTML5
-        );
-
-        $actual = Tag::stylesheetLink($options, false);
 
         $I->assertSame($expected, $actual);
     }
@@ -219,6 +142,83 @@ class StylesheetLinkCest extends TagSetup
         );
 
         $actual = Tag::stylesheetLink($options);
+
+        $I->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: stylesheetLink() - string parameter for a local link
+     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/1486
+     * @author Phalcon Team <team@phalcon.io>
+     * @author Dreamszhu <dreamsxin@qq.com>
+     * @since  2014-09-12
+     */
+    public function tagStylesheetLinkStringParameterLocal(UnitTester $I)
+    {
+        $I->wantToTest('Tag - stylesheetLink() - string parameter for a local link');
+
+        Tag::resetInput();
+
+        $options  = 'css/phalcon.css';
+        $expected = '<link rel="stylesheet" type="text/css" href="/css/phalcon.css" />' . PHP_EOL;
+
+        Tag::setDocType(
+            Tag::XHTML10_STRICT
+        );
+
+        $actual = Tag::stylesheetLink($options);
+
+        $I->assertSame($expected, $actual);
+
+        Tag::resetInput();
+
+        $options  = 'css/phalcon.css';
+        $expected = '<link rel="stylesheet" type="text/css" href="/css/phalcon.css">' . PHP_EOL;
+
+        Tag::setDocType(
+            Tag::HTML5
+        );
+
+        $actual = Tag::stylesheetLink($options);
+
+        $I->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: stylesheetLink() - string parameter for a remote
+     * link
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-12
+     */
+    public function tagStylesheetLinkStringParameterRemote(UnitTester $I)
+    {
+        $I->wantToTest('Tag - stylesheetLink() - string parameter for a remote');
+
+        Tag::resetInput();
+
+        $options  = 'http://phalcon.io/css/phalcon.css';
+        $expected = '<link rel="stylesheet" type="text/css" href="http://phalcon.io/css/phalcon.css" />' . PHP_EOL;
+
+        Tag::setDocType(
+            Tag::XHTML10_STRICT
+        );
+
+        $actual = Tag::stylesheetLink($options, false);
+
+        $I->assertSame($expected, $actual);
+
+        Tag::resetInput();
+
+        $options  = 'http://phalcon.io/css/phalcon.css';
+        $expected = '<link rel="stylesheet" type="text/css" href="http://phalcon.io/css/phalcon.css">' . PHP_EOL;
+
+        Tag::setDocType(
+            Tag::HTML5
+        );
+
+        $actual = Tag::stylesheetLink($options, false);
 
         $I->assertSame($expected, $actual);
     }

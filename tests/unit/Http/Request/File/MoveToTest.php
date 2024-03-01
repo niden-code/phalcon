@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Http\Request\File;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class MoveToTest extends TestCase
+final class MoveToTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Request\File :: moveTo()

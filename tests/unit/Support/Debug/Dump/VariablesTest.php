@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Debug\Dump;
 
 use Phalcon\Support\Debug\Dump;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
 use function file_get_contents;
@@ -22,7 +22,7 @@ use function trim;
 
 use const PHP_OS_FAMILY;
 
-final class VariablesTest extends TestCase
+final class VariablesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Debug\Dump :: variables()
@@ -46,7 +46,7 @@ final class VariablesTest extends TestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir2('fixtures/Support/Dump/variables_output.txt')
+                self::dataDir('fixtures/Support/Dump/variables_output.txt')
             )
         );
         $actual   = $dump->variables($test1, $test2, $test3);

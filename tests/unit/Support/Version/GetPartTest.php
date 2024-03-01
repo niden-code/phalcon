@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Version;
 
 use Phalcon\Support\Version;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function intval;
 
-final class GetPartTest extends TestCase
+final class GetPartTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Version :: getPart()

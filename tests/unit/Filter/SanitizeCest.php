@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Filter;
 
 use Phalcon\Filter\FilterFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function call_user_func_array;
 use function is_array;
 
-final class SanitizeTest extends TestCase
+final class SanitizeCest extends AbstractUnitTestCase
 {
     /**
      * @return array[]
@@ -783,6 +783,9 @@ final class SanitizeTest extends TestCase
         }
 
         $expected = is_array($source) ? $source[0] : $source;
-        $this->assertSame($expected, $actual);
+        /**
+         * assertEquals here because of the floats
+         */
+        $this->assertEquals($expected, $actual);
     }
 }

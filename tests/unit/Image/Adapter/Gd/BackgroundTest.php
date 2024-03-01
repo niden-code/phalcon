@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('gd')]
-final class BackgroundTest extends TestCase
+final class BackgroundTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -44,8 +44,8 @@ final class BackgroundTest extends TestCase
 
         foreach ($params as [$width, $height, $master, $color, $opacity, $hash]) {
             $resultImage = $color . 'bg.png';
-            $output      = outputDir2($outputDir . '/' . $resultImage);
-            $image       = new Gd(dataDir2('assets/images/example-png.png'));
+            $output      = self::outputDir($outputDir . '/' . $resultImage);
+            $image       = new Gd(self::dataDir('assets/images/example-png.png'));
 
             $image->background($color, $opacity)
                   ->resize($width, $height, $master)
@@ -57,7 +57,7 @@ final class BackgroundTest extends TestCase
             $actual = $this->checkImageHash($output, $hash);
             $this->assertTrue($actual);
 
-            safeDeleteFile2($output);
+            $this->safeDeleteFile($output);
         }
     }
 }

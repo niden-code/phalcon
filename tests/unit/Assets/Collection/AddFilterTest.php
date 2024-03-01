@@ -15,14 +15,14 @@ namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
 use Phalcon\Assets\Filters\None;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 /**
- * Class AddFilterTest extends TestCase
+ * Class AddFilterTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Assets\Collection
  */
-final class AddFilterTest extends TestCase
+final class AddFilterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: addFilter()

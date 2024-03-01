@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Html\Attributes;
 use Phalcon\Html\Attributes;
 use Phalcon\Html\Exception;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     use DiTrait;
 
@@ -70,6 +70,6 @@ final class ToStringTest extends TestCase
             ]
         );
 
-        $result = (string) $attributes;
+        $result = (string)$attributes;
     }
 }

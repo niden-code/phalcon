@@ -17,7 +17,7 @@ use Codeception\Example;
 use DateTime;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date;
@@ -27,7 +27,7 @@ use function logsDir;
 use function preg_match;
 use function strtoupper;
 
-final class LevelsTest extends TestCase
+final class LevelsTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: alert()
@@ -42,8 +42,8 @@ final class LevelsTest extends TestCase
      */
     public function testLoggerAlert(string $level): void
     {
-        $fileName = getNewFileName2('log');
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName('log');
+        $fileName = $this->logsDir($fileName);
         $adapter  = new Stream($fileName);
         $logger   = new Logger('my-logger', ['one' => $adapter]);
 
@@ -84,7 +84,7 @@ final class LevelsTest extends TestCase
 
         $this->assertLessThan($nSecondThreshold, $nInterval);
 
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 
     /**

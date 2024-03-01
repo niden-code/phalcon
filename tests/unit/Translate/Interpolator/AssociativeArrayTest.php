@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Translate\Interpolator;
 
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Translate\Interpolator\AssociativeArray;
-use PHPUnit\Framework\TestCase;
 
-final class AssociativeArrayTest extends TestCase
+final class AssociativeArrayTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Translate\Interpolator\AssociativeArray ::

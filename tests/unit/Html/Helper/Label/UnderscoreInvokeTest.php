@@ -11,46 +11,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Helper\Label;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Label;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
-final class UnderscoreInvokeTest extends TestCase
+final class UnderscoreInvokeTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Html\Helper\Label :: __invoke()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlHelperLabelUnderscoreInvoke(
-        string $expected,
-        string $text,
-        array $attributes,
-        bool $raw
-    ): void {
-        $escaper = new Escaper();
-        $helper  = new Label($escaper);
-
-        $actual   = $helper($text, $attributes, $raw);
-        $this->assertSame($expected, $actual);
-
-        $factory  = new TagFactory($escaper);
-        $locator  = $factory->newInstance('label');
-
-        $actual   = $locator($text, $attributes, $raw);
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array
      */
@@ -93,5 +62,34 @@ final class UnderscoreInvokeTest extends TestCase
                 true,
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Label :: __invoke()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlHelperLabelUnderscoreInvoke(
+        string $expected,
+        string $text,
+        array $attributes,
+        bool $raw
+    ): void {
+        $escaper = new Escaper();
+        $helper  = new Label($escaper);
+
+        $actual = $helper($text, $attributes, $raw);
+        $this->assertSame($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('label');
+
+        $actual = $locator($text, $attributes, $raw);
+        $this->assertSame($expected, $actual);
     }
 }

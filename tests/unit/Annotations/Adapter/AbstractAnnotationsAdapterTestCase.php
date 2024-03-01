@@ -11,17 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests1\Fixtures\Traits;
+namespace Phalcon\Tests\Unit\Annotations\Adapter;
 
 use Phalcon\Annotations\Adapter\Apcu;
 use Phalcon\Annotations\Adapter\Memory;
 use Phalcon\Annotations\Adapter\Stream;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function outputDir;
-use function outputDir2;
-
-trait AnnotationsTrait2
+abstract class AbstractAnnotationsAdapterTestCase extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
     public static function providerExamples(): array
     {
         return [
@@ -39,7 +40,7 @@ trait AnnotationsTrait2
             [
                 Stream::class,
                 [
-                    'annotationsDir' => outputDir2('annotations/'),
+                    'annotationsDir' => self::outputDir('annotations/'),
                 ],
             ],
         ];

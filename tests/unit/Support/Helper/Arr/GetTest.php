@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\Arr;
 
 use Phalcon\Support\Helper\Arr\Get;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
-final class GetTest extends TestCase
+final class GetTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]

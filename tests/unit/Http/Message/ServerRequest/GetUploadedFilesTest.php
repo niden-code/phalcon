@@ -17,9 +17,9 @@ use InvalidArgumentException;
 use Phalcon\Http\Message\ServerRequest;
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetUploadedFilesTest extends TestCase
+final class GetUploadedFilesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getUploadedFiles()

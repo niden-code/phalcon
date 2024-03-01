@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Attributes;
 
 use Phalcon\Html\Attributes;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class OffsetUnsetTest extends TestCase
+final class OffsetUnsetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Attributes :: offsetUnset()

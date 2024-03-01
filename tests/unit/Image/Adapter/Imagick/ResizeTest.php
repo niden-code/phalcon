@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class ResizeTest extends TestCase
+final class ResizeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: resize()
@@ -33,13 +33,13 @@ final class ResizeTest extends TestCase
     public function testImageAdapterImagickResize(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Resize to 200 pixels on the shortest side
-        $outputFile = outputDir2('image/imagick/resize.jpg');
+        $outputFile = self::outputDir('image/imagick/resize.jpg');
         $image->resize(200, 200)
               ->save($outputFile)
         ;
@@ -54,6 +54,6 @@ final class ResizeTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertLessThanOrEqual($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

@@ -16,18 +16,13 @@ namespace Phalcon\Tests\Unit\Annotations\Adapter;
 use Phalcon\Annotations\Adapter\AdapterInterface;
 use Phalcon\Annotations\Collection;
 use Phalcon\Annotations\Reflection;
-use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
-use PHPUnit\Framework\TestCase;
 use TestClass;
 use User\TestClassNs;
 
-use function dataDir2;
 use function is_object;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractAnnotationsAdapterTestCase
 {
-    use AnnotationsTrait2;
-
     /**
      * Tests Phalcon\Annotations\Adapter ::
      *
@@ -46,15 +41,15 @@ final class ConstructTest extends TestCase
         array $params
     ): void {
         $this->assertFileExists(
-            dataDir2('fixtures/Annotations/TestClass.php')
+            self::dataDir('fixtures/Annotations/TestClass.php')
         );
 
         $this->assertFileExists(
-            dataDir2('fixtures/Annotations/TestClassNs.php')
+            self::dataDir('fixtures/Annotations/TestClassNs.php')
         );
 
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
-        require_once dataDir2('fixtures/Annotations/TestClassNs.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClassNs.php');
 
         $adapter = new $class($params);
 
@@ -119,7 +114,7 @@ final class ConstructTest extends TestCase
         string $class,
         array $params
     ): void {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $adapter = new $class($params);
 

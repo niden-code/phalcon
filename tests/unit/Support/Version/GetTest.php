@@ -17,11 +17,11 @@ use Phalcon\Tests\Fixtures\Version\VersionAlphaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionBetaFixture;
 use Phalcon\Tests\Fixtures\Version\VersionRcFixture;
 use Phalcon\Tests\Fixtures\Version\VersionStableFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function is_string;
 
-final class GetTest extends TestCase
+final class GetTest extends AbstractUnitTestCase
 {
     /**
      * @return string[][]

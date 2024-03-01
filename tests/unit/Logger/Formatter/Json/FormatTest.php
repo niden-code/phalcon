@@ -19,12 +19,12 @@ use Exception;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Formatter\Json;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 
-final class FormatTest extends TestCase
+final class FormatTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Formatter\Json :: format()

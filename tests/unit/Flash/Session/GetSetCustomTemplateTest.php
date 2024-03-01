@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 use Phalcon\Flash\Session;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetCustomTemplateTest extends TestCase
+final class GetSetCustomTemplateTest extends AbstractUnitTestCase
 {
     use DiTrait2;
 

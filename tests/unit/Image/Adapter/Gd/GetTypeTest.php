@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Exception;
 use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const IMAGETYPE_GIF;
 use const IMAGETYPE_JPEG;
@@ -26,7 +26,7 @@ use const IMAGETYPE_WEBP;
 use const IMAGETYPE_XBM;
 
 #[RequiresPhpExtension('gd')]
-final class GetTypeTest extends TestCase
+final class GetTypeTest extends AbstractUnitTestCase
 {
     use GdTrait2;
 
@@ -37,27 +37,27 @@ final class GetTypeTest extends TestCase
     {
         return [
             [
-                dataDir2('assets/images/example-gif.gif'),
+                self::dataDir('assets/images/example-gif.gif'),
                 IMAGETYPE_GIF,
             ],
             [
-                dataDir2('assets/images/example-jpg.jpg'),
+                self::dataDir('assets/images/example-jpg.jpg'),
                 IMAGETYPE_JPEG,
             ],
             [
-                dataDir2('assets/images/example-png.png'),
+                self::dataDir('assets/images/example-png.png'),
                 IMAGETYPE_PNG,
             ],
             [
-                dataDir2('assets/images/example-wbmp.wbmp'),
+                self::dataDir('assets/images/example-wbmp.wbmp'),
                 IMAGETYPE_WBMP,
             ],
             [
-                dataDir2('assets/images/example-webp.webp'),
+                self::dataDir('assets/images/example-webp.webp'),
                 IMAGETYPE_WEBP,
             ],
             [
-                dataDir2('assets/images/example-xbm.xbm'),
+                self::dataDir('assets/images/example-xbm.xbm'),
                 IMAGETYPE_XBM,
             ],
         ];

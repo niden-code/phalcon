@@ -19,13 +19,13 @@ use Exception;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 use function uniqid;
 
-final class FormatTest extends TestCase
+final class FormatTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Formatter\Line :: format()

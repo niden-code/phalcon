@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function serialize;
 
-final class SerializeUnserializeTest extends TestCase
+final class SerializeUnserializeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: serialize()/unserialize
@@ -34,7 +34,7 @@ final class SerializeUnserializeTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("This object cannot be serialized");
 
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
         $adapter    = new Syslog($streamName);
 
         $object = serialize($adapter);

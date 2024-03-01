@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Assets\Manager;
 
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class OutputInlineCssTest extends TestCase
+final class OutputInlineCssTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Manager :: outputInlineCss()

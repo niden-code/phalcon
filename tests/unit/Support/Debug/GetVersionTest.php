@@ -17,9 +17,9 @@ use Phalcon\Storage\Exception;
 use Phalcon\Support\Debug;
 use Phalcon\Support\Version;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetVersionTest extends TestCase
+final class GetVersionTest extends AbstractUnitTestCase
 {
     use DiTrait;
 

@@ -16,14 +16,14 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function file_get_contents;
 use function logsDir;
 use function logsDir2;
 
-final class GetAdapterTest extends TestCase
+final class GetAdapterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: getAdapter()
@@ -35,8 +35,8 @@ final class GetAdapterTest extends TestCase
      */
     public function testLoggerGetAdapter(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
 
         $logger = new Logger(
@@ -52,7 +52,7 @@ final class GetAdapterTest extends TestCase
         $this->assertInstanceOf($class, $actual);
 
         $adapter1->close();
-        safeDeleteFile2($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName1);
     }
 
     /**
@@ -82,9 +82,9 @@ final class GetAdapterTest extends TestCase
      */
     public function testLoggerGetAdapterForTransaction(): void
     {
-        $fileName1  = getNewFileName2('log');
-        $fileName2  = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName1  = $this->getNewFileName('log');
+        $fileName2  = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
 
         $adapter1 = new Stream($outputPath . $fileName1);
         $adapter2 = new Stream($outputPath . $fileName2);
@@ -147,7 +147,7 @@ final class GetAdapterTest extends TestCase
         $adapter1->close();
         $adapter2->close();
 
-        safeDeleteFile2($outputPath . $fileName1);
-        safeDeleteFile2($outputPath . $fileName2);
+        $this->safeDeleteFile($outputPath . $fileName1);
+        $this->safeDeleteFile($outputPath . $fileName2);
     }
 }

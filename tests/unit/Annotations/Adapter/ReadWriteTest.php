@@ -19,18 +19,14 @@ use Phalcon\Annotations\Reflection;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamEmptyDataFixture;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFileExistsFixture;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFixture;
-use Phalcon\Tests1\Fixtures\Traits\AnnotationsTrait2;
-use PHPUnit\Framework\TestCase;
 use TestClass;
 
 use function dataDir2;
 use function outputDir2;
 use function safeDeleteFile2;
 
-final class ReadWriteTest extends TestCase
+final class ReadWriteTest extends AbstractAnnotationsAdapterTestCase
 {
-    use AnnotationsTrait2;
-
     /**
      * Tests Phalcon\Annotations\Adapter :: read()/write() - exceptions
      *
@@ -41,13 +37,13 @@ final class ReadWriteTest extends TestCase
      */
     public function testAnnotationsAdapterReadException(): void
     {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         /**
          * File does not exist
          */
         $params  = [
-            'annotationsDir' => outputDir2('annotations/'),
+            'annotationsDir' => self::outputDir('annotations/'),
         ];
         $adapter = new StreamFileExistsFixture($params);
 
@@ -75,10 +71,10 @@ final class ReadWriteTest extends TestCase
      */
     public function testAnnotationsAdapterReadWrite(): void
     {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $params  = [
-            'annotationsDir' => outputDir2('annotations/'),
+            'annotationsDir' => self::outputDir('annotations/'),
         ];
         $adapter = new Stream($params);
 
@@ -86,7 +82,7 @@ final class ReadWriteTest extends TestCase
 
         $adapter->write('testwrite', $classAnnotations);
 
-        $actual = outputDir2('annotations/testclass.php');
+        $actual = self::outputDir('annotations/testclass.php');
         $this->assertFileExists($actual);
 
         $newClass = $adapter->read('testwrite');
@@ -94,8 +90,8 @@ final class ReadWriteTest extends TestCase
         $actual   = $newClass;
         $this->assertInstanceOf($expected, $actual);
 
-        safeDeleteFile2(outputDir2('annotations/testwrite.php'));
-        safeDeleteFile2(outputDir2('annotations/testclass.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testwrite.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 
     /**
@@ -108,10 +104,10 @@ final class ReadWriteTest extends TestCase
      */
     public function testAnnotationsAdapterWriteStreamException(): void
     {
-        require_once dataDir2('fixtures/Annotations/TestClass.php');
+        require_once self::dataDir('fixtures/Annotations/TestClass.php');
 
         $params  = [
-            'annotationsDir' => outputDir2('annotations/'),
+            'annotationsDir' => self::outputDir('annotations/'),
         ];
         $adapter = new StreamFixture($params);
 
@@ -121,7 +117,7 @@ final class ReadWriteTest extends TestCase
 
         $adapter->write('testwrite', $classAnnotations);
 
-        safeDeleteFile2(outputDir2('annotations/testwrite.php'));
-        safeDeleteFile2(outputDir2('annotations/testclass.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testwrite.php'));
+        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

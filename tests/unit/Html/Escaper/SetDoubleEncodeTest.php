@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Escaper;
 
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetDoubleEncodeTest extends TestCase
+final class SetDoubleEncodeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Escaper :: setDoubleEncode()

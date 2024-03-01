@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Filter\Filter;
 
 use Phalcon\Filter\FilterFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function array_sum;
 use function restore_error_handler;
@@ -22,7 +22,7 @@ use function set_error_handler;
 
 use const E_USER_NOTICE;
 
-final class SanitizeMultipleTest extends TestCase
+final class SanitizeMultipleTest extends AbstractUnitTestCase
 {
     /**
      * @return array<array-key, array<string, mixed>>

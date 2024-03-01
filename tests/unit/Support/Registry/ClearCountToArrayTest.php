@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Registry;
 
 use Phalcon\Support\Registry;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ClearCountToArrayTest extends TestCase
+final class ClearCountToArrayTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Registry :: clear()

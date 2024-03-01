@@ -68,6 +68,29 @@ class SetParameterCest
     }
 
     /**
+     * Unit Tests Phalcon\Di\Service :: setParameter() - exception
+     *
+     * @param UnitTester $I
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-09-09
+     */
+    public function diServiceSetParameterException(UnitTester $I)
+    {
+        $I->wantToTest('Di\Service - setParameter() - exception');
+
+        $I->expectThrowable(
+            new Exception(
+                'Definition must be an array to update its parameters'
+            ),
+            function () {
+                $service = new Service(Escaper::class);
+                $service->setParameter(1, [1]);
+            }
+        );
+    }
+
+    /**
      * Unit Tests Phalcon\Di\Service :: setParameter() - with arguments
      *
      * @param UnitTester $I
@@ -106,28 +129,5 @@ class SetParameterCest
         ];
         $actual   = $service->getDefinition();
         $I->assertSame($expected, $actual);
-    }
-
-    /**
-     * Unit Tests Phalcon\Di\Service :: setParameter() - exception
-     *
-     * @param UnitTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-09
-     */
-    public function diServiceSetParameterException(UnitTester $I)
-    {
-        $I->wantToTest('Di\Service - setParameter() - exception');
-
-        $I->expectThrowable(
-            new Exception(
-                'Definition must be an array to update its parameters'
-            ),
-            function () {
-                $service = new Service(Escaper::class);
-                $service->setParameter(1, [1]);
-            }
-        );
     }
 }

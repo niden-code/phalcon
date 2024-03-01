@@ -19,38 +19,6 @@ use UnitTester;
 class ImageInputCest extends TagSetup
 {
     /**
-     * Tests Phalcon\Tag :: imageInput() - string as a parameter
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagImageInputStringParameter(UnitTester $I)
-    {
-        $I->wantToTest('Tag :: imageInput() - string as a parameter');
-        $options  = 'x_name';
-        $expected = '<input type="image" value="x_name"';
-
-        $this->testFieldParameter(
-            $I,
-            'imageInput',
-            $options,
-            $expected,
-            false
-        );
-
-        $options  = 'x_name';
-        $expected = '<input type="image" value="x_name"';
-
-        $this->testFieldParameter(
-            $I,
-            'imageInput',
-            $options,
-            $expected,
-            true
-        );
-    }
-
-    /**
      * Tests Phalcon\Tag :: imageInput() - array as a parameter
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -179,49 +147,34 @@ class ImageInputCest extends TagSetup
     }
 
     /**
-     * Tests Phalcon\Tag :: imageInput() - setDefault
+     * Tests Phalcon\Tag :: imageInput() - string as a parameter
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    public function tagImageInputWithSetDefault(UnitTester $I)
+    public function tagImageInputStringParameter(UnitTester $I)
     {
-        $I->wantToTest('Tag :: imageInput() - setDefault()');
-        $options  = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-        $expected = '<input type="image" name="x_other" '
-            . 'value="x_name" class="x_class" size="10"';
+        $I->wantToTest('Tag :: imageInput() - string as a parameter');
+        $options  = 'x_name';
+        $expected = '<input type="image" value="x_name"';
 
         $this->testFieldParameter(
             $I,
             'imageInput',
             $options,
             $expected,
-            false,
-            'setDefault'
+            false
         );
 
-        $options  = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-        $expected = '<input type="image" '
-            . 'name="x_other" value="x_name" class="x_class" '
-            . 'size="10"';
+        $options  = 'x_name';
+        $expected = '<input type="image" value="x_name"';
 
         $this->testFieldParameter(
             $I,
             'imageInput',
             $options,
             $expected,
-            true,
-            'setDefault'
+            true
         );
     }
 
@@ -274,6 +227,100 @@ class ImageInputCest extends TagSetup
     }
 
     /**
+     * Tests Phalcon\Tag :: imageInput() - displayTo and element not present
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagImageInputWithDisplayToElementNotPresent(UnitTester $I)
+    {
+        $I->wantToTest('Tag :: imageInput() - displayTo() and element not present');
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<input type="image" name="x_other" value="x_name" class="x_class" size="10"';
+
+        $this->testFieldParameter(
+            $I,
+            'imageInput',
+            $options,
+            $expected,
+            false,
+            'displayTo'
+        );
+
+        $options = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+
+        $expected = '<input type="image" name="x_other" value="x_name" class="x_class" size="10"';
+
+        $this->testFieldParameter(
+            $I,
+            'imageInput',
+            $options,
+            $expected,
+            true,
+            'displayTo'
+        );
+    }
+
+    /**
+     * Tests Phalcon\Tag :: imageInput() - setDefault
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagImageInputWithSetDefault(UnitTester $I)
+    {
+        $I->wantToTest('Tag :: imageInput() - setDefault()');
+        $options  = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+        $expected = '<input type="image" name="x_other" '
+            . 'value="x_name" class="x_class" size="10"';
+
+        $this->testFieldParameter(
+            $I,
+            'imageInput',
+            $options,
+            $expected,
+            false,
+            'setDefault'
+        );
+
+        $options  = [
+            'x_name',
+            'name'  => 'x_other',
+            'class' => 'x_class',
+            'size'  => '10',
+        ];
+        $expected = '<input type="image" '
+            . 'name="x_other" value="x_name" class="x_class" '
+            . 'size="10"';
+
+        $this->testFieldParameter(
+            $I,
+            'imageInput',
+            $options,
+            $expected,
+            true,
+            'setDefault'
+        );
+    }
+
+    /**
      * Tests Phalcon\Tag :: imageInput() - setDefault and element not present
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -318,53 +365,6 @@ class ImageInputCest extends TagSetup
             $expected,
             true,
             'setDefault'
-        );
-    }
-
-    /**
-     * Tests Phalcon\Tag :: imageInput() - displayTo and element not present
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function tagImageInputWithDisplayToElementNotPresent(UnitTester $I)
-    {
-        $I->wantToTest('Tag :: imageInput() - displayTo() and element not present');
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<input type="image" name="x_other" value="x_name" class="x_class" size="10"';
-
-        $this->testFieldParameter(
-            $I,
-            'imageInput',
-            $options,
-            $expected,
-            false,
-            'displayTo'
-        );
-
-        $options = [
-            'x_name',
-            'name'  => 'x_other',
-            'class' => 'x_class',
-            'size'  => '10',
-        ];
-
-        $expected = '<input type="image" name="x_other" value="x_name" class="x_class" size="10"';
-
-        $this->testFieldParameter(
-            $I,
-            'imageInput',
-            $options,
-            $expected,
-            true,
-            'displayTo'
         );
     }
 }

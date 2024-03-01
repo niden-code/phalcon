@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class MaskTest extends TestCase
+final class MaskTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: mask()
@@ -33,17 +33,17 @@ final class MaskTest extends TestCase
     public function testImageAdapterImagickMask(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         $mask = new Imagick(
-            dataDir2('assets/images/example-png.png')
+            self::dataDir('assets/images/example-png.png')
         );
 
         // Add a watermark to the bottom right of the image
-        $outputFile = outputDir2('image/imagick/mask.jpg');
+        $outputFile = self::outputDir('image/imagick/mask.jpg');
         $image->mask($mask)
               ->save($outputFile)
         ;
@@ -58,6 +58,6 @@ final class MaskTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

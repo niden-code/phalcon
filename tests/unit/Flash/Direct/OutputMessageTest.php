@@ -17,11 +17,11 @@ use Codeception\Example;
 use Phalcon\Flash\Direct;
 use Phalcon\Flash\Exception;
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use const PHP_EOL;
 
-final class OutputMessageTest extends TestCase
+final class OutputMessageTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: outputMessage() - exception

@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Tests\Fixtures\Traits\ImagickTrait;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('imagick')]
-final class PixelateTest extends TestCase
+final class PixelateTest extends AbstractUnitTestCase
 {
     use ImagickTrait;
 

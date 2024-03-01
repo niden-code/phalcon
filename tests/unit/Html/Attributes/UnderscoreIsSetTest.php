@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Html\Attributes;
 
 use Phalcon\Html\Attributes;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UnderscoreIsSetTest extends TestCase
+final class UnderscoreIsSetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Attributes :: __isset()

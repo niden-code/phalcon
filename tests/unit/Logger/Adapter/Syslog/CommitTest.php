@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Exception;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class CommitTest extends TestCase
+final class CommitTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Syslog :: commit()
@@ -30,7 +30,7 @@ final class CommitTest extends TestCase
      */
     public function testLoggerAdapterSyslogCommit(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
 
         $adapter = new Syslog($streamName);
 
@@ -55,7 +55,7 @@ final class CommitTest extends TestCase
      */
     public function testLoggerAdapterSyslogCommitNoTransaction(): void
     {
-        $streamName = getNewFileName2('log');
+        $streamName = $this->getNewFileName('log');
         $adapter = new Syslog($streamName);
 
         $actual = $adapter->inTransaction();

@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Assets\Asset;
 use Phalcon\Assets\Asset;
 use Phalcon\Assets\Asset\Css;
 use Phalcon\Assets\Asset\Js;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class IsSetAutoVersionTest extends TestCase
+final class IsSetAutoVersionTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Assets\Asset\Css :: isAutoVersion()/setAutoVersion()

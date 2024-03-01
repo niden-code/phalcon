@@ -21,29 +21,6 @@ use UnitTester;
 class TagHtmlCest extends TagSetup
 {
     /**
-     * Tests Phalcon\Tag :: tagHtml() - name parameter
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2014-09-05
-     *
-     * @dataProvider tagHtmlNameProvider
-     */
-    public function tagTagHtmlName(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Tag - tagHtml() - name parameter');
-
-        Tag::resetInput();
-
-        $name = $example['name'];
-
-        Tag::setDocType($example['docType']);
-
-        $expected = $example['expected'];
-        $actual   = Tag::tagHtml($name);
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
      * Tests Phalcon\Tag :: tagHtml() - name parameter and self close
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -77,35 +54,25 @@ class TagHtmlCest extends TagSetup
     }
 
     /**
-     * Tests Phalcon\Tag :: tagHtml() - name parameter and only start
+     * Tests Phalcon\Tag :: tagHtml() - name parameter
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2014-09-05
+     *
+     * @dataProvider tagHtmlNameProvider
      */
-    public function tagTagHtmlNameOnlyStart(UnitTester $I)
+    public function tagTagHtmlName(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Tag - tagHtml() - name parameter only start');
+        $I->wantToTest('Tag - tagHtml() - name parameter');
 
         Tag::resetInput();
 
-        $name     = 'aside';
-        $expected = '<aside>';
+        $name = $example['name'];
 
-        Tag::setDocType(Tag::XHTML10_STRICT);
+        Tag::setDocType($example['docType']);
 
-        $actual = Tag::tagHtml($name, [], false, true);
-
-        $I->assertSame($expected, $actual);
-
-        Tag::resetInput();
-
-        $name     = 'aside';
-        $expected = '<aside>';
-
-        Tag::setDocType(Tag::HTML5);
-
-        $actual = Tag::tagHtml($name, [], false, true);
-
+        $expected = $example['expected'];
+        $actual   = Tag::tagHtml($name);
         $I->assertSame($expected, $actual);
     }
 
@@ -138,6 +105,39 @@ class TagHtmlCest extends TagSetup
         Tag::setDocType(Tag::HTML5);
 
         $actual = Tag::tagHtml($name, [], false, false, true);
+
+        $I->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: tagHtml() - name parameter and only start
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function tagTagHtmlNameOnlyStart(UnitTester $I)
+    {
+        $I->wantToTest('Tag - tagHtml() - name parameter only start');
+
+        Tag::resetInput();
+
+        $name     = 'aside';
+        $expected = '<aside>';
+
+        Tag::setDocType(Tag::XHTML10_STRICT);
+
+        $actual = Tag::tagHtml($name, [], false, true);
+
+        $I->assertSame($expected, $actual);
+
+        Tag::resetInput();
+
+        $name     = 'aside';
+        $expected = '<aside>';
+
+        Tag::setDocType(Tag::HTML5);
+
+        $actual = Tag::tagHtml($name, [], false, true);
 
         $I->assertSame($expected, $actual);
     }

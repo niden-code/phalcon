@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Filters\JsMin;
 
 use Phalcon\Assets\Filters\JsMin;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function dataDir2;
 use function file_get_contents;
 
-final class FilterTest extends TestCase
+final class FilterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Filters\JsMin :: filter()
@@ -33,7 +33,7 @@ final class FilterTest extends TestCase
     {
         $jsmin = new JsMin();
 
-        $source   = file_get_contents(dataDir2('assets/assets/signup.js'));
+        $source   = file_get_contents(self::dataDir('assets/assets/signup.js'));
         $expected = '$(document).ready(function(){$("#registration").validate({})})';
         $actual   = $jsmin->filter($source);
         $this->assertSame($expected, $actual);

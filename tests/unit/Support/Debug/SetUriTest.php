@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Debug;
 
 use Phalcon\Support\Debug;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function sprintf;
 
-final class SetUriTest extends TestCase
+final class SetUriTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Debug :: setUri()

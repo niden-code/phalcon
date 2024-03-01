@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Uri;
 
 use InvalidArgumentException;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class WithQueryTest extends TestCase
+final class WithQueryTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]

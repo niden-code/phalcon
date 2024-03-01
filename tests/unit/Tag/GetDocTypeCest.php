@@ -20,59 +20,14 @@ use UnitTester;
 class GetDocTypeCest extends TagSetup
 {
     /**
-     * Tests Phalcon\Tag :: getDocType() - 3.2
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-05
-     */
-    public function testDoctypeSet32Final(UnitTester $I)
-    {
-        $this->runDoctypeTest($I, Tag::HTML32);
-    }
-
-
-    /**
-     * Tests Phalcon\Tag :: getDocType() - 4.01 Strict
+     * Tests Phalcon\Tag :: getDocType() - 1.0 Frameset
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-04
      */
-    public function testDoctypeSet401(UnitTester $I)
+    public function testDoctypeSet10Frameset(UnitTester $I)
     {
-        $this->runDoctypeTest($I, Tag::HTML401_STRICT);
-    }
-
-    /**
-     * Tests Phalcon\Tag :: getDocType() - 4.01 Transitional
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-04
-     */
-    public function testDoctypeSet401Transitional(UnitTester $I)
-    {
-        $this->runDoctypeTest($I, Tag::HTML401_TRANSITIONAL);
-    }
-
-    /**
-     * Tests Phalcon\Tag :: getDocType() - 4.01 Frameset
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-04
-     */
-    public function testDoctypeSet401Frameset(UnitTester $I)
-    {
-        $this->runDoctypeTest($I, Tag::HTML401_FRAMESET);
-    }
-
-    /**
-     * Tests Phalcon\Tag :: getDocType() - 5
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-04
-     */
-    public function testDoctypeSet5(UnitTester $I)
-    {
-        $this->runDoctypeTest($I, Tag::HTML5);
+        $this->runDoctypeTest($I, Tag::XHTML10_FRAMESET);
     }
 
     /**
@@ -98,17 +53,6 @@ class GetDocTypeCest extends TagSetup
     }
 
     /**
-     * Tests Phalcon\Tag :: getDocType() - 1.0 Frameset
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2014-09-04
-     */
-    public function testDoctypeSet10Frameset(UnitTester $I)
-    {
-        $this->runDoctypeTest($I, Tag::XHTML10_FRAMESET);
-    }
-
-    /**
      * Tests Phalcon\Tag :: getDocType() - 1.1
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -128,6 +72,61 @@ class GetDocTypeCest extends TagSetup
     public function testDoctypeSet20(UnitTester $I)
     {
         $this->runDoctypeTest($I, Tag::XHTML20);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: getDocType() - 3.2
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-05
+     */
+    public function testDoctypeSet32Final(UnitTester $I)
+    {
+        $this->runDoctypeTest($I, Tag::HTML32);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: getDocType() - 4.01 Strict
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-04
+     */
+    public function testDoctypeSet401(UnitTester $I)
+    {
+        $this->runDoctypeTest($I, Tag::HTML401_STRICT);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: getDocType() - 4.01 Frameset
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-04
+     */
+    public function testDoctypeSet401Frameset(UnitTester $I)
+    {
+        $this->runDoctypeTest($I, Tag::HTML401_FRAMESET);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: getDocType() - 4.01 Transitional
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-04
+     */
+    public function testDoctypeSet401Transitional(UnitTester $I)
+    {
+        $this->runDoctypeTest($I, Tag::HTML401_TRANSITIONAL);
+    }
+
+    /**
+     * Tests Phalcon\Tag :: getDocType() - 5
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-04
+     */
+    public function testDoctypeSet5(UnitTester $I)
+    {
+        $this->runDoctypeTest($I, Tag::HTML5);
     }
 
     /**

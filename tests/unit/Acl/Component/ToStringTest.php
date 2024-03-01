@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Acl\Component;
 
 use Phalcon\Acl\Component;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ToStringTest extends TestCase
+final class ToStringTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Component :: __toString()
@@ -28,7 +28,7 @@ final class ToStringTest extends TestCase
      */
     public function testAclComponentToString(): void
     {
-        $source = 'Customer';
+        $source    = 'Customer';
         $component = new Component($source);
 
         $expected = $source;
@@ -36,7 +36,7 @@ final class ToStringTest extends TestCase
         $this->assertSame($expected, $actual);
 
         $expected = $source;
-        $actual   = (string) $component;
+        $actual   = (string)$component;
         $this->assertSame($expected, $actual);
     }
 }

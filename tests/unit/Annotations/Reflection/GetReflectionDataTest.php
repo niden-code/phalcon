@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Annotations\Reflection;
 
 use Phalcon\Annotations\Reflection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetReflectionDataTest extends TestCase
+final class GetReflectionDataTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Annotations\Reflection :: getReflectionData()

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\StreamFactory;
 
 use Phalcon\Http\Message\Factories\StreamFactory;
 use Phalcon\Http\Message\Stream;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CreateStreamTest extends TestCase
+final class CreateStreamTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: createStream()
@@ -27,7 +27,7 @@ final class CreateStreamTest extends TestCase
      */
     public function testHttpMessageStreamFactoryCreateStream()
     {
-        $fileName = dataDir2('assets/stream/mit.txt');
+        $fileName = self::dataDir('assets/stream/mit.txt');
         $contents = file_get_contents($fileName);
         $factory  = new StreamFactory();
         $stream   = $factory->createStream($contents);

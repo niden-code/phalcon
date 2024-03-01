@@ -15,10 +15,10 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
-final class GetSetLogLevelTest extends TestCase
+final class GetSetLogLevelTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: getLogLevel()/setLogLevel()

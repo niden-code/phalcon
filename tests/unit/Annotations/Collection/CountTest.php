@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Annotations\Collection;
 
 use Phalcon\Annotations\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CountTest extends TestCase
+final class CountTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Annotations\Collection :: count()

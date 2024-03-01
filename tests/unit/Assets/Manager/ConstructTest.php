@@ -17,9 +17,9 @@ use Phalcon\Assets\Manager;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Manager :: __construct()

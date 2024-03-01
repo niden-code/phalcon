@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Helper\Str;
 
 use Phalcon\Support\Helper\Str\Uncamelize;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class UncamelizeTest extends TestCase
+final class UncamelizeTest extends AbstractUnitTestCase
 {
     /**
      * @return array

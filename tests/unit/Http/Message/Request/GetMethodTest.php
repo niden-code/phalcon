@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\Request;
 
 use InvalidArgumentException;
 use Phalcon\Http\Message\Request;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetMethodTest extends TestCase
+final class GetMethodTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Request :: getMethod()

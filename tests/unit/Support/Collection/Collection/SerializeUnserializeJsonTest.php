@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Collection\Collection;
 
 use Phalcon\Support\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function serialize;
 
-final class SerializeUnserializeJsonTest extends TestCase
+final class SerializeUnserializeJsonTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Collection :: jsonSerialize()

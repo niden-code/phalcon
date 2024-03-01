@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Collection\Collection;
 
 use Phalcon\Support\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetKeysValuesTest extends TestCase
+final class GetKeysValuesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Collection :: getKeys()

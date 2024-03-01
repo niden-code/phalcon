@@ -17,7 +17,7 @@ use Example\Namespaces\Adapter\Another;
 use Example\Namespaces\Adapter\Mongo;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function dataDir2;
@@ -28,7 +28,7 @@ use function spl_autoload_functions;
 use function spl_autoload_register;
 use function spl_autoload_unregister;
 
-abstract class AbstractLoaderTestCase extends TestCase
+abstract class AbstractLoaderTestCase extends AbstractUnitTestCase
 {
     /**
      * @var array

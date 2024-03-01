@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Assets\Asset;
 use Phalcon\Assets\Asset;
 use Phalcon\Assets\Asset\Css;
 use Phalcon\Assets\Asset\Js;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class GetSetVersionTest extends TestCase
+final class GetSetVersionTest extends AbstractUnitTestCase
 {
     /**
      * Unit Tests Phalcon\Assets\Asset\Css :: getVersion() / setVersion()

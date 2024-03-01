@@ -15,13 +15,13 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
 use function getNewFileName2;
 use function logsDir2;
 
-final class WriteTest extends TestCase
+final class WriteTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: write()
@@ -31,8 +31,8 @@ final class WriteTest extends TestCase
      */
     public function testHttpMessageStreamWrite()
     {
-        $fileName = getNewFileName2();
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName();
+        $fileName = $this->logsDir($fileName);
         $stream   = new Stream($fileName, 'wb');
 
         $source   = 'A well regulated Militia, being necessary to the security of a free State, '
@@ -60,8 +60,8 @@ final class WriteTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A valid resource is required.');
 
-        $fileName = getNewFileName2();
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName();
+        $fileName = $this->logsDir($fileName);
         $stream   = new Stream($fileName, 'wb');
         $stream->detach();
 
@@ -79,8 +79,8 @@ final class WriteTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The resource is not writable.');
 
-        $fileName = getNewFileName2();
-        $fileName = logsDir2($fileName);
+        $fileName = $this->getNewFileName();
+        $fileName = $this->logsDir($fileName);
         $stream   = new StreamFixture($fileName, 'wb');
 
         $stream->write('abc');

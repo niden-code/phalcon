@@ -13,32 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\Escaper;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class DetectEncodingTest extends TestCase
+final class DetectEncodingTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Escaper :: detectEncoding()
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlEscaperDetectEncoding(
-        string $source,
-        string $expected
-    ): void {
-        $escaper = new Escaper();
-
-        $actual   = $escaper->detectEncoding($source);
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return string[][]
      */
@@ -60,5 +39,25 @@ final class DetectEncodingTest extends TestCase
                 'UTF-8',
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Escaper :: detectEncoding()
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlEscaperDetectEncoding(
+        string $source,
+        string $expected
+    ): void {
+        $escaper = new Escaper();
+
+        $actual = $escaper->detectEncoding($source);
+        $this->assertSame($expected, $actual);
     }
 }

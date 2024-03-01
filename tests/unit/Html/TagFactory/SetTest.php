@@ -17,9 +17,9 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Anchor;
 use Phalcon\Html\Helper\Base;
 use Phalcon\Html\TagFactory;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SetTest extends TestCase
+final class SetTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Helper\TagFactory :: set()

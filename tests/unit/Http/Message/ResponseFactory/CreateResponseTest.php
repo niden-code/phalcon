@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Http\Message\ResponseFactory;
 
 use Phalcon\Http\Message\Factories\ResponseFactory;
 use Phalcon\Http\Message\Interfaces\ResponseInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class CreateResponseTest extends TestCase
+final class CreateResponseTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\ResponseFactory :: createResponse()

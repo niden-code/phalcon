@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Support\Collection\ReadOnlyCollection;
 
 use Phalcon\Support\Collection;
 use Phalcon\Support\Collection\ReadOnlyCollection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Collection :: __construct()

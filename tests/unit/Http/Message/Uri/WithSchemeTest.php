@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Message\Uri;
 
 use InvalidArgumentException;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function sprintf;
 
-final class WithSchemeTest extends TestCase
+final class WithSchemeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Uri :: withScheme()

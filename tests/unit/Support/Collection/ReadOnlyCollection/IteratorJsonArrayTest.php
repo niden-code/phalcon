@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Collection\ReadOnlyCollection;
 
 use Phalcon\Support\Collection\ReadOnlyCollection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function json_encode;
 
 use const JSON_PRETTY_PRINT;
 
-final class IteratorJsonArrayTest extends TestCase
+final class IteratorJsonArrayTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Support\Collection :: getIterator()

@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Link\Serializer\Header;
 
 use Phalcon\Html\Link\Serializer\Header;
 use Phalcon\Html\Link\Serializer\SerializerInterface;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\Serializer\Header :: __construct()

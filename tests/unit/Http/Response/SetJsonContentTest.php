@@ -15,13 +15,13 @@ namespace Phalcon\Tests\Unit\Http\Response;
 
 use Phalcon\Http\Response;
 use Phalcon\Tests1\Fixtures\Page\Http;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function json_encode;
 
 use const JSON_HEX_TAG;
 
-final class SetJsonContentTest extends TestCase
+final class SetJsonContentTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Response :: setJsonContent()

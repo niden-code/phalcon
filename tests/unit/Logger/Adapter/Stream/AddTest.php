@@ -18,13 +18,13 @@ use DateTimeZone;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function date_default_timezone_get;
 use function file_get_contents;
 
-final class AddTest extends TestCase
+final class AddTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger\Adapter\Stream :: add()
@@ -36,8 +36,8 @@ final class AddTest extends TestCase
      */
     public function testLoggerAdapterStreamAdd(): void
     {
-        $fileName   = getNewFileName2('log');
-        $outputPath = logsDir2();
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
         $timezone   = date_default_timezone_get();
         $datetime   = new DateTimeImmutable('now', new DateTimeZone($timezone));
         $adapter    = new Stream($outputPath . $fileName);
@@ -84,6 +84,6 @@ final class AddTest extends TestCase
         $this->assertStringContainsString($expected, $content);
 
         $adapter->close();
-        safeDeleteFile2($outputPath . $fileName);
+        $this->safeDeleteFile($outputPath . $fileName);
     }
 }

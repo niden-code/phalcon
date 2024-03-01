@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Assets\Filters\JsMin;
 
 use Phalcon\Assets\FilterInterface;
 use Phalcon\Assets\Filters\JsMin;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Filters\JsMin :: __construct() - no string exception

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Assets\Collection;
 
 use Phalcon\Assets\Collection;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class IsSetIsLocalTest extends TestCase
+final class IsSetIsLocalTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Assets\Collection :: isLocal() / setIsLocal()

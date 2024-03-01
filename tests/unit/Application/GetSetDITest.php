@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Application;
 
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function spl_object_hash;
 
-final class GetSetDITest extends TestCase
+final class GetSetDITest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Acl\Role :: getDI()/setDI()

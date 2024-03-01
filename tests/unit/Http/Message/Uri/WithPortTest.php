@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Message\Uri;
 
 use InvalidArgumentException;
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function sprintf;
 
-final class WithPortTest extends TestCase
+final class WithPortTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]

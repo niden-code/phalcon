@@ -17,7 +17,7 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Logger\Logger;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use UnitTester;
 
 use function file_get_contents;
@@ -26,7 +26,7 @@ use function sprintf;
 use function strtoupper;
 use function uniqid;
 
-final class LogTest extends TestCase
+final class LogTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Logger :: log()
@@ -38,8 +38,8 @@ final class LogTest extends TestCase
      */
     public function testLoggerLog(): void
     {
-        $logPath  = logsDir2();
-        $fileName = getNewFileName2('log');
+        $logPath  = $this->logsDir();
+        $fileName = $this->getNewFileName('log');
         $adapter  = new Stream($logPath . $fileName);
 
         $logger = new Logger(
@@ -88,7 +88,7 @@ final class LogTest extends TestCase
         }
 
         $adapter->close();
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 
     /**
@@ -101,8 +101,8 @@ final class LogTest extends TestCase
      */
     public function testLoggerLogLogLevel(): void
     {
-        $logPath  = logsDir2();
-        $fileName = getNewFileName2('log');
+        $logPath  = $this->logsDir();
+        $fileName = $this->getNewFileName('log');
         $adapter  = new Stream($logPath . $fileName);
 
         $logger = new Logger(
@@ -167,7 +167,7 @@ final class LogTest extends TestCase
         }
 
         $adapter->close();
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 
     /**
@@ -180,8 +180,8 @@ final class LogTest extends TestCase
      */
     public function testLoggerLogLogInterpolator(): void
     {
-        $logPath   = logsDir2();
-        $fileName  = getNewFileName2('log');
+        $logPath   = $this->logsDir();
+        $fileName  = $this->getNewFileName('log');
         $formatter = new Line(
             '%message%-[%level%]-%server%:%user%',
             'U.u'
@@ -212,6 +212,6 @@ final class LogTest extends TestCase
         $this->assertStringContainsString($expected, $contents);
 
         $adapter->close();
-        safeDeleteFile2($fileName);
+        $this->safeDeleteFile($fileName);
     }
 }

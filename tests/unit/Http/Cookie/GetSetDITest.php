@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Http\Cookie;
 
 use Phalcon\Di\Di;
 use Phalcon\Http\Cookie;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
-final class GetSetDITest extends TestCase
+final class GetSetDITest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Cookie :: getDI() / setDI()

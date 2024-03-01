@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Flash\Direct;
 use Codeception\Example;
 use Phalcon\Flash\Direct;
 use Phalcon\Html\Escaper;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function ob_end_clean;
 use function ob_get_contents;
@@ -25,11 +25,11 @@ use function ob_start;
 use const PHP_EOL;
 
 /**
- * Class OutputTest extends TestCase
+ * Class OutputTest extends AbstractUnitTestCase
  *
  * @package Phalcon\Tests\Unit\Flash\Direct
  */
-final class OutputTest extends TestCase
+final class OutputTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Flash\Direct :: output() - combinations

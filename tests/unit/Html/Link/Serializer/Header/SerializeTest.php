@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Html\Link\Serializer\Header;
 
 use Phalcon\Html\Link\EvolvableLink;
 use Phalcon\Html\Link\Serializer\Header;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-final class SerializeTest extends TestCase
+final class SerializeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\Serializer\Header :: serialize()

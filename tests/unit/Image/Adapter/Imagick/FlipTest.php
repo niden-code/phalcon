@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Enum;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function safeDeleteFile2;
 
 #[RequiresPhpExtension('imagick')]
-final class FlipTest extends TestCase
+final class FlipTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Image\Adapter\Imagick :: flip()
@@ -34,13 +34,13 @@ final class FlipTest extends TestCase
     public function testImageAdapterImagickFlip(): void
     {
         $image = new Imagick(
-            dataDir2('assets/images/example-jpg.jpg')
+            self::dataDir('assets/images/example-jpg.jpg')
         );
 
         $image->setResourceLimit(6, 1);
 
         // Flip the image from top to bottom
-        $outputFile = outputDir2('image/imagick/flip.jpg');
+        $outputFile = self::outputDir('image/imagick/flip.jpg');
         $image->flip(Enum::HORIZONTAL)
               ->save($outputFile)
         ;
@@ -55,6 +55,6 @@ final class FlipTest extends TestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        safeDeleteFile2($outputFile);
+        $this->safeDeleteFile($outputFile);
     }
 }

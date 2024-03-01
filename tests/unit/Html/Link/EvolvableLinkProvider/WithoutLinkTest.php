@@ -15,11 +15,11 @@ namespace Phalcon\Tests\Unit\Html\Link\EvolvableLinkProvider;
 
 use Phalcon\Html\Link\EvolvableLinkProvider;
 use Phalcon\Html\Link\Link;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function spl_object_hash;
 
-final class WithoutLinkTest extends TestCase
+final class WithoutLinkTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: withoutLink()

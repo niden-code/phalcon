@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Message\Uri;
 
 use Phalcon\Http\Message\Uri;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function sprintf;
 
-final class WithFragmentTest extends TestCase
+final class WithFragmentTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Http\Message\Uri :: withFragment()

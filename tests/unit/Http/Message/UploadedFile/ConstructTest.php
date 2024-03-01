@@ -16,12 +16,12 @@ namespace Phalcon\Tests\Unit\Http\Message\UploadedFile;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Interfaces\UploadedFileInterface;
 use Phalcon\Http\Message\UploadedFile;
-use PHPUnit\Framework\TestCase;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
 use function fopen;
 
-final class ConstructTest extends TestCase
+final class ConstructTest extends AbstractUnitTestCase
 {
     public static function getStreamExamples(): array
     {
@@ -55,7 +55,7 @@ final class ConstructTest extends TestCase
      */
     public function testHttpMessageUploadedFileConstruct(): void
     {
-        $stream = logsDir2(uniqid('test'));
+        $stream = $this->logsDir(uniqid('test'));
 
         $file = new UploadedFile($stream, 100);
 
@@ -76,7 +76,7 @@ final class ConstructTest extends TestCase
             'Invalid error. Must be one of the UPLOAD_ERR_* constants'
         );
 
-        $stream = logsDir2(uniqid('test'));
+        $stream = $this->logsDir(uniqid('test'));
         $file   = new UploadedFile($stream, 100, 100);
     }
 
@@ -88,7 +88,7 @@ final class ConstructTest extends TestCase
      */
     public function testHttpMessageUploadedFileConstructResource(): void
     {
-        $stream = logsDir2(uniqid('test'));
+        $stream = $this->logsDir(uniqid('test'));
 
         $stream = fopen($stream, 'w+b');
         $file   = new UploadedFile($stream, 100);
