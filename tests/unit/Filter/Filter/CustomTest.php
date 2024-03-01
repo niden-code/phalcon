@@ -15,43 +15,39 @@ namespace Phalcon\Tests\Unit\Filter\Filter;
 
 use Phalcon\Filter\Filter;
 use Phalcon\Tests\Fixtures\Filter\Sanitize\IPv4;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class CustomCest
+final class CustomTest extends TestCase
 {
     /**
      * Tests Phalcon\Filter :: custom has()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function filterFilterCustomHas(UnitTester $I)
+    public function testFilterFilterCustomHas(): void
     {
-        $I->wantToTest('Filter\Filter - custom has()');
-
         $actual = (new Filter(['ipv4' => IPv4::class]))->has('ipv4');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
      * Tests Phalcon\Filter :: custom sanitizer
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function filterFilterCustomSanitizer(UnitTester $I)
+    public function testFilterFilterCustomSanitizer(): void
     {
-        $I->wantToTest('Filter\Filter - custom sanitizer');
-
         /** @var IPv4 $sanitizer */
         $sanitizer = (new Filter(['ipv4' => IPv4::class]))->get('ipv4');
 
-        $I->assertInstanceOf(IPv4::class, $sanitizer);
-        $I->assertSame('127.0.0.1', $sanitizer('127.0.0.1'));
-        $I->assertFalse($sanitizer('127.0.0'));
+        $this->assertInstanceOf(IPv4::class, $sanitizer);
+        $this->assertSame('127.0.0.1', $sanitizer('127.0.0.1'));
+        $this->assertFalse($sanitizer('127.0.0'));
     }
 }

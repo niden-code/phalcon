@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Filter\FilterFactory;
 
-use Codeception\Example;
 use Phalcon\Filter\Filter;
 use Phalcon\Filter\FilterFactory;
 use Phalcon\Filter\FilterInterface;
@@ -38,58 +37,14 @@ use Phalcon\Filter\Sanitize\Upper;
 use Phalcon\Filter\Sanitize\UpperFirst;
 use Phalcon\Filter\Sanitize\UpperWords;
 use Phalcon\Filter\Sanitize\Url;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class NewInstanceCest
+final class NewInstanceTest extends TestCase
 {
-    /**
-     * Tests Phalcon\Filter\FilterFactory :: newInstance()
-     *
-     * @param UnitTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function filterFilterFactoryNewInstance(UnitTester $I)
-    {
-        $I->wantToTest('Filter\FilterFactory - newInstance()');
-        $factory = new FilterFactory();
-
-        $I->assertInstanceOf(FilterInterface::class, $factory->newInstance());
-    }
-
-    /**
-     * Tests Phalcon\Filter\FilterFactory :: newInstance() - services
-     *
-     * @param UnitTester $I
-     * @param Example    $example
-     *
-     * @dataProvider getData
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function filterFilterFactoryNewInstanceServices(UnitTester $I, Example $example)
-    {
-        $I->wantToTest(
-            'Filter\FilterFactory - newInstance() - services ' . $example[0]
-        );
-
-        $factory  = new FilterFactory();
-        $instance = $factory->newInstance();
-
-        $class = FilterInterface::class;
-        $I->assertInstanceOf($class, $instance);
-
-        $class  = $example[1];
-        $actual = $instance->get($example[0]);
-        $I->assertInstanceOf($class, $actual);
-    }
-
     /**
      * Returns the example data
      */
-    private function getData(): array
+    public static function providerExamples(): array
     {
         return [
             [Filter::FILTER_ABSINT, AbsInt::class],
@@ -114,5 +69,44 @@ class NewInstanceCest
             [Filter::FILTER_UPPERWORDS, UpperWords::class],
             [Filter::FILTER_URL, Url::class],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Filter\FilterFactory :: newInstance()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testFilterFilterFactoryNewInstance(): void
+    {
+        $factory = new FilterFactory();
+
+        $this->assertInstanceOf(FilterInterface::class, $factory->newInstance());
+    }
+
+    /**
+     * Tests Phalcon\Filter\FilterFactory :: newInstance() - services
+     *
+     * @return void
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testFilterFilterFactoryNewInstanceServices(
+        string $name,
+        string $className
+    ): void {
+        $factory  = new FilterFactory();
+        $instance = $factory->newInstance();
+
+        $class = FilterInterface::class;
+        $this->assertInstanceOf($class, $instance);
+
+        $actual = $instance->get($name);
+        $this->assertInstanceOf($className, $actual);
     }
 }

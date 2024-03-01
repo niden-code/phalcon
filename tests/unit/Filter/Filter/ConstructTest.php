@@ -15,27 +15,24 @@ namespace Phalcon\Tests\Unit\Filter\Filter;
 
 use Phalcon\Filter\Exception;
 use Phalcon\Filter\Filter;
-use UnitTester;
+use PHPUnit\Framework\TestCase;
 
-class ConstructCest
+final class ConstructTest extends TestCase
 {
     /**
      * Tests Phalcon\Filter\Locator :: __construct() - empty
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function filterFilterConstruct(UnitTester $I)
+    public function testFilterFilterConstruct(): void
     {
-        $I->wantToTest('Filter\Filter - __construct() - empty');
-        $I->expectThrowable(
-            new Exception('Filter unknown is not registered'),
-            function () {
-                $locator = new Filter();
-                $locator->get('unknown');
-            }
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Filter unknown is not registered');
+
+        $locator = new Filter();
+        $locator->get('unknown');
     }
 }
