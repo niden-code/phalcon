@@ -32,6 +32,7 @@ $folders = [
     'assets',
     'cache',
     'cache/models',
+    'cache/sessions',
     'coverage',
     'image',
     'image/gd',
