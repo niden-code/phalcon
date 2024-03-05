@@ -14,25 +14,23 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use Phalcon\Tests\Fixtures\Events\ComponentOne;
-use Phalcon\Tests\Fixtures\Listener\OneListener;
-use Phalcon\Tests\Fixtures\Listener\TwoListener;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Events\ComponentOne;
+use Phalcon\Tests1\Fixtures\Listener\OneListener;
+use Phalcon\Tests1\Fixtures\Listener\TwoListener;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class GetListenersCest
+final class GetListenersTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: getListeners()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerGetListeners(UnitTester $I)
+    public function testEventsManagerGetListeners(): void
     {
-        $I->wantToTest('Events\Manager - getListeners()');
-
         $first         = new OneListener();
         $second        = new TwoListener();
         $component     = new ComponentOne();
@@ -45,14 +43,14 @@ class GetListenersCest
         $logListeners = $component->getEventsManager()
                                   ->getListeners('log')
         ;
-        $I->assertCount(2, $logListeners);
+        $this->assertCount(2, $logListeners);
 
         $expected = OneListener::class;
         $actual   = $logListeners[0];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
 
         $expected = TwoListener::class;
         $actual   = $logListeners[1];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
     }
 }

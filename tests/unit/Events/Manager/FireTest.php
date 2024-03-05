@@ -15,27 +15,25 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Exception;
 use Phalcon\Events\Manager;
-use Phalcon\Tests\Fixtures\Events\ComponentOne;
-use Phalcon\Tests\Fixtures\Listener\OneListener;
-use Phalcon\Tests\Fixtures\Listener\ThreeListener;
-use Phalcon\Tests\Fixtures\Listener\TwoListener;
+use Phalcon\Tests1\Fixtures\Events\ComponentOne;
+use Phalcon\Tests1\Fixtures\Listener\OneListener;
+use Phalcon\Tests1\Fixtures\Listener\ThreeListener;
+use Phalcon\Tests1\Fixtures\Listener\TwoListener;
 use stdClass;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class FireCest
+final class FireTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: fire()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerFire(UnitTester $I)
+    public function testEventsManagerFire(): void
     {
-        $I->wantToTest('Events\Manager - fire()');
-
         $manager = new Manager();
         $one     = new OneListener();
         $two     = new TwoListener();
@@ -57,21 +55,19 @@ class FireCest
         $actual   = $component->getEventsManager()
                               ->getResponses()
         ;
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Events\Manager :: fire() - with priorities
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerFireWithPriorities(UnitTester $I)
+    public function testEventsManagerFireWithPriorities(): void
     {
-        $I->wantToTest('Events\Manager - fire() - with priorities');
-
         $manager = new Manager();
         $one     = new OneListener();
         $two     = new TwoListener();
@@ -93,51 +89,45 @@ class FireCest
         $actual   = $component->getEventsManager()
                               ->getResponses()
         ;
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Events\Manager :: fire() - no events
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerFireNoEvents(UnitTester $I)
+    public function testEventsManagerFireNoEvents(): void
     {
-        $I->wantToTest('Events\Manager - fire() - no events');
-
         $manager = new Manager();
         $actual  = $manager->fire('someEvent', new stdClass());
-        $I->assertNull($actual);
+        $this->assertNull($actual);
     }
 
     /**
      * Tests Phalcon\Events\Manager :: fire() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerFireException(UnitTester $I)
+    public function testEventsManagerFireException(): void
     {
-        $I->wantToTest('Events\Manager - fire() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid event type unknown');
 
-        $I->expectThrowable(
-            new Exception('Invalid event type unknown'),
+        $manager = new Manager();
+        $manager->attach(
+            'someEvent',
             function () {
-                $manager = new Manager();
-                $manager->attach(
-                    'someEvent',
-                    function () {
-                        return true;
-                    }
-                );
-
-                $manager->fire('unknown', new stdClass());
+                return true;
             }
         );
+
+        $manager->fire('unknown', new stdClass());
     }
 }

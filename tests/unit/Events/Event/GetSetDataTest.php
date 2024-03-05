@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Event;
 
 use Phalcon\Events\Event;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class GetSetDataCest
+final class GetSetDataTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Event - setData() - default
@@ -24,14 +24,12 @@ class GetSetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      */
-    public function eventsEventGetSetData(UnitTester $I)
+    public function testEventsEventGetSetData(): void
     {
-        $I->wantToTest('Events\Event - getData()/setData() - default');
-
         $event = new Event('some-type:beforeSome', $this);
 
         $actual = $event->getData();
-        $I->assertNull($actual);
+        $this->assertNull($actual);
     }
 
     /**
@@ -40,15 +38,13 @@ class GetSetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      */
-    public function eventsEventGetSetDataConstructor(UnitTester $I)
+    public function testEventsEventGetSetDataConstructor(): void
     {
-        $I->wantToTest('Events\Event - getData()/setData() - constructor');
-
         $data     = [1, 2, 3];
         $event    = new Event('some-type:beforeSome', $this, $data);
         $expected = $data;
         $actual   = $event->getData();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -57,21 +53,19 @@ class GetSetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      */
-    public function eventsEventGetSetDataOverwrite(UnitTester $I)
+    public function testEventsEventGetSetDataOverwrite(): void
     {
-        $I->wantToTest('Events\Event - getData()/setData() - overwrite');
-
         $data     = [1, 2, 3];
         $event    = new Event('some-type:beforeSome', $this, $data);
         $expected = $data;
         $actual   = $event->getData();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $newData = [4, 5, 6];
         $event->setData($newData);
         $expected = $newData;
         $actual   = $event->getData();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -80,18 +74,16 @@ class GetSetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      */
-    public function eventsEventGetSetDataEmpty(UnitTester $I)
+    public function testEventsEventGetSetDataEmpty(): void
     {
-        $I->wantToTest('Events\Event - getData()/setData() - empty');
-
         $data     = [1, 2, 3];
         $event    = new Event('some-type:beforeSome', $this, $data);
         $expected = $data;
         $actual   = $event->getData();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $event->setData();
         $actual = $event->getData();
-        $I->assertNull($actual);
+        $this->assertNull($actual);
     }
 }

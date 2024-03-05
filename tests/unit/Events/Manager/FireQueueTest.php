@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Events\Manager;
 
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class FireQueueCest
+final class FireQueueTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: fireQueue()
@@ -23,10 +23,8 @@ class FireQueueCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    public function eventsManagerFireQueue(UnitTester $I)
+    public function testEventsManagerFireQueue(): void
     {
-        $I->wantToTest('Events\Manager - fireQueue()');
-
-        $I->skipTest('Need implementation');
+        $this->markTestSkipped('Need implementation');
     }
 }

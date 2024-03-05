@@ -15,68 +15,55 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Codeception\Example;
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class IsValidHandlerCest
+final class IsValidHandlerTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: isValidHandler()
      *
-     * @dataProvider getExamples
-     *
-     * @param UnitTester $I
-     * @param Example    $example
+     * @return void
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function eventsManagerIsValidHandler(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Events\Manager - isValidHandler() - ' . $example[0]);
-
-        $manager  = new Manager();
-        $handler  = $example[2];
-        $expected = $example[1];
-        $actual   = $manager->isValidHandler($handler);
-        $I->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
+    public function testEventsManagerIsValidHandler(): void
     {
         $objectHandler  = new Manager();
         $closureHandler = function () {
             return true;
         };
 
-        return [
+        $dataset = [
             [
-                'string',
                 false,
                 'handler',
             ],
             [
-                'integer',
                 false,
                 134,
             ],
             [
-                'object',
                 true,
                 $objectHandler,
             ],
             [
-                'callable - method',
                 true,
                 [$objectHandler, 'hasListeners'],
             ],
             [
-                'closure',
                 true,
                 $closureHandler,
             ],
         ];
+
+        foreach ($dataset as $data) {
+            $manager = new Manager();
+
+            $expected = $data[0];
+            $handler  = $data[1];
+            $actual = $manager->isValidHandler($handler);
+            $this->assertSame($expected, $actual);
+        }
     }
 }

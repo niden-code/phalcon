@@ -14,29 +14,27 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Event;
 
 use Phalcon\Events\Event;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class IsCancelableCest
+final class IsStoppedTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Events\Event :: isCancelable()
+     * Tests Phalcon\Events\Event :: isStopped()
      *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-20
      */
-    public function eventsEventIsCancelable(UnitTester $I)
+    public function testEventsEventIsStopped(): void
     {
-        $I->wantToTest('Events\Event - isCancelable()');
-
         $type  = 'some-type:beforeSome';
         $event = new Event($type, $this);
 
-        $actual = $event->isCancelable();
-        $I->assertTrue($actual);
+        $actual = $event->isStopped();
+        $this->assertFalse($actual);
 
-        $event = new Event($type, $this, [], false);
+        $event->stop();
 
-        $actual = $event->isCancelable();
-        $I->assertFalse($actual);
+        $actual = $event->isStopped();
+        $this->assertTrue($actual);
     }
 }

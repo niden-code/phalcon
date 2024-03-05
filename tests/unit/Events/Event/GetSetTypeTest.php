@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Event;
 
 use Phalcon\Events\Event;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class GetSetTypeCest
+final class GetSetTypeTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Event :: getType()/setType()
@@ -24,22 +24,20 @@ class GetSetTypeCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      */
-    public function eventsEventSetType(UnitTester $I)
+    public function testEventsEventSetType(): void
     {
-        $I->wantToTest('Events\Event - getType()/setType()');
-
         $type    = 'some-type:beforeSome';
         $newType = 'some-type:afterSome';
         $event   = new Event($type, $this);
 
         $expected = $type;
         $actual   = $event->getType();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $event->setType($newType);
 
         $expected = $newType;
         $actual   = $event->getType();
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

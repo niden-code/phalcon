@@ -14,33 +14,31 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class IsCollectingCest
+final class IsCollectingTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: isCollecting()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerIsCollecting(UnitTester $I)
+    public function testEventsManagerIsCollecting(): void
     {
-        $I->wantToTest('Events\Manager - isCollecting()');
-
         $manager = new Manager();
 
         $actual = $manager->isCollecting();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $manager->collectResponses(true);
         $actual = $manager->isCollecting();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $manager->collectResponses(false);
         $actual = $manager->isCollecting();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 }

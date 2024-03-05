@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Events\Event;
 
 use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class StopCest
+final class StopTest extends AbstractUnitTestCase
 {
     /**
      * Tests using events propagation
@@ -25,7 +25,7 @@ class StopCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-11-11
      */
-    public function stopEventsInEventsManager(UnitTester $I)
+    public function testEventsEventStop(): void
     {
         $number        = 0;
         $eventsManager = new Manager();
@@ -41,6 +41,6 @@ class StopCest
 
         $eventsManager->fire('some-type:beforeSome', $this);
 
-        $I->assertSame(1, $number);
+        $this->assertSame(1, $number);
     }
 }

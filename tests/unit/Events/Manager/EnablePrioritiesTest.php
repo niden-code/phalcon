@@ -14,35 +14,33 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class EnablePrioritiesCest
+final class EnablePrioritiesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: enablePriorities()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerEnablePriorities(UnitTester $I)
+    public function testEventsManagerEnablePriorities(): void
     {
-        $I->wantToTest('Events\Manager - enablePriorities()');
-
         $manager = new Manager();
 
         $actual = $manager->arePrioritiesEnabled();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $manager->enablePriorities(true);
 
         $actual = $manager->arePrioritiesEnabled();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $manager->enablePriorities(false);
 
         $actual = $manager->arePrioritiesEnabled();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 }

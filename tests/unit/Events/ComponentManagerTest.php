@@ -13,39 +13,32 @@ namespace Phalcon\Tests\Unit\Events;
 
 use Phalcon\Events\Manager;
 use Phalcon\Tests\Fixtures\Events\ComponentWithEvents;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function method_exists;
 
-/**
- * Class ComponentManagerCest
- *
- * @package Phalcon\Tests\Unit\Events
- */
-class ComponentManagerCest
+final class ComponentManagerTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\EventsAwareTrait
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsComponentManager(UnitTester $I)
+    public function testEventsComponentManager(): void
     {
-        $I->wantToTest('Events\EventsAwareTrait');
-
         $manager   = new Manager();
         $component = new ComponentWithEvents();
 
         $actual = method_exists($component, 'getEventsManager');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = method_exists($component, 'setEventsManager');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $component->setEventsManager($manager);
         $actual = $component->getEventsManager();
-        $I->assertSame($manager, $actual);
+        $this->assertSame($manager, $actual);
     }
 }

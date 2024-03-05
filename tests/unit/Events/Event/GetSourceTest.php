@@ -14,30 +14,28 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Event;
 
 use Phalcon\Events\Event;
-use Phalcon\Events\EventInterface;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class ConstructCest
+final class GetSourceTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Events\Event :: __construct()
+     * Tests Phalcon\Events\Event :: getSource()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-10-06
      * @issue  https://github.com/phalcon/cphalcon/issues/15133
      */
-    public function eventsEventConstruct(UnitTester $I)
+    public function testEventsEventGetSource(): void
     {
-        $I->wantToTest('Events\Event - __construct()');
+        $event = new Event('some-type:beforeSome', $this);
 
-        $event = new Event('test', $this);
+        $expected = $this;
+        $actual   = $event->getSource();
+        $this->assertSame($expected, $actual);
 
-        $class = EventInterface::class;
-        $I->assertInstanceOf($class, $event);
+        $event = new Event('some-type:beforeSome');
 
-        $event = new Event('test');
-
-        $class = EventInterface::class;
-        $I->assertInstanceOf($class, $event);
+        $actual = $event->getSource();
+        $this->assertNull($actual);
     }
 }

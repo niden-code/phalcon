@@ -14,25 +14,23 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class HasListenersCest
+final class HasListenersTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: hasListeners()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerHasListeners(UnitTester $I)
+    public function testEventsManagerHasListeners(): void
     {
-        $I->wantToTest('Events\Manager - hasListeners()');
-
         $manager = new Manager();
         $actual  = $manager->hasListeners('some');
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $manager->attach(
             'some:upload',
@@ -42,6 +40,6 @@ class HasListenersCest
         );
 
         $actual = $manager->hasListeners('some:upload');
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 }

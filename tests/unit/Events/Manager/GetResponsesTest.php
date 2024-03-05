@@ -14,26 +14,24 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use Phalcon\Tests\Fixtures\Events\ComponentOne;
-use Phalcon\Tests\Fixtures\Listener\OneListener;
-use Phalcon\Tests\Fixtures\Listener\ThreeListener;
-use Phalcon\Tests\Fixtures\Listener\TwoListener;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Events\ComponentOne;
+use Phalcon\Tests1\Fixtures\Listener\OneListener;
+use Phalcon\Tests1\Fixtures\Listener\ThreeListener;
+use Phalcon\Tests1\Fixtures\Listener\TwoListener;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class GetResponsesCest
+final class GetResponsesTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: getResponses()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerGetResponses(UnitTester $I)
+    public function testEventsManagerGetResponses(): void
     {
-        $I->wantToTest('Events\Manager - getResponses()');
-
         $manager = new Manager();
         $one     = new OneListener();
         $two     = new TwoListener();
@@ -55,6 +53,6 @@ class GetResponsesCest
         $actual   = $component->getEventsManager()
                               ->getResponses()
         ;
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

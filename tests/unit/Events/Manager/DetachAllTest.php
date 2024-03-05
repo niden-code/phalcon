@@ -14,22 +14,20 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
-use UnitTester;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class DetachAllCest
+final class DetachAllTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: detachAll()
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerDetachAll(UnitTester $I)
+    public function testEventsManagerDetachAll(): void
     {
-        $I->wantToTest('Events\Manager - detachAll()');
-
         $eventType = 'some:upload';
         $manager   = new Manager();
         $manager->attach(
@@ -40,26 +38,24 @@ class DetachAllCest
         );
 
         $actual = $manager->getListeners($eventType);
-        $I->assertCount(1, $actual);
+        $this->assertCount(1, $actual);
 
         $manager->detachAll();
 
         $actual = $manager->hasListeners($eventType);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
      * Tests Phalcon\Events\Manager :: detachAll() - with type
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerDetachAllWithType(UnitTester $I)
+    public function testEventsManagerDetachAllWithType(): void
     {
-        $I->wantToTest('Events\Manager - detachAll() - with type');
-
         $uploadType = 'some:upload';
         $downloadType = 'some:download';
         $manager = new Manager();
@@ -78,15 +74,15 @@ class DetachAllCest
         );
 
         $actual = $manager->hasListeners($uploadType);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $manager->hasListeners($downloadType);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $manager->detachAll($uploadType);
 
         $actual = $manager->hasListeners($uploadType);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
         $actual = $manager->hasListeners($downloadType);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 }

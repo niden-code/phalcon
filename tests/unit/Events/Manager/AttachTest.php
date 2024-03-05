@@ -15,43 +15,39 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Exception;
 use Phalcon\Events\Manager;
-use Phalcon\Tests\Fixtures\Events\ComponentOne;
-use Phalcon\Tests\Fixtures\Listener\OneListener;
-use Phalcon\Tests\Fixtures\Listener\TwoListener;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Events\ComponentOne;
+use Phalcon\Tests1\Fixtures\Listener\OneListener;
+use Phalcon\Tests1\Fixtures\Listener\TwoListener;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-class AttachCest
+final class AttachTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Events\Manager :: attach() - exception
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function eventsManagerAttachException(UnitTester $I)
+    public function testEventsManagerAttachException(): void
     {
-        $I->wantToTest('Events\Manager - attach() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Event handler must be an Object or Callable');
 
-        $I->expectThrowable(
-            new Exception('Event handler must be an Object or Callable'),
-            function () {
-                $manager = new Manager();
-                $manager->attach('test:detachable', false);
-            }
-        );
+        $manager = new Manager();
+        $manager->attach('test:detachable', false);
     }
 
     /**
      * Tests Phalcon\Events\Manager :: attach() - by name after detatch all
      *
-     * @param UnitTester $I
+     * @return void
      *
      * @author @author Kamil Skowron <kamil@hedonsoftware.com>
      * @since  2020-09-09
      */
-    public function eventsManagerAttachByNameAfterDetatchAll(UnitTester $I)
+    public function testEventsManagerAttachByNameAfterDetatchAll(): void
     {
         $first         = new OneListener();
         $second        = new TwoListener();
@@ -64,11 +60,11 @@ class AttachCest
         $logListeners = $component->getEventsManager()
                                   ->getListeners('log')
         ;
-        $I->assertCount(1, $logListeners);
+        $this->assertCount(1, $logListeners);
 
         $expected = OneListener::class;
         $actual   = $logListeners[0];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
 
         $component->getEventsManager()
                   ->attach('log', $second)
@@ -76,15 +72,15 @@ class AttachCest
         $logListeners = $component->getEventsManager()
                                   ->getListeners('log')
         ;
-        $I->assertCount(2, $logListeners);
+        $this->assertCount(2, $logListeners);
 
         $expected = OneListener::class;
         $actual   = $logListeners[0];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
 
         $expected = TwoListener::class;
         $actual   = $logListeners[1];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
 
         $component->getEventsManager()
                   ->detachAll('log')
@@ -92,7 +88,7 @@ class AttachCest
         $logListeners = $component->getEventsManager()
                                   ->getListeners('log')
         ;
-        $I->assertEmpty($logListeners);
+        $this->assertEmpty($logListeners);
 
         $component->getEventsManager()
                   ->attach('log', $second)
@@ -100,10 +96,10 @@ class AttachCest
         $logListeners = $component->getEventsManager()
                                   ->getListeners('log')
         ;
-        $I->assertCount(1, $logListeners);
+        $this->assertCount(1, $logListeners);
 
         $expected = TwoListener::class;
         $actual   = $logListeners[0];
-        $I->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expected, $actual);
     }
 }
