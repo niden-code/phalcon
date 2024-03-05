@@ -16,7 +16,6 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Logger;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class GetSetLogLevelTest extends AbstractUnitTestCase
 {
@@ -43,7 +42,7 @@ final class GetSetLogLevelTest extends AbstractUnitTestCase
 
         $logger->setLogLevel(99);
         $expected = Enum::CUSTOM;
-        $actual = $logger->getLogLevel();
+        $actual   = $logger->getLogLevel();
         $this->assertSame($expected, $actual);
     }
 }

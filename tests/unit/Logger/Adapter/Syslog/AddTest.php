@@ -24,7 +24,6 @@ use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function date_default_timezone_get;
 

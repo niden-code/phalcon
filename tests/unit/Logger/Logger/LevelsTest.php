@@ -18,25 +18,40 @@ use DateTime;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Logger;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function date;
 use function end;
 use function file_get_contents;
-use function logsDir;
 use function preg_match;
 use function strtoupper;
 
 final class LevelsTest extends AbstractUnitTestCase
 {
     /**
+     * @return string[][]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            ['alert'],
+            ['critical'],
+            ['debug'],
+            ['emergency'],
+            ['error'],
+            ['info'],
+            ['notice'],
+            ['warning'],
+        ];
+    }
+
+    /**
      * Tests Phalcon\Logger :: alert()
      *
      * @dataProvider providerExamples
      *
-     * @return void
-     * @param Example    $example
+     * @param Example $example
      *
+     * @return void
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
@@ -85,22 +100,5 @@ final class LevelsTest extends AbstractUnitTestCase
         $this->assertLessThan($nSecondThreshold, $nInterval);
 
         $this->safeDeleteFile($fileName);
-    }
-
-    /**
-     * @return string[][]
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            ['alert'],
-            ['critical'],
-            ['debug'],
-            ['emergency'],
-            ['error'],
-            ['info'],
-            ['notice'],
-            ['warning'],
-        ];
     }
 }

@@ -17,12 +17,10 @@ use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Exception\RuntimeException;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\UploadedFile;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 use function file_get_contents;
-use function getNewFileName2;
-use function outputDir2;
 
 final class MoveToTest extends AbstractUnitTestCase
 {

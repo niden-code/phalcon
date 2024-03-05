@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Image\ImageFactory;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\ImageFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 #[RequiresPhpExtension('imagick')]
 final class LoadTest extends AbstractUnitTestCase

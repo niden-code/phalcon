@@ -19,10 +19,8 @@ use Phalcon\Logger\Exception as LoggerException;
 use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerFactory;
 use Phalcon\Logger\LoggerInterface;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
-use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 
 final class LoadTest extends AbstractUnitTestCase
 {
@@ -34,6 +32,32 @@ final class LoadTest extends AbstractUnitTestCase
     public function setUp(): void
     {
         $this->init();
+    }
+
+    /**
+     * Tests Phalcon\Translate\Factory :: load() - exceptions
+     *
+     * @return void
+     *
+     * @throws LoggerException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testLoggerFactoryLoadExceptions(): void
+    {
+        $options = $this->arrayConfig['logger'];
+        $factory = new LoggerFactory(new AdapterFactory());
+
+        $this->expectException(LoggerException::class);
+        $this->expectExceptionMessage(
+            "You must provide 'name' option in factory config parameter."
+        );
+
+        $newOptions = $options;
+        unset($newOptions['name']);
+
+        $factory->load($newOptions);
     }
 
     /**
@@ -120,31 +144,5 @@ final class LoadTest extends AbstractUnitTestCase
         $class  = Stream::class;
         $actual = $logger->getAdapter('admin');
         $this->assertInstanceOf($class, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Translate\Factory :: load() - exceptions
-     *
-     * @return void
-     *
-     * @throws LoggerException
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testLoggerFactoryLoadExceptions(): void
-    {
-        $options = $this->arrayConfig['logger'];
-        $factory = new LoggerFactory(new AdapterFactory());
-
-        $this->expectException(LoggerException::class);
-        $this->expectExceptionMessage(
-            "You must provide 'name' option in factory config parameter."
-        );
-
-        $newOptions = $options;
-        unset($newOptions['name']);
-
-        $factory->load($newOptions);
     }
 }

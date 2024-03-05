@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Request;
 
 use Phalcon\Http\Request;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 use function uniqid;
 

@@ -16,9 +16,8 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 use Phalcon\Flash\Exception;
 use Phalcon\Flash\Session;
 use Phalcon\Html\Escaper;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 
 use function spl_object_hash;
 
@@ -30,6 +29,27 @@ final class GetSetEscaperServiceTest extends AbstractUnitTestCase
     {
         $this->newDi();
         $this->setDiService('sessionStream');
+    }
+
+    /**
+     * Tests Phalcon\Flash\Session :: getEscaperService() - exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testFlashSessionGetEscaperServiceException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "A dependency injection container is required to " .
+            "access the 'escaper' service"
+        );
+
+        $flash = new Session();
+
+        $actual = $flash->getEscaperService();
     }
 
     /**
@@ -79,26 +99,5 @@ final class GetSetEscaperServiceTest extends AbstractUnitTestCase
 
         $actual = $flash->getEscaperService();
         $this->assertSame(spl_object_hash($escaper), spl_object_hash($actual));
-    }
-
-    /**
-     * Tests Phalcon\Flash\Session :: getEscaperService() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testFlashSessionGetEscaperServiceException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "A dependency injection container is required to " .
-            "access the 'escaper' service"
-        );
-
-        $flash = new Session();
-
-        $actual = $flash->getEscaperService();
     }
 }

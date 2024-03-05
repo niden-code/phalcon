@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Events\Manager;
 
-use Codeception\Example;
 use Phalcon\Events\Manager;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
@@ -62,7 +61,7 @@ final class IsValidHandlerTest extends AbstractUnitTestCase
 
             $expected = $data[0];
             $handler  = $data[1];
-            $actual = $manager->isValidHandler($handler);
+            $actual   = $manager->isValidHandler($handler);
             $this->assertSame($expected, $actual);
         }
     }

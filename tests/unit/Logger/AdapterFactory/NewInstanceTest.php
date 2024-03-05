@@ -17,11 +17,6 @@ use Phalcon\Logger\Adapter\AdapterInterface;
 use Phalcon\Logger\AdapterFactory;
 use Phalcon\Logger\Exception;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
-
-use function logsDir2;
-use function outputDir;
-use function outputDir2;
 
 final class NewInstanceTest extends AbstractUnitTestCase
 {

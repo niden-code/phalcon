@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Html\TagFactory;
 
-use Codeception\Example;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Anchor;
@@ -61,28 +60,6 @@ use function uniqid;
 
 final class NewInstanceTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Helper\TagFactory :: newInstance() - services
-     *
-     * @dataProvider providerExamples
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testHtmlTagFactoryNewInstanceServices(
-        string $name,
-        string $class
-    ): void {
-        $escaper = new Escaper();
-        $factory = new TagFactory($escaper);
-
-        $service = $factory->newInstance($name);
-
-        $this->assertInstanceOf($class, $service);
-    }
-
     /**
      * Tests Phalcon\Storage\SerializerFactory :: newInstance() - exception
      *
@@ -166,5 +143,27 @@ final class NewInstanceTest extends AbstractUnitTestCase
             ["title", Title::class],
             ["ul", Ul::class],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Helper\TagFactory :: newInstance() - services
+     *
+     * @dataProvider providerExamples
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testHtmlTagFactoryNewInstanceServices(
+        string $name,
+        string $class
+    ): void {
+        $escaper = new Escaper();
+        $factory = new TagFactory($escaper);
+
+        $service = $factory->newInstance($name);
+
+        $this->assertInstanceOf($class, $service);
     }
 }

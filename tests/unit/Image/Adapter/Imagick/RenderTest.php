@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 #[RequiresPhpExtension('imagick')]
 final class RenderTest extends AbstractUnitTestCase

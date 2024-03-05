@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Version;
 
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Support\Version\VersionAlphaFixture;
 use Phalcon\Tests1\Fixtures\Support\Version\VersionBetaFixture;
 use Phalcon\Tests1\Fixtures\Support\Version\VersionRcFixture;
 use Phalcon\Tests1\Fixtures\Support\Version\VersionStableFixture;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function is_string;
 

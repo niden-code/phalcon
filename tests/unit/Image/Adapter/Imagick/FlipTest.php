@@ -15,10 +15,8 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Enum;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
-use function safeDeleteFile2;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 #[RequiresPhpExtension('imagick')]
 final class FlipTest extends AbstractUnitTestCase

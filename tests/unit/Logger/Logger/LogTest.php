@@ -18,10 +18,8 @@ use Phalcon\Logger\Enum;
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Logger\Logger;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function file_get_contents;
-use function logsDir;
 use function sprintf;
 use function strtoupper;
 use function uniqid;
@@ -86,6 +84,51 @@ final class LogTest extends AbstractUnitTestCase
 
             $this->assertStringContainsString($expected, $contents);
         }
+
+        $adapter->close();
+        $this->safeDeleteFile($fileName);
+    }
+
+    /**
+     * Tests Phalcon\Logger :: log() - interpolator
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2022-09-11
+     */
+    public function testLoggerLogLogInterpolator(): void
+    {
+        $logPath   = $this->logsDir();
+        $fileName  = $this->getNewFileName('log');
+        $formatter = new Line(
+            '%message%-[%level%]-%server%:%user%',
+            'U.u'
+        );
+        $context   = [
+            'server' => uniqid('srv-'),
+            'user'   => uniqid('usr-'),
+        ];
+        $adapter   = new Stream($logPath . $fileName);
+        $adapter->setFormatter($formatter);
+
+        $logger = new Logger(
+            'my-logger',
+            [
+                'one' => $adapter,
+            ]
+        );
+
+        $logger->log(Enum::DEBUG, 'log message', $context);
+
+        $contents = file_get_contents($logPath . $fileName);
+
+        $expected = sprintf(
+            'log message-[DEBUG]-%s:%s',
+            $context['server'],
+            $context['user']
+        );
+        $this->assertStringContainsString($expected, $contents);
 
         $adapter->close();
         $this->safeDeleteFile($fileName);
@@ -165,51 +208,6 @@ final class LogTest extends AbstractUnitTestCase
             );
             $this->assertStringNotContainsString($expected, $contents);
         }
-
-        $adapter->close();
-        $this->safeDeleteFile($fileName);
-    }
-
-    /**
-     * Tests Phalcon\Logger :: log() - interpolator
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2022-09-11
-     */
-    public function testLoggerLogLogInterpolator(): void
-    {
-        $logPath   = $this->logsDir();
-        $fileName  = $this->getNewFileName('log');
-        $formatter = new Line(
-            '%message%-[%level%]-%server%:%user%',
-            'U.u'
-        );
-        $context   = [
-            'server' => uniqid('srv-'),
-            'user'   => uniqid('usr-'),
-        ];
-        $adapter   = new Stream($logPath . $fileName);
-        $adapter->setFormatter($formatter);
-
-        $logger = new Logger(
-            'my-logger',
-            [
-                'one' => $adapter,
-            ]
-        );
-
-        $logger->log(Enum::DEBUG, 'log message', $context);
-
-        $contents = file_get_contents($logPath . $fileName);
-
-        $expected = sprintf(
-            'log message-[DEBUG]-%s:%s',
-            $context['server'],
-            $context['user']
-        );
-        $this->assertStringContainsString($expected, $contents);
 
         $adapter->close();
         $this->safeDeleteFile($fileName);

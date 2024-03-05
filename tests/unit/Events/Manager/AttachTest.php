@@ -15,30 +15,13 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Exception;
 use Phalcon\Events\Manager;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Events\ComponentOne;
 use Phalcon\Tests1\Fixtures\Listener\OneListener;
 use Phalcon\Tests1\Fixtures\Listener\TwoListener;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class AttachTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Events\Manager :: attach() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testEventsManagerAttachException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Event handler must be an Object or Callable');
-
-        $manager = new Manager();
-        $manager->attach('test:detachable', false);
-    }
-
     /**
      * Tests Phalcon\Events\Manager :: attach() - by name after detatch all
      *
@@ -101,5 +84,22 @@ final class AttachTest extends AbstractUnitTestCase
         $expected = TwoListener::class;
         $actual   = $logListeners[0];
         $this->assertInstanceOf($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Events\Manager :: attach() - exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testEventsManagerAttachException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Event handler must be an Object or Callable');
+
+        $manager = new Manager();
+        $manager->attach('test:detachable', false);
     }
 }

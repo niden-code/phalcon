@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
-use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 
 #[RequiresPhpExtension('gd')]
 final class RenderTest extends AbstractUnitTestCase

@@ -14,10 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Request\File;
 
 use Phalcon\Http\Request\File;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
-use function dataDir2;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 final class GetTypeTest extends AbstractUnitTestCase
 {

@@ -16,7 +16,6 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Noop;
 use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Logger\Exception;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class CommitTest extends AbstractUnitTestCase
 {

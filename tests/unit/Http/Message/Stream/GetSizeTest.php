@@ -15,10 +15,8 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
-use function dataDir2;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 final class GetSizeTest extends AbstractUnitTestCase
 {

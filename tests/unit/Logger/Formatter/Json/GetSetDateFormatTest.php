@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Formatter\Json;
 
 use Phalcon\Logger\Formatter\Json;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class GetSetDateFormatTest extends AbstractUnitTestCase
 {

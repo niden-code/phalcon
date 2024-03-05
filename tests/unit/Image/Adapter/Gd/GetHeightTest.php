@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Exception;
-use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 
 #[RequiresPhpExtension('gd')]
 final class GetHeightTest extends AbstractUnitTestCase

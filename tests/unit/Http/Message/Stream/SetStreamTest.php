@@ -16,8 +16,6 @@ namespace Phalcon\Tests\Unit\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-
 final class SetStreamTest extends AbstractUnitTestCase
 {
     /**

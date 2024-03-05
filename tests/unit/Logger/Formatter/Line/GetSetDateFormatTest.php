@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Formatter\Line;
 
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class GetSetDateFormatTest extends AbstractUnitTestCase
 {

@@ -16,10 +16,10 @@ namespace Phalcon\Tests\Unit\Http;
 use Phalcon\Http\Cookie;
 use Phalcon\Http\Request;
 use Phalcon\Http\Response;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Http\PhpStream;
 use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function header_remove;
 use function stream_wrapper_register;

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Events\ComponentOne;
 use Phalcon\Tests1\Fixtures\Listener\OneListener;
 use Phalcon\Tests1\Fixtures\Listener\ThreeListener;
 use Phalcon\Tests1\Fixtures\Listener\TwoListener;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class GetResponsesTest extends AbstractUnitTestCase
 {

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 
-use Codeception\Stub;
 use DateTimeImmutable;
 use DateTimeZone;
 use LogicException;
@@ -21,13 +20,11 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Enum;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
-use Phalcon\Tests1\Fixtures\Logger\Adapter\StreamFixture;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Logger\Adapter\StreamFixture;
 
 use function date_default_timezone_get;
 use function file_get_contents;
-use function logsDir;
 
 final class ProcessTest extends AbstractUnitTestCase
 {

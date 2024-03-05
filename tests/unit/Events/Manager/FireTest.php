@@ -15,12 +15,12 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Exception;
 use Phalcon\Events\Manager;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Events\ComponentOne;
 use Phalcon\Tests1\Fixtures\Listener\OneListener;
 use Phalcon\Tests1\Fixtures\Listener\ThreeListener;
 use Phalcon\Tests1\Fixtures\Listener\TwoListener;
 use stdClass;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class FireTest extends AbstractUnitTestCase
 {
@@ -59,6 +59,45 @@ final class FireTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Events\Manager :: fire() - exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testEventsManagerFireException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid event type unknown');
+
+        $manager = new Manager();
+        $manager->attach(
+            'someEvent',
+            function () {
+                return true;
+            }
+        );
+
+        $manager->fire('unknown', new stdClass());
+    }
+
+    /**
+     * Tests Phalcon\Events\Manager :: fire() - no events
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testEventsManagerFireNoEvents(): void
+    {
+        $manager = new Manager();
+        $actual  = $manager->fire('someEvent', new stdClass());
+        $this->assertNull($actual);
+    }
+
+    /**
      * Tests Phalcon\Events\Manager :: fire() - with priorities
      *
      * @return void
@@ -90,44 +129,5 @@ final class FireTest extends AbstractUnitTestCase
                               ->getResponses()
         ;
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Events\Manager :: fire() - no events
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testEventsManagerFireNoEvents(): void
-    {
-        $manager = new Manager();
-        $actual  = $manager->fire('someEvent', new stdClass());
-        $this->assertNull($actual);
-    }
-
-    /**
-     * Tests Phalcon\Events\Manager :: fire() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testEventsManagerFireException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Invalid event type unknown');
-
-        $manager = new Manager();
-        $manager->attach(
-            'someEvent',
-            function () {
-                return true;
-            }
-        );
-
-        $manager->fire('unknown', new stdClass());
     }
 }

@@ -19,9 +19,6 @@ use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerFactory;
 use Phalcon\Logger\LoggerInterface;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
-
-use function logsDir;
 
 final class NewInstanceTest extends AbstractUnitTestCase
 {

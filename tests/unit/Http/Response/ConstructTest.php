@@ -18,8 +18,8 @@ use Phalcon\Events\EventsAwareInterface;
 use Phalcon\Http\Message\Interfaces\ResponseStatusCodeInterface;
 use Phalcon\Http\Response;
 use Phalcon\Http\ResponseInterface;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 final class ConstructTest extends AbstractUnitTestCase
 {

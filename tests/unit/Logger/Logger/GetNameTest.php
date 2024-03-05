@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Logger;
 
 use Phalcon\Logger\Logger;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class GetNameTest extends AbstractUnitTestCase
 {

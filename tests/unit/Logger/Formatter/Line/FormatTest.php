@@ -20,7 +20,6 @@ use Phalcon\Logger\Enum;
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Logger\Item;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function date_default_timezone_get;
 use function uniqid;
@@ -86,6 +85,46 @@ final class FormatTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Logger\Formatter\Line :: format() - custom interpolator
+     *
+     * @return void
+     *
+     * @throws Exception
+     * @since  2022-09-11
+     * @author Phalcon Team <team@phalcon.io>
+     */
+    public function testLoggerFormatterLineFormatCustomInterpolator(): void
+    {
+        $formatter = new Line(
+            '%message%-[%level%]-%date%-%server%:%user%',
+            'U.u'
+        );
+
+        $timezone = date_default_timezone_get();
+        $datetime = new DateTimeImmutable('now', new DateTimeZone($timezone));
+        $context  = [
+            'server' => uniqid('srv-'),
+            'user'   => uniqid('usr-'),
+        ];
+        $item     = new Item(
+            'log message',
+            'debug',
+            Enum::DEBUG,
+            $datetime,
+            $context
+        );
+
+        $expected = sprintf(
+            'log message-[debug]-%s-%s:%s',
+            $datetime->format('U.u'),
+            $context['server'],
+            $context['user']
+        );
+        $actual   = $formatter->format($item);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
      * Tests Phalcon\Logger\Formatter\Line :: format() -custom with milliseconds
      *
      * @return void
@@ -125,45 +164,5 @@ final class FormatTest extends AbstractUnitTestCase
         $expected = 0;
         $actual   = (int)$parts[1];
         $this->assertGreaterThan($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Logger\Formatter\Line :: format() - custom interpolator
-     *
-     * @return void
-     *
-     * @throws Exception
-     * @since  2022-09-11
-     * @author Phalcon Team <team@phalcon.io>
-     */
-    public function testLoggerFormatterLineFormatCustomInterpolator(): void
-    {
-        $formatter = new Line(
-            '%message%-[%level%]-%date%-%server%:%user%',
-            'U.u'
-        );
-
-        $timezone = date_default_timezone_get();
-        $datetime = new DateTimeImmutable('now', new DateTimeZone($timezone));
-        $context  = [
-            'server' => uniqid('srv-'),
-            'user'   => uniqid('usr-'),
-        ];
-        $item     = new Item(
-            'log message',
-            'debug',
-            Enum::DEBUG,
-            $datetime,
-            $context
-        );
-
-        $expected = sprintf(
-            'log message-[debug]-%s-%s:%s',
-            $datetime->format('U.u'),
-            $context['server'],
-            $context['user']
-        );
-        $actual   = $formatter->format($item);
-        $this->assertSame($expected, $actual);
     }
 }

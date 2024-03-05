@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Stream;
 
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class BeginTest extends AbstractUnitTestCase
 {

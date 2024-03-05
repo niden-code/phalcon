@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Imagick;
 
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Exception;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 #[RequiresPhpExtension('imagick')]
 final class SetResourceLimitTest extends AbstractUnitTestCase

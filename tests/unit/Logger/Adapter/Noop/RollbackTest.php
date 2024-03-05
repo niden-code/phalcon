@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Noop;
 
 use Phalcon\Logger\Adapter\Noop;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class RollbackTest extends AbstractUnitTestCase
 {

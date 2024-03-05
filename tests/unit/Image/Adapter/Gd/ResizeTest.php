@@ -16,12 +16,8 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Image\Exception;
-use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
-use function dataDir2;
-use function outputDir2;
-use function safeDeleteFile2;
+use Phalcon\Tests1\Fixtures\Traits\GdTrait2;
 
 #[RequiresPhpExtension('gd')]
 final class ResizeTest extends AbstractUnitTestCase

@@ -17,7 +17,6 @@ use Phalcon\Tests\Fixtures\Traits\CookieTrait;
 use Phalcon\Tests\Unit\Http\AbstractHttpTestCase;
 
 use function explode;
-use function setProtectedProperty2;
 use function uniqid;
 
 #[RequiresPhpExtension('xdebug')]

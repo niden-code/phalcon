@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Support\Collection\Collection;
 
 use Phalcon\Support\Collection;
-use Phalcon\Tests1\Fixtures\Support\Collection\CollectionFixture;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Support\Collection\CollectionFixture;
 
 use function json_encode;
 

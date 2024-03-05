@@ -16,7 +16,6 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Logger\Exception;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function serialize;
 

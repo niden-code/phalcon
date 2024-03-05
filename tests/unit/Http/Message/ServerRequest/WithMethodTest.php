@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Http\Message\ServerRequest;
 
 use Phalcon\Http\Message\ServerRequest;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class WithMethodTest extends AbstractUnitTestCase
 {

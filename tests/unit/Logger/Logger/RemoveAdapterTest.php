@@ -17,7 +17,6 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Logger;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class RemoveAdapterTest extends AbstractUnitTestCase
 {

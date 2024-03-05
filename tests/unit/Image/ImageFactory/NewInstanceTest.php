@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Unit\Image\ImageFactory;
 use Phalcon\Image\Adapter\Imagick;
 use Phalcon\Image\Exception;
 use Phalcon\Image\ImageFactory;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 use function uniqid;
 

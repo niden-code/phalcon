@@ -20,7 +20,6 @@ use Phalcon\Logger\Enum;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function date_default_timezone_get;
 use function file_get_contents;
@@ -54,7 +53,7 @@ final class CloseTest extends AbstractUnitTestCase
         $actual = $adapter->close();
         $this->assertTrue($actual);
 
-        $content = file_get_contents($outputPath . $fileName);
+        $content  = file_get_contents($outputPath . $fileName);
         $expected = 'Message 1';
         $this->assertStringContainsString($expected, $content);
 

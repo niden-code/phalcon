@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Response\Headers;
 
 use Phalcon\Http\Response\Headers;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 final class SetTest extends AbstractUnitTestCase
 {

@@ -18,8 +18,8 @@ use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\Stream\Input;
 use Phalcon\Http\Message\Stream\Memory;
 use Phalcon\Http\Message\Stream\Temp;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Page\Http;
 use RuntimeException;
 use stdClass;
 

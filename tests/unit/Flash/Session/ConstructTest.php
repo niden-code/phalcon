@@ -16,9 +16,8 @@ namespace Phalcon\Tests\Unit\Flash\Session;
 use Phalcon\Flash\Exception;
 use Phalcon\Flash\FlashInterface;
 use Phalcon\Flash\Session;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 
 final class ConstructTest extends AbstractUnitTestCase
 {

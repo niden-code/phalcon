@@ -19,10 +19,6 @@ use Phalcon\Http\Message\Stream\Memory;
 use Phalcon\Http\Message\Stream\Temp;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-use function getNewFileName2;
-use function logsDir2;
-
 final class IsReadableTest extends AbstractUnitTestCase
 {
     /**

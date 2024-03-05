@@ -17,11 +17,8 @@ use Phalcon\Http\Message\Exception\RuntimeException;
 use Phalcon\Http\Message\Interfaces\StreamInterface;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\UploadedFile;
-use Phalcon\Tests1\Fixtures\Page\Http;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
-use function getNewFileName2;
-use function outputDir2;
+use Phalcon\Tests1\Fixtures\Page\Http;
 
 use const UPLOAD_ERR_CANT_WRITE;
 

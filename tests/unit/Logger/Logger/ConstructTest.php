@@ -20,7 +20,6 @@ use Phalcon\Logger\Formatter\Json;
 use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerInterface;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 use function file_get_contents;
 
@@ -62,6 +61,49 @@ final class ConstructTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Logger :: __construct() - no adapter exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testLoggerConstructNoAdapterException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('No adapters specified');
+
+        $logger = new Logger('my-logger');
+
+        $logger->info('Some message');
+    }
+
+    /**
+     * Tests Phalcon\Logger :: __construct() - read only mode exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testLoggerConstructStreamReadOnlyModeException(): void
+    {
+        $fileName   = $this->getNewFileName('log');
+        $outputPath = $this->logsDir();
+        $file       = $outputPath . $fileName;
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Adapter cannot be opened in read mode');
+
+        $adapter = new Stream(
+            $file,
+            [
+                'mode' => 'r',
+            ]
+        );
+    }
+
+    /**
      * Tests Phalcon\Logger :: __construct() - file with json formatter
      *
      * @return void
@@ -71,9 +113,9 @@ final class ConstructTest extends AbstractUnitTestCase
      */
     public function testLoggerConstructStreamWithJsonConstants(): void
     {
-        $fileName = $this->getNewFileName('log');
+        $fileName   = $this->getNewFileName('log');
         $outputPath = $this->logsDir();
-        $adapter = new Stream($outputPath . $fileName);
+        $adapter    = new Stream($outputPath . $fileName);
 
         $adapter->setFormatter(new Json());
 
@@ -105,48 +147,5 @@ final class ConstructTest extends AbstractUnitTestCase
 
         $adapter->close();
         $this->safeDeleteFile($outputPath . $fileName);
-    }
-
-    /**
-     * Tests Phalcon\Logger :: __construct() - read only mode exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testLoggerConstructStreamReadOnlyModeException(): void
-    {
-        $fileName = $this->getNewFileName('log');
-        $outputPath = $this->logsDir();
-        $file = $outputPath . $fileName;
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Adapter cannot be opened in read mode');
-
-        $adapter = new Stream(
-            $file,
-            [
-                'mode' => 'r',
-            ]
-        );
-    }
-
-    /**
-     * Tests Phalcon\Logger :: __construct() - no adapter exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testLoggerConstructNoAdapterException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('No adapters specified');
-
-        $logger = new Logger('my-logger');
-
-        $logger->info('Some message');
     }
 }

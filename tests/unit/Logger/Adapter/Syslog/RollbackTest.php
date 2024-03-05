@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Logger\Adapter\Syslog;
 
 use Phalcon\Logger\Adapter\Syslog;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class RollbackTest extends AbstractUnitTestCase
 {

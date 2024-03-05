@@ -13,14 +13,24 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Events\Manager;
 
-use Codeception\Example;
 use Phalcon\Events\Exception;
 use Phalcon\Events\Manager;
-use stdClass;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use stdClass;
 
 final class DetachTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array
+     */
+    public static function providerBoolean(): array
+    {
+        return [
+            [true],
+            [false],
+        ];
+    }
+
     /**
      * Tests detach handler by using an Object
      *
@@ -80,16 +90,5 @@ final class DetachTest extends AbstractUnitTestCase
 
         $manager = new Manager();
         $manager->detach('test:detachable', false);
-    }
-
-    /**
-     * @return array
-     */
-    public static function providerBoolean(): array
-    {
-        return [
-            [true],
-            [false],
-        ];
     }
 }

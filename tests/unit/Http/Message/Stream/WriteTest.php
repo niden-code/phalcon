@@ -18,9 +18,6 @@ use Phalcon\Tests\Fixtures\Http\Message\StreamFixture;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 use RuntimeException;
 
-use function getNewFileName2;
-use function logsDir2;
-
 final class WriteTest extends AbstractUnitTestCase
 {
     /**

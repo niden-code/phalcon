@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Flash\Direct;
 
-use Codeception\Example;
 use Phalcon\Flash\Direct;
 use Phalcon\Flash\Exception;
 use Phalcon\Html\Escaper;
@@ -24,20 +23,24 @@ use const PHP_EOL;
 final class OutputMessageTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Flash\Direct :: outputMessage() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return array
      */
-    public function testFlashDirectOutputMessageException(): void
+    public static function providerExamples(): array
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('The message must be an array or a string');
-
-        $flash   = new Direct(new Escaper());
-        $message = $flash->outputMessage('success', false);
+        return [
+            [
+                'error',
+            ],
+            [
+                'notice',
+            ],
+            [
+                'success',
+            ],
+            [
+                'warning',
+            ],
+        ];
     }
 
     /**
@@ -70,23 +73,19 @@ final class OutputMessageTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return array
+     * Tests Phalcon\Flash\Direct :: outputMessage() - exception
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    public static function providerExamples(): array
+    public function testFlashDirectOutputMessageException(): void
     {
-        return [
-            [
-                'error',
-            ],
-            [
-                'notice',
-            ],
-            [
-                'success',
-            ],
-            [
-                'warning',
-            ],
-        ];
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The message must be an array or a string');
+
+        $flash   = new Direct(new Escaper());
+        $message = $flash->outputMessage('success', false);
     }
 }

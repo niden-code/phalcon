@@ -17,67 +17,10 @@ use Phalcon\Http\Response\HeadersInterface;
 use Phalcon\Tests\Unit\Http\AbstractHttpTestCase;
 use Phalcon\Tests1\Fixtures\Page\Http;
 
-use function getProtectedProperty2;
-use function setProtectedProperty2;
 use function uniqid;
 
 final class HeadersTest extends AbstractHttpTestCase
 {
-    /**
-     * Tests the get of the response status headers
-     *
-     * @issue  https://github.com/phalcon/cphalcon/issues/12895
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2017-06-17
-     *
-     * @dataProvider statusHeaderProvider
-     */
-    public function testHttpResponseGetResponseStatusHeader(
-        string $code
-    ) {
-        $headers = new Headers();
-
-        $this->setProtectedProperty(
-            $headers,
-            'headers',
-            [
-                Http::STATUS => $code,
-            ]
-        );
-
-        $expected = $code;
-        $actual   = $headers->get(Http::STATUS);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests the set of the response status headers
-     *
-     * @issue  https://github.com/phalcon/cphalcon/issues/12895
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2017-06-17
-     *
-     * @dataProvider statusHeaderProvider
-     */
-    public function testHttpResponseSetResponseStatusHeader(
-        string $code
-    ) {
-        $headers = new Headers();
-
-        $headers->set(Http::STATUS, $code);
-        $headers = $this->getProtectedProperty($headers, 'headers');
-
-        $expected = 1;
-        $this->assertCount($expected, $headers);
-
-        $actual = isset($headers[Http::STATUS]);
-        $this->assertTrue($actual);
-
-        $expected = (string)$code;
-        $actual   = $headers[Http::STATUS];
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array[]
      */
@@ -167,6 +110,33 @@ final class HeadersTest extends AbstractHttpTestCase
 
         $actual = $response->sendHeaders();
         $this->assertFalse($actual);
+    }
+
+    /**
+     * Tests the get of the response status headers
+     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/12895
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2017-06-17
+     *
+     * @dataProvider statusHeaderProvider
+     */
+    public function testHttpResponseGetResponseStatusHeader(
+        string $code
+    ) {
+        $headers = new Headers();
+
+        $this->setProtectedProperty(
+            $headers,
+            'headers',
+            [
+                Http::STATUS => $code,
+            ]
+        );
+
+        $expected = $code;
+        $actual   = $headers->get(Http::STATUS);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -307,6 +277,34 @@ final class HeadersTest extends AbstractHttpTestCase
         ];
 
         $actual = $headers->toArray();
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests the set of the response status headers
+     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/12895
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2017-06-17
+     *
+     * @dataProvider statusHeaderProvider
+     */
+    public function testHttpResponseSetResponseStatusHeader(
+        string $code
+    ) {
+        $headers = new Headers();
+
+        $headers->set(Http::STATUS, $code);
+        $headers = $this->getProtectedProperty($headers, 'headers');
+
+        $expected = 1;
+        $this->assertCount($expected, $headers);
+
+        $actual = isset($headers[Http::STATUS]);
+        $this->assertTrue($actual);
+
+        $expected = (string)$code;
+        $actual   = $headers[Http::STATUS];
         $this->assertSame($expected, $actual);
     }
 }

@@ -17,7 +17,6 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Formatter\FormatterInterface;
 use Phalcon\Logger\Formatter\Line;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
 final class GetSetFormatterTest extends AbstractUnitTestCase
 {
