@@ -3,7 +3,9 @@
   "description": "Phalcon Framework",
   "keywords": [
     "php",
-    "framework"
+    "framework",
+    "psr-3",
+    "psr-11"
   ],
   "license": "MIT",
   "require": {
@@ -19,7 +21,8 @@
     "matthiasmullie/minify": "^1.3",
     "payload-interop/payload-interop": "^1.0",
     "phalcon/traits": "^2.0",
-    "phpbench/phpbench": "^1.2"
+    "phpbench/phpbench": "^1.2",
+    "psr/container": "^2.0"
   },
   "suggest": {
     "ext-gd": "to use Image\\Adapter\\Gd",
