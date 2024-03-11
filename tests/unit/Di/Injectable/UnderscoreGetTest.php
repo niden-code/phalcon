@@ -19,7 +19,6 @@ use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
 use RuntimeException;
 use stdClass;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-
 use Throwable;
 
 use function restore_error_handler;
@@ -53,7 +52,7 @@ final class UnderscoreGetTest extends AbstractUnitTestCase
         $component = $container->get('component');
 
         set_error_handler(
-            function (int $number, string $message){
+            function (int $number, string $message) {
                 throw new RuntimeException($message, $number);
             }
         );

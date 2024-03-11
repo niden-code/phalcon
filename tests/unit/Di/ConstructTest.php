@@ -30,10 +30,6 @@ final class ConstructTest extends AbstractUnitTestCase
     {
         $class  = Di::class;
         $actual = Di::getDefault();
-        $this->assertNull($actual);
-
-        $container = new Di();
-        $actual = Di::getDefault();
         $this->assertInstanceOf($class, $actual);
     }
 }

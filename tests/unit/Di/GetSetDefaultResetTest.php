@@ -28,23 +28,22 @@ final class GetSetDefaultResetTest extends AbstractUnitTestCase
      */
     public function testDiGetSetDefaultReset(): void
     {
+        $class  = Di::class;
         $actual = Di::getDefault();
-        $this->assertNull($actual);
+        $this->assertInstanceOf($class, $actual);
 
         $container = new Di();
-        $class     = Di::class;
-        $this->assertInstanceOf($class, $container);
 
         // delete it
         Di::reset();
-
         $actual = Di::getDefault();
-        $this->assertNull($actual);
+        $this->assertNotSame($container, $actual);
 
         // set it again
         Di::setDefault($container);
 
         $actual = Di::getDefault();
         $this->assertInstanceOf($class, $actual);
+        $this->assertSame($container, $actual);
     }
 }
