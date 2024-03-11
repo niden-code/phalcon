@@ -357,7 +357,7 @@ class Tag
      *
      * @return DiInterface
      */
-    public static function getDI(): DiInterface
+    public static function getDI(): ?DiInterface
     {
         if (null === self::$container) {
             self::$container = Di::getDefault();
