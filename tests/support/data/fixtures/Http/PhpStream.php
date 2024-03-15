@@ -28,6 +28,11 @@ class PhpStream
     use DirTrait;
 
     /**
+     * @var string
+     */
+    protected string $context = '';
+
+    /**
      * @var int
      */
     protected int $index = 0;
