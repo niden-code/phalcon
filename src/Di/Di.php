@@ -60,6 +60,8 @@ use Phalcon\Events\Traits\EventsAwareTrait;
  *
  * $request = $di->getRequest();
  *```
+ *
+ * @phpstan-consistent-constructor
  */
 class Di implements DiInterface
 {
