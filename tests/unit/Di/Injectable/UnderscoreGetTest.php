@@ -19,7 +19,6 @@ use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
 use RuntimeException;
 use stdClass;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use Throwable;
 
 use function restore_error_handler;
 use function set_error_handler;

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Di;
 
 use Phalcon\Di\Traits\InjectionAwareTrait;
+use stdClass;
 
 /**
  * This abstract class offers common access to the DI in a class
@@ -22,7 +23,7 @@ use Phalcon\Di\Traits\InjectionAwareTrait;
  *
  * @package Phalcon\Di
  */
-abstract class AbstractInjectionAware implements InjectionAwareInterface
+abstract class AbstractInjectionAware extends stdClass implements InjectionAwareInterface
 {
     use InjectionAwareTrait;
 }
