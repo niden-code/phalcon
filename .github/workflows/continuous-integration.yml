@@ -153,13 +153,11 @@ jobs:
           fi
 
           cp tests/_config/.env.default .env
-          vendor/bin/codecept build
 
       - name: "Run Unit Tests"
         if: always()
         run: |
-          ./vendor/bin/phpunit --coverage-php=./tests/support/output/coverage/coverage.xml --display-deprecations
-#          vendor/bin/codecept run --coverage-xml=coverage.xml --ext DotReporter unit
+          ./vendor/bin/phpunit tests/unit/ --coverage-php=./tests/support/output/coverage/coverage.xml --display-deprecations
 
       - name: "Upload coverage file artifact"
         uses: "actions/upload-artifact@v3"
@@ -238,12 +236,11 @@ jobs:
           fi
 
           cp tests/_config/.env.default .env
-          vendor/bin/codecept build
 
       - name: "Run CLI Tests"
         if: always()
         run: |
-          vendor/bin/codecept run --coverage-xml=coverage.xml --ext DotReporter cli
+          ./vendor/bin/phpunit tests/cli/ --coverage-php=./tests/support/output/coverage/coverage.xml --display-deprecations
 
       - name: "Upload coverage file artifact"
         uses: "actions/upload-artifact@v3"
