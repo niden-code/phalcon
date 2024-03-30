@@ -37,7 +37,7 @@ use const GLOB_MARK;
 
 abstract class AbstractUnitTestCase extends TestCase
 {
-    use DirTrait;
+    use HelperTrait;
 
     /**
      * Calls private or protected method.

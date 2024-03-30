@@ -17,7 +17,7 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Mvc\View;
 
-use Phalcon\Tests\Support\DirTrait;
+use Phalcon\Tests\Support\HelperTrait;
 
 use function dataDir;
 
@@ -39,7 +39,7 @@ use function dataDir;
  */
 class Module implements ModuleDefinitionInterface
 {
-    use DirTrait;
+    use HelperTrait;
 
     public function registerAutoloaders(DiInterface $di = null)
     {

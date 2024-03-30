@@ -11,10 +11,8 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Integration\Storage\Adapter;
+namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Codeception\Stub;
-use IntegrationTester;
 use Phalcon\Storage\Adapter\AdapterInterface;
 use Phalcon\Storage\Adapter\Apcu;
 use Phalcon\Storage\Adapter\Libmemcached;
@@ -23,80 +21,68 @@ use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Support\Exception;
 use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Storage\Adapter\ApcuIteratorFixture;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function outputDir;
+use function getOptionsLibmemcached2;
+use function getOptionsRedis2;
 use function phpversion;
+use function sort;
 use function uniqid;
 use function version_compare;
 
-class GetKeysCest
+final class GetKeysTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Storage\Adapter\Apcu :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
-     * @throws Exception
+     * @throws HelperException
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterApcuGetKeys(IntegrationTester $I)
+    #[RequiresPhpExtension('apcu')]
+    public function testStorageAdapterApcuGetKeys(): void
     {
-        $I->wantToTest('Storage\Adapter\Apcu - getKeys()');
-
-        $I->checkExtensionIsLoaded('apcu');
-
         $serializer = new SerializerFactory();
         $adapter    = new Apcu($serializer);
 
-        $I->assertTrue($adapter->clear());
+        $this->assertTrue($adapter->clear());
 
-        $this->runTest($adapter, $I, 'ph-apcu-');
+        $this->runTests($adapter, 'ph-apcu-');
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Apcu :: getKeys() - iterator error
      *
-     * @param IntegrationTester $I
+     * @return void
      *
-     * @throws Exception
+     * @throws HelperException
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterApcuGetKeysIteratorError(IntegrationTester $I)
+    #[RequiresPhpExtension('apcu')]
+    public function testStorageAdapterApcuGetKeysIteratorError(): void
     {
-        $I->wantToTest('Storage\Adapter\Apcu - getKeys() - iterator error');
-
-        $I->checkExtensionIsLoaded('apcu');
-
         $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Apcu::class,
-            [
-                $serializer,
-            ],
-            [
-                'phpApcuIterator' => false,
-            ]
-        );
+        $adapter    = new ApcuIteratorFixture($serializer);
 
-        $this->setupTest($adapter, $I);
+        $this->setupTest($adapter);
 
         $actual = $adapter->getKeys();
-        $I->assertIsArray($actual);
-        $I->assertEmpty($actual);
+        $this->assertIsArray($actual);
+        $this->assertEmpty($actual);
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Libmemcached :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      * @throws StorageException
@@ -104,20 +90,17 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterLibmemcachedGetKeys(IntegrationTester $I)
+    #[RequiresPhpExtension('memcached')]
+    public function testStorageAdapterLibmemcachedGetKeys(): void
     {
-        $I->wantToTest('Storage\Adapter\Libmemcached - getKeys()');
-
-        $I->checkExtensionIsLoaded('memcached');
-
         $serializer = new SerializerFactory();
         $adapter    = new Libmemcached(
             $serializer,
-            getOptionsLibmemcached()
+            self::getOptionsLibmemcached()
         );
 
-        $memcachedServerVersions = $adapter->getAdapter()
-                                           ->getVersion()
+        $memcachedServerVersions   = $adapter->getAdapter()
+                                             ->getVersion()
         ;
         $memcachedExtensionVersion = phpversion('memcached');
 
@@ -128,50 +111,48 @@ class GetKeysCest
                 version_compare($memcachedServerVersion, '1.4.23', '>=') &&
                 version_compare($memcachedExtensionVersion, '3.0.1', '<')
             ) {
-                $I->skipTest(
+                $this->markTestSkipped(
                     'getAllKeys() does not work in certain Memcached versions'
                 );
             }
 
             // https://github.com/php-memcached-dev/php-memcached/issues/367
             if (version_compare($memcachedServerVersion, '1.5.0', '>=')) {
-                $I->skipTest(
+                $this->markTestSkipped(
                     'getAllKeys() does not work in certain Memcached versions'
                 );
             }
         }
 
-        $I->assertTrue($adapter->clear());
+        $this->assertTrue($adapter->clear());
 
-        $this->runTest($adapter, $I, 'ph-memc-');
+        $this->runTests($adapter, 'ph-memc-');
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Memory :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterMemoryGetKeys(IntegrationTester $I)
+    public function testStorageAdapterMemoryGetKeys(): void
     {
-        $I->wantToTest('Storage\Adapter\Memory - getKeys()');
-
         $serializer = new SerializerFactory();
         $adapter    = new Memory($serializer);
 
-        $I->assertTrue($adapter->clear());
+        $this->assertTrue($adapter->clear());
 
-        $this->runTest($adapter, $I, 'ph-memo-');
+        $this->runTests($adapter, 'ph-memo-');
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Redis :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      * @throws StorageException
@@ -179,24 +160,21 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterRedisGetKeys(IntegrationTester $I)
+    #[RequiresPhpExtension('redis')]
+    public function testStorageAdapterRedisGetKeys(): void
     {
-        $I->wantToTest('Storage\Adapter\Redis - getKeys()');
-
-        $I->checkExtensionIsLoaded('redis');
-
         $serializer = new SerializerFactory();
-        $adapter    = new Redis($serializer, getOptionsRedis());
+        $adapter    = new Redis($serializer, self::getOptionsRedis());
 
-        $I->assertTrue($adapter->clear());
+        $this->assertTrue($adapter->clear());
 
-        $this->runTest($adapter, $I, 'ph-reds-');
+        $this->runTests($adapter, 'ph-reds-');
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Stream :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      * @throws StorageException
@@ -204,34 +182,32 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function storageAdapterStreamGetKeys(IntegrationTester $I)
+    public function testStorageAdapterStreamGetKeys(): void
     {
-        $I->wantToTest('Storage\Adapter\Stream - getKeys()');
-
         $serializer = new SerializerFactory();
         $adapter    = new Stream(
             $serializer,
             [
-                'storageDir' => outputDir(),
+                'storageDir' => self::outputDir(),
             ]
         );
 
-        $I->assertTrue($adapter->clear());
+        $this->assertTrue($adapter->clear());
 
-        $this->runTest($adapter, $I, 'ph-strm');
+        $this->runTests($adapter, 'ph-strm');
 
         $key1 = uniqid('key');
         $key2 = uniqid('key');
         $key3 = uniqid('one');
         $key4 = uniqid('one');
 
-        $I->safeDeleteDirectory(outputDir('ph-strm'));
+        $this->safeDeleteDirectory(self::outputDir('ph-strm'));
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Stream :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      * @throws StorageException
@@ -240,15 +216,13 @@ class GetKeysCest
      * @since  2020-09-09
      * @issue  cphalcon/#14190
      */
-    public function storageAdapterStreamGetKeysIssue14190(IntegrationTester $I)
+    public function testStorageAdapterStreamGetKeysIssue14190(): void
     {
-        $I->wantToTest('Storage\Adapter\Stream - getKeys() - issue 14190');
-
         $serializer = new SerializerFactory();
         $adapter    = new Stream(
             $serializer,
             [
-                'storageDir' => outputDir(),
+                'storageDir' => self::outputDir(),
                 'prefix'     => 'basePrefix-',
             ]
         );
@@ -256,9 +230,9 @@ class GetKeysCest
         $adapter->clear();
 
         $actual = $adapter->set('key', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
         $actual = $adapter->set('key1', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
 
         $expected = [
             'basePrefix-key',
@@ -268,20 +242,20 @@ class GetKeysCest
         $actual = $adapter->getKeys();
         sort($actual);
 
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         foreach ($expected as $key) {
             $actual = $adapter->delete($key);
-            $I->assertTrue($actual);
+            $this->assertTrue($actual);
         }
 
-        $I->safeDeleteDirectory(outputDir('basePrefix-'));
+        $this->safeDeleteDirectory(self::outputDir('basePrefix-'));
     }
 
     /**
      * Tests Phalcon\Storage\Adapter\Stream :: getKeys()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      * @throws StorageException
@@ -290,32 +264,30 @@ class GetKeysCest
      * @since  2020-09-09
      * @issue  cphalcon/#14190
      */
-    public function storageAdapterStreamGetKeysPrefix(IntegrationTester $I)
+    public function testStorageAdapterStreamGetKeysPrefix(): void
     {
-        $I->wantToTest('Storage\Adapter\Stream - getKeys() - prefix');
-
         $serializer = new SerializerFactory();
         $adapter    = new Stream(
             $serializer,
             [
-                'storageDir' => outputDir(),
+                'storageDir' => self::outputDir(),
                 'prefix'     => 'pref-',
             ]
         );
 
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $adapter->getKeys();
-        $I->assertEmpty($actual);
+        $this->assertEmpty($actual);
 
         $actual = $adapter->set('key', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
         $actual = $adapter->set('key1', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
         $actual = $adapter->set('somekey', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
         $actual = $adapter->set('somekey1', 'test');
-        $I->assertNotFalse($actual);
+        $this->assertNotFalse($actual);
 
         $expected = [
             'pref-key',
@@ -325,7 +297,7 @@ class GetKeysCest
         ];
         $actual   = $adapter->getKeys();
         sort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [
             'pref-somekey',
@@ -334,20 +306,25 @@ class GetKeysCest
 
         $actual = $adapter->getKeys('so');
         sort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
-        $I->safeDeleteDirectory(outputDir('pref-'));
+        $this->safeDeleteDirectory(self::outputDir('pref-'));
     }
 
-    private function runTest(
+    /**
+     * @param AdapterInterface $adapter
+     * @param string           $prefix
+     *
+     * @return void
+     */
+    private function runTests(
         AdapterInterface $adapter,
-        IntegrationTester $I,
         string $prefix
     ): void {
-        [$key1, $key2, $key3, $key4] = $this->setupTest($adapter, $I);
+        [$key1, $key2, $key3, $key4] = $this->setupTest($adapter);
 
         $expected = [
             $prefix . $key1,
@@ -357,7 +334,7 @@ class GetKeysCest
         ];
         $actual   = $adapter->getKeys();
         sort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = [
             $prefix . $key3,
@@ -365,35 +342,33 @@ class GetKeysCest
         ];
         $actual   = $adapter->getKeys("one");
         sort($actual);
-        $I->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
-    private function setupTest(
-        AdapterInterface $adapter,
-        IntegrationTester $I
-    ): array {
+    private function setupTest(AdapterInterface $adapter): array
+    {
         $key1 = uniqid('key');
         $key2 = uniqid('key');
         $key3 = uniqid('one');
         $key4 = uniqid('one');
 
         $result = $adapter->set($key1, 'test');
-        $I->assertNotFalse($result);
+        $this->assertNotFalse($result);
         $result = $adapter->set($key2, 'test');
-        $I->assertNotFalse($result);
+        $this->assertNotFalse($result);
         $result = $adapter->set($key3, 'test');
-        $I->assertNotFalse($result);
+        $this->assertNotFalse($result);
         $result = $adapter->set($key4, 'test');
-        $I->assertNotFalse($result);
+        $this->assertNotFalse($result);
 
         $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $adapter->has($key2);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $adapter->has($key3);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $adapter->has($key4);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         return [$key1, $key2, $key3, $key4];
     }

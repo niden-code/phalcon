@@ -17,5 +17,5 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractCliTestCase extends TestCase
 {
-    use DirTrait;
+    use HelperTrait;
 }

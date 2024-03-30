@@ -17,7 +17,7 @@ use function dirname;
 
 use const DIRECTORY_SEPARATOR;
 
-trait DirTrait
+trait HelperTrait
 {
     /**
      * Returns the data folder

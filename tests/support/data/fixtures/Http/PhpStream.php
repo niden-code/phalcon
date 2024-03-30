@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests1\Fixtures\Http;
 
-use Phalcon\Tests\Support\DirTrait;
+use Phalcon\Tests\Support\HelperTrait;
 
 use function outputDir2;
 
@@ -25,7 +25,7 @@ use function outputDir2;
  */
 class PhpStream
 {
-    use DirTrait;
+    use HelperTrait;
 
     /**
      * @var string
