@@ -77,7 +77,7 @@ final class OutputCssTest extends AbstractUnitTestCase
         $expected = 'A{TEXT-DECORATION:NONE;}B{FONT-WEIGHT:BOLD;}';
         $this->assertStringContainsString($expected, $content);
 
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 
     /**

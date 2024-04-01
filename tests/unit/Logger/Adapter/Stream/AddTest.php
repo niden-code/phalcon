@@ -83,6 +83,6 @@ final class AddTest extends AbstractUnitTestCase
         $this->assertStringContainsString($expected, $content);
 
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

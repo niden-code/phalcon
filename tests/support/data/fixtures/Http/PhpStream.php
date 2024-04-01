@@ -27,10 +27,10 @@ class PhpStream
 {
     use HelperTrait;
 
-    /**
-     * @var string
-     */
-    protected string $context = '';
+//    /**
+//     * @var string
+//     */
+//    protected string $context = '';
 
     /**
      * @var int
@@ -46,11 +46,6 @@ class PhpStream
      * @var string
      */
     protected string $data = '';
-
-    /**
-     * @var string
-     */
-    protected string $outputDir = '';
 
     /**
      * Constructor
@@ -152,7 +147,6 @@ class PhpStream
         return $this->index;
     }
 
-
     public function stream_write($data)
     {
         return file_put_contents(
@@ -176,6 +170,6 @@ class PhpStream
 
     protected function getBufferFilename(): string
     {
-        return $this->outputDir('stream/php_input.txt');
+        return self::outputDir('stream/php_input.txt');
     }
 }

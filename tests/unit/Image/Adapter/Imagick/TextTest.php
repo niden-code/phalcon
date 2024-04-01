@@ -61,6 +61,6 @@ final class TextTest extends AbstractUnitTestCase
         $actual   = $image->getHeight();
         $this->assertSame($expected, $actual);
 
-        $this->safeDeleteFile($outputFile);
+        self::safeDeleteFile($outputFile);
     }
 }

@@ -293,6 +293,6 @@ final class OutputJsTest extends AbstractUnitTestCase
         );
 
         $this->assertFileExists(self::outputDir("assets/{$file}"));
-        $this->safeDeleteFile(self::outputDir("assets/{$file}"));
+        self::safeDeleteFile(self::outputDir("assets/{$file}"));
     }
 }

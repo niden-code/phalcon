@@ -58,6 +58,6 @@ final class GetPropertiesTest extends AbstractAnnotationsAdapterTestCase
             $this->assertInstanceOf($expected, $actual);
         }
 
-        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

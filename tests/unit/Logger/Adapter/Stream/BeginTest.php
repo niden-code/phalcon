@@ -39,6 +39,6 @@ final class BeginTest extends AbstractUnitTestCase
 
         $adapter->rollback();
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

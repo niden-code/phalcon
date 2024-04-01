@@ -57,7 +57,7 @@ final class CloseTest extends AbstractUnitTestCase
         $expected = 'Message 1';
         $this->assertStringContainsString($expected, $content);
 
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 
     /**

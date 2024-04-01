@@ -57,7 +57,7 @@ final class ProcessTest extends AbstractUnitTestCase
 
         $actual = $adapter->close();
         $this->assertTrue($actual);
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -91,6 +91,6 @@ final class ProcessTest extends AbstractUnitTestCase
         );
         $adapter->process($item);
 
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

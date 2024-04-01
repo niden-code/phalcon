@@ -94,7 +94,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = 5;
 //        $actual   = $config->count();
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -111,7 +111,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //        $actual   = $config->get('models')
 //                           ->get('metadata')
 //        ;
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -127,14 +127,14 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = '.';
 //        $actual   = $config->getPathDelimiter();
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //
 //
 //        $config->setPathDelimiter('/');
 //
 //        $expected = '/';
 //        $actual   = $config->getPathDelimiter();
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //
 //        $config->setPathDelimiter($existing);
 //    }
@@ -186,7 +186,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //        $actual   = $config->offsetGet('models')
 //                           ->offsetGet('metadata')
 //        ;
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -202,7 +202,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = 'something-else';
 //        $actual   = $config->offsetGet('models');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -240,7 +240,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = 'yeah';
 //        $actual   = $config->path('test.parent.property2');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -255,7 +255,7 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = 'Unknown';
 //        $actual   = $config->path('test.parent.property3', 'Unknown');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 //
 //    /**
@@ -271,17 +271,17 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = 'yeah';
 //        $actual   = $config->path('test.parent.property2', 'Unknown');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //
 //        $config->setPathDelimiter('/');
 //
 //        $expected = 'Unknown';
 //        $actual   = $config->path('test.parent.property2', 'Unknown');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //
 //        $expected = 'yeah';
 //        $actual   = $config->path('test/parent/property2', 'Unknown');
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //
 //        $config->setPathDelimiter($existing);
 //    }
@@ -298,12 +298,12 @@ abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 //
 //        $expected = $this->config;
 //        $actual   = $config->toArray();
-//        $this->assertEquals($expected, $actual);
+//        $this->assertSame($expected, $actual);
 //    }
 
     protected function compareConfig(array $actual, Config $expected)
     {
-        $this->assertEquals($expected->toArray(), $actual);
+        $this->assertSame($expected->toArray(), $actual);
 
         foreach ($actual as $key => $value) {
             $this->assertTrue(isset($expected->$key));

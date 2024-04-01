@@ -143,6 +143,6 @@ final class ExceptionsTest extends AbstractUnitTestCase
         $actual   = $adapter->get('test-key', 'test');
         $this->assertSame($expected, $actual);
 
-        $this->safeDeleteFile($target . 'test-key');
+        self::safeDeleteFile($target . 'test-key');
     }
 }

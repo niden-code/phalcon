@@ -33,6 +33,6 @@ final class GetStatusTest extends AbstractUnitTestCase
 
         $expected = DomainStatus::PROCESSING;
         $actual   = $payload->getStatus();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

@@ -33,8 +33,7 @@ final class SetRawHeaderTest extends AbstractHttpTestCase
 
         $actual = $response->getHeaders();
 
-        $expected = '';
         $actual   = $actual->get(Http::HTTP_304_NOT_MODIFIED);
-        $this->assertEquals($expected, $actual);
+        $this->assertFalse($actual);
     }
 }

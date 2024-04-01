@@ -783,7 +783,6 @@ final class SanitizeTest extends AbstractUnitTestCase
             $actual = call_user_func_array([$filter, $method], $source);
         }
 
-//        $expected = is_array($source) ? $source[0] : $source;
         /**
          * assertEquals here because of the floats
          */

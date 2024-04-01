@@ -51,7 +51,7 @@ final class GetAdaptersTest extends AbstractUnitTestCase
         $this->assertInstanceOf($class, $adapters['one']);
         $this->assertInstanceOf($class, $adapters['two']);
 
-        $this->safeDeleteFile($outputPath . $fileName1);
-        $this->safeDeleteFile($outputPath . $fileName2);
+        self::safeDeleteFile($outputPath . $fileName1);
+        self::safeDeleteFile($outputPath . $fileName2);
     }
 }

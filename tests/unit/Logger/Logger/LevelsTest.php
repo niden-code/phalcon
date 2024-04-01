@@ -99,6 +99,6 @@ final class LevelsTest extends AbstractUnitTestCase
 
         $this->assertLessThan($nSecondThreshold, $nInterval);
 
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 }

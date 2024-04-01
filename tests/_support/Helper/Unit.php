@@ -115,7 +115,7 @@ class Unit extends Module
         $files = glob($directory . '*', GLOB_MARK);
         foreach ($files as $file) {
             if (substr($file, -1) == '/') {
-                $this->safeDeleteDirectory($file);
+                self::safeDeleteDirectory($file);
             } else {
                 unlink($file);
             }

@@ -76,7 +76,7 @@ final class ExcludeAdaptersTest extends AbstractUnitTestCase
         $adapter1->close();
         $adapter2->close();
 
-        $this->safeDeleteFile($fileName1);
-        $this->safeDeleteFile($fileName2);
+        self::safeDeleteFile($fileName1);
+        self::safeDeleteFile($fileName2);
     }
 }

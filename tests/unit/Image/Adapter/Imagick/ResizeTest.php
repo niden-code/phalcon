@@ -52,6 +52,6 @@ final class ResizeTest extends AbstractUnitTestCase
         $actual   = $image->getHeight();
         $this->assertLessThanOrEqual($expected, $actual);
 
-        $this->safeDeleteFile($outputFile);
+        self::safeDeleteFile($outputFile);
     }
 }

@@ -90,8 +90,8 @@ final class ReadWriteTest extends AbstractAnnotationsAdapterTestCase
         $actual   = $newClass;
         $this->assertInstanceOf($expected, $actual);
 
-        $this->safeDeleteFile(self::outputDir('annotations/testwrite.php'));
-        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testwrite.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 
     /**
@@ -117,7 +117,7 @@ final class ReadWriteTest extends AbstractAnnotationsAdapterTestCase
 
         $adapter->write('testwrite', $classAnnotations);
 
-        $this->safeDeleteFile(self::outputDir('annotations/testwrite.php'));
-        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testwrite.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

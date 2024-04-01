@@ -37,6 +37,6 @@ final class GetNameTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
 
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

@@ -333,7 +333,7 @@ final class CsvTest extends AbstractUnitTestCase
         foreach ($tests as $key => $expected) {
             $actual = $translator->$method($key);
 
-            $this->assertEquals($expected, $actual);
+            $this->assertSame($expected, $actual);
         }
     }
 
@@ -460,7 +460,7 @@ final class CsvTest extends AbstractUnitTestCase
                 ]
             );
 
-            $this->assertEquals($expected, $actual);
+            $this->assertSame($expected, $actual);
         }
     }
 
@@ -484,7 +484,7 @@ final class CsvTest extends AbstractUnitTestCase
 
         foreach ($tests as $key => $expected) {
             $actual = $translator->$method($key, ['name' => 'my friend']);
-            $this->assertEquals($expected, $actual);
+            $this->assertSame($expected, $actual);
         }
     }
 
@@ -513,7 +513,7 @@ final class CsvTest extends AbstractUnitTestCase
         foreach ($tests as $key => $expected) {
             $actual = $translator->$method($key, $vars);
 
-            $this->assertEquals($expected, $actual);
+            $this->assertSame($expected, $actual);
         }
     }
 
@@ -563,7 +563,7 @@ final class CsvTest extends AbstractUnitTestCase
         ];
         $expected = 'Привет, John D. Doe!';
         $actual   = $translator->$method('Hello %fname% %mname% %lname%!', $vars);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**

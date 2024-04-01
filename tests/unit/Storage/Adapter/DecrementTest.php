@@ -86,17 +86,17 @@ final class DecrementTest extends AbstractUnitTestCase
 
         $expected = 99;
         $actual   = $adapter->decrement($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = 90;
         $actual   = $adapter->decrement($key, 9);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         /**
          * unknown key
@@ -104,10 +104,10 @@ final class DecrementTest extends AbstractUnitTestCase
         $key      = uniqid();
         $expected = $unknown;
         $actual   = $adapter->decrement($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         if ('Stream' === $className) {
-            $this->safeDeleteDirectory(self::outputDir('ph-strm'));
+            self::safeDeleteDirectory(self::outputDir('ph-strm'));
         }
     }
 
@@ -128,18 +128,18 @@ final class DecrementTest extends AbstractUnitTestCase
         $key      = uniqid();
         $expected = 100;
         $actual   = $adapter->increment($key, 100);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = 99;
         $actual   = $adapter->decrement($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
         $this->assertEquals($expected, $actual);
 
         $expected = 90;
         $actual   = $adapter->decrement($key, 9);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
         $this->assertEquals($expected, $actual);
@@ -150,6 +150,6 @@ final class DecrementTest extends AbstractUnitTestCase
         $key      = uniqid();
         $expected = -9;
         $actual   = $adapter->decrement($key, 9);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

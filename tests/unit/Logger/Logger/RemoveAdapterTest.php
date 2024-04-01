@@ -53,8 +53,8 @@ final class RemoveAdapterTest extends AbstractUnitTestCase
         $adapters = $logger->getAdapters();
         $this->assertCount($expected, $adapters);
 
-        $this->safeDeleteFile($outputPath . $fileName1);
-        $this->safeDeleteFile($outputPath . $fileName2);
+        self::safeDeleteFile($outputPath . $fileName1);
+        self::safeDeleteFile($outputPath . $fileName2);
     }
 
     /**
@@ -91,6 +91,6 @@ final class RemoveAdapterTest extends AbstractUnitTestCase
             $this->assertSame($expected, $actual);
         }
 
-        $this->safeDeleteFile($outputPath . $fileName1);
+        self::safeDeleteFile($outputPath . $fileName1);
     }
 }

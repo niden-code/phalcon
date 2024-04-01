@@ -60,10 +60,10 @@ final class AddAdapterTest extends AbstractUnitTestCase
 
         $content = file_get_contents($outputPath . $fileName1);
         $this->assertStringContainsString('Hello', $content);
-        $this->safeDeleteFile($fileName1);
+        self::safeDeleteFile($fileName1);
 
         $content = file_get_contents($outputPath . $fileName2);
         $this->assertStringContainsString('Hello', $content);
-        $this->safeDeleteFile($fileName2);
+        self::safeDeleteFile($fileName2);
     }
 }

@@ -50,7 +50,7 @@ final class GetConstantsTest extends AbstractAnnotationsAdapterTestCase
         $actual   = $constantAnnotation;
         $this->assertInstanceOf($expected, $actual);
 
-        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 
     /**
@@ -84,6 +84,6 @@ final class GetConstantsTest extends AbstractAnnotationsAdapterTestCase
         $actual   = array_keys($constantAnnotations);
         $this->assertSame($expected, $actual);
 
-        $this->safeDeleteFile(self::outputDir('annotations/testclass.php'));
+        self::safeDeleteFile(self::outputDir('annotations/testclass.php'));
     }
 }

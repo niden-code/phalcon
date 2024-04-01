@@ -26,6 +26,6 @@ class CsEnvTest extends LazyTestCase
         $expected  = array_fill(0, 3, random_int(1, 100));
         putenv("CAPSULE_DI_FOO=" . implode(',', $expected));
         $actual = $this->actual($lazy);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

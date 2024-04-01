@@ -201,7 +201,7 @@ final class GetKeysTest extends AbstractUnitTestCase
         $key3 = uniqid('one');
         $key4 = uniqid('one');
 
-        $this->safeDeleteDirectory(self::outputDir('ph-strm'));
+        self::safeDeleteDirectory(self::outputDir('ph-strm'));
     }
 
     /**
@@ -249,7 +249,7 @@ final class GetKeysTest extends AbstractUnitTestCase
             $this->assertTrue($actual);
         }
 
-        $this->safeDeleteDirectory(self::outputDir('basePrefix-'));
+        self::safeDeleteDirectory(self::outputDir('basePrefix-'));
     }
 
     /**
@@ -311,7 +311,7 @@ final class GetKeysTest extends AbstractUnitTestCase
         $actual = $adapter->clear();
         $this->assertTrue($actual);
 
-        $this->safeDeleteDirectory(self::outputDir('pref-'));
+        self::safeDeleteDirectory(self::outputDir('pref-'));
     }
 
     /**

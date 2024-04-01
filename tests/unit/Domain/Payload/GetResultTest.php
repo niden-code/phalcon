@@ -38,6 +38,6 @@ final class GetResultTest extends AbstractUnitTestCase
 
         $expected = ['one' => 'two'];
         $actual   = $payload->getResult();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

@@ -45,7 +45,7 @@ final class RollbackTest extends AbstractUnitTestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 
     /**

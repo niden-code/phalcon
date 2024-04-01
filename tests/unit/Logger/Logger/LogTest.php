@@ -86,7 +86,7 @@ final class LogTest extends AbstractUnitTestCase
         }
 
         $adapter->close();
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 
     /**
@@ -131,7 +131,7 @@ final class LogTest extends AbstractUnitTestCase
         $this->assertStringContainsString($expected, $contents);
 
         $adapter->close();
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 
     /**
@@ -210,6 +210,6 @@ final class LogTest extends AbstractUnitTestCase
         }
 
         $adapter->close();
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 }

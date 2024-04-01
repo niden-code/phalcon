@@ -52,6 +52,6 @@ final class RotateTest extends AbstractUnitTestCase
         $actual   = $image->getHeight();
         $this->assertGreaterThan($expected, $actual);
 
-        $this->safeDeleteFile($outputFile);
+        self::safeDeleteFile($outputFile);
     }
 }

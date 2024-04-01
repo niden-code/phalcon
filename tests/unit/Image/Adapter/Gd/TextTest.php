@@ -155,7 +155,7 @@ final class TextTest extends AbstractUnitTestCase
         $actual = $this->checkImageHash($output, $hash);
         $this->assertTrue($actual);
 
-        $this->safeDeleteFile($output);
+        self::safeDeleteFile($output);
     }
 
     /**
@@ -194,6 +194,6 @@ final class TextTest extends AbstractUnitTestCase
         $this->assertFileExists($output);
 
         $this->assertTrue($this->checkImageHash($output, $hash));
-        $this->safeDeleteFile($output);
+        self::safeDeleteFile($output);
     }
 }

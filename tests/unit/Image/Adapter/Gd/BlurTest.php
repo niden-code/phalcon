@@ -84,7 +84,7 @@ final class BlurTest extends AbstractUnitTestCase
                 $actual = $this->checkImageHash($output, $hash);
                 $this->assertTrue($actual);
 
-                $this->safeDeleteFile($output);
+                self::safeDeleteFile($output);
             }
         }
     }

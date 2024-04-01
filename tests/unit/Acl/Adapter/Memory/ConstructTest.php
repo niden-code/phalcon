@@ -204,7 +204,7 @@ final class ConstructTest extends AbstractUnitTestCase
 
         $acl      = null;
         $contents = file_get_contents(self::outputCacheDir($filename));
-        $this->safeDeleteFile(self::outputCacheDir($filename));
+        self::safeDeleteFile(self::outputCacheDir($filename));
 
         $acl = unserialize($contents);
 

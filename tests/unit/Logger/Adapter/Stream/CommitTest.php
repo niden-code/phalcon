@@ -44,7 +44,7 @@ final class CommitTest extends AbstractUnitTestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -69,6 +69,6 @@ final class CommitTest extends AbstractUnitTestCase
             $this->assertSame($expected, $actual);
         }
 
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

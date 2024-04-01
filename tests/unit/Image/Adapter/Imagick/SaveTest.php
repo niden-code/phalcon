@@ -37,6 +37,6 @@ final class SaveTest extends AbstractUnitTestCase
 
         $this->assertFileExists($outputFile);
 
-        $this->safeDeleteFile($outputFile);
+        self::safeDeleteFile($outputFile);
     }
 }

@@ -36,6 +36,6 @@ final class GetSetFormatterTest extends AbstractUnitTestCase
         $this->assertInstanceOf(FormatterInterface::class, $actual);
 
         $adapter->close();
-        $this->safeDeleteFile($fileName);
+        self::safeDeleteFile($fileName);
     }
 }

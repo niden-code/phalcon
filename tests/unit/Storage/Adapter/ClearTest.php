@@ -196,6 +196,6 @@ final class ClearTest extends AbstractUnitTestCase
         $actual = $adapter->clear();
         $this->assertFalse($actual);
 
-        $this->safeDeleteDirectory(self::outputDir('ph-strm'));
+        self::safeDeleteDirectory(self::outputDir('ph-strm'));
     }
 }

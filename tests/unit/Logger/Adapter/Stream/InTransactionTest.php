@@ -43,6 +43,6 @@ final class InTransactionTest extends AbstractUnitTestCase
         $this->assertFalse($actual);
 
         $adapter->close();
-        $this->safeDeleteFile($outputPath . $fileName);
+        self::safeDeleteFile($outputPath . $fileName);
     }
 }

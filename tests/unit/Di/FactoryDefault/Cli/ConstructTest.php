@@ -38,7 +38,7 @@ final class ConstructTest extends AbstractUnitTestCase
 
         $expected = count($services);
         $actual   = count($container->getServices());
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**

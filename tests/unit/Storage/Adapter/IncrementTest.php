@@ -22,8 +22,6 @@ use Phalcon\Storage\SerializerFactory;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
-use function getOptionsLibmemcached2;
-use function getOptionsRedis2;
 use function uniqid;
 
 final class IncrementTest extends AbstractUnitTestCase
@@ -107,7 +105,7 @@ final class IncrementTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
 
         if ('Stream' === $className) {
-            $this->safeDeleteDirectory(self::outputDir('ph-strm'));
+            self::safeDeleteDirectory(self::outputDir('ph-strm'));
         }
     }
 
@@ -128,21 +126,21 @@ final class IncrementTest extends AbstractUnitTestCase
         $key      = uniqid();
         $expected = 1;
         $actual   = $adapter->increment($key, 1);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
         $this->assertEquals($expected, $actual);
 
         $expected = 2;
         $actual   = $adapter->increment($key);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
         $this->assertEquals($expected, $actual);
 
         $expected = 10;
         $actual   = $adapter->increment($key, 8);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $actual = $adapter->get($key);
         $this->assertEquals($expected, $actual);
