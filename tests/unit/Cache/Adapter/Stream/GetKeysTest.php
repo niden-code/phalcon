@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter\Stream;
 
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Exception as CacheException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function outputDir;
 use function sort;
 use function uniqid;
 

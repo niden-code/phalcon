@@ -13,91 +13,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Config\Config;
 
-use Codeception\Example;
 use Phalcon\Config\Config;
 use Phalcon\Config\Exception;
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
-use UnitTester;
 
 final class MergeTest extends AbstractConfigTestCase
 {
-    /**
-     * Tests Phalcon\Config\Config :: merge()
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-02-15
-     */
-    public function testConfigMergeConfig(): void
-    {
-        $config = $this->getConfig();
-
-        $expected = $this->getMergedByConfig();
-        $actual   = $config;
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Config\Config :: merge()
-     *
-     * @dataProvider providerMergeConfigs
-     *
-     * @link         https://github.com/phalcon/cphalcon/issues/13351
-     * @link         https://github.com/phalcon/cphalcon/issues/13201
-     * @link         https://github.com/phalcon/cphalcon/issues/13768
-     * @link         https://github.com/phalcon/cphalcon/issues/12779
-     * @link         https://github.com/phalcon/phalcon/issues/196
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2121-10-21
-     */
-    public function testConfigMergeConfigCases(
-        array $source,
-        array $target,
-        array $expected
-    ): void {
-        $sourceConfig = new Config($source);
-        $targetConfig = new Config($target);
-
-        /**
-         * As Config object
-         */
-        $actual = $sourceConfig
-            ->merge($targetConfig)
-            ->toArray()
-        ;
-        $this->assertSame($expected, $actual);
-
-        $targetArray = $targetConfig->toArray();
-
-        /**
-         * As array
-         */
-        $actual = $sourceConfig
-            ->merge($targetArray)
-            ->toArray()
-        ;
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Config :: merge() - exceptions
-     *
-     * @dataProvider providerExamples
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-10-26
-     */
-    public function testConfigMergeExceptions(string $adapter): void
-    {
-        $config = $this->getConfig($adapter);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Invalid data type for merge.');
-
-        $config->merge('invalid-config');
-    }
-
     /**
      * @return array[]
      */
@@ -390,6 +311,82 @@ final class MergeTest extends AbstractConfigTestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Config\Config :: merge()
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-02-15
+     */
+    public function testConfigMergeConfig(): void
+    {
+        $config = $this->getConfig();
+
+        $expected = $this->getMergedByConfig();
+        $actual   = $config;
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Config\Config :: merge()
+     *
+     * @dataProvider providerMergeConfigs
+     *
+     * @link         https://github.com/phalcon/cphalcon/issues/13351
+     * @link         https://github.com/phalcon/cphalcon/issues/13201
+     * @link         https://github.com/phalcon/cphalcon/issues/13768
+     * @link         https://github.com/phalcon/cphalcon/issues/12779
+     * @link         https://github.com/phalcon/phalcon/issues/196
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2121-10-21
+     */
+    public function testConfigMergeConfigCases(
+        array $source,
+        array $target,
+        array $expected
+    ): void {
+        $sourceConfig = new Config($source);
+        $targetConfig = new Config($target);
+
+        /**
+         * As Config object
+         */
+        $actual = $sourceConfig
+            ->merge($targetConfig)
+            ->toArray()
+        ;
+        $this->assertSame($expected, $actual);
+
+        $targetArray = $targetConfig->toArray();
+
+        /**
+         * As array
+         */
+        $actual = $sourceConfig
+            ->merge($targetArray)
+            ->toArray()
+        ;
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Config :: merge() - exceptions
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-10-26
+     */
+    public function testConfigMergeExceptions(string $adapter): void
+    {
+        $config = $this->getConfig($adapter);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid data type for merge.');
+
+        $config->merge('invalid-config');
     }
 
     /**

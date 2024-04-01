@@ -17,8 +17,6 @@ use Codeception\Stub;
 use Phalcon\Assets\Collection;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-
 /**
  * Class GetRealTargetPathTest extends AbstractUnitTestCase
  *

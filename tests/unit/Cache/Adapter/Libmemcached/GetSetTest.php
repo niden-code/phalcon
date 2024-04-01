@@ -14,27 +14,52 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Cache\Adapter\Libmemcached;
 
 use Codeception\Example;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Exception as CacheException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use stdClass;
-
-use function getOptionsLibmemcached;
 
 #[RequiresPhpExtension('memcached')]
 final class GetSetTest extends AbstractUnitTestCase
 {
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                'random string',
+            ],
+            [
+                123456,
+            ],
+            [
+                123.456,
+            ],
+            [
+                true,
+            ],
+            [
+                false,
+            ],
+            [
+                null,
+            ],
+            [
+                new stdClass(),
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\Libmemcached :: get()/set()
      *
      * @dataProvider providerExamples
      *
-     * @return void
-     * @param Example           $example
+     * @param Example $example
      *
+     * @return void
      * @throws CacheException
      * @throws HelperException
      *
@@ -92,32 +117,5 @@ final class GetSetTest extends AbstractUnitTestCase
         $expected = $source;
         $actual   = $adapter->get($key);
         $this->assertSame($expected, $actual);
-    }
-
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                'random string',
-            ],
-            [
-                123456,
-            ],
-            [
-                123.456,
-            ],
-            [
-                true,
-            ],
-            [
-                false,
-            ],
-            [
-                null,
-            ],
-            [
-                new stdClass(),
-            ],
-        ];
     }
 }

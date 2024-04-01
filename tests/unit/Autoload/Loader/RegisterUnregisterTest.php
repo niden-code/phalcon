@@ -17,37 +17,13 @@ use LoaderEvent;
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function array_pop;
-use function dataDir2;
 use function spl_autoload_functions;
 
 final class RegisterUnregisterTest extends AbstractLoaderTestCase
 {
     use LoaderTrait;
-
-    /**
-     * Tests Phalcon\Autoload\Loader :: register()/unregister()
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testAutoloaderLoaderRegisterUnregister(): void
-    {
-        $loader = new Loader();
-        $loader->register();
-
-        $functions = spl_autoload_functions();
-        $item      = array_pop($functions);
-
-        $this->assertSame($loader, $item[0]);
-        $this->assertSame('autoload', $item[1]);
-
-        $loader->unregister();
-    }
 
     /**
      * Tests Phalcon\Autoload\Loader :: events
@@ -117,6 +93,28 @@ final class RegisterUnregisterTest extends AbstractLoaderTestCase
         ];
 
         $this->assertSame($expected, $trace);
+
+        $loader->unregister();
+    }
+
+    /**
+     * Tests Phalcon\Autoload\Loader :: register()/unregister()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testAutoloaderLoaderRegisterUnregister(): void
+    {
+        $loader = new Loader();
+        $loader->register();
+
+        $functions = spl_autoload_functions();
+        $item      = array_pop($functions);
+
+        $this->assertSame($loader, $item[0]);
+        $this->assertSame('autoload', $item[1]);
 
         $loader->unregister();
     }

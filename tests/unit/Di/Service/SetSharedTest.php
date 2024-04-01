@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Di\Service;
 
-use Codeception\Example;
 use Phalcon\Di\Service;
 use Phalcon\Html\Escaper;
 use Phalcon\Tests\Support\AbstractUnitTestCase;

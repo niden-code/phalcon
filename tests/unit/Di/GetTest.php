@@ -70,7 +70,6 @@ final class GetTest extends AbstractUnitTestCase
      */
     public function testDiGetException(): void
     {
-
         // non exists service
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(

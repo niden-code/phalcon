@@ -21,7 +21,7 @@ class RequireFileTest extends LazyTestCase
      */
     public function testContainerLazyRequireFileCall(): void
     {
-        $lazy   = new RequireFile(
+        $lazy     = new RequireFile(
             new Call(
                 function ($container) {
                     return $this->dataDir('fixtures/Container/include_file.php');
@@ -37,7 +37,7 @@ class RequireFileTest extends LazyTestCase
      */
     public function testContainerLazyRequireFileString(): void
     {
-        $lazy   = new RequireFile(
+        $lazy     = new RequireFile(
             $this->dataDir('fixtures/Container/include_file.php'),
         );
         $expected = 'included';

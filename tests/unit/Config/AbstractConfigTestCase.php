@@ -17,12 +17,9 @@ use Phalcon\Config\Adapter\Json;
 use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Config;
-use Phalcon\Config\Exception;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
 use function is_array;
-use function sprintf;
 
 abstract class AbstractConfigTestCase extends AbstractUnitTestCase
 {

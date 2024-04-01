@@ -23,9 +23,9 @@ final class IsSharedTest extends AbstractUnitTestCase
     /**
      * Tests Phalcon\Di\Service :: isShared()
      *
-     * @return void
-     * @param Example    $example
+     * @param Example $example
      *
+     * @return void
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-09-09
      */

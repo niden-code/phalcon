@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Config\Config;
 
-use Codeception\Stub;
 use Phalcon\Config\Adapter\Grouped;
 use Phalcon\Config\Adapter\Ini;
 use Phalcon\Config\Adapter\Yaml;
@@ -25,7 +24,6 @@ use Phalcon\Tests1\Fixtures\Config\Adapter\YamlExtensionLoadedFixture;
 use Phalcon\Tests1\Fixtures\Config\Adapter\YamlParseFileFixture;
 
 use function basename;
-use function dataDir2;
 use function define;
 use function hash;
 
@@ -35,12 +33,25 @@ use const PATH_DATA2;
 final class ConstructTest extends AbstractConfigTestCase
 {
     /**
+     * @return array[]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [''], // Group
+            ['Json'],
+            ['Php'],
+            ['Yaml'],
+        ];
+    }
+
+    /**
      * Tests Phalcon\Config\Adapter\* :: __construct()
      *
      * @dataProvider providerExamples
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2018-11-13
      */
     public function testCheckConstruct(string $adapter): void
     {
@@ -50,68 +61,96 @@ final class ConstructTest extends AbstractConfigTestCase
     }
 
     /**
-     * Tests Phalcon\Config\Adapter\Yaml :: __construct() - callbacks
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - complex instance
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2021-10-21
+     * @author fenikkusu
+     * @since  2017-06-06
      */
-    public function testConfigAdapterYamlConstructCallbacks(): void
+    public function testConfigAdapterGroupedConstructComplexInstance()
     {
-        $config = new Yaml(
-            self::dataDir('assets/config/callbacks.yml'),
+        $this->config['test']['property2'] = 'something-else';
+        $this->config['test']['property']  = 'blah';
+
+        $config = [
+            self::dataDir('assets/config/config.php'),
             [
-                '!decrypt' => function ($value) {
-                    return hash('sha256', $value);
-                },
-                '!approot' => function ($value) {
-                    return PATH_DATA2 . $value;
-                },
-            ]
-        );
+                'adapter'  => 'json',
+                'filePath' => self::dataDir('assets/config/config.json'),
+            ],
+            [
+                'adapter' => 'array',
+                'config'  => [
+                    'test' => [
+                        'property2' => 'something-else',
+                    ],
+                ],
+            ],
+            new Config(
+                [
+                    'test' => [
+                        'property' => 'blah',
+                    ],
+                ]
+            ),
+        ];
 
-        $expected = PATH_DATA2 . '/app/controllers/';
-        $actual   = $config->application->controllersDir;
-        $this->assertSame($expected, $actual);
-
-        $expected = '9f7030891b235f3e06c4bff74ae9dc1b9b59d4f2e4e6fd94eeb2b91caee5d223';
-        $actual   = $config->database->password;
-        $this->assertSame($expected, $actual);
+        foreach ([[], ['']] as $parameters) {
+            $this->compareConfig(
+                $this->config,
+                new Grouped($config, ...$parameters)
+            );
+        }
     }
 
     /**
-     * Tests Phalcon\Config\Adapter\Yaml :: __construct() -
-     * exception extension loaded
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - default adapter
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2021-10-21
+     * @author fenikkusu
+     * @since  2017-06-06
      */
-    public function testConfigAdapterYamlConstructExceptionExtensionLoaded(): void
+    public function testConfigAdapterGroupedConstructDefaultAdapter()
     {
-        $filePath = self::dataDir('assets/config/callbacks.yml');
+        $this->config['test']['property2'] = 'something-else';
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Yaml extension is not loaded');
+        $config = [
+            [
+                'filePath' => self::dataDir('assets/config/config.json'),
+            ],
+            [
+                'adapter' => 'array',
+                'config'  => [
+                    'test' => [
+                        'property2' => 'something-else',
+                    ],
+                ],
+            ],
+        ];
 
-        $adapter = new YamlExtensionLoadedFixture($filePath);
+        $object = new Grouped($config, 'json');
+
+        $this->compareConfig($this->config, $object);
     }
 
     /**
-     * Tests Phalcon\Config\Adapter\Yaml :: __construct() -
-     * exception file cannot be parsed
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - exception
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2021-10-21
+     * @author Fenikkusu
+     * @since  2017-06-06
      */
-    public function testConfigAdapterYamlConstructExceptionFileCannotBeParsed(): void
+    public function testConfigAdapterGroupedConstructThrowsException()
     {
-        $filePath = self::dataDir('assets/config/callbacks.yml');
-
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            'Configuration file ' . basename($filePath) . ' cannot be loaded'
+            "To use 'array' adapter you have to specify the 'config' as an array."
         );
 
-        $adapter = new YamlParseFileFixture($filePath);
+        $adapter = new Grouped(
+            [
+                [
+                    'adapter' => 'array',
+                ],
+            ]
+        );
     }
 
     /**
@@ -193,108 +232,67 @@ final class ConstructTest extends AbstractConfigTestCase
     }
 
     /**
-     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - complex instance
+     * Tests Phalcon\Config\Adapter\Yaml :: __construct() - callbacks
      *
-     * @author fenikkusu
-     * @since  2017-06-06
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2021-10-21
      */
-    public function testConfigAdapterGroupedConstructComplexInstance()
+    public function testConfigAdapterYamlConstructCallbacks(): void
     {
-        $this->config['test']['property2'] = 'something-else';
-        $this->config['test']['property']  = 'blah';
-
-        $config = [
-            self::dataDir('assets/config/config.php'),
+        $config = new Yaml(
+            self::dataDir('assets/config/callbacks.yml'),
             [
-                'adapter' => 'json',
-                'filePath' => self::dataDir('assets/config/config.json'),
-            ],
-            [
-                'adapter' => 'array',
-                'config'  => [
-                    'test' => [
-                        'property2' => 'something-else',
-                    ],
-                ],
-            ],
-            new Config(
-                [
-                    'test' => [
-                        'property' => 'blah',
-                    ],
-                ]
-            ),
-        ];
-
-        foreach ([[], ['']] as $parameters) {
-            $this->compareConfig(
-                $this->config,
-                new Grouped($config, ...$parameters)
-            );
-        }
-    }
-
-    /**
-     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - default adapter
-     *
-     * @author fenikkusu
-     * @since  2017-06-06
-     */
-    public function testConfigAdapterGroupedConstructDefaultAdapter()
-    {
-        $this->config['test']['property2'] = 'something-else';
-
-        $config = [
-            [
-                'filePath' => self::dataDir('assets/config/config.json'),
-            ],
-            [
-                'adapter' => 'array',
-                'config'  => [
-                    'test' => [
-                        'property2' => 'something-else',
-                    ],
-                ],
-            ],
-        ];
-
-        $object = new Grouped($config, 'json');
-
-        $this->compareConfig($this->config, $object);
-    }
-
-    /**
-     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - exception
-     *
-     * @author Fenikkusu
-     * @since  2017-06-06
-     */
-    public function testConfigAdapterGroupedConstructThrowsException()
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "To use 'array' adapter you have to specify the 'config' as an array."
-        );
-
-        $adapter = new Grouped(
-            [
-                [
-                    'adapter' => 'array',
-                ],
+                '!decrypt' => function ($value) {
+                    return hash('sha256', $value);
+                },
+                '!approot' => function ($value) {
+                    return PATH_DATA2 . $value;
+                },
             ]
         );
+
+        $expected = PATH_DATA2 . '/app/controllers/';
+        $actual   = $config->application->controllersDir;
+        $this->assertSame($expected, $actual);
+
+        $expected = '9f7030891b235f3e06c4bff74ae9dc1b9b59d4f2e4e6fd94eeb2b91caee5d223';
+        $actual   = $config->database->password;
+        $this->assertSame($expected, $actual);
     }
 
     /**
-     * @return array[]
+     * Tests Phalcon\Config\Adapter\Yaml :: __construct() -
+     * exception extension loaded
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2021-10-21
      */
-    public static function providerExamples(): array
+    public function testConfigAdapterYamlConstructExceptionExtensionLoaded(): void
     {
-        return [
-            [''], // Group
-            ['Json'],
-            ['Php'],
-            ['Yaml'],
-        ];
+        $filePath = self::dataDir('assets/config/callbacks.yml');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Yaml extension is not loaded');
+
+        $adapter = new YamlExtensionLoadedFixture($filePath);
+    }
+
+    /**
+     * Tests Phalcon\Config\Adapter\Yaml :: __construct() -
+     * exception file cannot be parsed
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2021-10-21
+     */
+    public function testConfigAdapterYamlConstructExceptionFileCannotBeParsed(): void
+    {
+        $filePath = self::dataDir('assets/config/callbacks.yml');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Configuration file ' . basename($filePath) . ' cannot be loaded'
+        );
+
+        $adapter = new YamlParseFileFixture($filePath);
     }
 }

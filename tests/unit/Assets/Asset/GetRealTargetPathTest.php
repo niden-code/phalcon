@@ -18,8 +18,6 @@ use Phalcon\Assets\Asset;
 use Phalcon\Assets\Asset\Css;
 use Phalcon\Assets\Asset\Js;
 
-use function dataDir2;
-
 final class GetRealTargetPathTest extends AbstractAssetCase
 {
     /**

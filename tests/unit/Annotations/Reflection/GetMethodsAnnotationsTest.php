@@ -18,8 +18,6 @@ use Phalcon\Annotations\Reader;
 use Phalcon\Annotations\Reflection;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-
 final class GetMethodsAnnotationsTest extends AbstractUnitTestCase
 {
     /**

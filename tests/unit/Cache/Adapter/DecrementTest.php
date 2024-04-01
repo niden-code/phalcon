@@ -13,21 +13,59 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Phalcon\Cache\Adapter\Redis;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function getOptionsLibmemcached;
-use function outputDir;
 use function uniqid;
 
 final class DecrementTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                'Apcu',
+                Apcu::class,
+                [],
+                -1,
+            ],
+            [
+                'Libmemcached',
+                Libmemcached::class,
+                self::getOptionsLibmemcached(),
+                false,
+            ],
+            [
+                'Memory',
+                Memory::class,
+                [],
+                false,
+            ],
+            [
+                'Redis',
+                Redis::class,
+                self::getOptionsRedis(),
+                -1,
+            ],
+            [
+                'Stream',
+                Stream::class,
+                [
+                    'storageDir' => self::outputDir(),
+                ],
+                false,
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* :: decrement()
      *
@@ -74,46 +112,5 @@ final class DecrementTest extends AbstractUnitTestCase
         if ('Stream' === $className) {
             self::safeDeleteDirectory(self::outputDir('ph-strm'));
         }
-    }
-
-    /**
-     * @return array[]
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                'Apcu',
-                Apcu::class,
-                [],
-                -1,
-            ],
-            [
-                'Libmemcached',
-                Libmemcached::class,
-                self::getOptionsLibmemcached(),
-                false,
-            ],
-            [
-                'Memory',
-                Memory::class,
-                [],
-                false,
-            ],
-            [
-                'Redis',
-                Redis::class,
-                self::getOptionsRedis(),
-                -1,
-            ],
-            [
-                'Stream',
-                Stream::class,
-                [
-                    'storageDir' => self::outputDir(),
-                ],
-                false,
-            ],
-        ];
     }
 }

@@ -17,8 +17,8 @@ use Exception;
 use Phalcon\Annotations\Adapter\Apcu;
 use Phalcon\Annotations\AnnotationsFactory;
 use Phalcon\Config\Config;
-use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 
 final class LoadTest extends AbstractUnitTestCase
 {

@@ -13,18 +13,19 @@ namespace Phalcon\Tests\Unit\Container\Lazy;
 
 use Phalcon\Container\Exception;
 use Phalcon\Container\Lazy\Env;
+use Random\RandomException;
 
 class EnvTest extends LazyTestCase
 {
     /**
      * @return void
-     * @throws \Random\RandomException
+     * @throws RandomException
      */
     public function testContainerLazyEnv(): void
     {
-        $varname = 'CAPSULE_DI_FOO';
-        $lazy    = new Env($varname);
-        $expected  = random_int(1, 100);
+        $varname  = 'CAPSULE_DI_FOO';
+        $lazy     = new Env($varname);
+        $expected = random_int(1, 100);
         putenv("CAPSULE_DI_FOO={$expected}");
         $actual = $this->actual($lazy);
         $this->assertEquals($expected, $actual);
@@ -32,7 +33,7 @@ class EnvTest extends LazyTestCase
 
     /**
      * @return void
-     * @throws \Random\RandomException
+     * @throws RandomException
      */
     public function testContainerLazyEnvNoSuchVar(): void
     {
@@ -47,13 +48,13 @@ class EnvTest extends LazyTestCase
 
     /**
      * @return void
-     * @throws \Random\RandomException
+     * @throws RandomException
      */
     public function testContainerLazyEnvType(): void
     {
-        $varname = 'CAPSULE_DI_FOO';
-        $lazy    = new Env($varname, 'int');
-        $expected  = random_int(1, 100);
+        $varname  = 'CAPSULE_DI_FOO';
+        $lazy     = new Env($varname, 'int');
+        $expected = random_int(1, 100);
         putenv("CAPSULE_DI_FOO={$expected}");
         $actual = $this->actual($lazy);
         $this->assertSame($expected, $actual);

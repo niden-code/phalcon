@@ -36,7 +36,7 @@ final class OffsetGetTest extends AbstractUnitTestCase
 
         $container->set('escaper', Escaper::class);
 
-        $class = Escaper::class;
+        $class  = Escaper::class;
         $actual = $container->offsetGet('escaper');
         $this->assertInstanceOf($class, $actual);
 

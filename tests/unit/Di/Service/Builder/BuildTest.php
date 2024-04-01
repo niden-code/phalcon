@@ -17,9 +17,9 @@ use Phalcon\Di\Di;
 use Phalcon\Di\Exception;
 use Phalcon\Di\Service\Builder;
 use Phalcon\Html\Escaper;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Di\PropertiesComponent;
 use Phalcon\Tests1\Fixtures\Di\ServiceComponent;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class BuildTest extends AbstractUnitTestCase
 {

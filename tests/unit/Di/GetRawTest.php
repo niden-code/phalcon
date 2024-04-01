@@ -51,7 +51,6 @@ final class GetRawTest extends AbstractUnitTestCase
      */
     public function testDiGetRawException(): void
     {
-
         // nonexistent service
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(

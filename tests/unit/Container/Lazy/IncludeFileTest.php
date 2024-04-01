@@ -21,7 +21,7 @@ class IncludeFileTest extends LazyTestCase
      */
     public function testContainerLazyIncludeFileClosure(): void
     {
-        $lazy   = new IncludeFile(
+        $lazy     = new IncludeFile(
             new Call(
                 function ($container) {
                     return $this->dataDir('fixtures/Container/include_file.php');
@@ -37,7 +37,7 @@ class IncludeFileTest extends LazyTestCase
      */
     public function testContainerLazyIncludeFileString(): void
     {
-        $lazy   = new IncludeFile(
+        $lazy     = new IncludeFile(
             $this->dataDir('fixtures/Container/include_file.php'),
         );
         $expected = 'included';

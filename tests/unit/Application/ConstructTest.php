@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Unit\Application;
 use Phalcon\Application\AbstractApplication;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Events\EventsAwareInterface;
-use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
 
 final class ConstructTest extends AbstractUnitTestCase
 {

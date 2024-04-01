@@ -14,25 +14,20 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Config\Config;
 
 use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
-use UnitTester;
 
 final class ToArrayTest extends AbstractConfigTestCase
 {
     /**
-     * Tests Phalcon\Config\Config :: toArray()
-     *
-     * @dataProvider providerExamples
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
+     * @return array[]
      */
-    public function testConfigToArray(string $adapter): void
+    public static function providerExamples(): array
     {
-        $config = $this->getConfig($adapter);
-
-        $expected = $this->config;
-        $actual   = $config->toArray();
-        $this->assertSame($expected, $actual);
+        return [
+            [''], // Config
+            ['Json'],
+            ['Php'],
+            ['Yaml'],
+        ];
     }
 
     /**
@@ -79,15 +74,19 @@ final class ToArrayTest extends AbstractConfigTestCase
     }
 
     /**
-     * @return array[]
+     * Tests Phalcon\Config\Config :: toArray()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-19
      */
-    public static function providerExamples(): array
+    public function testConfigToArray(string $adapter): void
     {
-        return [
-            [''], // Config
-            ['Json'],
-            ['Php'],
-            ['Yaml'],
-        ];
+        $config = $this->getConfig($adapter);
+
+        $expected = $this->config;
+        $actual   = $config->toArray();
+        $this->assertSame($expected, $actual);
     }
 }

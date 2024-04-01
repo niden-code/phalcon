@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
@@ -54,8 +54,8 @@ final class GetMultipleTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
 
         $expected = [
-            $key1 => 'test1',
-            $key2 => 'test2',
+            $key1     => 'test1',
+            $key2     => 'test2',
             'unknown' => 'default-unknown',
         ];
         $actual   = $adapter->getMultiple([$key1, $key2, 'unknown'], 'default-unknown');

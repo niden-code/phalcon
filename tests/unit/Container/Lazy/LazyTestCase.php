@@ -15,7 +15,6 @@ use Phalcon\Container\Container;
 use Phalcon\Container\Definition\Definitions;
 use Phalcon\Container\Lazy\AbstractLazy;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use PHPUnit\Framework\TestCase;
 
 class LazyTestCase extends AbstractUnitTestCase
 {

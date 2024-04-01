@@ -16,8 +16,6 @@ namespace Phalcon\Tests\Unit\Assets\Collection;
 use Phalcon\Assets\Collection;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-
 /**
  * Class GetSetSourcePathTest extends AbstractUnitTestCase
  *

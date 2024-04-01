@@ -19,8 +19,6 @@ use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
-
 final class AddInlineJsTest extends AbstractUnitTestCase
 {
     use DiTrait;

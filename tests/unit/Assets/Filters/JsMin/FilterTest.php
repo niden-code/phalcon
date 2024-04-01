@@ -16,7 +16,6 @@ namespace Phalcon\Tests\Unit\Assets\Filters\JsMin;
 use Phalcon\Assets\Filters\JsMin;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
 use function file_get_contents;
 
 final class FilterTest extends AbstractUnitTestCase

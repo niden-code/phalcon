@@ -13,14 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Autoload\Loader;
 
-use Example\Namespaces\Adapter\Another;
-use Example\Namespaces\Adapter\Mongo;
-use Phalcon\Autoload\Loader;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
 
-use function dataDir2;
 use function get_include_path;
 use function is_array;
 use function set_include_path;
@@ -31,14 +25,13 @@ use function spl_autoload_unregister;
 abstract class AbstractLoaderTestCase extends AbstractUnitTestCase
 {
     /**
-     * @var array
-     */
-    protected array $loaders = [];
-
-    /**
      * @var string
      */
     protected string $includePath = '';
+    /**
+     * @var array
+     */
+    protected array $loaders = [];
 
     /**
      * Executed before each test

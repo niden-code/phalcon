@@ -13,18 +13,39 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter\Apcu;
 
-use Codeception\Example;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Support\Exception;
-use Phalcon\Tests\Fixtures\Traits\ApcuTrait;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use stdClass;
 
 #[RequiresPhpExtension('apcu')]
 final class GetSetTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                'random string',
+            ],
+            [
+                123456,
+            ],
+            [
+                123.456,
+            ],
+            [
+                true,
+            ],
+            [
+                new stdClass(),
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\Apcu :: get()/set()
      *
@@ -49,29 +70,5 @@ final class GetSetTest extends AbstractUnitTestCase
         $expected = $value;
         $actual   = $adapter->get($key);
         $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @return array
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                'random string',
-            ],
-            [
-                123456,
-            ],
-            [
-                123.456,
-            ],
-            [
-                true,
-            ],
-            [
-                new stdClass(),
-            ],
-        ];
     }
 }

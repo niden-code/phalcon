@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
 use DateInterval;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
@@ -26,33 +24,59 @@ use Phalcon\Storage\Exception as CacheException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
 use Phalcon\Tests\Fixtures\Cache\Adapter\Libmemcached as LibmemcachedFixture;
-
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
-
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function outputDir;
-use function sprintf;
 
 final class ConstructTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cache\Adapter\Stream :: __construct() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return array[]
      */
-    public function testCacheAdapterStreamConstructException(): void
+    public static function providerExamples(): array
     {
-        $this->expectException(CacheException::class);
-        $this->expectExceptionMessage(
-            "The 'storageDir' must be specified in the options"
-        );
+        return [
+            [
+                Apcu::class,
+                [],
+            ],
+            [
+                Libmemcached::class,
+                self::getOptionsLibmemcached(),
+            ],
+            [
+                Memory::class,
+                [],
+            ],
+            [
+                Redis::class,
+                self::getOptionsRedis(),
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => self::outputDir(),
+                ],
+            ],
+        ];
+    }
 
+    /**
+     * Tests Phalcon\Cache\Adapter\* :: __construct()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testCacheAdapterConstruct(
+        string $class,
+        array $options
+    ): void {
         $serializer = new SerializerFactory();
-        (new Stream($serializer));
+        $adapter    = new $class($serializer, $options);
+
+        $this->assertInstanceOf($class, $adapter);
+        $this->assertInstanceOf(AdapterInterface::class, $adapter);
     }
 
     /**
@@ -120,52 +144,21 @@ final class ConstructTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Cache\Adapter\* :: __construct()
+     * Tests Phalcon\Cache\Adapter\Stream :: __construct() - exception
      *
-     * @dataProvider providerExamples
+     * @return void
      *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    public function testCacheAdapterConstruct(
-        string $class,
-        array $options
-    ): void {
-        $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
-
-        $this->assertInstanceOf($class, $adapter);
-        $this->assertInstanceOf(AdapterInterface::class, $adapter);
-    }
-
-    /**
-     * @return array[]
-     */
-    public static function providerExamples(): array
+    public function testCacheAdapterStreamConstructException(): void
     {
-        return [
-            [
-                Apcu::class,
-                [],
-            ],
-            [
-                Libmemcached::class,
-                self::getOptionsLibmemcached(),
-            ],
-            [
-                Memory::class,
-                [],
-            ],
-            [
-                Redis::class,
-                self::getOptionsRedis(),
-            ],
-            [
-                Stream::class,
-                [
-                    'storageDir' => self::outputDir(),
-                ],
-            ],
-        ];
+        $this->expectException(CacheException::class);
+        $this->expectExceptionMessage(
+            "The 'storageDir' must be specified in the options"
+        );
+
+        $serializer = new SerializerFactory();
+        (new Stream($serializer));
     }
 }

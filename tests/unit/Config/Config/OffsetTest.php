@@ -13,21 +13,32 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Config\Config;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
-use UnitTester;
-
-use function sprintf;
 
 final class OffsetTest extends AbstractConfigTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [''], // Group
+            ['Grouped'],
+            ['Ini'],
+            ['Json'],
+            ['Php'],
+            ['Yaml'],
+        ];
+    }
+
     /**
      * Tests Phalcon\Config\Config :: offset*
      *
      * @dataProvider providerExamples
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-19
      */
     public function testConfigOffsetExistsUnset(string $adapter): void
     {
@@ -51,20 +62,5 @@ final class OffsetTest extends AbstractConfigTestCase
 
         $actual = $config->offsetExists('models');
         $this->assertFalse($actual);
-    }
-
-    /**
-     * @return array[]
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [''], // Group
-            ['Grouped'],
-            ['Ini'],
-            ['Json'],
-            ['Php'],
-            ['Yaml'],
-        ];
     }
 }

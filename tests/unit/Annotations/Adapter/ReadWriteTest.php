@@ -21,8 +21,6 @@ use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFileExistsFixture;
 use Phalcon\Tests1\Fixtures\Annotations\Adapter\StreamFixture;
 use TestClass;
 
-use function dataDir2;
-use function outputDir2;
 use function safeDeleteFile2;
 
 final class ReadWriteTest extends AbstractAnnotationsAdapterTestCase

@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Unit\Di\FactoryDefault\Cli;
 use Codeception\Example;
 use Phalcon\Di\Exception;
 use Phalcon\Di\FactoryDefault\Cli;
-use Phalcon\Tests1\Fixtures\Traits\CliTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Traits\CliTrait2;
 
 final class ConstructTest extends AbstractUnitTestCase
 {
@@ -46,9 +46,9 @@ final class ConstructTest extends AbstractUnitTestCase
      *
      * @dataProvider getServices
      *
-     * @return void
-     * @param Example    $example
+     * @param Example $example
      *
+     * @return void
      * @throws Exception
      *
      * @author       Phalcon Team <team@phalcon.io>

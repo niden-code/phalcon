@@ -18,23 +18,6 @@ use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
 final class CountTest extends AbstractConfigTestCase
 {
     /**
-     * Tests Phalcon\Config\Config :: getPathDelimiter()
-     *
-     * @dataProvider providerExamples
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2021-10-21
-     */
-    public function testConfigCount(string $adapter): void
-    {
-        $config = $this->getConfig($adapter);
-
-        $expected = 5;
-        $actual   = $config->count();
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
      * @return array[]
      */
     public static function providerExamples(): array
@@ -47,5 +30,22 @@ final class CountTest extends AbstractConfigTestCase
             ['Php'],
             ['Yaml'],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Config\Config :: getPathDelimiter()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2021-10-21
+     */
+    public function testConfigCount(string $adapter): void
+    {
+        $config = $this->getConfig($adapter);
+
+        $expected = 5;
+        $actual   = $config->count();
+        $this->assertSame($expected, $actual);
     }
 }

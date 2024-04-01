@@ -15,7 +15,6 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class GetSetEventsManagerTest extends AbstractLoaderTestCase
 {

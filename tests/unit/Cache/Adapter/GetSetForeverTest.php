@@ -13,56 +13,18 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
-use Memcached as NativeMemcached;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
-use Redis as NativeRedis;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function outputDir;
-use function sprintf;
 use function uniqid;
 
 final class GetSetForeverTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Cache\Adapter\* :: get()/setForever()
-     *
-     * @dataProvider providerExamples
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testCacheAdapterGetSetForever(
-        string $class,
-        array $options
-    ): void {
-        $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
-
-        $key = uniqid();
-
-        $result = $adapter->setForever($key, "test");
-        $this->assertTrue($result);
-
-        sleep(2);
-        $result = $adapter->has($key);
-        $this->assertTrue($result);
-
-        /**
-         * Delete it
-         */
-        $result = $adapter->delete($key);
-        $this->assertTrue($result);
-    }
-
     /**
      * @return array[]
      */
@@ -92,5 +54,36 @@ final class GetSetForeverTest extends AbstractUnitTestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\* :: get()/setForever()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testCacheAdapterGetSetForever(
+        string $class,
+        array $options
+    ): void {
+        $serializer = new SerializerFactory();
+        $adapter    = new $class($serializer, $options);
+
+        $key = uniqid();
+
+        $result = $adapter->setForever($key, "test");
+        $this->assertTrue($result);
+
+        sleep(2);
+        $result = $adapter->has($key);
+        $this->assertTrue($result);
+
+        /**
+         * Delete it
+         */
+        $result = $adapter->delete($key);
+        $this->assertTrue($result);
     }
 }

@@ -18,7 +18,6 @@ use Phalcon\Annotations\Reader;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 use ReflectionException;
 
-use function dataDir2;
 use function str_replace;
 
 use const DIRECTORY_SEPARATOR;

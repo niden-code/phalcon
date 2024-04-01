@@ -13,47 +13,16 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
-
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function outputDir;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class GetSetDefaultSerializerTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Cache\Adapter\* ::
-     * getDefaultSerializer()/setDefaultSerializer()
-     *
-     * @dataProvider providerExamples
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testCacheAdapterGetSetDefaultSerializer(
-        string $class,
-        array $options
-    ): void {
-        $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
-
-        $expected = 'php';
-        $actual   = $adapter->getDefaultSerializer();
-        $this->assertSame($expected, $actual);
-
-        $adapter->setDefaultSerializer('Base64');
-        $expected = 'base64';
-        $actual   = $adapter->getDefaultSerializer();
-        $this->assertSame($expected, $actual);
-    }
-
     /**
      * @return array[]
      */
@@ -83,5 +52,31 @@ final class GetSetDefaultSerializerTest extends AbstractUnitTestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\* ::
+     * getDefaultSerializer()/setDefaultSerializer()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testCacheAdapterGetSetDefaultSerializer(
+        string $class,
+        array $options
+    ): void {
+        $serializer = new SerializerFactory();
+        $adapter    = new $class($serializer, $options);
+
+        $expected = 'php';
+        $actual   = $adapter->getDefaultSerializer();
+        $this->assertSame($expected, $actual);
+
+        $adapter->setDefaultSerializer('Base64');
+        $expected = 'base64';
+        $actual   = $adapter->getDefaultSerializer();
+        $this->assertSame($expected, $actual);
     }
 }

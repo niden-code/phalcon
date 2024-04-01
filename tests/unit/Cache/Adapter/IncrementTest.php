@@ -13,21 +13,54 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Phalcon\Cache\Adapter\Redis;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function getOptionsLibmemcached;
-use function outputDir;
 use function uniqid;
 
 final class IncrementTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function providerExamples(): array
+    {
+        return [
+            [
+                Apcu::class,
+                [],
+                1,
+            ],
+            [
+                Libmemcached::class,
+                self::getOptionsLibmemcached(),
+                false,
+            ],
+            [
+                Memory::class,
+                [],
+                false,
+            ],
+            [
+                Redis::class,
+                self::getOptionsRedis(),
+                1,
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => self::outputDir(),
+                ],
+                false,
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* :: increment()
      *
@@ -69,41 +102,5 @@ final class IncrementTest extends AbstractUnitTestCase
         $expected = $unknown;
         $actual   = $adapter->increment($key);
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return array[]
-     */
-    public static function providerExamples(): array
-    {
-        return [
-            [
-                Apcu::class,
-                [],
-                1,
-            ],
-            [
-                Libmemcached::class,
-                self::getOptionsLibmemcached(),
-                false,
-            ],
-            [
-                Memory::class,
-                [],
-                false,
-            ],
-            [
-                Redis::class,
-                self::getOptionsRedis(),
-                1,
-            ],
-            [
-                Stream::class,
-                [
-                    'storageDir' => self::outputDir(),
-                ],
-                false,
-            ],
-        ];
     }
 }

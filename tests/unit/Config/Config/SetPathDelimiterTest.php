@@ -13,19 +13,29 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Config\Config;
 
-use Phalcon\Tests\Fixtures\Traits\ConfigTrait;
 use Phalcon\Tests\Unit\Config\AbstractConfigTestCase;
-use UnitTester;
 
 final class SetPathDelimiterTest extends AbstractConfigTestCase
 {
+    public static function providerExamples(): array
+    {
+        return [
+            [''], // Config
+            ['Grouped'],
+            ['Ini'],
+            ['Json'],
+            ['Php'],
+            ['Yaml'],
+        ];
+    }
+
     /**
      * Tests Phalcon\Config\Config :: setPathDelimiter()
      *
      * @dataProvider providerExamples
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-19
      */
     public function testConfigSetPathDelimiter(string $adapter): void
     {
@@ -47,17 +57,5 @@ final class SetPathDelimiterTest extends AbstractConfigTestCase
         $this->assertSame($expected, $actual);
 
         $config->setPathDelimiter($existing);
-    }
-
-    public static function providerExamples(): array
-    {
-        return [
-            [''], // Config
-            ['Grouped'],
-            ['Ini'],
-            ['Json'],
-            ['Php'],
-            ['Yaml'],
-        ];
     }
 }

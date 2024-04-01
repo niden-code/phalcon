@@ -13,42 +13,18 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function array_merge;
-use function getOptionsRedis;
-use function outputDir;
-use function sprintf;
 
 final class GetPrefixTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Cache\Adapter\* :: getPrefix()
-     *
-     * @dataProvider providerExamples
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testCacheAdapterGetSetPrefix(
-        string $class,
-        array $options,
-        mixed $expected
-    ): void {
-        $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
-
-        $actual   = $adapter->getPrefix();
-        $this->assertSame($expected, $actual);
-    }
-
     public static function providerExamples(): array
     {
         return [
@@ -174,5 +150,25 @@ final class GetPrefixTest extends AbstractUnitTestCase
                 'my-prefix',
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\* :: getPrefix()
+     *
+     * @dataProvider providerExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testCacheAdapterGetSetPrefix(
+        string $class,
+        array $options,
+        mixed $expected
+    ): void {
+        $serializer = new SerializerFactory();
+        $adapter    = new $class($serializer, $options);
+
+        $actual = $adapter->getPrefix();
+        $this->assertSame($expected, $actual);
     }
 }

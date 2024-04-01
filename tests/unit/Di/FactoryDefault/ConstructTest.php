@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Di\FactoryDefault;
 
-use Codeception\Example;
 use Phalcon\Annotations\Adapter\Memory as MemoryAnnotations;
 use Phalcon\Assets\Manager as ManagerAssets;
 use Phalcon\Di\FactoryDefault;
@@ -36,47 +35,6 @@ use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class ConstructTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Di\FactoryDefault :: __construct()
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function testDiFactoryDefaultConstruct(): void
-    {
-        $container = new FactoryDefault();
-
-        $expected = 17;
-        $actual   = count($container->getServices());
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Di\FactoryDefault :: __construct() - Check services
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2018-11-13
-     *
-     * @dataProvider providerServices
-     */
-    public function testDiFactoryDefaultConstructServices(
-        string $service,
-        string $class
-    ): void {
-        $container = new FactoryDefault();
-
-        if ('sessionBag' === $service) {
-            $params = ['someName'];
-        } else {
-            $params = null;
-        }
-
-        $actual = $container->get($service, $params);
-        $this->assertInstanceOf($class, $actual);
-    }
-
     /**
      * @return string[][]
      */
@@ -164,5 +122,46 @@ final class ConstructTest extends AbstractUnitTestCase
                 Url::class,
             ],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Di\FactoryDefault :: __construct()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     */
+    public function testDiFactoryDefaultConstruct(): void
+    {
+        $container = new FactoryDefault();
+
+        $expected = 17;
+        $actual   = count($container->getServices());
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Di\FactoryDefault :: __construct() - Check services
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2018-11-13
+     *
+     * @dataProvider providerServices
+     */
+    public function testDiFactoryDefaultConstructServices(
+        string $service,
+        string $class
+    ): void {
+        $container = new FactoryDefault();
+
+        if ('sessionBag' === $service) {
+            $params = ['someName'];
+        } else {
+            $params = null;
+        }
+
+        $actual = $container->get($service, $params);
+        $this->assertInstanceOf($class, $actual);
     }
 }

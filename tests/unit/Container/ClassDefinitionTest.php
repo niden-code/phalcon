@@ -18,8 +18,8 @@ use Phalcon\Container\Exception\NotDefined;
 use Phalcon\Container\Exception\NotFound;
 use Phalcon\Container\Exception\NotInstantiated;
 use Phalcon\Container\Lazy\Call;
-use Phalcon\Tests1\Fixtures\Container\ChildClass;
 use Phalcon\Tests1\Fixtures\Container\BadHint;
+use Phalcon\Tests1\Fixtures\Container\ChildClass;
 use Phalcon\Tests1\Fixtures\Container\ConstructorClass;
 use Phalcon\Tests1\Fixtures\Container\ConstructorDefaultValue;
 use Phalcon\Tests1\Fixtures\Container\ConstructorObjects;
@@ -45,6 +45,38 @@ class ClassDefinitionTest extends DefinitionTestCase
         $this->assertTrue($definition->hasArgument(0));
 
         $this->assertSame('one', $definition->getArgument(0));
+    }
+
+    /**
+     * @return void
+     * @throws NotFound
+     * @throws NotInstantiated
+     */
+    public function testContainerArgumentAlternativeClass(): void
+    {
+        $definition = new ClassDefinition(ChildClass::class);
+        $definition->class(stdClass::class);
+        $this->assertTrue($definition->isInstantiable($this->container));
+        $this->assertInstanceOf(stdClass::class, $this->actual($definition));
+    }
+
+    /**
+     * @return void
+     * @throws NotInstantiated
+     */
+    public function testContainerArgumentLatestTakesPrecedence(): void
+    {
+        $definition = new ClassDefinition(ChildClass::class);
+        $definition->arguments([0 => 'valbefore', 'one' => 'valafter']);
+
+        /** @var ChildClass $actual */
+        $actual = $this->actual($definition);
+        $this->assertSame('valafter', $actual->one);
+        $definition->arguments(['one' => 'valbefore', 0 => 'valafter']);
+
+        /** @var ChildClass $actual */
+        $actual = $this->actual($definition);
+        $this->assertSame('valafter', $actual->one);
     }
 
     /**
@@ -160,6 +192,28 @@ class ClassDefinitionTest extends DefinitionTestCase
 
     /**
      * @return void
+     */
+    public function testContainerArgumentNoSuchClass(): void
+    {
+        $this->expectException(NotFound::class);
+        $this->expectExceptionMessage("Class 'NoSuchClass' not found.");
+        $definition = new ClassDefinition('NoSuchClass');
+    }
+
+    /**
+     * @return void
+     * @throws NotFound
+     */
+    public function testContainerArgumentNotFound(): void
+    {
+        $definition = new ClassDefinition(ChildClass::class);
+        $this->expectException(NotFound::class);
+        $this->expectExceptionMessage("Class 'NoSuchClass' not found.");
+        $definition->class('NoSuchClass');
+    }
+
+    /**
+     * @return void
      * @throws NotInstantiated
      */
     public function testContainerArgumentNumbered(): void
@@ -181,6 +235,18 @@ class ClassDefinitionTest extends DefinitionTestCase
         $definition->argument(2, ['val2a', 'val2b', 'val2c']);
 
         $this->assertInstanceOf(Optional::class, $this->actual($definition));
+    }
+
+    /**
+     * @return void
+     * @throws NotFound
+     * @throws NotInstantiated
+     */
+    public function testContainerArgumentSameAsId(): void
+    {
+        $definition = new ClassDefinition(stdClass::class);
+        $definition->class(stdClass::class);
+        $this->assertInstanceOf(stdClass::class, $this->actual($definition));
     }
 
     /**
@@ -225,7 +291,7 @@ class ClassDefinitionTest extends DefinitionTestCase
     public function testContainerArgumentUnionType(): void
     {
         $definition = new ClassDefinition(Union::class);
-        $expected     = ['arrayval'];
+        $expected   = ['arrayval'];
         $definition->argument(0, $expected);
 
         /** @var Union $actual */
@@ -244,13 +310,13 @@ class ClassDefinitionTest extends DefinitionTestCase
         $value3 = [
             uniqid('three-'),
             uniqid('three-'),
-            uniqid('three-')
+            uniqid('three-'),
         ];
 
         $definition = new ClassDefinition(Optional::class);
         $definition->arguments([$value1, $value2, $value3]);
 
-        $expected   = $value3;
+        $expected = $value3;
         /** @var Optional $actual */
         $actual = $this->actual($definition);
         $this->assertSame($expected, $actual->three);
@@ -262,8 +328,8 @@ class ClassDefinitionTest extends DefinitionTestCase
      */
     public function testContainerArgumentVariadicOmitted(): void
     {
-        $value1 = uniqid('val-');
-        $value2 = uniqid('val-');
+        $value1     = uniqid('val-');
+        $value2     = uniqid('val-');
         $definition = new ClassDefinition(Optional::class);
         $definition->arguments([$value1, $value2]);
 
@@ -291,72 +357,6 @@ class ClassDefinitionTest extends DefinitionTestCase
                 ],
             ],
         );
-    }
-
-    /**
-     * @return void
-     * @throws NotInstantiated
-     */
-    public function testContainerArgumentLatestTakesPrecedence(): void
-    {
-        $definition = new ClassDefinition(ChildClass::class);
-        $definition->arguments([0 => 'valbefore', 'one' => 'valafter']);
-
-        /** @var ChildClass $actual */
-        $actual = $this->actual($definition);
-        $this->assertSame('valafter', $actual->one);
-        $definition->arguments(['one' => 'valbefore', 0 => 'valafter']);
-
-        /** @var ChildClass $actual */
-        $actual = $this->actual($definition);
-        $this->assertSame('valafter', $actual->one);
-    }
-
-    /**
-     * @return void
-     * @throws NotFound
-     * @throws NotInstantiated
-     */
-    public function testContainerArgumentAlternativeClass(): void
-    {
-        $definition = new ClassDefinition(ChildClass::class);
-        $definition->class(stdClass::class);
-        $this->assertTrue($definition->isInstantiable($this->container));
-        $this->assertInstanceOf(stdClass::class, $this->actual($definition));
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerArgumentNoSuchClass(): void
-    {
-        $this->expectException(NotFound::class);
-        $this->expectExceptionMessage("Class 'NoSuchClass' not found.");
-        $definition = new ClassDefinition('NoSuchClass');
-    }
-
-    /**
-     * @return void
-     * @throws NotFound
-     */
-    public function testContainerArgumentNotFound(): void
-    {
-        $definition = new ClassDefinition(ChildClass::class);
-        $this->expectException(NotFound::class);
-        $this->expectExceptionMessage("Class 'NoSuchClass' not found.");
-        $definition->class('NoSuchClass');
-    }
-
-    /**
-     * @return void
-     * @throws NotFound
-     * @throws NotInstantiated
-     */
-    public function testContainerArgumentSameAsId(): void
-    {
-        $definition = new ClassDefinition(stdClass::class);
-        $definition->class(stdClass::class);
-        $this->assertInstanceOf(stdClass::class, $this->actual($definition));
     }
 
     /**
@@ -432,6 +432,21 @@ class ClassDefinitionTest extends DefinitionTestCase
      * @return void
      * @throws NotInstantiated
      */
+    public function testContainerMissingArgument(): void
+    {
+        $definition = new ClassDefinition(ConstructorDefaultValue::class);
+        $definition->argument(1, 'twoValue');
+
+        $this->assertInstanceOf(
+            ConstructorDefaultValue::class,
+            $this->actual($definition)
+        );
+    }
+
+    /**
+     * @return void
+     * @throws NotInstantiated
+     */
     public function testContainerNoConstructor(): void
     {
         $definition = new ClassDefinition(stdClass::class);
@@ -481,20 +496,5 @@ class ClassDefinitionTest extends DefinitionTestCase
         /** @var ChildClass $actual */
         $actual = $this->actual($definition);
         $this->assertSame('prop1value', $actual->getProperty());
-    }
-
-    /**
-     * @return void
-     * @throws NotInstantiated
-     */
-    public function testContainerMissingArgument(): void
-    {
-        $definition = new ClassDefinition(ConstructorDefaultValue::class);
-        $definition->argument(1, 'twoValue');
-
-        $this->assertInstanceOf(
-            ConstructorDefaultValue::class,
-            $this->actual($definition)
-        );
     }
 }

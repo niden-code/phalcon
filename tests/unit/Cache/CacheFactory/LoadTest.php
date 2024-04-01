@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\CacheFactory;
 
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\CacheFactory;
 use Phalcon\Cache\CacheInterface;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 
 final class LoadTest extends AbstractUnitTestCase

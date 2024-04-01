@@ -13,55 +13,20 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter\Stream;
 
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Exception as CacheException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
 use function file_put_contents;
 use function is_dir;
 use function mkdir;
-use function outputDir;
 use function sleep;
 
 final class GetSetTest extends AbstractUnitTestCase
 {
-    /**
-     * Tests Phalcon\Cache\Adapter\Stream :: set()
-     *
-     * @return void
-     *
-     * @throws HelperException
-     * @throws CacheException
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testCacheAdapterStreamSet(): void
-    {
-        $serializer = new SerializerFactory();
-        $adapter    = new Stream(
-            $serializer,
-            [
-                'storageDir' => self::outputDir(),
-            ]
-        );
-
-        $data   = 'Phalcon Framework';
-        $actual = $adapter->set('test-key', $data);
-        $this->assertTrue($actual);
-
-        $target = self::outputDir() . 'ph-strm/te/st/-k/';
-        $file   = $target . 'test-key';
-        $contents = file_get_contents($file);
-        $expected = 's:3:"ttl";i:3600;s:7:"content";s:25:"s:17:"Phalcon Framework";";}';
-        $this->assertStringContainsString($expected, $contents);
-
-        self::safeDeleteFile($target . 'test-key');
-    }
-
     /**
      * Tests Phalcon\Cache\Adapter\Stream :: get()
      *
@@ -159,6 +124,40 @@ final class GetSetTest extends AbstractUnitTestCase
         $expected = 'test';
         $actual   = $adapter->get('test-key', 'test');
         $this->assertSame($expected, $actual);
+
+        self::safeDeleteFile($target . 'test-key');
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Stream :: set()
+     *
+     * @return void
+     *
+     * @throws HelperException
+     * @throws CacheException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheAdapterStreamSet(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Stream(
+            $serializer,
+            [
+                'storageDir' => self::outputDir(),
+            ]
+        );
+
+        $data   = 'Phalcon Framework';
+        $actual = $adapter->set('test-key', $data);
+        $this->assertTrue($actual);
+
+        $target   = self::outputDir() . 'ph-strm/te/st/-k/';
+        $file     = $target . 'test-key';
+        $contents = file_get_contents($file);
+        $expected = 's:3:"ttl";i:3600;s:7:"content";s:25:"s:17:"Phalcon Framework";";}';
+        $this->assertStringContainsString($expected, $contents);
 
         self::safeDeleteFile($target . 'test-key');
     }

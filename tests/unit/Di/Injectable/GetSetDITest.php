@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di\Injectable;
 
 use Phalcon\Di\Di;
-use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
 
 final class GetSetDITest extends AbstractUnitTestCase
 {

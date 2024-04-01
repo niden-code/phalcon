@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
 use Codeception\Stub;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
@@ -60,6 +60,53 @@ final class SetMultipleTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Cache :: setMultiple() - exception
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheCacheSetMultipleException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The keys need to be an array or instance of Traversable'
+        );
+
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('apcu');
+
+        $adapter = new Cache($instance);
+
+        $actual = $adapter->setMultiple(1234);
+    }
+
+    /**
+     * Tests Phalcon\Cache :: setMultiple() - exception
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheCacheSetMultipleExceptionSet(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The key contains invalid characters');
+
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('apcu');
+
+        $adapter = new Cache($instance);
+
+        $adapter->setMultiple(
+            [
+                'abc$^' => 'test1',
+                'abd$^' => 'test2',
+            ]
+        );
+    }
+
+    /**
      * Tests Phalcon\Cache :: setMultiple() - false
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -90,52 +137,5 @@ final class SetMultipleTest extends AbstractUnitTestCase
         );
 
         $this->assertFalse($actual);
-    }
-
-    /**
-     * Tests Phalcon\Cache :: setMultiple() - exception
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testCacheCacheSetMultipleExceptionSet(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The key contains invalid characters');
-
-        $serializer = new SerializerFactory();
-        $factory    = new AdapterFactory($serializer);
-        $instance   = $factory->newInstance('apcu');
-
-        $adapter = new Cache($instance);
-
-        $adapter->setMultiple(
-            [
-                'abc$^' => 'test1',
-                'abd$^' => 'test2',
-            ]
-        );
-    }
-
-    /**
-     * Tests Phalcon\Cache :: setMultiple() - exception
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testCacheCacheSetMultipleException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'The keys need to be an array or instance of Traversable'
-        );
-
-        $serializer = new SerializerFactory();
-        $factory    = new AdapterFactory($serializer);
-        $instance   = $factory->newInstance('apcu');
-
-        $adapter = new Cache($instance);
-
-        $actual = $adapter->setMultiple(1234);
     }
 }

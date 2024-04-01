@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\CacheFactory;
 
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\CacheFactory;
 use Phalcon\Cache\CacheInterface;
 use Phalcon\Cache\Exception\Exception;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function uniqid;
 
@@ -33,10 +33,10 @@ final class NewInstanceTest extends AbstractUnitTestCase
      */
     public function testCacheCacheFactoryNewInstance(): void
     {
-        $serializer = new SerializerFactory();
+        $serializer     = new SerializerFactory();
         $adapterFactory = new AdapterFactory($serializer);
-        $cacheFactory = new CacheFactory($adapterFactory);
-        $adapter = $cacheFactory->newInstance('apcu');
+        $cacheFactory   = new CacheFactory($adapterFactory);
+        $adapter        = $cacheFactory->newInstance('apcu');
 
         $this->assertInstanceOf(Cache::class, $adapter);
         $this->assertInstanceOf(CacheInterface::class, $adapter);

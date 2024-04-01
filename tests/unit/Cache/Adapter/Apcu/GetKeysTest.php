@@ -13,14 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter\Apcu;
 
-use Codeception\Stub;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception;
-use Phalcon\Tests\Fixtures\Traits\ApcuTrait;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Storage\Adapter\ApcuIteratorFixture;
-
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 use function sort;

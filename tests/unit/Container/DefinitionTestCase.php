@@ -30,15 +30,6 @@ class DefinitionTestCase extends AbstractUnitTestCase
     protected Definitions $definitions;
 
     /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        $this->definitions = new Definitions();
-        $this->container   = new Container($this->definitions);
-    }
-
-    /**
      * @param AbstractDefinition $definition
      *
      * @return object
@@ -67,5 +58,14 @@ class DefinitionTestCase extends AbstractUnitTestCase
                 $this->assertSame($expectedExceptionMessage, $ex->getMessage());
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        $this->definitions = new Definitions();
+        $this->container   = new Container($this->definitions);
     }
 }

@@ -22,10 +22,8 @@ use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
 use function ob_get_clean;
 use function ob_start;
-use function outputDir2;
 use function safeDeleteFile2;
 use function sprintf;
 use function uniqid;

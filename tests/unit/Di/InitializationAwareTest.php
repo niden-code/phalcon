@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di;
 
 use Phalcon\Di\Di;
-use Phalcon\Tests1\Fixtures\Di\InitializationAwareComponent;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Di\InitializationAwareComponent;
 
 final class InitializationAwareTest extends AbstractUnitTestCase
 {

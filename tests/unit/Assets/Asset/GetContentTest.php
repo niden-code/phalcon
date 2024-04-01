@@ -17,11 +17,10 @@ use Phalcon\Assets\Asset;
 use Phalcon\Assets\Asset\Css;
 use Phalcon\Assets\Asset\Js;
 use Phalcon\Assets\Exception;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Assets\AssetExistsFixture;
 use Phalcon\Tests1\Fixtures\Assets\AssetGetContentsFixture;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
 use function file_get_contents;
 
 use const PHP_EOL;

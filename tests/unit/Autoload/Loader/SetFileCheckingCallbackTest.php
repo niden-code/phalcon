@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Autoload\Loader;
 
-use Codeception\Example;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 use function class_exists;
 use function function_exists;
@@ -27,45 +25,18 @@ final class SetFileCheckingCallbackTest extends AbstractLoaderTestCase
     use LoaderTrait;
 
     /**
-     * Tests Phalcon\Autoload\Loader :: setFileCheckingCallback()
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     * @issue  https://github.com/phalcon/cphalcon/issues/13360
-     * @issue  https://github.com/phalcon/cphalcon/issues/10472
+     * @return array
      */
-    public function testAutoloaderLoaderSetFileCheckingCallbackFalse(): void
+    public static function providerExamples(): array
     {
-        $loader = new Loader();
-
-        $loader->setFileCheckingCallback(
-            function ($file) {
-                return false;
-            }
-        );
-
-        $loader->setFiles(
+        return [
             [
-                self::dataDir('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
-            ]
-        );
-
-        $loader->setNamespaces(
-            [
-                'Example' => self::dataDir('fixtures/Autoload/Example/'),
+                'stream_resolve_include_path',
             ],
-            true
-        );
-
-        $loader->register();
-
-        $actual = function_exists('noClass3Foo');
-        $this->assertFalse($actual);
-
-        $actual = function_exists('noClass3Bar');
-        $this->assertFalse($actual);
+            [
+                null,
+            ],
+        ];
     }
 
     /**
@@ -132,17 +103,44 @@ final class SetFileCheckingCallbackTest extends AbstractLoaderTestCase
     }
 
     /**
-     * @return array
+     * Tests Phalcon\Autoload\Loader :: setFileCheckingCallback()
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     * @issue  https://github.com/phalcon/cphalcon/issues/13360
+     * @issue  https://github.com/phalcon/cphalcon/issues/10472
      */
-    public static function providerExamples(): array
+    public function testAutoloaderLoaderSetFileCheckingCallbackFalse(): void
     {
-        return [
+        $loader = new Loader();
+
+        $loader->setFileCheckingCallback(
+            function ($file) {
+                return false;
+            }
+        );
+
+        $loader->setFiles(
             [
-                'stream_resolve_include_path',
-            ],
+                self::dataDir('fixtures/Autoload/Example/Functions/FunctionsNoClassThree.php'),
+            ]
+        );
+
+        $loader->setNamespaces(
             [
-                null,
+                'Example' => self::dataDir('fixtures/Autoload/Example/'),
             ],
-        ];
+            true
+        );
+
+        $loader->register();
+
+        $actual = function_exists('noClass3Foo');
+        $this->assertFalse($actual);
+
+        $actual = function_exists('noClass3Bar');
+        $this->assertFalse($actual);
     }
 }

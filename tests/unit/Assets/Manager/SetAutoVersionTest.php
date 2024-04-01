@@ -19,7 +19,6 @@ use Phalcon\Html\TagFactory;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
 
-use function dataDir2;
 use function filemtime;
 
 final class SetAutoVersionTest extends AbstractUnitTestCase

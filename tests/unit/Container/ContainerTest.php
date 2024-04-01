@@ -19,8 +19,6 @@ use Phalcon\Tests1\Fixtures\Container\ChildProvider;
 use Phalcon\Tests1\Fixtures\Container\ConstructorObjects;
 use stdClass;
 
-use function uniqid;
-
 class ContainerTest extends AbstractUnitTestCase
 {
     protected Container $container;
@@ -32,7 +30,7 @@ class ContainerTest extends AbstractUnitTestCase
     {
         $callable = $this->container->callableGet(stdClass::class);
 
-        $expected   = $callable(stdClass::class);
+        $expected = $callable(stdClass::class);
         $actual   = $callable(stdClass::class);
         $this->assertSame($expected, $actual);
     }
@@ -44,7 +42,7 @@ class ContainerTest extends AbstractUnitTestCase
     {
         $callable = $this->container->callableNew(stdClass::class);
 
-        $expected   = $callable(stdClass::class);
+        $expected = $callable(stdClass::class);
         $actual   = $callable(stdClass::class);
         $this->assertNotSame($expected, $actual);
     }
@@ -58,12 +56,12 @@ class ContainerTest extends AbstractUnitTestCase
         $actual   = $this->container->get(stdClass::class);
         $this->assertSame($expected, $actual);
 
-        $name = 'direct';
+        $name     = 'direct';
         $expected = 'ten';
         $actual   = $this->container->get($name);
         $this->assertSame($expected, $actual);
 
-        $name = 'lazy';
+        $name     = 'lazy';
         $expected = 'thirty';
         $actual   = $this->container->get($name);
         $this->assertSame($expected, $actual);
@@ -93,15 +91,15 @@ class ContainerTest extends AbstractUnitTestCase
     public function testContainerNew(): void
     {
         $expected = $this->container->new(stdClass::class);
-        $actual = $this->container->new(stdClass::class);
+        $actual   = $this->container->new(stdClass::class);
         $this->assertNotSame($expected, $actual);
 
-        $name = 'direct';
+        $name     = 'direct';
         $expected = 'ten';
         $actual   = $this->container->get($name);
         $this->assertSame($expected, $actual);
 
-        $name = 'lazy';
+        $name     = 'lazy';
         $expected = 'thirty';
         $actual   = $this->container->get($name);
         $this->assertSame($expected, $actual);
@@ -115,7 +113,7 @@ class ContainerTest extends AbstractUnitTestCase
         $this->container = new Container(
             new Definitions(),
             [
-                new ChildProvider()
+                new ChildProvider(),
             ]
         );
     }

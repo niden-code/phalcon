@@ -17,13 +17,9 @@ use Phalcon\Config\Adapter\Ini;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\ConfigFactory;
 use Phalcon\Config\Exception;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
-use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
-use UnitTester;
+use Phalcon\Tests1\Fixtures\Traits\FactoryTrait2;
 
-use function dataDir;
-use function dataDir2;
 use function hash;
 
 final class LoadTest extends AbstractUnitTestCase
@@ -38,6 +34,22 @@ final class LoadTest extends AbstractUnitTestCase
     public function setUp(): void
     {
         $this->init();
+    }
+
+    /**
+     * Tests Phalcon\Config\ConfigFactory :: load() - array
+     *
+     * @author Wojciech Ślawski <jurigag@gmail.com>
+     * @since  2017-03-02
+     */
+    public function testConfigFactoryLoadArray(): void
+    {
+        $options = $this->arrayConfig['config'];
+        $class   = Ini::class;
+
+        /** @var Ini $ini */
+        $ini = (new ConfigFactory())->load($options);
+        $this->assertInstanceOf($class, $ini);
     }
 
     /**
@@ -69,37 +81,24 @@ final class LoadTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Config\ConfigFactory :: load() - array
-     *
-     * @author Wojciech Ślawski <jurigag@gmail.com>
-     * @since  2017-03-02
-     */
-    public function testConfigFactoryLoadArray(): void
-    {
-        $options = $this->arrayConfig['config'];
-        $class   = Ini::class;
-
-        /** @var Ini $ini */
-        $ini = (new ConfigFactory())->load($options);
-        $this->assertInstanceOf($class, $ini);
-    }
-
-    /**
-     * Tests Phalcon\Config\ConfigFactory :: load() - string
+     * Tests Phalcon\Config\ConfigFactory :: load() -  exception adapter
      *
      * @return void
      *
-     * @author Wojciech Ślawski <jurigag@gmail.com>
-     * @since  2017-11-24
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-06-19
      */
-    public function testConfigFactoryLoadString(): void
+    public function testConfigFactoryLoadExceptionAdapter(): void
     {
-        $filePath = $this->arrayConfig['config']['filePathExtension'];
-        $class    = Ini::class;
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "You must provide 'adapter' option in factory config parameter."
+        );
 
-        /** @var Ini $ini */
-        $ini = (new ConfigFactory())->load($filePath);
-        $this->assertInstanceOf($class, $ini);
+        $config = [
+            'filePath' => self::dataDir('assets/config/config.ini'),
+        ];
+        $ini    = (new ConfigFactory())->load($config);
     }
 
     /**
@@ -142,51 +141,21 @@ final class LoadTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Config\ConfigFactory :: load() -  exception adapter
+     * Tests Phalcon\Config\ConfigFactory :: load() - string
      *
      * @return void
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
+     * @author Wojciech Ślawski <jurigag@gmail.com>
+     * @since  2017-11-24
      */
-    public function testConfigFactoryLoadExceptionAdapter(): void
+    public function testConfigFactoryLoadString(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "You must provide 'adapter' option in factory config parameter."
-        );
+        $filePath = $this->arrayConfig['config']['filePathExtension'];
+        $class    = Ini::class;
 
-        $config = [
-            'filePath' => self::dataDir('assets/config/config.ini'),
-        ];
-        $ini    = (new ConfigFactory())->load($config);
-    }
-
-    /**
-     * Tests Phalcon\Config\ConfigFactory :: load() -  yaml callback
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-06-19
-     */
-    public function testConfigFactoryLoadYamlCallback(): void
-    {
-        $class   = Yaml::class;
-        $factory = new ConfigFactory();
-        $config  = [
-            'adapter'   => 'yaml',
-            'filePath'  => self::dataDir('assets/config/callbacks.yml'),
-            'callbacks' => [
-                '!decrypt' => function ($value) {
-                    return hash('sha256', $value);
-                },
-                '!approot' => function ($value) {
-                    return 'app/root/' . $value;
-                },
-            ],
-        ];
-
-        $config = $factory->load($config);
-        $this->assertInstanceOf($class, $config);
+        /** @var Ini $ini */
+        $ini = (new ConfigFactory())->load($filePath);
+        $this->assertInstanceOf($class, $ini);
     }
 
     /**
@@ -215,5 +184,32 @@ final class LoadTest extends AbstractUnitTestCase
         $expected = "/phalcon4/";
         $actual   = $config2->get('phalcon')->baseUri;
         $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Config\ConfigFactory :: load() -  yaml callback
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-06-19
+     */
+    public function testConfigFactoryLoadYamlCallback(): void
+    {
+        $class   = Yaml::class;
+        $factory = new ConfigFactory();
+        $config  = [
+            'adapter'   => 'yaml',
+            'filePath'  => self::dataDir('assets/config/callbacks.yml'),
+            'callbacks' => [
+                '!decrypt' => function ($value) {
+                    return hash('sha256', $value);
+                },
+                '!approot' => function ($value) {
+                    return 'app/root/' . $value;
+                },
+            ],
+        ];
+
+        $config = $factory->load($config);
+        $this->assertInstanceOf($class, $config);
     }
 }

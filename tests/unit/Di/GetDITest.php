@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di;
 
 use Phalcon\Di\Di;
+use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
 use ReflectionClass;
 use ReflectionException;
 use stdClass;
-use Phalcon\Tests\Support\AbstractUnitTestCase;
 
 final class GetDITest extends AbstractUnitTestCase
 {
@@ -58,7 +58,7 @@ final class GetDITest extends AbstractUnitTestCase
         $reflection = new ReflectionClass($className);
         $prop       = $reflection->getProperty('container');
         $prop->setAccessible(true);
-        $actual     = $prop->getValue($ic);
+        $actual = $prop->getValue($ic);
 
         $this->assertSame($di, $actual);
     }

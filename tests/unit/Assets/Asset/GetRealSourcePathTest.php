@@ -17,8 +17,6 @@ use Phalcon\Assets\Asset;
 use Phalcon\Assets\Asset\Css;
 use Phalcon\Assets\Asset\Js;
 
-use function dataDir2;
-
 use const PHP_OS_FAMILY;
 
 final class GetRealSourcePathTest extends AbstractAssetCase

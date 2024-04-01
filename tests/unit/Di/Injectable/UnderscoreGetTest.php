@@ -13,18 +13,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Di\Injectable;
 
-use Exception;
 use Phalcon\Di\Di;
-use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
-use RuntimeException;
-use stdClass;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Di\InjectableComponent;
+use stdClass;
 
-use function restore_error_handler;
-use function set_error_handler;
 use function spl_object_hash;
-
-use const PHP_OS_FAMILY;
 
 final class UnderscoreGetTest extends AbstractUnitTestCase
 {

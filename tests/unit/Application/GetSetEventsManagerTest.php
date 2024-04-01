@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Application;
 
 use Phalcon\Events\Manager;
-use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
 use Phalcon\Tests\Support\AbstractUnitTestCase;
+use Phalcon\Tests1\Fixtures\Application\ApplicationFixture;
 
 use function spl_object_hash;
 

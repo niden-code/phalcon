@@ -12,18 +12,19 @@
 namespace Phalcon\Tests\Unit\Container\Lazy;
 
 use Phalcon\Container\Lazy\CsEnv;
+use Random\RandomException;
 
 class CsEnvTest extends LazyTestCase
 {
     /**
      * @return void
-     * @throws \Random\RandomException
+     * @throws RandomException
      */
     public function testContainerLazyCsEnv(): void
     {
-        $varname = 'CAPSULE_DI_FOO';
-        $lazy    = new CsEnv($varname, 'int');
-        $expected  = array_fill(0, 3, random_int(1, 100));
+        $varname  = 'CAPSULE_DI_FOO';
+        $lazy     = new CsEnv($varname, 'int');
+        $expected = array_fill(0, 3, random_int(1, 100));
         putenv("CAPSULE_DI_FOO=" . implode(',', $expected));
         $actual = $this->actual($lazy);
         $this->assertSame($expected, $actual);
