@@ -92,7 +92,18 @@ jobs:
     name: Unit tests / PHP-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}
     runs-on: ${{ matrix.os }}
 
+    services:
+      redis:
+        image: redis:5-alpine
+        ports:
+          - "6379:6379"
+      memcached:
+        image: memcached:1.5-alpine
+        ports:
+          - "11211:11211"
+
     strategy:
+      fail-fast: true
       matrix:
         php:
           - '8.1'
@@ -155,6 +166,9 @@ jobs:
           cp tests/_config/.env.default .env
 
       - name: "Run Unit Tests"
+        env:
+          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
         if: always()
         run: |
           ./vendor/bin/phpunit tests/unit/ --coverage-php=./tests/support/output/coverage/coverage.xml --display-deprecations
