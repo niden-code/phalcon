@@ -17,11 +17,6 @@ use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Session\Bag;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 
-/**
- * Class GetIteratorTest extends AbstractUnitTestCase
- *
- * @package Phalcon\Tests\Integration\Session\Bag
- */
 final class GetIteratorTest extends AbstractUnitTestCase
 {
     use DiTrait2;

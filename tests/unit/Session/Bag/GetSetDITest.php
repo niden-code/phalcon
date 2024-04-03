@@ -18,11 +18,6 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Session\Bag;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 
-/**
- * Class GetSetDITest extends AbstractUnitTestCase
- *
- * @package Phalcon\Tests\Integration\Session\Bag
- */
 final class GetSetDITest extends AbstractUnitTestCase
 {
     use DiTrait2;
