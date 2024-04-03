@@ -19,7 +19,6 @@ use Phalcon\Tests\Support\AbstractUnitTestCase;
 use Phalcon\Tests1\Fixtures\Session\StreamGetContentsFixture;
 use Phalcon\Tests1\Fixtures\Traits\DiTrait2;
 use Phalcon\Tests1\Fixtures\Traits\MemcachedTrait;
-
 use Phalcon\Tests1\Fixtures\Traits\RedisTrait;
 
 use function file_get_contents;
