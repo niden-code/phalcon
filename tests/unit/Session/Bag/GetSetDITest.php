@@ -32,8 +32,6 @@ final class GetSetDITest extends AbstractUnitTestCase
      */
     public function testSessionBagGetSetDI(): void
     {
-        $this->wantToTest("Session\Bag - getDI()/setDI()");
-
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
         $session   = $this->container->get('session');

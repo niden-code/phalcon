@@ -31,8 +31,6 @@ final class GetIteratorTest extends AbstractUnitTestCase
      */
     public function testSessionBagGetIterator(): void
     {
-        $this->wantToTest('Session\Bag - getIterator()');
-
         $this->setNewFactoryDefault();
         $this->setDiService('sessionStream');
         $data = [
