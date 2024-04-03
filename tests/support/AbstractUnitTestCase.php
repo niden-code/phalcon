@@ -23,6 +23,7 @@ use function call_user_func_array;
 use function dirname;
 use function file_exists;
 use function func_get_args;
+use function function_exists;
 use function gc_collect_cycles;
 use function glob;
 use function is_dir;

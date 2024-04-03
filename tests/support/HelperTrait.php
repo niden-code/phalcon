@@ -20,6 +20,20 @@ use const DIRECTORY_SEPARATOR;
 trait HelperTrait
 {
     /**
+     * Returns the cache folder
+     *
+     * @param string $fileName
+     *
+     * @return string
+     */
+    protected static function cacheDir(string $fileName = ''): string
+    {
+        return self::outputDir()
+            . 'cache' . DIRECTORY_SEPARATOR
+            . $fileName;
+    }
+
+    /**
      * Returns the data folder
      *
      * @param string $fileName
