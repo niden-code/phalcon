@@ -163,7 +163,7 @@ jobs:
             ./config/ci/linux-setup-locales.sh
           fi
 
-          cp tests/_config/.env.default .env
+          cp tests/support/config/.env.default .env
 
       - name: "Run Unit Tests"
         env:
@@ -249,7 +249,7 @@ jobs:
             ./config/ci/linux-setup-locales.sh
           fi
 
-          cp tests/_config/.env.default .env
+          cp tests/support/config/.env.default .env
 
       - name: "Run CLI Tests"
         if: always()
@@ -260,7 +260,7 @@ jobs:
         uses: "actions/upload-artifact@v3"
         with:
           name: "cli-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}.coverage"
-          path: "tests/_output/coverage.xml"
+          path: "tests/support/output/coverage/coverage.xml"
 
 
   integration-tests:

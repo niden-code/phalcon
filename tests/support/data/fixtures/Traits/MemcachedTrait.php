@@ -38,10 +38,7 @@ trait MemcachedTrait
         if (class_exists('\Memcached')) {
             $this->memcached = new Memcached();
             $options = self::getOptionsLibmemcached();
-            $this->memcached->addServer(
-                $options['servers'][0]['host'],
-                (int) $options['servers'][0]['port']
-            );
+            $this->memcached->addServers($options['servers']);
         } else {
             throw new RuntimeException('Memcache classes not loaded');
         }

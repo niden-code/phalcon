@@ -175,9 +175,9 @@ abstract class AbstractUnitTestCase extends TestCase
     protected static function getOptionsRedis(): array
     {
         return [
-            'host'  => self::env('DATA_REDIS_HOST'),
-            'port'  => self::env('DATA_REDIS_PORT'),
-            'index' => self::env('DATA_REDIS_NAME'),
+            'host'  => self::env('DATA_REDIS_HOST', '127.0.0.1'),
+            'port'  => self::env('DATA_REDIS_PORT', 6379),
+            'index' => self::env('DATA_REDIS_NAME', 0),
         ];
     }
 
