@@ -34,8 +34,9 @@ final class GetFilteredPatchTest extends AbstractHttpTestCase
         $this->registerStream();
         set_error_handler(
             static function (): bool {
-            return true;
-        });
+                return true;
+            }
+        );
         file_put_contents(Http::STREAM, 'no-id=24');
         restore_error_handler();
 
