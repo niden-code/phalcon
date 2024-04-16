@@ -38,6 +38,7 @@ use function time;
 use function unlink;
 
 use const E_NOTICE;
+use const E_WARNING;
 use const LOCK_EX;
 use const LOCK_SH;
 
@@ -401,7 +402,7 @@ class Stream extends AbstractAdapter
             function () use (&$warning) {
                 $warning = true;
             },
-            E_NOTICE
+            E_WARNING
         );
 
         $data = unserialize($payload);

@@ -23,8 +23,6 @@ use Phalcon\Tests\Support\AbstractUnitTestCase;
 use stdClass;
 
 use function array_merge;
-use function getOptionsLibmemcached2;
-use function getOptionsRedis2;
 use function uniqid;
 
 final class GetSetTest extends AbstractUnitTestCase

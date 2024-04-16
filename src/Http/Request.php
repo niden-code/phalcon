@@ -41,6 +41,8 @@ use function parse_str;
 use function preg_match_all;
 use function preg_replace;
 use function preg_split;
+use function restore_error_handler;
+use function set_error_handler;
 use function str_replace;
 use function stripos;
 use function strrpos;
@@ -931,7 +933,13 @@ class Request extends AbstractInjectionAware implements
             /**
              * We need store the read raw body because it can't be read again
              */
+            set_error_handler(
+                static function (): bool {
+                    return true;
+                }
+            );
             $this->rawBody = file_get_contents('php://input');
+            restore_error_handler();
         }
 
         return $this->rawBody;

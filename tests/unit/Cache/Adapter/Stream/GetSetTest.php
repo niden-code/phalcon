@@ -103,10 +103,7 @@ final class GetSetTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
 
         // Invalid stored object
-        $actual = file_put_contents(
-            $target . 'test-key',
-            '{'
-        );
+        $actual = file_put_contents($target . 'test-key', '{');
         $this->assertNotFalse($actual);
 
         $expected = 'test';

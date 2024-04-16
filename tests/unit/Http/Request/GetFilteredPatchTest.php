@@ -17,6 +17,8 @@ use Phalcon\Tests\Unit\Http\AbstractHttpTestCase;
 use Phalcon\Tests1\Fixtures\Page\Http;
 
 use function file_put_contents;
+use function restore_error_handler;
+use function set_error_handler;
 
 final class GetFilteredPatchTest extends AbstractHttpTestCase
 {
@@ -30,8 +32,12 @@ final class GetFilteredPatchTest extends AbstractHttpTestCase
     public function testHttpRequestGetFilteredPatch()
     {
         $this->registerStream();
-
+        set_error_handler(
+            static function (): bool {
+            return true;
+        });
         file_put_contents(Http::STREAM, 'no-id=24');
+        restore_error_handler();
 
         $_SERVER['REQUEST_METHOD'] = Http::METHOD_PATCH;
 

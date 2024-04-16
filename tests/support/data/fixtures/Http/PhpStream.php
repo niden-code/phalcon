@@ -27,11 +27,6 @@ class PhpStream
 {
     use HelperTrait;
 
-//    /**
-//     * @var string
-//     */
-//    protected string $context = '';
-
     /**
      * @var int
      */
