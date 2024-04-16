@@ -401,8 +401,7 @@ class Stream extends AbstractAdapter
         set_error_handler(
             function () use (&$warning) {
                 $warning = true;
-            },
-            E_WARNING
+            }
         );
 
         $data = unserialize($payload);
