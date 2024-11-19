@@ -205,9 +205,7 @@ class Collection implements
      */
     public function has(string $element): bool
     {
-        if ($this->insensitive) {
-            $element = mb_strtolower($element);
-        }
+        $element = $this->processKey($element);
 
         return isset($this->lowerKeys[$element]);
     }
@@ -250,9 +248,7 @@ class Collection implements
     public function remove(string $element): void
     {
         if ($this->has($element)) {
-            if ($this->insensitive) {
-                $element = mb_strtolower($element);
-            }
+            $element = $this->processKey($element);
 
             $value = $this->lowerKeys[$element];
 
