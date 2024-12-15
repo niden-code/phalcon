@@ -67,7 +67,7 @@ class Delete extends AbstractConditions
     /**
      * Resets the `RETURNING` store
      *
-     * @return $this
+     * @return static
      */
     public function resetReturning(): static
     {
@@ -81,7 +81,7 @@ class Delete extends AbstractConditions
      *
      * @param array $columns
      *
-     * @return $this
+     * @return static
      */
     public function returning(array $columns): static
     {

@@ -16,6 +16,7 @@ namespace Phalcon\Filter\Validation\Validator;
 use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\AbstractCombinedFieldsValidator;
 use Phalcon\Filter\Validation\Exception;
+use Phalcon\Mvc\Model;
 use Phalcon\Mvc\ModelInterface;
 
 use function array_keys;
@@ -192,6 +193,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
             }
         }
 
+        /** @var Model|null $record */
         $record = $this->getOption("model");
 
         if (true === empty($record) || true !== is_object($record)) {
@@ -230,7 +232,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
 //            );
         }
 
-        /** @var ModelInterface $className */
+        /** @var Model $className */
         $className = get_class($record);
 
         return $className::count($params) === 0;

@@ -400,6 +400,7 @@ class Annotations extends Router
         /**
          * Add the route to the router
          */
+        /** @var Route $route */
         $route = $this->add($uri, $paths);
 
         /**

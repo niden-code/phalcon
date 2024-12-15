@@ -25,6 +25,20 @@ use Phalcon\Translate\Adapter\NativeArray;
 
 /**
  * @property InterpolatorFactory $interpolator
+ *
+ * @psalm-type TConfig = array{
+ *      adapter: string,
+ *      options?: array{
+ *          content: string,
+ *          delimiter: string,
+ *          enclosure: string,
+ *          locale: string,
+ *          defaultDomain: string,
+ *          directory: string,
+ *          category: string,
+ *          triggerError: bool,
+ *      }
+ *  }
  */
 class TranslateFactory
 {
@@ -47,19 +61,7 @@ class TranslateFactory
     /**
      * Factory to create an instance from a Config object
      *
-     * @param array<string, mixed>|ConfigInterface $config = {
-     *                                                     'adapter'       : string,
-     *                                                     'options'       : array {
-     *                                                     'content'       : string,
-     *                                                     'delimiter'     : string,
-     *                                                     'enclosure'     : string,
-     *                                                     'locale'        : string,
-     *                                                     'defaultDomain' : string,
-     *                                                     'directory'     : string,
-     *                                                     'category'      : string,
-     *                                                     'triggerError'  : bool,
-     *                                                     }
-     *                                                     }
+     * @param ConfigInterface|TConfig $config
      *
      * @return AdapterInterface
      * @throws SupportException
@@ -67,9 +69,10 @@ class TranslateFactory
      */
     public function load(array | ConfigInterface $config): AdapterInterface
     {
+        /** @var TConfig $config */
         $config  = $this->checkConfig($config);
-        $name    = $config['adapter'];
-        $options = $config['options'] ?? [];
+        $name    = (string)$config['adapter'];
+        $options = true === isset($config['options']) ? (array)$config['options'] : [];
 
         return $this->newInstance($name, $options);
     }

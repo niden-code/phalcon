@@ -87,7 +87,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     /**
      * AbstractAdapter constructor.
      *
-     * @param SerializerFactory $factory
+     * @param SerializerFactory $serializerFactory
      * @param array             $options
      */
     protected function __construct(

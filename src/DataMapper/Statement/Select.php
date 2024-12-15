@@ -263,7 +263,7 @@ class Select extends AbstractConditions
      * @param mixed|null               $value
      * @param int                      $type
      *
-     * @return $this
+     * @return static
      */
     public function join(
         string $join,
@@ -336,7 +336,7 @@ class Select extends AbstractConditions
     /**
      * Reset the AS clause
      *
-     * @return $this
+     * @return static
      */
     public function resetAs(): static
     {
@@ -348,7 +348,7 @@ class Select extends AbstractConditions
     /**
      * Resets the columns
      *
-     * @return $this
+     * @return static
      */
     public function resetColumns(): static
     {
@@ -360,7 +360,7 @@ class Select extends AbstractConditions
     /**
      * Resets the flags
      *
-     * @return $this
+     * @return static
      */
     public function resetFlags(): static
     {
@@ -372,7 +372,7 @@ class Select extends AbstractConditions
     /**
      * Reset the FROM clause
      *
-     * @return $this
+     * @return static
      */
     public function resetFrom(): static
     {
@@ -384,7 +384,7 @@ class Select extends AbstractConditions
     /**
      * Resets the group by
      *
-     * @return $this
+     * @return static
      */
     public function resetGroupBy(): static
     {
@@ -396,7 +396,7 @@ class Select extends AbstractConditions
     /**
      * Resets the having
      *
-     * @return void
+     * @return static
      */
     public function resetHaving(): static
     {

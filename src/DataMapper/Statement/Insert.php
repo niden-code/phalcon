@@ -45,7 +45,7 @@ class Insert extends AbstractStatement
      *
      * @param string $column
      *
-     * @return Insert
+     * @return static
      */
     public function column(
         string $column,
@@ -66,7 +66,7 @@ class Insert extends AbstractStatement
      *
      * @param array $columns
      *
-     * @return Insert
+     * @return static
      */
     public function columns(array $columns): static
     {
@@ -110,7 +110,7 @@ class Insert extends AbstractStatement
      *
      * @param string $table
      *
-     * @return Insert
+     * @return static
      */
     public function into(string $table): static
     {
@@ -135,7 +135,7 @@ class Insert extends AbstractStatement
     /**
      * Resets the `RETURNING` store
      *
-     * @return $this
+     * @return static
      */
     public function resetReturning(): static
     {
@@ -149,7 +149,7 @@ class Insert extends AbstractStatement
      *
      * @param array $columns
      *
-     * @return $this
+     * @return static
      */
     public function returning(array $columns): static
     {
@@ -167,7 +167,7 @@ class Insert extends AbstractStatement
      * @param string     $column
      * @param mixed|null $value
      *
-     * @return Insert
+     * @return static
      */
     public function set(string $column, mixed $value = null): static
     {

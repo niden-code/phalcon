@@ -31,7 +31,7 @@ class Update extends Delete
      * @param mixed|null $value
      * @param int        $type
      *
-     * @return $this
+     * @return static
      */
     public function column(
         string $column,
@@ -52,7 +52,7 @@ class Update extends Delete
      *
      * @param array $columns
      *
-     * @return $this
+     * @return static
      */
     public function columns(array $columns): static
     {
@@ -67,6 +67,9 @@ class Update extends Delete
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getStatement(): string
     {
         return $this->buildWith()
@@ -95,7 +98,7 @@ class Update extends Delete
      * @param string     $column
      * @param mixed|null $value
      *
-     * @return $this
+     * @return static
      */
     public function set(string $column, mixed $value = null): static
     {
