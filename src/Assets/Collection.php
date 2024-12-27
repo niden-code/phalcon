@@ -23,19 +23,9 @@ use function realpath;
 /**
  * Collection of asset objects
  *
- * @property array  $assets
- * @property array  $attributes
- * @property bool   $autoVersion
- * @property array  $codes
- * @property array  $filters
- * @property bool   $join
- * @property bool   $isLocal
- * @property string $prefix
- * @property string $sourcePath
- * @property bool   $targetIsLocal
- * @property string $targetPath
- * @property string $targetUri
- * @property string $version
+ * @template TKey of array-key
+ * @template TValue of AssetInterface
+ * @implements IteratorAggregate<TKey, TValue>
  */
 class Collection implements Countable, IteratorAggregate
 {
@@ -59,12 +49,12 @@ class Collection implements Countable, IteratorAggregate
     protected bool $autoVersion = false;
 
     /**
-     * @var array<string, string>
+     * @var AssetInterface[]
      */
     protected array $codes = [];
 
     /**
-     * @var array<int, FilterInterface>
+     * @var FilterInterface[]
      */
     protected array $filters = [];
     /**
@@ -129,7 +119,7 @@ class Collection implements Countable, IteratorAggregate
      * @param string|null           $version
      * @param bool                  $autoVersion
      *
-     * @return $this
+     * @return static
      */
     public function addCss(
         string $path,
@@ -138,7 +128,7 @@ class Collection implements Countable, IteratorAggregate
         array $attributes = [],
         string $version = null,
         bool $autoVersion = false
-    ): Collection {
+    ): static {
         return $this->processAdd(
             "Css",
             $path,
@@ -155,9 +145,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param FilterInterface $filter
      *
-     * @return Collection
+     * @return static
      */
-    public function addFilter(FilterInterface $filter): Collection
+    public function addFilter(FilterInterface $filter): static
     {
         $this->filters[] = $filter;
 
@@ -169,9 +159,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param Inline $code
      *
-     * @return $this
+     * @return static
      */
-    public function addInline(Inline $code): Collection
+    public function addInline(Inline $code): static
     {
         $this->addAsset($code);
 
@@ -181,48 +171,48 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Adds an inline CSS to the collection
      *
-     * @param string $content
-     * @param bool   $filter
-     * @param array  $attributes
+     * @param string                $content
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
      *
-     * @return $this
+     * @return static
      */
     public function addInlineCss(
         string $content,
         bool $filter = true,
         array $attributes = []
-    ): Collection {
+    ): static {
         return $this->processAddInline("Css", $content, $filter, $attributes);
     }
 
     /**
      * Adds an inline JavaScript to the collection
      *
-     * @param string $content
-     * @param bool   $filter
-     * @param array  $attributes
+     * @param string                $content
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
      *
-     * @return $this
+     * @return static
      */
     public function addInlineJs(
         string $content,
         bool $filter = true,
         array $attributes = []
-    ): Collection {
+    ): static {
         return $this->processAddInline("Js", $content, $filter, $attributes);
     }
 
     /**
      * Adds a JavaScript asset to the collection
      *
-     * @param string      $path
-     * @param bool|null   $isLocal
-     * @param bool        $filter
-     * @param array       $attributes
-     * @param string|null $version
-     * @param bool        $autoVersion
+     * @param string                $path
+     * @param bool|null             $isLocal
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
+     * @param string|null           $version
+     * @param bool                  $autoVersion
      *
-     * @return $this
+     * @return static
      */
     public function addJs(
         string $path,
@@ -231,7 +221,7 @@ class Collection implements Countable, IteratorAggregate
         array $attributes = [],
         string $version = null,
         bool $autoVersion = false
-    ): Collection {
+    ): static {
         return $this->processAdd(
             "Js",
             $path,
@@ -278,7 +268,7 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Return the stored codes
      *
-     * @return array<string, string>
+     * @return AssetInterface[]
      */
     public function getCodes(): array
     {
@@ -288,7 +278,7 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Return the stored filters
      *
-     * @return array<int, FilterInterface>
+     * @return FilterInterface[]
      */
     public function getFilters(): array
     {
@@ -298,9 +288,7 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Returns the generator of the class
      *
-     * @return Generator<int, mixed>
-     *
-     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Generator<string, AssetInterface>
      */
     public function getIterator(): Generator
     {
@@ -347,7 +335,10 @@ class Collection implements Countable, IteratorAggregate
          * exist
          */
         if (true === $this->phpFileExists($completePath)) {
-            return realPath($completePath);
+            /**
+             * Just in case realPath returns false, cast it to an empty string
+             */
+            return (string)realPath($completePath);
         }
 
         return $completePath;
@@ -458,9 +449,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param bool $flag
      *
-     * @return Collection
+     * @return static
      */
-    public function join(bool $flag): Collection
+    public function join(bool $flag): static
     {
         $this->join = $flag;
 
@@ -470,11 +461,11 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Sets extra HTML attributes
      *
-     * @param array $attributes
+     * @param array<string, string> $attributes
      *
-     * @return $this
+     * @return static
      */
-    public function setAttributes(array $attributes): Collection
+    public function setAttributes(array $attributes): static
     {
         $this->attributes = $attributes;
 
@@ -484,9 +475,9 @@ class Collection implements Countable, IteratorAggregate
     /**
      * @param bool $flag
      *
-     * @return Collection
+     * @return static
      */
-    public function setAutoVersion(bool $flag): Collection
+    public function setAutoVersion(bool $flag): static
     {
         $this->autoVersion = $flag;
 
@@ -496,11 +487,11 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Sets an array of filters in the collection
      *
-     * @param array $filters
+     * @param FilterInterface[] $filters
      *
-     * @return $this
+     * @return static
      */
-    public function setFilters(array $filters): Collection
+    public function setFilters(array $filters): static
     {
         $this->filters = $filters;
 
@@ -512,9 +503,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return static
      */
-    public function setIsLocal(bool $flag): Collection
+    public function setIsLocal(bool $flag): static
     {
         $this->isLocal = $flag;
 
@@ -526,9 +517,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param string $prefix
      *
-     * @return $this
+     * @return static
      */
-    public function setPrefix(string $prefix): Collection
+    public function setPrefix(string $prefix): static
     {
         $this->prefix = $prefix;
 
@@ -540,9 +531,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param string $sourcePath
      *
-     * @return Collection
+     * @return static
      */
-    public function setSourcePath(string $sourcePath): Collection
+    public function setSourcePath(string $sourcePath): static
     {
         $this->sourcePath = $sourcePath;
 
@@ -554,9 +545,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return static
      */
-    public function setTargetIsLocal(bool $flag): Collection
+    public function setTargetIsLocal(bool $flag): static
     {
         $this->targetIsLocal = $flag;
 
@@ -568,9 +559,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param string $targetPath
      *
-     * @return $this
+     * @return static
      */
-    public function setTargetPath(string $targetPath): Collection
+    public function setTargetPath(string $targetPath): static
     {
         $this->targetPath = $targetPath;
 
@@ -582,9 +573,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param string $targetUri
      *
-     * @return Collection
+     * @return static
      */
-    public function setTargetUri(string $targetUri): Collection
+    public function setTargetUri(string $targetUri): static
     {
         $this->targetUri = $targetUri;
 
@@ -596,9 +587,9 @@ class Collection implements Countable, IteratorAggregate
      *
      * @param string $version
      *
-     * @return Collection
+     * @return static
      */
-    public function setVersion(string $version): Collection
+    public function setVersion(string $version): static
     {
         $this->version = $version;
 
@@ -632,15 +623,15 @@ class Collection implements Countable, IteratorAggregate
     /**
      * Adds an inline asset
      *
-     * @param string      $className
-     * @param string      $path
-     * @param bool|null   $isLocal
-     * @param bool        $filter
-     * @param array       $attributes
-     * @param string|null $version
-     * @param bool        $autoVersion
+     * @param string                $className
+     * @param string                $path
+     * @param bool|null             $isLocal
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
+     * @param string|null           $version
+     * @param bool                  $autoVersion
      *
-     * @return Collection
+     * @return static
      */
     private function processAdd(
         string $className,
@@ -650,27 +641,45 @@ class Collection implements Countable, IteratorAggregate
         array $attributes = [],
         string $version = null,
         bool $autoVersion = false
-    ): Collection {
-        $name  = "Phalcon\\Assets\\Asset\\" . $className;
-        $flag  = (null !== $isLocal) ? $isLocal : $this->isLocal;
-        $attrs = $this->processAttributes($attributes);
+    ): static {
+        /** @var class-string $name */
+        $name = "Phalcon\\Assets\\Asset\\" . $className;
 
-        $this->add(new $name($path, $flag, $filter, $attrs, $version, $autoVersion));
+        /** @var AssetInterface $add */
+        $add = new $name(
+            $path,
+            (null !== $isLocal) ? $isLocal : $this->isLocal,
+            $filter,
+            $this->processAttributes($attributes),
+            $version,
+            $autoVersion
+        );
+
+        $this->add($add);
 
         return $this;
     }
 
     /**
      * Adds an inline asset
+     *
+     * @param string                $className
+     * @param string                $content
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
+     *
+     * @return static
      */
     private function processAddInline(
         string $className,
         string $content,
         bool $filter = true,
         array $attributes = []
-    ): Collection {
+    ): static {
+        /** @var class-string $name */
         $name  = "Phalcon\\Assets\\Inline\\" . $className;
         $attrs = $this->processAttributes($attributes);
+        /** @var Inline $asset */
         $asset = new $name(
             $content,
             $filter,
@@ -683,9 +692,9 @@ class Collection implements Countable, IteratorAggregate
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, string> $attributes
      *
-     * @return array
+     * @return array<string, string>
      */
     private function processAttributes(array $attributes): array
     {

@@ -20,13 +20,14 @@ use Phalcon\Assets\Inline\Css as InlineCss;
 use Phalcon\Assets\Inline\Js as InlineJs;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Di\Traits\InjectionAwareTrait;
+use Phalcon\Html\Helper\Link;
+use Phalcon\Html\Helper\Script;
 use Phalcon\Html\TagFactory;
 
 use function call_user_func_array;
 use function file_exists;
 use function file_put_contents;
 use function filemtime;
-use function is_array;
 use function is_dir;
 use function is_object;
 
@@ -35,17 +36,26 @@ use const PHP_EOL;
 /**
  * Manages collections of CSS/JavaScript assets
  *
- * @property array      $collections
- * @property bool       $implicitOutput
- * @property array      $options
- * @property TagFactory $tagFactory
+ * @phpstan-type TOptions = array{
+ *      sourceBasePath?: string,
+ *      targetBasePath?: string
+ * }
+ *
+ * @phpstan-type TParameters = array{
+ *      local?: bool,
+ *      type?: string,
+ *      rel?: string,
+ *      string?: string,
+ *      0?: string,
+ *      1?: string
+ * }
  */
 class Manager implements InjectionAwareInterface
 {
     use InjectionAwareTrait;
 
     /**
-     * @var array
+     * @var array<string, Collection>
      */
     protected array $collections = [];
 
@@ -55,25 +65,15 @@ class Manager implements InjectionAwareInterface
     protected bool $implicitOutput = true;
 
     /**
-     * @var array
-     */
-    protected array $options = [];
-
-    /**
-     * @var TagFactory
-     */
-    protected TagFactory $tagFactory;
-
-    /**
      * Manager constructor.
      *
      * @param TagFactory $tagFactory
-     * @param array      $options
+     * @param TOptions   $options
      */
-    public function __construct(TagFactory $tagFactory, array $options = [])
-    {
-        $this->tagFactory = $tagFactory;
-        $this->options    = $options;
+    public function __construct(
+        protected TagFactory $tagFactory,
+        protected array $options = []
+    ) {
     }
 
     /**
@@ -81,9 +81,9 @@ class Manager implements InjectionAwareInterface
      *
      * @param Asset $asset
      *
-     * @return $this
+     * @return static
      */
-    public function addAsset(Asset $asset): Manager
+    public function addAsset(Asset $asset): static
     {
         /**
          * Adds the asset by its type
@@ -99,9 +99,9 @@ class Manager implements InjectionAwareInterface
      * @param string $type
      * @param Asset  $asset
      *
-     * @return $this
+     * @return static
      */
-    public function addAssetByType(string $type, Asset $asset): Manager
+    public function addAssetByType(string $type, Asset $asset): static
     {
         $collection = $this->checkAndCreateCollection($type);
         $collection->add($asset);
@@ -112,14 +112,14 @@ class Manager implements InjectionAwareInterface
     /**
      * Adds a CSS asset to the 'css' collection
      *
-     * @param string      $path
-     * @param bool        $local
-     * @param bool        $filter
-     * @param array       $attributes
-     * @param string|null $version
-     * @param bool        $autoVersion
+     * @param string                $path
+     * @param bool                  $local
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
+     * @param string|null           $version
+     * @param bool                  $autoVersion
      *
-     * @return $this
+     * @return static
      */
     public function addCss(
         string $path,
@@ -128,7 +128,7 @@ class Manager implements InjectionAwareInterface
         array $attributes = [],
         string $version = null,
         bool $autoVersion = false
-    ): Manager {
+    ): static {
         $this->addAssetByType(
             'css',
             new AssetCss($path, $local, $filter, $attributes, $version, $autoVersion)
@@ -142,9 +142,9 @@ class Manager implements InjectionAwareInterface
      *
      * @param Inline $code
      *
-     * @return $this
+     * @return static
      */
-    public function addInlineCode(Inline $code): Manager
+    public function addInlineCode(Inline $code): static
     {
         /**
          * Adds the inline code by its type
@@ -160,9 +160,9 @@ class Manager implements InjectionAwareInterface
      * @param string $type
      * @param Inline $code
      *
-     * @return $this
+     * @return static
      */
-    public function addInlineCodeByType(string $type, Inline $code): Manager
+    public function addInlineCodeByType(string $type, Inline $code): static
     {
         $collection = $this->checkAndCreateCollection($type);
         $collection->addInline($code);
@@ -173,17 +173,17 @@ class Manager implements InjectionAwareInterface
     /**
      * Adds an inline CSS to the 'css' collection
      *
-     * @param string $content
-     * @param bool   $filter
-     * @param array  $attributes
+     * @param string                $content
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
      *
-     * @return $this
+     * @return static
      */
     public function addInlineCss(
         string $content,
         bool $filter = true,
         array $attributes = []
-    ): Manager {
+    ): static {
         $this->addInlineCodeByType(
             'css',
             new InlineCss($content, $filter, $attributes)
@@ -195,17 +195,17 @@ class Manager implements InjectionAwareInterface
     /**
      * Adds an inline JavaScript to the 'js' collection
      *
-     * @param string $content
-     * @param bool   $filter
-     * @param array  $attributes
+     * @param string                $content
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
      *
-     * @return $this
+     * @return static
      */
     public function addInlineJs(
         string $content,
         bool $filter = true,
         array $attributes = []
-    ): Manager {
+    ): static {
         $this->addInlineCodeByType(
             'js',
             new InlineJs($content, $filter, $attributes)
@@ -222,14 +222,14 @@ class Manager implements InjectionAwareInterface
      * $assets->addJs("https://jquery.my-cdn.com/jquery.js", false);
      *```
      *
-     * @param string      $path
-     * @param bool        $local
-     * @param bool        $filter
-     * @param array       $attributes
-     * @param string|null $version
-     * @param bool        $autoVersion
+     * @param string                $path
+     * @param bool                  $local
+     * @param bool                  $filter
+     * @param array<string, string> $attributes
+     * @param string|null           $version
+     * @param bool                  $autoVersion
      *
-     * @return $this
+     * @return static
      */
     public function addJs(
         string $path,
@@ -238,7 +238,7 @@ class Manager implements InjectionAwareInterface
         array $attributes = [],
         string $version = null,
         bool $autoVersion = false
-    ): Manager {
+    ): static {
         $this->addAssetByType(
             'js',
             new AssetJs($path, $local, $filter, $attributes, $version, $autoVersion)
@@ -262,10 +262,10 @@ class Manager implements InjectionAwareInterface
     /**
      * Creates/Returns a collection of assets by type
      *
-     * @param array  $assets
-     * @param string $type
+     * @param AssetInterface[] $assets
+     * @param string           $type
      *
-     * @return array
+     * @return AssetInterface[]
      */
     public function collectionAssetsByType(array $assets, string $type): array
     {
@@ -280,26 +280,6 @@ class Manager implements InjectionAwareInterface
         }
 
         return $filtered;
-    }
-
-    /**
-     * Returns true or false if collection exists.
-     *
-     * ```php
-     * if ($manager->exists("jsHeader")) {
-     *     // \Phalcon\Assets\Collection
-     *     $collection = $manager->get("jsHeader");
-     * }
-     * ```
-     *
-     * @param string $name
-     *
-     * @return bool
-     * @deprecated
-     */
-    public function exists(string $name): bool
-    {
-        return $this->has($name);
     }
 
     /**
@@ -326,7 +306,7 @@ class Manager implements InjectionAwareInterface
     /**
      * Returns existing collections in the manager
      *
-     * @return Collection[]
+     * @return array<string, Collection>
      */
     public function getCollections(): array
     {
@@ -355,6 +335,8 @@ class Manager implements InjectionAwareInterface
 
     /**
      * Returns the manager options
+     *
+     * @return TOptions
      */
     public function getOptions(): array
     {
@@ -540,7 +522,7 @@ class Manager implements InjectionAwareInterface
                         /**
                          * Filters must be valid objects
                          */
-                        if (true !== is_object($filter)) {
+                        if (!is_object($filter)) {
                             throw new Exception('Filter is invalid');
                         }
 
@@ -675,7 +657,7 @@ class Manager implements InjectionAwareInterface
                     /**
                      * Filters must be valid objects
                      */
-                    if (true !== is_object($filter)) {
+                    if (!is_object($filter)) {
                         throw new Exception('Filter is invalid');
                     }
 
@@ -690,21 +672,21 @@ class Manager implements InjectionAwareInterface
                     $joinedContent .= $content;
                 } else {
                     $html .= $this->tagFactory->element(
-                        $type,
-                        $content,
-                        $attributes,
-                        true
-                    ) . PHP_EOL;
+                            $type,
+                            $content,
+                            $attributes,
+                            true
+                        ) . PHP_EOL;
                 }
             }
 
             if (true === $join) {
                 $html .= $this->tagFactory->element(
-                    $type,
-                    $joinedContent,
-                    $attributes,
-                    true
-                ) . PHP_EOL;
+                        $type,
+                        $joinedContent,
+                        $attributes,
+                        true
+                    ) . PHP_EOL;
             }
 
             /**
@@ -784,9 +766,9 @@ class Manager implements InjectionAwareInterface
      * @param string     $name
      * @param Collection $collection
      *
-     * @return $this
+     * @return static
      */
-    public function set(string $name, Collection $collection): Manager
+    public function set(string $name, Collection $collection): static
     {
         $this->collections[$name] = $collection;
 
@@ -796,11 +778,11 @@ class Manager implements InjectionAwareInterface
     /**
      * Sets the manager options
      *
-     * @param array $options
+     * @param TOptions $options
      *
-     * @return $this
+     * $return static
      */
-    public function setOptions(array $options): Manager
+    public function setOptions(array $options): static
     {
         $this->options = $options;
 
@@ -812,9 +794,9 @@ class Manager implements InjectionAwareInterface
      *
      * @param bool $implicitOutput
      *
-     * @return $this
+     * $return static
      */
-    public function useImplicitOutput(bool $implicitOutput): Manager
+    public function useImplicitOutput(bool $implicitOutput): static
     {
         $this->implicitOutput = $implicitOutput;
 
@@ -870,13 +852,13 @@ class Manager implements InjectionAwareInterface
     /**
      * Builds a LINK[rel="stylesheet"] tag
      *
-     * @param mixed $parameters
-     * @param bool  $local
+     * @param TParameters $parameters
+     * @param bool        $local
      *
      * @return string
-     * @throws Exception
+     * @throws BaseException
      */
-    private function cssLink($parameters = [], bool $local = true): string
+    private function cssLink(array $parameters = [], bool $local = true): string
     {
         return $this->processParameters(
             $parameters,
@@ -888,10 +870,10 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * @param mixed  $callback
-     * @param array  $attributes
-     * @param string $prefixedPath
-     * @param bool   $local
+     * @param mixed                 $callback
+     * @param array<string, string> $attributes
+     * @param string                $prefixedPath
+     * @param bool                  $local
      *
      * @return string
      */
@@ -953,10 +935,10 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * @param Collection $collection
-     * @param string     $completeTargetPath
-     * @param array      $callback
-     * @param string     $output
+     * @param Collection                       $collection
+     * @param string                           $completeTargetPath
+     * @param array<array-key, Manager|string> $callback
+     * @param string                           $output
      *
      * @return string
      */
@@ -1056,13 +1038,13 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * @param mixed $parameters
-     * @param bool  $local
+     * @param TParameters $parameters
+     * @param bool        $local
      *
      * @return string
      * @throws Exception
      */
-    private function jsLink($parameters = [], bool $local = true): string
+    private function jsLink(array $parameters = [], bool $local = true): string
     {
         return $this->processParameters(
             $parameters,
@@ -1076,17 +1058,17 @@ class Manager implements InjectionAwareInterface
     /**
      * Processes common parameters for js/css link generation
      *
-     * @param        $parameters
-     * @param bool   $local
-     * @param string $helperClass
-     * @param string $type
-     * @param string $name
+     * @param TParameters $parameters
+     * @param bool        $local
+     * @param string      $helperClass
+     * @param string      $type
+     * @param string      $name
      *
      * @return string
      * @throws BaseException
      */
     private function processParameters(
-        $parameters,
+        array $parameters,
         bool $local,
         string $helperClass,
         string $type,
@@ -1094,15 +1076,11 @@ class Manager implements InjectionAwareInterface
     ): string {
         $params = $parameters;
 
-        if (true !== is_array($params)) {
-            $params = [$parameters, $local];
-        }
-
-        if (true === isset($params[1])) {
+        if (isset($params[1])) {
             $local = (bool)$params[1];
             unset($params[1]);
         } else {
-            if (true === isset($params["local"])) {
+            if (isset($params["local"])) {
                 $local = (bool)$params["local"];
 
                 unset($params["local"]);
@@ -1122,12 +1100,13 @@ class Manager implements InjectionAwareInterface
 
         if (true !== isset($params[$name])) {
             $params[$name] = "";
-            if (true === isset($params[0])) {
+            if (isset($params[0])) {
                 $params[$name] = $params[0];
                 unset($params[0]);
             }
         }
 
+        /** @var string $tag */
         $tag = $params[$name];
         unset($params[$name]);
 
@@ -1138,6 +1117,7 @@ class Manager implements InjectionAwareInterface
             $tag = "/" . ltrim($tag, "/");
         }
 
+        /** @var Link|Script $helper */
         $helper = $this->tagFactory->newInstance($helperClass);
 
         $helper->__invoke(""); // no indentation

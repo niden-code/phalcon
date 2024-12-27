@@ -21,8 +21,12 @@ use Phalcon\Events\Traits\EventsAwareTrait;
 /**
  * Base class for Phalcon\Cli\Console and Phalcon\Mvc\Application.
  *
- * @property string $defaultModule
- * @property array  $modules
+ * @phpstan-type TModule = array{
+ *     string: array{
+ *          className: string,
+ *          path: string,
+ *     }
+ * }
  */
 abstract class AbstractApplication extends Injectable implements EventsAwareInterface
 {
@@ -34,7 +38,7 @@ abstract class AbstractApplication extends Injectable implements EventsAwareInte
     protected string $defaultModule = '';
 
     /**
-     * @var array<string, mixed>
+     * @var TModule[]
      */
     protected array $modules = [];
 
@@ -63,10 +67,10 @@ abstract class AbstractApplication extends Injectable implements EventsAwareInte
      *
      * @param string $name
      *
-     * @return array<string, mixed>
+     * @return TModule
      * @throws Exception
      */
-    public function getModule(string $name)
+    public function getModule(string $name): array
     {
         if (true !== isset($this->modules[$name])) {
             throw new Exception(
@@ -81,7 +85,7 @@ abstract class AbstractApplication extends Injectable implements EventsAwareInte
     /**
      * Return the modules registered in the application
      *
-     * @return array<string, mixed>
+     * @return TModule[]
      */
     public function getModules(): array
     {
@@ -106,8 +110,8 @@ abstract class AbstractApplication extends Injectable implements EventsAwareInte
      * );
      * ```
      *
-     * @param array<string, array<string, string>> $modules
-     * @param bool                                 $merge
+     * @param TModule[] $modules
+     * @param bool      $merge
      *
      * @return $this
      */

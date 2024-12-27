@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  *
  * Minifying logic supported by Minify by Mathias Mullie
+ *
  * @link    https://github.com/matthiasmullie/minify
  * @license https://github.com/matthiasmullie/minify/blob/master/LICENSE
  */

@@ -17,34 +17,9 @@ use function hash;
 
 /**
  * Represents an inline asset
- *
- * @property array  $attributes
- * @property string $content
- * @property bool   $filter
- * @property string $type
  */
 class Inline implements AssetInterface
 {
-    /**
-     * @var array<string, string>
-     */
-    protected array $attributes;
-
-    /**
-     * @var string
-     */
-    protected string $content;
-
-    /**
-     * @var bool
-     */
-    protected bool $filter;
-
-    /**
-     * @var string
-     */
-    protected string $type;
-
     /**
      * Inline constructor.
      *
@@ -54,15 +29,11 @@ class Inline implements AssetInterface
      * @param array<string, string> $attributes
      */
     public function __construct(
-        string $type,
-        string $content,
-        bool $filter = true,
-        array $attributes = []
+        protected string $type,
+        protected string $content,
+        protected bool $filter = true,
+        protected array $attributes = []
     ) {
-        $this->type       = $type;
-        $this->content    = $content;
-        $this->filter     = $filter;
-        $this->attributes = $attributes;
     }
 
     /**
