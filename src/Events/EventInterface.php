@@ -39,7 +39,7 @@ interface EventInterface
      *
      * @return mixed
      */
-    public function getType();
+    public function getType(): mixed;
 
     /**
      * Check whether the event is cancelable

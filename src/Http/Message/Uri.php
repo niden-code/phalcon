@@ -166,7 +166,7 @@ final class Uri extends AbstractCommon implements UriInterface
             $this->scheme   = $this->filterScheme($urlParts["scheme"] ?? "");
             $this->userInfo = $this->filterUserInfo($urlParts["user"] ?? "");
 
-            if (true === isset($urlParts["pass"])) {
+            if (isset($urlParts["pass"])) {
                 $this->userInfo .= ":" . $this->filterUserInfo(
                     $urlParts["pass"]
                 );
@@ -667,7 +667,7 @@ final class Uri extends AbstractCommon implements UriInterface
         ];
 
         if (
-            true === isset($schemes[$this->scheme]) &&
+            isset($schemes[$this->scheme]) &&
             $port === $schemes[$this->scheme]
         ) {
             return null;
@@ -758,7 +758,7 @@ final class Uri extends AbstractCommon implements UriInterface
             return "";
         }
 
-        if (true !== isset($schemes[$filtered])) {
+        if (!isset($schemes[$filtered])) {
             throw new InvalidArgumentException(
                 "Unsupported scheme [" . $filtered . "]. " .
                 "Scheme must be one of [" .
@@ -851,7 +851,7 @@ final class Uri extends AbstractCommon implements UriInterface
     private function splitQueryValue(string $element): array
     {
         $data = explode("=", $element, 2);
-        if (true !== isset($data[1])) {
+        if (!isset($data[1])) {
             $data[] = null;
         }
 

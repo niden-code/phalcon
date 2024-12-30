@@ -21,10 +21,10 @@ trait JsonTrait
     /**
      * @param mixed $value
      */
-    private function checkSerializable($value)
+    private function checkSerializable(mixed $value): mixed
     {
         if (
-            true === is_object($value) &&
+            is_object($value) &&
             true === method_exists($value, 'jsonSerialize')
         ) {
             return $value->jsonSerialize();

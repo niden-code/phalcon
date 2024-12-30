@@ -95,7 +95,7 @@ class Stream extends Noop
          */
         $path = $options['savePath'] ?? $this->phpIniGet('session.save_path');
 
-        if (true === empty($path)) {
+        if (empty($path)) {
             throw new Exception('The session save path cannot be empty');
         }
 
@@ -117,7 +117,7 @@ class Stream extends Noop
     {
         $file = $this->path . $this->getPrefixedName($id);
 
-        if (true === file_exists($file) && true === is_file($file)) {
+        if (file_exists($file) && is_file($file)) {
             unlink($file);
         }
 
@@ -136,8 +136,8 @@ class Stream extends Noop
 
         foreach (glob($pattern) as $file) {
             if (
-                true === file_exists($file) &&
-                true === is_file($file) &&
+                file_exists($file) &&
+                is_file($file) &&
                 filemtime($file) < $time
             ) {
                 unlink($file);

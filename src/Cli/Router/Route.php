@@ -504,7 +504,7 @@ class Route implements RouteInterface
                     // Extract the namespace from the namespaced class
                     $namespaceName = implode("\\", $taskNameArray);
 
-                    if (true === empty($realClassName)) {
+                    if (empty($realClassName)) {
                         throw new Exception(
                             "The route contains invalid paths"
                         );

@@ -18,8 +18,6 @@ use function filter_var;
 use const FILTER_SANITIZE_FULL_SPECIAL_CHARS;
 
 /**
- * Phalcon\Filter\Sanitize\SpecialFull
- *
  * Sanitizes a value special characters (htmlspecialchars() and ENT_QUOTES)
  */
 class SpecialFull

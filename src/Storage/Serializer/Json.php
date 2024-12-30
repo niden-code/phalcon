@@ -29,7 +29,7 @@ class Json extends AbstractSerializer
      */
     public function serialize()
     {
-        if (true === is_object($this->data) && !($this->data instanceof JsonSerializable)) {
+        if (is_object($this->data) && !($this->data instanceof JsonSerializable)) {
             throw new InvalidArgumentException(
                 "Data for the JSON serializer cannot be of type 'object' " .
                 "without implementing 'JsonSerializable'"

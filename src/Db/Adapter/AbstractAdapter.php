@@ -289,7 +289,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         array $definition
     ): bool {
         $columns = $definition["columns"] ?? [];
-        if (true === empty($columns)) {
+        if (empty($columns)) {
             throw new Exception("The table must contain at least one column");
         }
 
@@ -317,7 +317,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         array $definition,
         string $schemaName = null
     ): bool {
-        if (true !== isset($definition["sql"])) {
+        if (!isset($definition["sql"])) {
             throw new Exception("The table must contain at least one column");
         }
 
@@ -359,7 +359,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     ): bool {
         $sql = "DELETE FROM " . $this->escapeIdentifier($tableName);
 
-        if (true !== empty($whereCondition)) {
+        if (!empty($whereCondition)) {
             $sql .= " WHERE " . $whereCondition;
         }
 
@@ -975,7 +975,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         /**
          * A valid array with more than one element is required
          */
-        if (true === empty($values)) {
+        if (empty($values)) {
             throw new Exception(
                 "Unable to insert into " . $tableName . " without data"
             );
@@ -1003,8 +1003,8 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
                     $placeholders[] = "?";
                     $insertValues[] = $value;
 
-                    if (true !== empty($dataTypes)) {
-                        if (true !== isset($dataTypes[$position])) {
+                    if (!empty($dataTypes)) {
+                        if (!isset($dataTypes[$position])) {
                             throw new Exception(
                                 "Incomplete number of bind types"
                             );
@@ -1029,7 +1029,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
 
         $insertSql = "INSERT INTO " . $escapedTable . " VALUES (" . $joinedValues . ")";
 
-        if (true !== empty($fields)) {
+        if (!empty($fields)) {
             $escapedFields = [];
             foreach ($fields as $field) {
                 $escapedFields[] = $this->escapeIdentifier($field);
@@ -1044,7 +1044,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         /**
          * Perform the execution via PDO::execute
          */
-        if (true !== empty($bindDataTypes)) {
+        if (!empty($bindDataTypes)) {
             return $this->execute($insertSql, $insertValues, $bindDataTypes);
         }
 
@@ -1080,7 +1080,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         array $data,
         array $dataTypes = []
     ): bool {
-        if (true === empty($data)) {
+        if (empty($data)) {
             return false;
         }
 
@@ -1351,7 +1351,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     ): array {
         $options = $this->dialect->tableOptions($tableName, $schemaName);
 
-        if (true === empty($options)) {
+        if (empty($options)) {
             return [];
         }
 
@@ -1418,7 +1418,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
          * string 'null', everything else is passed as '?'
          */
         foreach ($values as $position => $value) {
-            if (true !== isset($fields[$position])) {
+            if (!isset($fields[$position])) {
                 throw new Exception(
                     "The number of values in the update is not the same as fields"
                 );
@@ -1439,8 +1439,8 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
                 } else {
                     $updateValues[] = $value;
 
-                    if (true !== empty($dataTypes)) {
-                        if (true !== isset($dataTypes[$position])) {
+                    if (!empty($dataTypes)) {
+                        if (!isset($dataTypes[$position])) {
                             throw new Exception(
                                 "Incomplete number of bind types"
                             );
@@ -1465,7 +1465,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         $setClause    = implode(", ", $placeholders);
 
         $updateSql = "UPDATE " . $escapedTable . " SET " . $setClause;
-        if (true !== empty($whereCondition)) {
+        if (!empty($whereCondition)) {
             $updateSql .= " WHERE ";
 
             /**
@@ -1480,7 +1480,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
                  * If an index 'conditions' is present it contains string where
                  * conditions that are appended to the UPDATE SQL
                  */
-                if (true === isset($whereCondition["conditions"])) {
+                if (isset($whereCondition["conditions"])) {
                     $updateSql .= $whereCondition["conditions"];
                 }
 
@@ -1488,7 +1488,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
                  * Bound parameters are arbitrary values that are passed
                  * separately
                  */
-                if (true === isset($whereCondition["bind"])) {
+                if (isset($whereCondition["bind"])) {
                     $condition    = $whereCondition["bind"];
                     $condition    = is_array($condition) ? $condition : [$condition];
                     $updateValues = array_merge($updateValues, $condition);
@@ -1498,7 +1498,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
                  * Bind types is how the bound parameters must be cast before
                  * be sent to the database system
                  */
-                if (true === isset($whereCondition["bindTypes"])) {
+                if (isset($whereCondition["bindTypes"])) {
                     $condition     = $whereCondition["bindTypes"];
                     $condition     = is_array($condition) ? $condition : [$condition];
                     $bindDataTypes = array_merge($bindDataTypes, $condition);
@@ -1512,7 +1512,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         /**
          * Perform the execution via PDO::execute
          */
-        if (true !== empty($bindDataTypes)) {
+        if (!empty($bindDataTypes)) {
             return $this->execute($updateSql, $updateValues, $bindDataTypes);
         }
 
@@ -1551,7 +1551,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         array | string $whereCondition = [],
         array $dataTypes = []
     ): bool {
-        if (true === empty($data)) {
+        if (empty($data)) {
             return false;
         }
 

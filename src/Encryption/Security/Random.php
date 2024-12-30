@@ -17,8 +17,6 @@ use Exception as BaseException;
 use Phalcon\Traits\Php\UrlTrait;
 
 /**
- * Phalcon\Encryption\Security\Random
- *
  * Secure random number generator class.
  *
  * Provides secure random number generator which is suitable for generating

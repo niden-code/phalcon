@@ -15,40 +15,22 @@ namespace Phalcon\Domain;
 
 use PayloadInterop\DomainPayload;
 
-/**
- * Class Payload
- *
- * @package Phalcon\Domain
- *
- * @property array  $result
- * @property string $status
- */
 class Payload implements DomainPayload
 {
     /**
-     * @var array
-     */
-    protected array $result = [];
-
-    /**
-     * @var string
-     */
-    protected string $status;
-
-    /**
      * Payload constructor.
      *
-     * @param string $status
-     * @param array  $result
+     * @param string                  $status
+     * @param array<array-key, mixed> $result
      */
-    public function __construct(string $status, array $result = [])
-    {
-        $this->result = $result;
-        $this->status = $status;
+    public function __construct(
+        protected string $status,
+        protected array $result = []
+    ) {
     }
 
     /**
-     * @return array
+     * @return array<array-key, mixed>
      */
     public function getResult(): array
     {

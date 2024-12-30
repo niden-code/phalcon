@@ -73,7 +73,7 @@ class Header implements SerializerInterface
                 . implode('; ', $parts);
         }
 
-        if (true !== empty($elements)) {
+        if (!empty($elements)) {
             $result = implode(",", $elements);
         }
 

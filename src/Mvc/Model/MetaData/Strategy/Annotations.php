@@ -30,7 +30,7 @@ class Annotations implements StrategyInterface
      */
     final public function getColumnMaps(ModelInterface $model, DiInterface $container): array
     {
-        if (false === is_object($container)) {
+        if (!is_object($container)) {
             throw new Exception(
                 "The dependency injector is invalid in MetaData Strategy Annotations"
             );
@@ -41,7 +41,7 @@ class Annotations implements StrategyInterface
         $className  = get_class($model);
         $reflection = $annotations->get($className);
 
-        if (false === is_object($reflection)) {
+        if (!is_object($reflection)) {
             throw new Exception(
                 "No annotations were found in class " . $className
             );
@@ -80,7 +80,7 @@ class Annotations implements StrategyInterface
              */
             $columnName = $columnAnnotation->getNamedParameter("column");
 
-            if (true === empty($columnName)) {
+            if (empty($columnName)) {
                 $columnName = $property;
             }
 
@@ -116,7 +116,7 @@ class Annotations implements StrategyInterface
         ModelInterface $model,
         DiInterface $container
     ): array {
-        if (false === is_object($container)) {
+        if (!is_object($container)) {
             throw new Exception("The dependency injector is invalid");
         }
 
@@ -125,7 +125,7 @@ class Annotations implements StrategyInterface
         $className  = get_class($model);
         $reflection = $annotations->get($className);
 
-        if (false === is_object($reflection)) {
+        if (!is_object($reflection)) {
             throw new Exception(
                 "No annotations were found in class " . $className
             );
@@ -177,7 +177,7 @@ class Annotations implements StrategyInterface
              */
             $columnName = $columnAnnotation->getNamedParameter("column");
 
-            if (true === empty($columnName)) {
+            if (empty($columnName)) {
                 $columnName = $property;
             }
 

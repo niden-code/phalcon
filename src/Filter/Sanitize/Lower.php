@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function mb_convert_case;
 
 /**
- * Phalcon\Filter\Sanitize\Lower
- *
  * Sanitizes a value to lowercase
  */
 class Lower

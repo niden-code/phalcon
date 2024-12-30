@@ -118,7 +118,7 @@ class Url extends AbstractInjectionAware implements UrlInterface
     ): string {
         if (null === $local) {
             if (
-                true === is_string($uri) &&
+                is_string($uri) &&
                 (str_contains($uri, "//") || str_contains($uri, ":"))
             ) {
                 if (preg_match("#^((//)|([a-z0-9]+://)|([a-z0-9]+:))#i", $uri)) {
@@ -131,12 +131,12 @@ class Url extends AbstractInjectionAware implements UrlInterface
             }
         }
 
-        if (true !== is_string($baseUri)) {
+        if (!is_string($baseUri)) {
             $baseUri = $this->getBaseUri();
         }
 
         if (is_array($uri)) {
-            if (true !== isset($uri["for"])) {
+            if (!isset($uri["for"])) {
                 throw new Exception(
                     "It's necessary to define the route name with the parameter 'for'"
                 );
@@ -236,7 +236,7 @@ class Url extends AbstractInjectionAware implements UrlInterface
     public function getBaseUri(): string
     {
         if (null === $this->baseUri) {
-            if (true === isset($_SERVER["PHP_SELF"])) {
+            if (isset($_SERVER["PHP_SELF"])) {
                 /**
                  * @todo Check the implementation for this
                  */

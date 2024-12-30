@@ -96,7 +96,7 @@ class Grouped extends Config
                 continue;
             }
 
-            if (false !== is_string($configName)) {
+            if (is_string($configName)) {
                 if ('' === $defaultAdapter) {
                     $this->merge(
                         (new ConfigFactory())->load($configName)
@@ -109,12 +109,12 @@ class Grouped extends Config
                     'filePath' => $configName,
                     'adapter'  => $defaultAdapter,
                 ];
-            } elseif (true !== isset($configInstance['adapter'])) {
+            } elseif (!isset($configInstance['adapter'])) {
                 $configInstance['adapter'] = $defaultAdapter;
             }
 
             if ('array' === $configInstance['adapter']) {
-                if (true !== isset($configInstance['config'])) {
+                if (!isset($configInstance['config'])) {
                     throw new Exception(
                         "To use 'array' adapter you have to specify " .
                         "the 'config' as an array."

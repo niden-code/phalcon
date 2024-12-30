@@ -29,10 +29,10 @@ class Whitelist
     use FilterTrait;
 
     /**
-     * @param array<int|string,mixed> $collection
-     * @param array<int|string,mixed> $whiteList
+     * @param array<array-key, mixed> $collection
+     * @param array<array-key, mixed> $whiteList
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     public function __invoke(array $collection, array $whiteList): array
     {

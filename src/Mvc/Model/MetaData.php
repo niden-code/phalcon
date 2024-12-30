@@ -124,7 +124,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_ATTRIBUTES);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -148,7 +148,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getAutomaticCreateAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_AUTOMATIC_DEFAULT_INSERT);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -174,7 +174,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getAutomaticUpdateAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_AUTOMATIC_DEFAULT_UPDATE);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -200,7 +200,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getBindTypes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_DATA_TYPES_BIND);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -227,7 +227,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     {
         $data = $this->readColumnMapIndex($model, self::MODELS_COLUMN_MAP);
 
-        if (true === is_array($data) || null === $data) {
+        if (is_array($data) || null === $data) {
             return $data;
         }
 
@@ -290,7 +290,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getDataTypes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_DATA_TYPES);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -316,7 +316,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getDataTypesNumeric(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_DATA_TYPES_NUMERIC);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -342,7 +342,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getDefaultValues(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_DEFAULT_VALUES);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -368,7 +368,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getEmptyStringAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_EMPTY_STRING_VALUES);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -461,7 +461,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getNonPrimaryKeyAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_NON_PRIMARY_KEY);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -487,7 +487,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getNotNullAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_NOT_NULL);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -513,7 +513,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getPrimaryKeyAttributes(ModelInterface $model): array
     {
         $data = $this->readMetaDataIndex($model, self::MODELS_PRIMARY_KEY);
-        if (true === is_array($data)) {
+        if (is_array($data)) {
             return $data;
         }
 
@@ -539,7 +539,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function getReverseColumnMap(ModelInterface $model): array | null
     {
         $data = $this->readColumnMapIndex($model, self::MODELS_REVERSE_COLUMN_MAP);
-        if (true === is_array($data) || null === $data) {
+        if (is_array($data) || null === $data) {
             return $data;
         }
 
@@ -581,7 +581,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
     public function hasAttribute(ModelInterface $model, string $attribute): bool
     {
         $columnMap = $this->getReverseColumnMap($model);
-        if (true === is_array($columnMap)) {
+        if (is_array($columnMap)) {
             return isset($columnMap[$attribute]);
         }
 
@@ -934,7 +934,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
             return false;
         }
 
-        if (true === isset($this->columnMap[$key])) {
+        if (isset($this->columnMap[$key])) {
             return true;
         }
 
@@ -1000,7 +1000,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
                     if (method_exists($model, "metaData")) {
                         $modelMetadata = $model->metaData();
 
-                        if (false === is_array($modelMetadata)) {
+                        if (!is_array($modelMetadata)) {
                             throw new Exception(
                                 "Invalid meta-data for model " . get_class($model)
                             );

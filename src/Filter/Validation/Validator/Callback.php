@@ -85,16 +85,16 @@ class Callback extends AbstractValidator
     {
         $callback = $this->getOption("callback");
 
-        if (true === is_callable($callback)) {
+        if (is_callable($callback)) {
             $data = $validation->getEntity();
 
-            if (true === empty($data)) {
+            if (empty($data)) {
                 $data = $validation->getData();
             }
 
             $returnedValue = call_user_func($callback, $data);
 
-            if (true === is_bool($returnedValue)) {
+            if (is_bool($returnedValue)) {
                 if (true !== $returnedValue) {
                     $validation->appendMessage(
                         $this->messageFactory($validation, $field)

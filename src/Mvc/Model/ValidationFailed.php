@@ -35,7 +35,7 @@ class ValidationFailed extends Exception
         protected array $validationMessages
     ) {
         $messageStr = "Validation failed";
-        if (true !== empty($validationMessages)) {
+        if (!empty($validationMessages)) {
             /**
              * Get the first message in the array
              */

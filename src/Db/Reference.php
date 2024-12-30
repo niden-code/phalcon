@@ -93,25 +93,25 @@ class Reference implements ReferenceInterface
         protected string $name,
         array $definition
     ) {
-        if (true !== isset($definition["referencedTable"])) {
+        if (!isset($definition["referencedTable"])) {
             throw new Exception("Referenced table is required");
         }
 
-        if (true !== isset($definition["columns"])) {
+        if (!isset($definition["columns"])) {
             throw new Exception("Foreign key columns are required");
         }
 
-        if (true !== isset($definition["referencedColumns"])) {
+        if (!isset($definition["referencedColumns"])) {
             throw new Exception(
                 "Referenced columns of the foreign key are required"
             );
         }
 
-        if (true !== is_array($definition["columns"])) {
+        if (!is_array($definition["columns"])) {
             throw new Exception("Foreign key columns must be an array");
         }
 
-        if (true !== is_array(($definition["referencedColumns"]))) {
+        if (!is_array(($definition["referencedColumns"]))) {
             throw new Exception(
                 "Referenced columns of the foreign key must be an array"
             );

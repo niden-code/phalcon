@@ -31,7 +31,7 @@ trait DiInstanceTrait
      */
     private function createClosureInstance($instance, array $parameters = null)
     {
-        if (true !== empty($parameters)) {
+        if (!empty($parameters)) {
             return call_user_func_array($instance, $parameters);
         }
 
@@ -46,7 +46,7 @@ trait DiInstanceTrait
      */
     private function createInstance(string $name, array $parameters = null)
     {
-        if (true !== empty($parameters)) {
+        if (!empty($parameters)) {
             return new $name(...$parameters);
         }
 

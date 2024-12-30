@@ -45,7 +45,7 @@ class Friendly
         bool $lowercase = true,
         array | string $replace = []
     ): string {
-        if (true === is_string($replace)) {
+        if (is_string($replace)) {
             $replace = [$replace];
         }
 

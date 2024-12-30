@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function lcfirst;
 
 /**
- * Phalcon\Filter\Sanitize\LowerFirst
- *
  * Sanitizes a value to lcfirst
  */
 class LowerFirst

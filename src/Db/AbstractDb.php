@@ -68,7 +68,7 @@ abstract class AbstractDb
         /**
          * Enables/Disables globally the escaping of SQL identifiers
          */
-        if (true === isset($options["escapeSqlIdentifiers"])) {
+        if (isset($options["escapeSqlIdentifiers"])) {
             ini_set(
                 "phalcon.db.escape_identifiers",
                 $options["escapeSqlIdentifiers"]
@@ -78,7 +78,7 @@ abstract class AbstractDb
         /**
          * Force cast bound values in the PHP userland
          */
-        if (true === isset($options["forceCasting"])) {
+        if (isset($options["forceCasting"])) {
             ini_set("phalcon.db.force_casting", $options["forceCasting"]);
         }
     }

@@ -95,7 +95,7 @@ class Stream extends AbstractAdapter
     {
         $result = true;
 
-        if (true === is_resource($this->handler)) {
+        if (is_resource($this->handler)) {
             $result = $this->phpFclose($this->handler);
         }
 

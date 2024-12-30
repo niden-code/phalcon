@@ -316,7 +316,7 @@ class Stream implements StreamInterface
     {
         $handle  = $stream;
         $warning = false;
-        if (true === is_string($stream)) {
+        if (is_string($stream)) {
             set_error_handler(
                 function () use (&$warning) {
                     $warning = true;
@@ -331,7 +331,7 @@ class Stream implements StreamInterface
 
         if (
             true === $warning ||
-            true !== is_resource($handle) ||
+            !is_resource($handle) ||
             "stream" !== get_resource_type($handle)
         ) {
             throw new RuntimeException(

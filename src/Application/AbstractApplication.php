@@ -72,7 +72,7 @@ abstract class AbstractApplication extends Injectable implements EventsAwareInte
      */
     public function getModule(string $name): array
     {
-        if (true !== isset($this->modules[$name])) {
+        if (!isset($this->modules[$name])) {
             throw new Exception(
                 "Module '" . $name
                 . "' is not registered in the application container"

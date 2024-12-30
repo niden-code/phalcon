@@ -16,16 +16,14 @@ namespace Phalcon\Filter\Sanitize;
 use function str_replace;
 
 /**
- * Phalcon\Filter\Sanitize\Replace
- *
  * Sanitizes a value replacing parts of a string
  */
 class Replace
 {
     /**
-     * @param array|string $input
-     * @param array|string $source
-     * @param array|string $target
+     * @param string[]|string $input
+     * @param string[]|string $source
+     * @param string[]|string $target
      *
      * @return string|string[]
      */

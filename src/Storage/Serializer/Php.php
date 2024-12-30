@@ -28,9 +28,9 @@ class Php extends AbstractSerializer
     /**
      * Serializes data
      *
-     * @return string|null
+     * @return bool|float|int|string|null
      */
-    public function serialize()
+    public function serialize(): bool|float|int|string|null
     {
         if (true !== $this->isSerializable($this->data)) {
             return $this->data;
@@ -42,14 +42,14 @@ class Php extends AbstractSerializer
     /**
      * Unserializes data
      *
-     * @param string $data
+     * @param mixed $data
      */
-    public function unserialize($data)
+    public function unserialize(mixed $data): void
     {
         if (true !== $this->isSerializable($data)) {
             $this->data = $data;
         } else {
-            if (true !== is_string($data)) {
+            if (!is_string($data)) {
                 throw new InvalidArgumentException(
                     'Data for the unserializer must of type string'
                 );
@@ -82,7 +82,7 @@ class Php extends AbstractSerializer
      *
      * @return mixed|false
      */
-    private function phpUnserialize(string $data, array $options = [])
+    private function phpUnserialize(string $data, array $options = []): mixed
     {
         return unserialize($data, $options);
     }

@@ -34,7 +34,7 @@ class Css extends InlineBase
         bool $filter = true,
         array $attributes = []
     ) {
-        if (true === empty($attributes)) {
+        if (empty($attributes)) {
             $attributes = [
                 'type' => 'text/css',
             ];

@@ -126,12 +126,12 @@ class Dispatcher extends CliDispatcher implements DispatcherInterface
         array | string $filters = [],
         mixed $defaultValue = null
     ): mixed {
-        if (true !== isset($this->options[$option])) {
+        if (!isset($this->options[$option])) {
             return $defaultValue;
         }
 
         $optionValue = $this->options[$option];
-        if (true === empty($filters)) {
+        if (empty($filters)) {
             return $optionValue;
         }
 

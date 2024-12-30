@@ -220,7 +220,7 @@ class Weak extends AbstractAdapter
      */
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
-        if (true === is_int($ttl) && $ttl < 1) {
+        if (is_int($ttl) && $ttl < 1) {
             return $this->delete($key);
         }
 

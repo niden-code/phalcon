@@ -19,11 +19,11 @@ namespace Phalcon\Support\Helper\Arr;
 class Set
 {
     /**
-     * @param array<int|string,mixed> $collection
+     * @param array<array-key, mixed> $collection
      * @param mixed                   $value
      * @param mixed                   $index
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     public function __invoke(
         array $collection,
@@ -36,11 +36,11 @@ class Set
     }
 
     /**
-     * @param array<int|string,mixed> $collection
+     * @param array<array-key, mixed> $collection
      * @param mixed                   $value
      * @param mixed                   $index
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     private function checkNotNull(array $collection, $value, $index): array
     {
@@ -52,11 +52,11 @@ class Set
     }
 
     /**
-     * @param array<int|string,mixed> $collection
+     * @param array<array-key, mixed> $collection
      * @param mixed                   $value
      * @param mixed                   $index
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     private function checkNull(array $collection, $value, $index): array
     {

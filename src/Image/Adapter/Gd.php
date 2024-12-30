@@ -402,7 +402,7 @@ class Gd extends AbstractAdapter
                 $index = imagecolorat($maskImage, $x, $y);
                 $color = imagecolorsforindex($maskImage, $index);
 
-                if (true === isset($color["red"])) {
+                if (isset($color["red"])) {
                     $alpha = 127 - intval($color["red"] / 2);
                 }
 
@@ -684,7 +684,7 @@ class Gd extends AbstractAdapter
         $extension = pathinfo($file, PATHINFO_EXTENSION);
 
         // If no extension is given, revert to the original type.
-        if (true === empty($extension)) {
+        if (empty($extension)) {
             $extension = image_type_to_extension($this->type, false);
         }
 
@@ -791,14 +791,14 @@ class Gd extends AbstractAdapter
 
         $opacity = (int)round(abs(($opacity * 127 / 100) - 127));
 
-        if (true !== empty($fontFile)) {
+        if (!empty($fontFile)) {
             $space = imagettfbbox($size, 0, $fontFile, $text);
 
             if (false === $space) {
                 throw new Exception("Call to imagettfbbox() failed");
             }
 
-            if (true === isset($space[0])) {
+            if (isset($space[0])) {
                 $bottomLeftX = (int)$space[0];
                 $bottomLeftY = (int)$space[1];
                 $topRightX   = (int)$space[4];

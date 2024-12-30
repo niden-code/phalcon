@@ -69,7 +69,7 @@ class Console extends AbstractApplication
         /** @var Router $router */
         $router = $this->container->getShared("router");
 
-        if (true === empty($arguments) && true !== empty($this->arguments)) {
+        if (empty($arguments) && !empty($this->arguments)) {
             $router->handle($this->arguments);
         } else {
             $router->handle($arguments);
@@ -80,16 +80,16 @@ class Console extends AbstractApplication
          */
         $moduleName = $router->getModuleName();
 
-        if (true === empty($moduleName)) {
+        if (empty($moduleName)) {
             $moduleName = $this->defaultModule;
         }
 
-        if (true !== empty($moduleName)) {
+        if (!empty($moduleName)) {
             if (false === $this->fireManagerEvent("console:beforeStartModule", $moduleName)) {
                 return false;
             }
 
-            if (true !== isset($this->modules[$moduleName])) {
+            if (!isset($this->modules[$moduleName])) {
                 throw new Exception(
                     "Module '" . $moduleName . "' isn't registered in the console container"
                 );
@@ -97,13 +97,13 @@ class Console extends AbstractApplication
 
             $module = $this->modules[$moduleName];
 
-            if (true !== is_array($module)) {
+            if (!is_array($module)) {
                 throw new Exception("Invalid module definition path");
             }
 
             $className = $module["className"] ?? "Module";
 
-            if (true === isset($module["path"])) {
+            if (isset($module["path"])) {
                 $path = $module["path"];
                 if (true !== file_exists($path)) {
                     throw new Exception(
@@ -164,12 +164,12 @@ class Console extends AbstractApplication
         $opts       = [];
         $handleArgs = [];
 
-        if (true === $shift && true !== empty($arguments)) {
+        if (true === $shift && !empty($arguments)) {
             array_shift($arguments);
         }
 
         foreach ($arguments as $argument) {
-            if (true === is_string($argument)) {
+            if (is_string($argument)) {
                 if (0 === strncmp($argument, "--", 2)) {
                     $parts    = explode("=", $argument);
                     $parts[0] = ltrim($parts[0], '-');
@@ -190,15 +190,15 @@ class Console extends AbstractApplication
         if (true === $str) {
             $this->arguments = implode(Route::getDelimiter(), $args);
         } else {
-            if (true !== empty($args)) {
+            if (!empty($args)) {
                 $handleArgs["task"] = array_shift($args);
             }
 
-            if (true !== empty($args)) {
+            if (!empty($args)) {
                 $handleArgs["action"] = array_shift($args);
             }
 
-            if (true !== empty($args)) {
+            if (!empty($args)) {
                 $handleArgs = array_merge($handleArgs, $args);
             }
 

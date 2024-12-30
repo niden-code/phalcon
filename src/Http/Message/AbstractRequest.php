@@ -91,11 +91,11 @@ abstract class AbstractRequest extends AbstractMessage implements
         if (null === $requestTarget) {
             $requestTarget = $this->uri->getPath();
 
-            if (true !== empty($this->uri->getQuery())) {
+            if (!empty($this->uri->getQuery())) {
                 $requestTarget .= "?" . $this->uri->getQuery();
             }
 
-            if (true === empty($requestTarget)) {
+            if (empty($requestTarget)) {
                 $requestTarget = "/";
             }
         }
@@ -244,7 +244,7 @@ abstract class AbstractRequest extends AbstractMessage implements
 
             $method = strtoupper($method);
 
-            if (true !== isset($methods[$method])) {
+            if (!isset($methods[$method])) {
                 throw new InvalidArgumentException(
                     "Invalid or unsupported method " . $method
                 );
@@ -268,7 +268,7 @@ abstract class AbstractRequest extends AbstractMessage implements
             return $uri;
         }
 
-        if (true === is_string($uri)) {
+        if (is_string($uri)) {
             return new Uri($uri);
         }
 

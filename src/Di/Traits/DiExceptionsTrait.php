@@ -37,7 +37,7 @@ trait DiExceptionsTrait
         /**
          * All the arguments must have a type
          */
-        if (true !== isset($argument['type'])) {
+        if (!isset($argument['type'])) {
             throw new Exception(
                 'Argument at position ' . $position . ' must have a type'
             );
@@ -73,7 +73,7 @@ trait DiExceptionsTrait
         /**
          * The class name is required
          */
-        if (true !== isset($definition['className'])) {
+        if (!isset($definition['className'])) {
             throw new Exception(
                 "Invalid service definition. Missing 'className' parameter"
             );
@@ -88,7 +88,7 @@ trait DiExceptionsTrait
      */
     private function checkMethodArgumentsIsArray(mixed $arguments, int $position): void
     {
-        if (true !== is_array($arguments)) {
+        if (!is_array($arguments)) {
             throw new Exception(
                 'Call arguments must be an array on position ' .
                 $position
@@ -107,7 +107,7 @@ trait DiExceptionsTrait
         /**
          * The call parameter must be an array of arrays
          */
-        if (true !== is_array($method)) {
+        if (!is_array($method)) {
             throw new Exception(
                 'Method call must be an array on position ' .
                 $position
@@ -126,7 +126,7 @@ trait DiExceptionsTrait
         /**
          * A param 'method' is required
          */
-        if (true !== isset($method['method'])) {
+        if (!isset($method['method'])) {
             throw new Exception(
                 'The method name is required on position ' .
                 $position
@@ -141,7 +141,7 @@ trait DiExceptionsTrait
      */
     private function checkPropertiesInjectionConstruct(mixed $instance): void
     {
-        if (true !== is_object($instance)) {
+        if (!is_object($instance)) {
             throw new Exception(
                 "The definition has properties injection " .
                 "parameters but the constructor didn't return an instance"
@@ -160,7 +160,7 @@ trait DiExceptionsTrait
         /**
          * The call parameter must be an array of arrays
          */
-        if (true !== is_array($property)) {
+        if (!is_array($property)) {
             throw new Exception(
                 "Property must be an array on position " .
                 $position
@@ -179,7 +179,7 @@ trait DiExceptionsTrait
         /**
          * A param 'name' is required
          */
-        if (true !== isset($property['name'])) {
+        if (!isset($property['name'])) {
             throw new Exception(
                 'The property name is required on position ' .
                 $position
@@ -198,7 +198,7 @@ trait DiExceptionsTrait
         /**
          * A param 'value' is required
          */
-        if (true !== isset($property['value'])) {
+        if (!isset($property['value'])) {
             throw new Exception(
                 'The property value is required on position ' .
                 $position
@@ -218,7 +218,7 @@ trait DiExceptionsTrait
         string $name,
         int $position
     ): void {
-        if (true !== isset($argument[$name])) {
+        if (!isset($argument[$name])) {
             throw new Exception(
                 'Service "' . $name . '" is required in parameter ' .
                 'on position ' . $position
@@ -233,7 +233,7 @@ trait DiExceptionsTrait
      */
     private function checkSetterInjectionConstructor(mixed $instance): void
     {
-        if (true !== is_object($instance)) {
+        if (!is_object($instance)) {
             throw new Exception(
                 'The definition has setter injection ' .
                 'parameters but the constructor did not return an instance'
@@ -248,7 +248,7 @@ trait DiExceptionsTrait
      */
     private function checkSetterInjectionParameters(mixed $parameters): void
     {
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             throw new Exception(
                 'Setter injection parameters must be an array'
             );

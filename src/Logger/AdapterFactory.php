@@ -68,7 +68,7 @@ class AdapterFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getServices(): array
     {

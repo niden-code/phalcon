@@ -65,7 +65,7 @@ abstract class AbstractValidator implements ValidatorInterface
 
         if (is_array($template)) {
             $this->setTemplates($template);
-        } elseif (true === is_string($template)) {
+        } elseif (is_string($template)) {
             $this->setTemplate($template);
         }
 
@@ -90,7 +90,7 @@ abstract class AbstractValidator implements ValidatorInterface
      */
     public function getOption(string $key, mixed $defaultValue = null): mixed
     {
-        if (true !== isset($this->options[$key])) {
+        if (!isset($this->options[$key])) {
             return $defaultValue;
         }
 
@@ -103,7 +103,7 @@ abstract class AbstractValidator implements ValidatorInterface
         if (
             "attribute" === $key &&
             is_array($value) &&
-            true === isset($value[$key])
+            isset($value[$key])
         ) {
             return $value[$key];
         }
@@ -121,12 +121,12 @@ abstract class AbstractValidator implements ValidatorInterface
     public function getTemplate(string $field = null): string
     {
         // there is a template in field
-        if (null !== $field && true === isset($this->templates[$field])) {
+        if (null !== $field && isset($this->templates[$field])) {
             return $this->templates[$field];
         }
 
         // there is a custom template
-        if (true !== empty($this->template)) {
+        if (!empty($this->template)) {
             return $this->template;
         }
 
@@ -263,12 +263,12 @@ abstract class AbstractValidator implements ValidatorInterface
         $allowEmpty = $this->getOption("allowEmpty", false);
 
         if (is_array($allowEmpty)) {
-            $allowEmpty = true === isset($allowEmpty[$field])
+            $allowEmpty = isset($allowEmpty[$field])
                 ? $allowEmpty[$field]
                 : false;
         }
 
-        return true === $allowEmpty && true === empty($value);
+        return true === $allowEmpty && empty($value);
     }
 
     /**
@@ -318,7 +318,7 @@ abstract class AbstractValidator implements ValidatorInterface
         $label = $this->getOption("label");
         $label = $this->checkArray($label, $field);
 
-        if (true === empty($label)) {
+        if (empty($label)) {
             $label = $validation->getLabel($field);
         }
 

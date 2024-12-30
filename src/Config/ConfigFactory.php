@@ -43,6 +43,19 @@ use const PATHINFO_EXTENSION;
  *
  * $config = (new ConfigFactory())->load($options);
  *```
+ *
+ * @phpstan-type TConfig = array{
+ *      adapter?: string,
+ *      filePath?: string,
+ *      mode?: string|null,
+ *      callbacks?: array<string, callable>|null
+ * }
+ * @phpstan-type TConfigReturn = array{
+ *      adapter: string,
+ *      filePath: string,
+ *      mode?: string|null,
+ *      callbacks?: array<string, callable>|null
+ * }
  */
 class ConfigFactory
 {
@@ -51,7 +64,7 @@ class ConfigFactory
     /**
      * ConfigFactory constructor.
      *
-     * @param array $services
+     * @param array<string, string> $services
      */
     public function __construct(array $services = [])
     {
@@ -61,12 +74,7 @@ class ConfigFactory
     /**
      * Load a config to create a new instance
      *
-     * @param array|string|Config $config = [
-     *                                    'adapter'   => 'ini',
-     *                                    'filePath'  => 'config.ini',
-     *                                    'mode'      => null,
-     *                                    'callbacks' => null
-     *                                    ]
+     * @param TConfig|string|Config $config
      *
      * @return ConfigInterface
      * @throws Exception
@@ -78,7 +86,7 @@ class ConfigFactory
         $adapter  = strtolower($configArray['adapter']);
         $filePath = $configArray['filePath'];
 
-        if (true === empty(pathinfo($filePath, PATHINFO_EXTENSION))) {
+        if (empty(pathinfo($filePath, PATHINFO_EXTENSION))) {
             $filePath .= '.' . lcfirst($adapter);
         }
 
@@ -104,7 +112,7 @@ class ConfigFactory
      *
      * @param string     $name
      * @param string     $fileName
-     * @param mixed|null $params
+     * @param array<string, callable>|string|int|null $params
      *
      * @return ConfigInterface
      * @throws BaseException
@@ -112,22 +120,35 @@ class ConfigFactory
     public function newInstance(
         string $name,
         string $fileName,
-        $params = null
+        array|string|int|null $params = null
     ): ConfigInterface {
         $definition = $this->getService($name);
 
         switch ($definition) {
             case Grouped::class:
+                /** @var string|null $params */
                 $adapter = null === $params ? 'php' : $params;
-                return new $definition($fileName, $adapter);
+                /** @var Grouped $config */
+                $config = new $definition($fileName, $adapter);
+                break;
             case Ini::class:
+                /** @var string|null $params */
                 $mode = null === $params ? INI_SCANNER_RAW : $params;
-                return new $definition($fileName, $mode);
+                /** @var Ini $config */
+                $config = new $definition($fileName, $mode);
+                break;
             case Yaml::class:
-                return new $definition($fileName, $params);
+                /** @var array<string, callable>|null $params */
+                /** @var Yaml $config */
+                $config = new $definition($fileName, $params);
+                break;
             default:
-                return new $definition($fileName);
+                /** @var ConfigInterface $config */
+                $config = new $definition($fileName);
+                break;
         }
+
+        return $config;
     }
 
     /**
@@ -139,7 +160,7 @@ class ConfigFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getServices(): array
     {
@@ -153,18 +174,18 @@ class ConfigFactory
     }
 
     /**
-     * @param mixed $config
+     * @param TConfig|ConfigInterface|string $config
      *
-     * @return array
+     * @return TConfigReturn
      * @throws Exception
      */
-    protected function parseConfig($config): array
+    protected function parseConfig(array|ConfigInterface|string $config): array
     {
-        if (false !== is_string($config)) {
+        if (is_string($config)) {
             $oldConfig = $config;
             $extension = pathinfo($config, PATHINFO_EXTENSION);
 
-            if (true === empty($extension)) {
+            if (empty($extension)) {
                 throw new Exception(
                     'You need to provide the extension in the file path'
                 );
@@ -186,19 +207,19 @@ class ConfigFactory
     }
 
     /**
-     * @param array $config
+     * @param TConfig $config
      *
      * @throws Exception
      */
     private function checkConfigArray(array $config): void
     {
-        if (true !== isset($config['filePath'])) {
+        if (!isset($config['filePath'])) {
             throw new Exception(
                 "You must provide 'filePath' option in factory config parameter."
             );
         }
 
-        if (true !== isset($config['adapter'])) {
+        if (!isset($config['adapter'])) {
             throw new Exception(
                 "You must provide 'adapter' option in factory config parameter."
             );

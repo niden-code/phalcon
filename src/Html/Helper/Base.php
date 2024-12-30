@@ -31,7 +31,7 @@ class Base extends AbstractHelper
     public function __invoke(string $href, array $attributes = [])
     {
         $overrides = [];
-        if (true !== empty($href)) {
+        if (!empty($href)) {
             $overrides = ['href' => $href];
         }
 

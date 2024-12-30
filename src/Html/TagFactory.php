@@ -154,7 +154,7 @@ class TagFactory
     {
         $services = $this->getServices();
 
-        if (true !== isset($services[$name])) {
+        if (!isset($services[$name])) {
             throw new Exception('Service ' . $name . ' is not registered');
         }
 
@@ -181,7 +181,7 @@ class TagFactory
      */
     public function newInstance(string $name)
     {
-        if (true !== isset($this->services[$name])) {
+        if (!isset($this->services[$name])) {
             $definition            = $this->getService($name);
             $this->services[$name] = new $definition($this->escaper);
         }

@@ -83,7 +83,7 @@ class Parser
             true
         );
 
-        if (true !== is_array($decoded)) {
+        if (!is_array($decoded)) {
             throw new InvalidArgumentException(
                 'Invalid Claims (not an array)'
             );
@@ -93,8 +93,8 @@ class Parser
          * Just in case
          */
         if (
-            true === isset($decoded[Enum::AUDIENCE]) &&
-            true !== is_array($decoded[Enum::AUDIENCE])
+            isset($decoded[Enum::AUDIENCE]) &&
+            !is_array($decoded[Enum::AUDIENCE])
         ) {
             $decoded[Enum::AUDIENCE] = [$decoded[Enum::AUDIENCE]];
         }
@@ -113,13 +113,13 @@ class Parser
     {
         $decoded = json_decode($this->doDecodeUrl($headers), true);
 
-        if (true !== is_array($decoded)) {
+        if (!is_array($decoded)) {
             throw new InvalidArgumentException(
                 'Invalid Header (not an array)'
             );
         }
 
-        if (true !== isset($decoded[Enum::TYPE])) {
+        if (!isset($decoded[Enum::TYPE])) {
             throw new InvalidArgumentException(
                 "Invalid Header (missing 'typ' element)"
             );
@@ -153,7 +153,7 @@ class Parser
      *
      * @param string $token
      *
-     * @return array
+     * @return array{0: string, 1: string, 2: string}
      */
     private function parseToken(string $token): array
     {

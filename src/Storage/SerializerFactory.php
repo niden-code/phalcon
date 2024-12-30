@@ -36,7 +36,7 @@ class SerializerFactory
     use FactoryTrait;
 
     /**
-     * @param array $services
+     * @param string[] $services
      */
     public function __construct(array $services = [])
     {
@@ -52,8 +52,10 @@ class SerializerFactory
     public function newInstance(string $name): SerializerInterface
     {
         $definition = $this->getService($name);
+        /** @var SerializerInterface $serializer */
+        $serializer = new $definition();
 
-        return new $definition();
+        return $serializer;
     }
 
     /**
@@ -65,7 +67,7 @@ class SerializerFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getServices(): array
     {

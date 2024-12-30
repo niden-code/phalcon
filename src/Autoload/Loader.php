@@ -38,27 +38,18 @@ use const DIRECTORY_SEPARATOR;
  * (namespaced or not) as well as files. It also features extension loading,
  * allowing the user to autoload files with different extensions than .php.
  *
- * @property string|null     $checkedPath
- * @property array           $classes
- * @property array           $debug
- * @property array           $directories
- * @property array           $extensions
- * @property string|callable $fileCheckingCallback
- * @property array           $files
- * @property string|null     $foundPath
- * @property bool            $isDebug
- * @property bool            $isRegistered
- * @property array           $namespaces
+ * @phpstan-type TNamespaces = array<string, TStrings>
+ * @phpstan-type TStrings = array<string, string>
  */
 class Loader
 {
     use EventsAwareTrait;
     use StartsWithTrait;
 
-    private const EVENT_BEFORE_CHECK_PATH = "loader:beforeCheckPath";
+    private const EVENT_AFTER_CHECK_CLASS  = "loader:afterCheckClass";
     private const EVENT_BEFORE_CHECK_CLASS = "loader:beforeCheckClass";
-    private const EVENT_AFTER_CHECK_CLASS = "loader:afterCheckClass";
-    private const EVENT_PATH_FOUND = "loader:pathFound";
+    private const EVENT_BEFORE_CHECK_PATH  = "loader:beforeCheckPath";
+    private const EVENT_PATH_FOUND         = "loader:pathFound";
 
     /**
      * @var string|null
@@ -66,7 +57,7 @@ class Loader
     protected ?string $checkedPath = null;
 
     /**
-     * @var array<string, string>
+     * @var TStrings
      */
     protected array $classes = [];
 
@@ -76,12 +67,12 @@ class Loader
     protected array $debug = [];
 
     /**
-     * @var array<string, string>
+     * @var TStrings
      */
     protected array $directories = [];
 
     /**
-     * @var array<string, string>
+     * @var TStrings
      */
     protected array $extensions = [];
 
@@ -91,7 +82,7 @@ class Loader
     protected $fileCheckingCallback = "is_file";
 
     /**
-     * @var array<string, string>
+     * @var TStrings
      */
     protected array $files = [];
 
@@ -111,7 +102,7 @@ class Loader
     protected bool $isRegistered = false;
 
     /**
-     * @var array<string, array>
+     * @var TNamespaces
      */
     protected array $namespaces = [];
 
@@ -182,9 +173,9 @@ class Loader
     }
 
     /**
-     * @param string       $namespace
-     * @param array|string $directories
-     * @param bool         $prepend
+     * @param string          $namespace
+     * @param TStrings|string $directories
+     * @param bool            $prepend
      *
      * @return $this
      */
@@ -332,7 +323,7 @@ class Loader
     /**
      * Returns the namespaces currently registered in the autoloader
      *
-     * @return string[]
+     * @return TNamespaces
      */
     public function getNamespaces(): array
     {
@@ -369,12 +360,7 @@ class Loader
     {
         if (true !== $this->isRegistered) {
             $this->loadFiles();
-
-            spl_autoload_register(
-                [$this, "autoload"],
-                true,
-                $prepend
-            );
+            $this->registerAutoload($prepend);
 
             $this->isRegistered = true;
         }
@@ -385,8 +371,8 @@ class Loader
     /**
      * Register classes and their locations
      *
-     * @param array $classes
-     * @param bool  $merge
+     * @param TStrings $classes
+     * @param bool     $merge
      *
      * @return Loader
      */
@@ -406,8 +392,8 @@ class Loader
     /**
      * Register directories in which "not found" classes could be found
      *
-     * @param array $directories
-     * @param bool  $merge
+     * @param TStrings $directories
+     * @param bool     $merge
      *
      * @return Loader
      */
@@ -425,8 +411,8 @@ class Loader
      * Sets an array of file extensions that the loader must try in each attempt
      * to locate the file
      *
-     * @param array $extensions
-     * @param bool  $merge
+     * @param TStrings $extensions
+     * @param bool     $merge
      *
      * @return Loader
      */
@@ -463,18 +449,14 @@ class Loader
      * @return Loader
      * @throws Exception
      */
-    public function setFileCheckingCallback($method = null): Loader
+    public function setFileCheckingCallback(string|callable|null $method = null): Loader
     {
-        if (true === is_callable($method)) {
+        if (is_callable($method) || is_string($method)) {
             $this->fileCheckingCallback = $method;
-        } elseif (null === $method) {
-            $this->fileCheckingCallback = function ($file) {
+        } else {
+            $this->fileCheckingCallback = function () {
                 return true;
             };
-        } else {
-            throw new Exception(
-                "The 'method' parameter must be either a callable or NULL"
-            );
         }
 
         return $this;
@@ -484,8 +466,8 @@ class Loader
      * Registers files that are "non-classes" hence need a "require". This is
      * very useful for including files that only have functions
      *
-     * @param array $files
-     * @param bool  $merge
+     * @param TStrings $files
+     * @param bool     $merge
      *
      * @return Loader
      */
@@ -502,8 +484,8 @@ class Loader
     /**
      * Register namespaces and their related directories
      *
-     * @param array $namespaces
-     * @param bool  $merge
+     * @param TNamespaces $namespaces
+     * @param bool        $merge
      *
      * @return Loader
      */
@@ -593,10 +575,10 @@ class Loader
      * Traverses a collection and adds elements to it using the relevant
      * class method
      *
-     * @param array  $collection
-     * @param string $collectionName
-     * @param string $method
-     * @param bool   $merge
+     * @param TStrings $collection
+     * @param string   $collectionName
+     * @param string   $method
+     * @param bool     $merge
      *
      * @return Loader
      */
@@ -628,7 +610,7 @@ class Loader
      */
     private function autoloadCheckClasses(string $className): bool
     {
-        if (true === isset($this->classes[$className])) {
+        if (isset($this->classes[$className])) {
             $filePath = $this->classes[$className];
             $this->fireManagerEvent(self::EVENT_PATH_FOUND, $filePath);
 
@@ -645,9 +627,9 @@ class Loader
      * Checks the registered directories to find the class. Includes the file if
      * found and returns true; false otherwise
      *
-     * @param array  $directories
-     * @param string $className
-     * @param bool   $isDirectory
+     * @param TStrings $directories
+     * @param string   $className
+     * @param bool     $isDirectory
      *
      * @return bool
      * @throws EventsException
@@ -725,10 +707,10 @@ class Loader
      * to normalize the directories with the proper directory separator at the
      * end
      *
-     * @param array|string $directories
-     * @param string       $dirSeparator
+     * @param TStrings|string $directories
+     * @param string          $dirSeparator
      *
-     * @return array
+     * @return TStrings
      */
     private function checkDirectories(
         array | string $directories,
@@ -756,5 +738,15 @@ class Loader
     private function getHash(string $content): string
     {
         return hash('sha256', $content);
+    }
+
+    /**
+     * @param bool $prepend
+     *
+     * @return bool
+     */
+    private function registerAutoload(bool $prepend): bool
+    {
+        return spl_autoload_register([$this, 'autoload'], true, $prepend);
     }
 }

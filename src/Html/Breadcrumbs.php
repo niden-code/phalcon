@@ -140,7 +140,7 @@ class Breadcrumbs
          * Check if this is the "Home" element i.e. count() = 0
          */
         $line = '<dt>' . $lastLabel . '</dt>';
-        if (true === empty($this->data)) {
+        if (empty($this->data)) {
             $line = $this->getLink($lastLabel, $lastUrl);
         }
 

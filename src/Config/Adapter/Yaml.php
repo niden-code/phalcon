@@ -65,8 +65,8 @@ class Yaml extends Config
     /**
      * Yaml constructor.
      *
-     * @param string     $filePath
-     * @param array|null $callbacks
+     * @param string                       $filePath
+     * @param array<string, callable>|null $callbacks
      *
      * @throws Exception
      */
@@ -93,6 +93,7 @@ class Yaml extends Config
             );
         }
 
+        /** @var array<string, callable> $yamlConfig */
         parent::__construct($yamlConfig);
     }
 }

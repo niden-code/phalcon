@@ -73,6 +73,7 @@ class CacheFactory
         $config  = $this->checkConfig($config);
         $this->checkConfigElement($config, 'adapter');
 
+        /** @var string $name */
         $name    = $config['adapter'];
         $options = $config['options'] ?? [];
 

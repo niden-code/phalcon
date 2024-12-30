@@ -80,8 +80,8 @@ abstract class AbstractSerializer implements SerializerInterface
     {
         return !(
             null === $data ||
-            true === is_bool($data) ||
-            true === is_numeric($data)
+            is_bool($data) ||
+            is_numeric($data)
         );
     }
 }

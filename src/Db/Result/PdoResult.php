@@ -97,7 +97,7 @@ class PdoResult implements ResultInterface
          * PDO doesn't support scrollable cursors, so we need to re-execute the
          * statement
          */
-        if (true !== empty($this->bindParams)) {
+        if (!empty($this->bindParams)) {
             $statement = $pdo->prepare($this->sqlStatement);
 
             if (is_object($statement)) {

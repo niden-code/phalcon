@@ -176,7 +176,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["allowedTypes"])) {
+        if (isset($options["allowedTypes"])) {
             $validator = new MimeType(
                 [
                     "size"    => $options["allowedTypes"],
@@ -209,7 +209,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["equalResolution"])) {
+        if (isset($options["equalResolution"])) {
             $validator = new EqualResolution(
                 [
                     "size"    => $options["equalResolution"],
@@ -242,7 +242,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["maxResolution"])) {
+        if (isset($options["maxResolution"])) {
             $validator = new MaxResolution(
                 [
                     "size"     => $options["maxResolution"],
@@ -276,7 +276,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["minResolution"])) {
+        if (isset($options["minResolution"])) {
             $validator = new MinResolution(
                 [
                     "size"     => $options["minResolution"],
@@ -310,7 +310,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["equalSize"])) {
+        if (isset($options["equalSize"])) {
             $validator = new EqualFileSize(
                 [
                     "size"    => $options["equalSize"],
@@ -343,7 +343,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["maxSize"])) {
+        if (isset($options["maxSize"])) {
             $validator = new MaxFileSize(
                 [
                     "size"     => $options["maxSize"],
@@ -377,7 +377,7 @@ class File extends AbstractValidatorComposite
         string $iniSize,
         string $valid
     ): File {
-        if (true === isset($options["minSize"])) {
+        if (isset($options["minSize"])) {
             $validator = new MinFileSize(
                 [
                     "size"     => $options["minSize"],
@@ -411,15 +411,15 @@ class File extends AbstractValidatorComposite
         string $messageIniSize,
         string $messageValid
     ): void {
-        if (true !== empty($messageFileEmpty)) {
+        if (!empty($messageFileEmpty)) {
             $validator->setMessageFileEmpty($messageFileEmpty);
         }
 
-        if (true !== empty($messageIniSize)) {
+        if (!empty($messageIniSize)) {
             $validator->setMessageIniSize($messageIniSize);
         }
 
-        if (true !== empty($messageValid)) {
+        if (!empty($messageValid)) {
             $validator->setMessageValid($messageValid);
         }
 

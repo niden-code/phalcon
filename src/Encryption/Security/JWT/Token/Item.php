@@ -36,7 +36,7 @@ class Item extends AbstractItem
      *
      * @return mixed|null
      */
-    public function get(string $name, mixed $defaultValue = null)
+    public function get(string $name, mixed $defaultValue = null): mixed
     {
         if (true !== $this->has($name)) {
             return $defaultValue;
@@ -46,7 +46,7 @@ class Item extends AbstractItem
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getPayload(): array
     {

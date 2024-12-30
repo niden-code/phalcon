@@ -246,7 +246,7 @@ class Request extends AbstractInjectionAware implements
             $address = $_SERVER['REMOTE_ADDR'] ?? null;
         }
 
-        if (true !== is_string($address)) {
+        if (!is_string($address)) {
             return false;
         }
 
@@ -306,7 +306,7 @@ class Request extends AbstractInjectionAware implements
                 return $auth;
             }
 
-            if (true !== empty($matches)) {
+            if (!empty($matches)) {
                 foreach ($matches as $match) {
                     $auth[$match[1]] = $match[3];
                 }
@@ -606,7 +606,7 @@ class Request extends AbstractInjectionAware implements
         }
 
         $cleanHost = $host;
-        if (true !== empty($host) && $this->strictHostCheck) {
+        if (!empty($host) && $this->strictHostCheck) {
             /**
              * Cleanup. Force lowercase as per RFC 952/2181
              */
@@ -685,7 +685,7 @@ class Request extends AbstractInjectionAware implements
      */
     final public function getMethod(): string
     {
-        if (true !== isset($_SERVER['REQUEST_METHOD'])) {
+        if (!isset($_SERVER['REQUEST_METHOD'])) {
             return self::METHOD_GET;
         }
 
@@ -694,11 +694,11 @@ class Request extends AbstractInjectionAware implements
         if (self::METHOD_POST === $returnMethod) {
             $overriddenMethod = $this->getHeader('X-HTTP-METHOD-OVERRIDE');
 
-            if (true !== empty($overriddenMethod)) {
+            if (!empty($overriddenMethod)) {
                 $returnMethod = strtoupper($overriddenMethod);
             } elseif (
                 true === $this->methodOverride &&
-                true === isset($_REQUEST['_method'])
+                isset($_REQUEST['_method'])
             ) {
                 $returnMethod = strtoupper($_REQUEST['_method']);
             }
@@ -934,7 +934,7 @@ class Request extends AbstractInjectionAware implements
     {
         $https = $this->getServer('HTTPS');
 
-        return (true !== empty($https) && 'off' !== $https) ? 'https' : 'http';
+        return (!empty($https) && 'off' !== $https) ? 'https' : 'http';
     }
 
     /**
@@ -1017,7 +1017,7 @@ class Request extends AbstractInjectionAware implements
         $files      = [];
         $superFiles = $_FILES;
 
-        if (true !== empty($superFiles)) {
+        if (!empty($superFiles)) {
             foreach ($superFiles as $prefix => $input) {
                 if (is_array($input['name'])) {
                     $smoothInput = $this->smoothFiles(
@@ -1425,7 +1425,7 @@ class Request extends AbstractInjectionAware implements
                 $error = $file['error'];
 
                 if (
-                    true !== is_array($error) &&
+                    !is_array($error) &&
                     (!$error || !$onlySuccessful)
                 ) {
                     $numberFiles++;
@@ -1581,7 +1581,7 @@ class Request extends AbstractInjectionAware implements
             return $source;
         }
 
-        if (true !== isset($source[$name])) {
+        if (!isset($source[$name])) {
             return $defaultValue;
         }
 
@@ -1682,13 +1682,13 @@ class Request extends AbstractInjectionAware implements
     ): int {
         $numberFiles = 0;
 
-        if (true !== is_array($data)) {
+        if (!is_array($data)) {
             return 1;
         }
 
         foreach ($data as $value) {
             if (
-                true !== is_array($value) &&
+                !is_array($value) &&
                 (!$value || true !== $onlySuccessful)
             ) {
                 $numberFiles++;
@@ -1776,8 +1776,8 @@ class Request extends AbstractInjectionAware implements
             }
         }
 
-        if (true !== isset($headers['Authorization'])) {
-            if (true === isset($headers['Php-Auth-User'])) {
+        if (!isset($headers['Authorization'])) {
+            if (isset($headers['Php-Auth-User'])) {
                 $headers['Authorization'] = 'Basic '
                     . base64_encode(
                         $headers['Php-Auth-User'] . ':' . $headers['Php-Auth-Pw']
@@ -1918,7 +1918,7 @@ class Request extends AbstractInjectionAware implements
                 false !== stripos($contentType, 'json')
             ) {
                 $cached = $this->getJsonRawBody(true);
-                $cached = true !== is_array($cached) ? [] : $cached;
+                $cached = !is_array($cached) ? [] : $cached;
             } else {
                 $cached = [];
                 parse_str($this->getRawBody(), $cached);

@@ -36,12 +36,12 @@ class Container implements ContainerInterface
     use ArgumentsTrait;
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     protected array $has = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $registry = [];
 

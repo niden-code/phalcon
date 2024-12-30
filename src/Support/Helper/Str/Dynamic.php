@@ -56,7 +56,7 @@ class Dynamic
             is_array($matches)
         ) {
             foreach ($matches as $match) {
-                if (true !== isset($match[0]) || true !== isset($match[1])) {
+                if (!isset($match[0]) || !isset($match[1])) {
                     continue;
                 }
 

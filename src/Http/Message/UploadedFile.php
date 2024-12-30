@@ -278,10 +278,10 @@ final class UploadedFile implements UploadedFileInterface
          * All together for early failure
          */
         if (
-            !(true === is_string($targetPath) &&
-                true !== empty($targetPath) &&
-                true === is_dir(dirname($targetPath)) &&
-                true === is_writable(dirname($targetPath)))
+            !(is_string($targetPath) &&
+                !empty($targetPath) &&
+                is_dir(dirname($targetPath)) &&
+                is_writable(dirname($targetPath)))
         ) {
             throw new InvalidArgumentException(
                 "Target folder is empty string, not a folder or not writable"
@@ -290,7 +290,7 @@ final class UploadedFile implements UploadedFileInterface
 
         $sapi = constant("PHP_SAPI");
         if (
-            true !== empty($this->fileName) ||
+            !empty($this->fileName) ||
             str_starts_with($sapi, "cli") ||
             str_starts_with($sapi, "phpdbg")
         ) {

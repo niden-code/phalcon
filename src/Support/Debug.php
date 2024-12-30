@@ -517,7 +517,7 @@ class Debug
      */
     protected function getArrayDump(array $arguments, int $number = 0): ?string
     {
-        if ($number >= 3 || true === empty($arguments)) {
+        if ($number >= 3 || empty($arguments)) {
             return null;
         }
 
@@ -529,11 +529,11 @@ class Debug
         foreach ($arguments as $index => $argument) {
             if ('' === $argument) {
                 $varDump = '(empty string)';
-            } elseif (true === is_scalar($argument)) {
+            } elseif (is_scalar($argument)) {
                 $varDump = $this->escapeString((string)$argument);
             } elseif (is_array($argument)) {
                 $varDump = 'Array(' . $this->getArrayDump($argument, $number + 1) . ')';
-            } elseif (true === is_object($argument)) {
+            } elseif (is_object($argument)) {
                 $varDump = 'Object(' . get_class($argument) . ')';
             } elseif (null === $argument) {
                 $varDump = 'null';
@@ -567,21 +567,21 @@ class Debug
         /**
          * String variables are escaped to avoid XSS injections
          */
-        if (true === is_string($variable)) {
+        if (is_string($variable)) {
             return $this->escapeString($variable);
         }
 
         /**
          * Scalar variables are just converted to strings
          */
-        if (true === is_scalar($variable)) {
+        if (is_scalar($variable)) {
             return (string)$variable;
         }
 
         /**
          * If the variable is an object print its class name
          */
-        if (true === is_object($variable)) {
+        if (is_object($variable)) {
             $className = get_class($variable);
 
             /**
@@ -646,7 +646,7 @@ class Debug
                         </td>
                         <td>";
 
-        if (true === isset($trace['class'])) {
+        if (isset($trace['class'])) {
             $className = $trace['class'];
             /**
              * We assume that classes starting by Phalcon are framework's
@@ -706,7 +706,7 @@ class Debug
         /** @var string $functionName */
         $functionName = $trace['function'];
 
-        if (true === isset($trace['class'])) {
+        if (isset($trace['class'])) {
             $functionNameWithLink = $functionName;
         } else {
             /**
@@ -747,7 +747,7 @@ class Debug
         /**
          * Check for arguments in the function
          */
-        if (true === isset($trace['args'])) {
+        if (isset($trace['args'])) {
             $arguments = [];
             foreach ($trace['args'] as $argument) {
                 /**
@@ -770,7 +770,7 @@ class Debug
          * When 'file' is present, it usually means the function is provided by
          * the user
          */
-        if (true === isset($trace['file'])) {
+        if (isset($trace['file'])) {
             $file = $trace['file'];
             $line = $trace['line'];
 
@@ -999,7 +999,7 @@ class Debug
         $filter = $this->blacklist['server'] ?? [];
 
         foreach ($source as $key => $value) {
-            if (true !== isset($filter[mb_strtolower($key)])) {
+            if (!isset($filter[mb_strtolower($key)])) {
                 $html .= "
                     <tr>
                         <td class='key'>$key</td>
@@ -1028,7 +1028,7 @@ class Debug
         string $headerTwo,
         string $colspan = ""
     ): string {
-        $span = (true === empty($colspan)) ? "" : ' colspan="' . $colspan . '"';
+        $span = (empty($colspan)) ? "" : ' colspan="' . $colspan . '"';
 
         return "
         <div id='$divId'>

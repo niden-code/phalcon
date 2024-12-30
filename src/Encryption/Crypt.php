@@ -64,17 +64,6 @@ use const OPENSSL_RAW_DATA;
  *
  * echo $crypt->decrypt($encrypted, $key);
  * ```
- *
- * @property string $authTag
- * @property string $authData
- * @property int    $authTagLength
- * @property string $key
- * @property int    $padding
- * @property string $cipher
- * @property array  $availableCiphers
- * @property int    $ivLength
- * @property string $hashAlgorithm
- * @property bool   $useSigning
  */
 class Crypt implements CryptInterface
 {
@@ -120,7 +109,7 @@ class Crypt implements CryptInterface
     /**
      * Available cipher methods.
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected array $availableCiphers = [];
 
@@ -208,9 +197,9 @@ class Crypt implements CryptInterface
      */
     public function decrypt(string $input, string $key = null): string
     {
-        $decryptKey = (true === empty($key)) ? $this->key : $key;
+        $decryptKey = (empty($key)) ? $this->key : $key;
 
-        if (true === empty($decryptKey)) {
+        if (empty($decryptKey)) {
             throw new Exception("Decryption key cannot be empty");
         }
 
@@ -301,9 +290,9 @@ class Crypt implements CryptInterface
      */
     public function encrypt(string $input, string $key = null): string
     {
-        $encryptKey = (true === empty($key)) ? $this->key : $key;
+        $encryptKey = (empty($key)) ? $this->key : $key;
 
-        if (true === empty($encryptKey)) {
+        if (empty($encryptKey)) {
             throw new Exception("Encryption key cannot be empty");
         }
 
@@ -313,7 +302,7 @@ class Crypt implements CryptInterface
 
         try {
             $iv = $this->phpOpensslRandomPseudoBytes($this->ivLength);
-        } catch (\ValueError) {
+        } catch (ValueError) {
             throw new Exception("Cannot calculate Random Pseudo Bytes");
         }
 
@@ -601,9 +590,10 @@ class Crypt implements CryptInterface
     {
         $method    = "getAvailable";
         $method    .= ("hash" === $cipher) ? "HashAlgorithms" : "Ciphers";
+        /** @var array<array-key, string> $available */
         $available = $this->$method();
         $lower     = $this->toLower($cipher);
-        if (true !== isset($available[$lower])) {
+        if (!isset($available[$lower])) {
             throw new Exception(
                 sprintf(
                     "The %s algorithm '%s' is not supported on this system.",
@@ -805,17 +795,13 @@ class Crypt implements CryptInterface
          * with that data
          */
         if (true === $this->checkIsMode(["ccm", "gcm"], $mode)) {
-            $authData = $this->authData;
-
-            if (true === empty($authData)) {
+            if (empty($this->authData)) {
                 throw new Exception(
                     "Auth data must be provided when using AEAD mode"
                 );
             }
 
-            $authTag       = $this->authTag;
-            $authTagLength = $this->authTagLength;
-
+            $authTag   = $this->authTag;
             $encrypted = openssl_encrypt(
                 $padded,
                 $cipher,
@@ -823,10 +809,11 @@ class Crypt implements CryptInterface
                 OPENSSL_RAW_DATA,
                 $iv,
                 $authTag,
-                $authData,
-                $authTagLength
+                $this->authData,
+                $this->authTagLength
             );
 
+            /** @var string $authTag */
             $this->authTag = $authTag;
         } else {
             $encrypted = openssl_encrypt(
@@ -909,7 +896,7 @@ class Crypt implements CryptInterface
      * @param string $hashAlgorithm
      * @param string $input
      *
-     * @return array
+     * @return array{0: string, 1:string}
      */
     private function calculateCipherTextAndDigest(
         string $hashAlgorithm,

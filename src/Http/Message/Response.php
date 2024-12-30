@@ -136,7 +136,7 @@ final class Response extends AbstractMessage implements ResponseInterface
         $phrases = $this->getPhrases();
         $this->checkCodeValue($code);
 
-        if ("" === $phrase && true === isset($phrases[$code])) {
+        if ("" === $phrase && isset($phrases[$code])) {
             $phrase = $phrases[$code];
         }
 

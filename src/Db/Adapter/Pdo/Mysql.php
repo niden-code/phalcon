@@ -81,10 +81,10 @@ class Mysql extends PdoAdapter
          * set this option in the descriptor["options"], we do not have to set
          * anything
          */
-        if (true !== isset($descriptor["options"][PDO::ATTR_EMULATE_PREPARES])) {
+        if (!isset($descriptor["options"][PDO::ATTR_EMULATE_PREPARES])) {
             $descriptor["options"][PDO::ATTR_EMULATE_PREPARES] = false;
         }
-        if (true !== isset($descriptor["options"][PDO::ATTR_STRINGIFY_FETCHES])) {
+        if (!isset($descriptor["options"][PDO::ATTR_STRINGIFY_FETCHES])) {
             $descriptor["options"][PDO::ATTR_STRINGIFY_FETCHES] = false;
         }
 
@@ -535,7 +535,7 @@ class Mysql extends PdoAdapter
             $keyName   = $index["Key_name"];
             $indexType = $index["Index_type"];
 
-            if (true !== isset($indexes[$keyName])) {
+            if (!isset($indexes[$keyName])) {
                 $indexes[$keyName] = [];
             }
 

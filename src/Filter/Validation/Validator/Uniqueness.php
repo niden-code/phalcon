@@ -143,7 +143,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
     {
         // Caching columnMap
         $columnRenaming = (bool)ini_get("orm.column_renaming");
-        if (true === $columnRenaming && true === empty($this->columnMap)) {
+        if (true === $columnRenaming && empty($this->columnMap)) {
             $this->columnMap = $record
                 ->getDI()
                 ->getShared("modelsMetadata")
@@ -151,7 +151,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
             ;
         }
 
-        if (true === isset($this->columnMap[$field])) {
+        if (isset($this->columnMap[$field])) {
             return $this->columnMap[$field];
         }
 
@@ -174,7 +174,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
 //
 //        var isDocument;
 
-        if (true !== is_array($field)) {
+        if (!is_array($field)) {
             $field = [$field];
         }
 
@@ -188,7 +188,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
         if (null !== $convert) {
             $values = $convert($values);
 
-            if (true !== is_array($values)) {
+            if (!is_array($values)) {
                 throw new Exception("Value conversion must return an array");
             }
         }
@@ -196,11 +196,11 @@ class Uniqueness extends AbstractCombinedFieldsValidator
         /** @var Model|null $record */
         $record = $this->getOption("model");
 
-        if (true === empty($record) || true !== is_object($record)) {
+        if (empty($record) || !is_object($record)) {
             // check validation getEntity() method
             $record = $validation->getEntity();
 
-            if (true === empty($record)) {
+            if (empty($record)) {
                 throw new Exception(
                     "Model of record must be set to property \"model\""
                 );
@@ -456,7 +456,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
             }
         }
 
-        if (true !== empty($exceptConditions)) {
+        if (!empty($exceptConditions)) {
             $params["conditions"][] = "("
                 . implode(" OR ", $exceptConditions)
                 . ")";

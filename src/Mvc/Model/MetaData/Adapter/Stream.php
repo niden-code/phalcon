@@ -67,7 +67,7 @@ class Stream extends MetaData
      */
     public function read(?string $key): array | null
     {
-        if (true === is_null($key)) {
+        if (null === $key) {
             return null;
         }
         $path = $this->metaDataDir . $this->prepareVirtualPath($key) . ".php";

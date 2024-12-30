@@ -153,7 +153,7 @@ abstract class AbstractLogger
      */
     public function getAdapter(string $name): AdapterInterface
     {
-        if (true !== isset($this->adapters[$name])) {
+        if (!isset($this->adapters[$name])) {
             throw new LoggerException(
                 'Adapter does not exist for this logger'
             );

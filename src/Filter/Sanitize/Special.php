@@ -18,8 +18,6 @@ use function filter_var;
 use const FILTER_SANITIZE_SPECIAL_CHARS;
 
 /**
- * Phalcon\Filter\Sanitize\Special
- *
  * Sanitizes a value special characters
  */
 class Special

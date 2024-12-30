@@ -31,6 +31,7 @@ class Increment
         string $text,
         string $separator = '_'
     ): string {
+        /** @var array<int, string> $parts */
         $parts  = explode($separator, $text);
         $number = 1;
 

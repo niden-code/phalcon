@@ -18,8 +18,6 @@ use function mb_convert_case;
 use const MB_CASE_UPPER;
 
 /**
- * Phalcon\Filter\Sanitize\Upper
- *
  * Sanitizes a value to uppercase
  */
 class Upper

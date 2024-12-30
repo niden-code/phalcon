@@ -38,14 +38,14 @@ class SoftDelete extends AbstractBehavior
         /**
          * 'value' is the value to be updated instead of delete the record
          */
-        if (true !== isset($options['value'])) {
+        if (!isset($options['value'])) {
             throw new Exception("The option 'value' is required");
         }
 
         /**
          * 'field' is the attribute to be updated instead of delete the record
          */
-        if (true !== isset($options['field'])) {
+        if (!isset($options['field'])) {
             throw new Exception("The option 'field' is required");
         }
 

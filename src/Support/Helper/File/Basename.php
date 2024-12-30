@@ -46,7 +46,7 @@ class Basename
             $matches
         ) ? $matches[0] : '';
 
-        if (true !== empty($suffix)) {
+        if (!empty($suffix)) {
             $filename = preg_replace(
                 '@' . preg_quote($suffix, '@') . '$@',
                 '',

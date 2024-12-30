@@ -39,7 +39,7 @@ class Introspection implements StrategyInterface
         if (true === method_exists($model, "columnMap")) {
             $userColumnMap = $model->columnMap();
 
-            if (false === is_array($userColumnMap)) {
+            if (!is_array($userColumnMap)) {
                 throw new Exception("columnMap() not returned an array");
             }
 

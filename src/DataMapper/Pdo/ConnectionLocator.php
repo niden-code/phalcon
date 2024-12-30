@@ -203,7 +203,7 @@ class ConnectionLocator
         /**
          * No collection returns the master
          */
-        if (true === empty($collection)) {
+        if (empty($collection)) {
             return $this->getMaster();
         }
 

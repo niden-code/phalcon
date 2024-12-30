@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function ucfirst;
 
 /**
- * Phalcon\Filter\Sanitize\UpperFirst
- *
  * Sanitizes a value to ucfirst
  */
 class UpperFirst

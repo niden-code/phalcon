@@ -46,6 +46,7 @@ use function substr;
  *
  * echo $router->getTaskName();
  *```
+ * @phpstan-import-type TDefaults from RouterInterface
  */
 class Router extends AbstractInjectionAware implements RouterInterface
 {
@@ -80,7 +81,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
     protected ?RouteInterface $matchedRoute = null;
 
     /**
-     * @var array
+     * @var array<array-key, string>
      */
     protected array $matches = [];
 
@@ -185,7 +186,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
     /**
      * Returns the sub expressions in the regular expression matched
      *
-     * @return array
+     * @return array<array-key, string>
      */
     public function getMatches(): array
     {
@@ -291,7 +292,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
         $this->wasMatched   = false;
         $this->matchedRoute = null;
 
-        if (true !== is_array($arguments)) {
+        if (!is_array($arguments)) {
             $reverseRoutes = array_reverse($this->routes);
             foreach ($reverseRoutes as $route) {
                 /**
@@ -315,7 +316,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
                         /**
                          * Check first if the callback is callable
                          */
-                        if (true !== is_callable($beforeMatch)) {
+                        if (!is_callable($beforeMatch)) {
                             throw new Exception(
                                 "Before-Match callback is not callable in matched route"
                             );
@@ -345,19 +346,19 @@ class Router extends AbstractInjectionAware implements RouterInterface
                     /**
                      * Check if the matches has variables
                      */
-                    if (true !== empty($matches)) {
+                    if (!empty($matches)) {
                         /**
                          * Get the route converters if any
                          */
                         $converters = $route->getConverters();
 
                         foreach ($paths as $part => $position) {
-                            if (true === isset($matches[$position])) {
+                            if (isset($matches[$position])) {
                                 $matchPosition = $matches[$position];
                                 /**
                                  * Check if the part has a converter
                                  */
-                                if (true === isset($converters[$part])) {
+                                if (isset($converters[$part])) {
                                     $parts[$part] = call_user_func_array(
                                         $converters[$part],
                                         [$matchPosition]
@@ -372,7 +373,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
                                 /**
                                  * Apply the converters anyway
                                  */
-                                if (true === isset($converters[$part])) {
+                                if (isset($converters[$part])) {
                                     $parts[$part] = call_user_func_array(
                                         $converters[$part],
                                         [$position]
@@ -418,7 +419,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
          * Check for a module
          */
         $moduleName = $parts["module"] ?? $this->defaultModule;
-        if (true === isset($parts["module"])) {
+        if (isset($parts["module"])) {
             unset($parts["module"]);
         }
 
@@ -426,7 +427,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
          * Check for a task
          */
         $taskName = $parts["task"] ?? $this->defaultTask;
-        if (true === isset($parts["task"])) {
+        if (isset($parts["task"])) {
             unset($parts["task"]);
         }
 
@@ -434,16 +435,16 @@ class Router extends AbstractInjectionAware implements RouterInterface
          * Check for an action
          */
         $actionName = $parts["action"] ?? $this->defaultAction;
-        if (true === isset($parts["action"])) {
+        if (isset($parts["action"])) {
             unset($parts["action"]);
         }
 
         /**
          * Check for parameters
          */
-        if (true === isset($parts["params"])) {
+        if (isset($parts["params"])) {
             $params = $parts["params"];
-            if (true !== is_array($params)) {
+            if (!is_array($params)) {
                 $strParams = substr((string)$params, 1);
 
                 if ($strParams) {
@@ -456,7 +457,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
             unset($parts["params"]);
         }
 
-        if (true !== empty($params)) {
+        if (!empty($params)) {
             $params = array_merge($params, $parts);
         } else {
             $params = $parts;
@@ -524,7 +525,7 @@ class Router extends AbstractInjectionAware implements RouterInterface
      * );
      *```
      *
-     * @param array $defaults
+     * @param TDefaults $defaults
      *
      * @return RouterInterface
      */

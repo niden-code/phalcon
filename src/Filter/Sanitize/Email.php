@@ -19,8 +19,6 @@ use const FILTER_FLAG_EMAIL_UNICODE;
 use const FILTER_SANITIZE_EMAIL;
 
 /**
- * Phalcon\Filter\Sanitize\Email
- *
  * Sanitizes an email string
  */
 class Email

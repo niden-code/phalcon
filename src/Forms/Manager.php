@@ -49,7 +49,7 @@ class Manager
      */
     public function get(string $name): Form
     {
-        if (true !== isset($this->forms[$name])) {
+        if (!isset($this->forms[$name])) {
             throw new Exception(
                 "There is no form with name='"
                 . $name

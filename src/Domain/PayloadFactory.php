@@ -17,16 +17,14 @@ use PayloadInterop\DomainPayload;
 
 /**
  * Factory to create payload objects
- *
- * @package Phalcon\Domain
  */
 class PayloadFactory
 {
     /**
      * Instantiate a new object
      *
-     * @param string $status
-     * @param array  $result
+     * @param string                  $status
+     * @param array<array-key, mixed> $result
      *
      * @return DomainPayload
      */

@@ -379,7 +379,7 @@ class Micro extends Injectable implements ArrayAccess, EventsAwareInterface
             $matchedRoute = $router->getMatchedRoute();
 
             if (null !== $matchedRoute) {
-                if (true !== isset($this->handlers[$matchedRoute->getRouteId()])) {
+                if (!isset($this->handlers[$matchedRoute->getRouteId()])) {
                     throw new Exception(
                         "Matched route does not have an associated handler"
                     );
@@ -769,13 +769,13 @@ class Micro extends Injectable implements ArrayAccess, EventsAwareInterface
          */
         $mainHandler = $collection->getHandler();
 
-        if (true === empty($mainHandler)) {
+        if (empty($mainHandler)) {
             throw new Exception("Collection requires a main handler");
         }
 
         $handlers = $collection->getHandlers();
 
-        if (true === empty($handlers)) {
+        if (empty($handlers)) {
             throw new Exception("There are no handlers to mount");
         }
 
@@ -811,7 +811,7 @@ class Micro extends Injectable implements ArrayAccess, EventsAwareInterface
             $realHandler     = [$lazyHandler, $subHandler];
             $prefixedPattern = $pattern;
 
-            if (true !== empty($prefix)) {
+            if (!empty($prefix)) {
                 $prefixedPattern = $prefix;
                 if ($pattern === "/") {
                     $prefixedPattern .= $pattern;
@@ -824,7 +824,7 @@ class Micro extends Injectable implements ArrayAccess, EventsAwareInterface
             $route = $this->map($prefixedPattern, $realHandler);
 
             if (
-                (is_string($methods) && true !== empty($methods)) ||
+                (is_string($methods) && !empty($methods)) ||
                 is_array($methods)
             ) {
                 $route->via($methods);

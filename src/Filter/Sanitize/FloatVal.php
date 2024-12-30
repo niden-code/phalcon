@@ -19,8 +19,6 @@ use const FILTER_FLAG_ALLOW_FRACTION;
 use const FILTER_SANITIZE_NUMBER_FLOAT;
 
 /**
- * Phalcon\Filter\Sanitize\FloatVal
- *
  * Sanitizes a value to float
  */
 class FloatVal

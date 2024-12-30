@@ -26,10 +26,10 @@ class Interpolate
     use InterpolateTrait;
 
     /**
-     * @param string $message
-     * @param array  $context
-     * @param string $leftToken
-     * @param string $rightToken
+     * @param string   $message
+     * @param string[] $context
+     * @param string   $leftToken
+     * @param string   $rightToken
      *
      * @return string
      */

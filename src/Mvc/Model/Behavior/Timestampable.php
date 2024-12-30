@@ -47,14 +47,14 @@ class Timestampable extends AbstractBehavior
 
         $options = $this->getOptions($type);
 
-        if (true === empty($options)) {
+        if (empty($options)) {
             return;
         }
 
         /**
          * The field name is required in this behavior
          */
-        if (true !== isset($options['field'])) {
+        if (!isset($options['field'])) {
             throw new Exception("The option 'field' is required");
         }
 
@@ -65,7 +65,7 @@ class Timestampable extends AbstractBehavior
          * Assign the value to the field, use writeAttribute() if the property
          * is protected
          */
-        if (true === is_array($field)) {
+        if (is_array($field)) {
             foreach ($field as $singleField) {
                 $model->writeAttribute($singleField, $timestamp);
             }
@@ -81,20 +81,20 @@ class Timestampable extends AbstractBehavior
      */
     private function getTimestamp(array $options)
     {
-        if (true === isset($options['format'])) {
+        if (isset($options['format'])) {
             /**
              * Format is a format for date()
              */
             return date($options['format']);
         }
 
-        if (true === isset($options["generator"])) {
+        if (isset($options["generator"])) {
             $generator = $options["generator"];
             /**
              * A generator is a closure that produce the correct timestamp value
              */
             if (
-                true === is_object($generator) &&
+                is_object($generator) &&
                 $generator instanceof Closure
             ) {
                 return call_user_func($generator);

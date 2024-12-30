@@ -61,7 +61,7 @@ class Bag extends Collection implements BagInterface, InjectionAwareInterface
         $this->container = $session->getDI();
 
         $data = $session->get($name);
-        if (true !== is_array($data)) {
+        if (!is_array($data)) {
             $data = [];
         }
 

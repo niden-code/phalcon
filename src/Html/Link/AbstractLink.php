@@ -60,7 +60,7 @@ abstract class AbstractLink
         $this->href       = $href;
         $this->templated  = $this->hrefIsTemplated($href);
 
-        if (true !== empty($rel)) {
+        if (!empty($rel)) {
             $this->rels->set($rel, true);
         }
     }

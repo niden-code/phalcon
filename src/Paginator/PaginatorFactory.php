@@ -14,11 +14,22 @@ declare(strict_types=1);
 namespace Phalcon\Paginator;
 
 use Phalcon\Config\Config;
+use Phalcon\Mvc\Model\Query\Builder;
 use Phalcon\Paginator\Adapter\AdapterInterface;
+use Phalcon\Paginator\Adapter\Model;
 use Phalcon\Paginator\Adapter\NativeArray;
+use Phalcon\Paginator\Adapter\QueryBuilder;
 use Phalcon\Support\Traits\ConfigTrait;
 use Phalcon\Traits\Factory\FactoryTrait;
 
+/**
+ * @phpstan-type TOptions = array{
+ *      adapter: string,
+ *      limit?: int,
+ *      page?: int,
+ *      builder?: Builder
+ * }
+ */
 class PaginatorFactory
 {
     use ConfigTrait;
@@ -26,6 +37,8 @@ class PaginatorFactory
 
     /**
      * AdapterFactory constructor.
+     *
+     * @param array $services
      */
     public function __construct(array $services = [])
     {
@@ -55,12 +68,7 @@ class PaginatorFactory
      * $paginator = (new PaginatorFactory())->load($options);
      *```
      *
-     * @param array|Config $config = [
-     *                             'adapter' => 'queryBuilder',
-     *                             'limit' => 20,
-     *                             'page' => 1,
-     *                             'builder' => null
-     *                             ]
+     * @param TOptions|Config $config
      */
     public function load(array | Config $config): AdapterInterface
     {
@@ -78,8 +86,10 @@ class PaginatorFactory
     public function newInstance(string $name, array $options = []): AdapterInterface
     {
         $definition = $this->getService($name);
+        /** @var AdapterInterface $paginator */
+        $paginator = new $definition($options);
 
-        return new $definition($options);
+        return $paginator;
     }
 
     /**
@@ -98,9 +108,9 @@ class PaginatorFactory
     protected function getServices(): array
     {
         return [
-            "model"        => "Phalcon\\Paginator\\Adapter\\Model",
+            "model"        => Model::class,
             "nativeArray"  => NativeArray::class,
-            "queryBuilder" => "Phalcon\\Paginator\\Adapter\\QueryBuilder",
+            "queryBuilder" => QueryBuilder::class,
         ];
     }
 }

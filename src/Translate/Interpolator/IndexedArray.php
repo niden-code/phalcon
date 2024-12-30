@@ -13,11 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Translate\Interpolator;
 
-/**
- * Class IndexedArray
- *
- * @package Phalcon\Translate\Interpolator
- */
+use function vsprintf;
+
 class IndexedArray implements InterpolatorInterface
 {
     /**
@@ -32,10 +29,8 @@ class IndexedArray implements InterpolatorInterface
         string $translation,
         array $placeholders = []
     ): string {
-        if (true !== empty($placeholders)) {
-            array_unshift($placeholders, $translation);
-
-            return call_user_func_array('sprintf', $placeholders);
+        if (!empty($placeholders)) {
+            return vsprintf($translation, $placeholders);
         }
 
         return $translation;

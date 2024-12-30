@@ -34,45 +34,51 @@ trait PhpApcuTrait
      *
      * @link https://php.net/manual/en/function.apcu-dec.php
      */
-    protected function phpApcuDec($key, $step = 1, &$success = null, $ttl = 0)
-    {
+    protected function phpApcuDec(
+        string $key,
+        int $step = 1,
+        ?bool &$success = null,
+        int $ttl = 0
+    ): int|false {
         return apcu_dec($key, $step, $success, $ttl);
     }
 
     /**
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return bool|array
      *
      * @link https://php.net/manual/en/function.apcu-delete.php
      */
-    protected function phpApcuDelete($key)
+    protected function phpApcuDelete(array|string $key): bool|array
     {
         return apcu_delete($key);
     }
 
     /**
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return bool|array
      *
      * @link https://php.net/manual/en/function.apcu-exists.php
      */
-    protected function phpApcuExists($key)
+    protected function phpApcuExists(array|string $key): bool|array
     {
         return apcu_exists($key);
     }
 
     /**
-     * @param string|array $key
+     * @param array|string $key
      * @param bool|null    $success
      *
      * @return mixed|false
      *
      * @link https://php.net/manual/en/function.apcu-fetch.php
      */
-    protected function phpApcuFetch($key, &$success = null)
-    {
+    protected function phpApcuFetch(
+        array|string $key,
+        ?bool &$success = null
+    ): mixed {
         return apcu_fetch($key, $success);
     }
 
@@ -86,13 +92,17 @@ trait PhpApcuTrait
      *
      * @link https://php.net/manual/en/function.apcu-inc.php
      */
-    protected function phpApcuInc($key, $step = 1, &$success = null, $ttl = 0)
-    {
+    protected function phpApcuInc(
+        string $key,
+        int $step = 1,
+        ?bool &$success = null,
+        int $ttl = 0
+    ): false|int {
         return apcu_inc($key, $step, $success, $ttl);
     }
 
     /**
-     * @param string|array $key
+     * @param array|string $key
      * @param mixed        $var
      * @param int          $ttl
      *
@@ -100,8 +110,11 @@ trait PhpApcuTrait
      *
      * @link https://php.net/manual/en/function.apcu-store.php
      */
-    protected function phpApcuStore($key, $var, $ttl = 0)
-    {
+    protected function phpApcuStore(
+        array|string $key,
+        mixed $var,
+        int $ttl = 0
+    ): array|bool {
         return apcu_store($key, $var, $ttl);
     }
 }

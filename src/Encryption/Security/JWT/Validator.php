@@ -19,19 +19,16 @@ use Phalcon\Encryption\Security\JWT\Token\Token;
 
 /**
  * Class Validator
- *
- * @property int   $timeShift
- * @property Token $token
  */
 class Validator
 {
     /**
-     * @var array
+     * @var array<string, int|string|null>
      */
     private array $claims;
 
     /**
-     * @var array
+     * @var array<array-key, string>
      */
     private array $errors = [];
 
@@ -43,7 +40,7 @@ class Validator
      */
     public function __construct(
         private Token $token,
-        private int $timeShift = 0
+        private readonly int $timeShift = 0
     ) {
         $now          = time();
         $this->claims = [
@@ -111,13 +108,13 @@ class Validator
     /**
      * Validate the audience
      *
-     * @param string|array $audience
+     * @param string|string[] $audience
      *
      * @return Validator
      */
     public function validateAudience(array | string $audience): Validator
     {
-        if (true === is_string($audience)) {
+        if (is_string($audience)) {
             $audience = [$audience];
         }
 
@@ -144,14 +141,14 @@ class Validator
      */
     public function validateExpiration(int $timestamp): Validator
     {
-        $tokenExpirationTime = (int)$this->token->getClaims()
-                                                ->get(Enum::EXPIRATION_TIME)
+        $tokenExpirationTime = $this
+            ->token
+            ->getClaims()
+            ->get(Enum::EXPIRATION_TIME)
         ;
 
-        if (
-            $this->token->getClaims()
-                        ->has(Enum::EXPIRATION_TIME) &&
-            $this->getTimestamp($timestamp) > $tokenExpirationTime
+        if (null !== $tokenExpirationTime &&
+            $this->getTimestamp($timestamp) > (int)$tokenExpirationTime
         ) {
             $this->errors[] = "Validation: the token has expired";
         }

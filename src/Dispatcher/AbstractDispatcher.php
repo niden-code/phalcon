@@ -321,7 +321,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
             $handler = $this->container->getShared($handlerClass);
 
             // Handlers must be only objects
-            if (true !== is_object($handler)) {
+            if (!is_object($handler)) {
                 $status = $this->throwDispatchException(
                     "Invalid handler returned from the services container",
                     DispatcherException::EXCEPTION_INVALID_HANDLER
@@ -336,7 +336,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
 
             // Check if the handler is new (hasn't been initialized).
             $handlerHash  = spl_object_hash($handler);
-            $isNewHandler = true !== isset($this->handlerHashes[$handlerHash]);
+            $isNewHandler = !isset($this->handlerHashes[$handlerHash]);
 
             if (true === $isNewHandler) {
                 $this->handlerHashes[$handlerHash] = true;
@@ -350,7 +350,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
             // Check if the method exists in the handler
             $actionMethod = $this->getActiveMethod();
 
-            if (true !== is_callable([$handler, $actionMethod])) {
+            if (!is_callable([$handler, $actionMethod])) {
                 if (true === $hasEventsManager) {
                     if (false === $this->fireManagerEvent("dispatch:beforeNotFoundAction")) {
                         continue;
@@ -746,7 +746,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
      */
     public function getActiveMethod(): string
     {
-        if (true !== isset($this->activeMethodMap[$this->actionName])) {
+        if (!isset($this->activeMethodMap[$this->actionName])) {
             $this->activeMethodMap[$this->actionName] = lcfirst(
                 $this->toCamelCase($this->actionName)
             );
@@ -896,12 +896,12 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
         array | string $filters = [],
         mixed $defaultValue = null
     ): mixed {
-        if (true !== isset($this->parameters[$parameter])) {
+        if (!isset($this->parameters[$parameter])) {
             return $defaultValue;
         }
 
         $paramValue = $this->parameters[$parameter];
-        if (true === empty($filters)) {
+        if (empty($filters)) {
             return $paramValue;
         }
 
@@ -1074,7 +1074,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
         BinderInterface $modelBinder,
         AdapterInterface | string $cache = null
     ): DispatcherInterface {
-        if (true === is_string($cache)) {
+        if (is_string($cache)) {
             $cache = $this->container->get($cache);
         }
 
@@ -1200,13 +1200,13 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
      */
     protected function resolveEmptyProperties(): void
     {
-        $this->namespaceName = true !== empty($this->namespaceName)
+        $this->namespaceName = !empty($this->namespaceName)
             ? $this->namespaceName
             : $this->defaultNamespace;
-        $this->handlerName   = true !== empty($this->handlerName)
+        $this->handlerName   = !empty($this->handlerName)
             ? $this->handlerName
             : $this->defaultHandler;
-        $this->actionName    = true !== empty($this->actionName)
+        $this->actionName    = !empty($this->actionName)
             ? $this->actionName
             : $this->defaultAction;
     }
@@ -1229,7 +1229,7 @@ abstract class AbstractDispatcher extends Injectable implements DispatcherInterf
      */
     protected function toCamelCase(string $input): string
     {
-        if (true !== isset($this->camelCaseMap[$input])) {
+        if (!isset($this->camelCaseMap[$input])) {
             $this->camelCaseMap[$input] = implode(
                 "",
                 array_map(

@@ -18,8 +18,6 @@ use function filter_var;
 use const FILTER_SANITIZE_URL;
 
 /**
- * Phalcon\Filter\Sanitize\Url
- *
  * Sanitizes a value url
  */
 class Url

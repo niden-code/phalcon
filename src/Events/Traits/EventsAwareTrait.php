@@ -18,13 +18,6 @@ use Phalcon\Events\ManagerInterface;
 
 use function property_exists;
 
-/**
- * Trait EventsAwareTrait
- *
- * @package Phalcon\Events\Traits
- *
- * @property ?ManagerInterface $eventsManager
- */
 trait EventsAwareTrait
 {
     protected ?ManagerInterface $eventsManager = null;

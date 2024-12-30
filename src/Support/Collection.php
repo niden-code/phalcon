@@ -136,7 +136,7 @@ class Collection implements
         /**
          * If the key is not set, return the default value
          */
-        if (true !== isset($this->lowerKeys[$element])) {
+        if (!isset($this->lowerKeys[$element])) {
             return $defaultValue;
         }
 

@@ -53,6 +53,9 @@ class FilterFactory
         return new Filter($this->getServices());
     }
 
+    /**
+     * @return string[]
+     */
     protected function getServices(): array
     {
         return [

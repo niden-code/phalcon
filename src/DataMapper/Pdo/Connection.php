@@ -95,7 +95,7 @@ class Connection extends AbstractConnection
                 "mssql"  => true,
             ];
 
-            if (true !== isset($available[$parts[0]])) {
+            if (!isset($available[$parts[0]])) {
                 throw new InvalidArgumentException(
                     "Driver not supported [" . $parts[0] . "]"
                 );
@@ -103,7 +103,7 @@ class Connection extends AbstractConnection
 
 
             // if no error mode is specified, use exceptions
-            if (true !== isset($options[PDO::ATTR_ERRMODE])) {
+            if (!isset($options[PDO::ATTR_ERRMODE])) {
                 $options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
             }
 

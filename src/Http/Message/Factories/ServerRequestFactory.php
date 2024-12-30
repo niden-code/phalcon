@@ -104,11 +104,11 @@ class ServerRequestFactory implements
         /**
          * Ensure that superglobals are defined if not
          */
-        $globalCookies = true !== empty($_COOKIE) ? $_COOKIE : [];
-        $globalFiles   = true !== empty($_FILES) ? $_FILES : [];
-        $globalGet     = true !== empty($_GET) ? $_GET : [];
-        $globalPost    = true !== empty($_POST) ? $_POST : [];
-        $globalServer  = true !== empty($_SERVER) ? $_SERVER : [];
+        $globalCookies = !empty($_COOKIE) ? $_COOKIE : [];
+        $globalFiles   = !empty($_FILES) ? $_FILES : [];
+        $globalGet     = !empty($_GET) ? $_GET : [];
+        $globalPost    = !empty($_POST) ? $_POST : [];
+        $globalServer  = !empty($_SERVER) ? $_SERVER : [];
 
         $server            = $this->checkNullArray($server, $globalServer);
         $files             = $this->checkNullArray($files, $globalFiles);
@@ -125,7 +125,7 @@ class ServerRequestFactory implements
         $filesCollection   = $this->parseUploadedFiles($files);
         $cookiesCollection = $cookies;
 
-        if (true === empty($cookies) && true === $headers->has("cookie")) {
+        if (empty($cookies) && true === $headers->has("cookie")) {
             $cookiesCollection = $this->parseCookieHeader(
                 $headers->get("cookie")
             );
@@ -225,7 +225,7 @@ class ServerRequestFactory implements
         $iisRewrite   = $server->get("IIS_WasUrlRewritten");
         $unencodedUrl = $server->get("UNENCODED_URL", "");
 
-        if ("1" === $iisRewrite && true !== empty($unencodedUrl)) {
+        if ("1" === $iisRewrite && !empty($unencodedUrl)) {
             return $unencodedUrl;
         }
 
@@ -242,7 +242,7 @@ class ServerRequestFactory implements
          * ORIG_PATH_INFO
          */
         $origPathInfo = $server->get("ORIG_PATH_INFO");
-        if (true === empty($origPathInfo)) {
+        if (empty($origPathInfo)) {
             return "/";
         }
 
@@ -300,7 +300,7 @@ class ServerRequestFactory implements
      */
     private function checkNullArray($source, array $super): array
     {
-        if (true === empty($source)) {
+        if (empty($source)) {
             return $super;
         }
 
@@ -319,9 +319,9 @@ class ServerRequestFactory implements
     private function createUploadedFile(array $file): UploadedFile
     {
         if (
-            true !== isset($file["tmp_name"]) ||
-            true !== isset($file["size"]) ||
-            true !== isset($file["error"])
+            !isset($file["tmp_name"]) ||
+            !isset($file["size"]) ||
+            !isset($file["error"])
         ) {
             throw new InvalidArgumentException(
                 "The file array must contain tmp_name, size and error; " .
@@ -329,8 +329,8 @@ class ServerRequestFactory implements
             );
         }
 
-        $name = true === isset($file["name"]) ? $file["name"] : null;
-        $type = true === isset($file["type"]) ? $file["type"] : null;
+        $name = isset($file["name"]) ? $file["name"] : null;
+        $type = isset($file["type"]) ? $file["type"] : null;
 
         return new UploadedFile(
             $file["tmp_name"],
@@ -477,7 +477,7 @@ class ServerRequestFactory implements
 
         $localProtocol = str_replace("http/", "", $localProtocol);
 
-        if (true !== isset($protocols[$localProtocol])) {
+        if (!isset($protocols[$localProtocol])) {
             throw new InvalidArgumentException(
                 "Unsupported protocol " . $protocol
             );
@@ -546,7 +546,7 @@ class ServerRequestFactory implements
             /**
              * file is array with 'tmp_name'
              */
-            if (is_array($file) && true === isset($file["tmp_name"])) {
+            if (is_array($file) && isset($file["tmp_name"])) {
                 $collection->set($key, $this->createUploadedFile($file));
                 continue;
             }
@@ -589,9 +589,9 @@ class ServerRequestFactory implements
          */
         $split = $this->calculateUriHost($server, $headers);
 
-        if (true !== empty($split[0])) {
+        if (!empty($split[0])) {
             $uri = $uri->withHost($split[0]);
-            if (true !== empty($split[1])) {
+            if (!empty($split[1])) {
                 $uri = $uri->withPort($split[1]);
             }
         }

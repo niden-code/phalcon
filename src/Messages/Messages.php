@@ -150,7 +150,7 @@ class Messages implements ArrayAccess, Countable, Iterator, JsonSerializable
      */
     private function checkAppendMessagesArray($messages): void
     {
-        if (true !== is_array($messages)) {
+        if (!is_array($messages)) {
             /**
              * A collection of messages is iterated and appended one-by-one to
              * the current list

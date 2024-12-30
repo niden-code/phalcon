@@ -17,6 +17,13 @@ use Phalcon\Cli\Router\RouteInterface;
 
 /**
  * Interface for Phalcon\Cli\Router
+ *
+ * @psalm-type TDefaults = array{
+ *      module?: string,
+ *      task?: string,
+ *      action?: string,
+ *      params?: string
+ * }
  */
 interface RouterInterface
 {
@@ -47,7 +54,7 @@ interface RouterInterface
     /**
      * Return the sub expressions in the regular expression matched
      *
-     * @return array
+     * @return array<array-key, string>
      */
     public function getMatches(): array;
 
@@ -136,7 +143,7 @@ interface RouterInterface
     /**
      * Sets an array of default paths
      *
-     * @param array $defaults
+     * @param TDefaults $defaults
      *
      * @return RouterInterface
      */

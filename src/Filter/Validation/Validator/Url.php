@@ -71,7 +71,7 @@ class Url extends AbstractValidator
             return true;
         }
 
-        if (true === isset($this->options["options"])) {
+        if (isset($this->options["options"])) {
             $result = filter_var(
                 $value,
                 FILTER_VALIDATE_URL,

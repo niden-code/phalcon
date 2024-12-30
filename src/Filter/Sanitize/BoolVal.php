@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function in_array;
 
 /**
- * Phalcon\Filter\Sanitize\BoolVal
- *
  * Sanitizes a value to boolean
  */
 class BoolVal

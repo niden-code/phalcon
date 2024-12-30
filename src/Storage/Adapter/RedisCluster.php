@@ -187,7 +187,7 @@ class RedisCluster extends Redis
 
         $serializer = mb_strtolower($this->defaultSerializer);
 
-        if (true === isset($map[$serializer])) {
+        if (isset($map[$serializer])) {
             $this->defaultSerializer = '';
             $connection->setOption(RedisConsts::OPT_SERIALIZER, $map[$serializer]);
         }

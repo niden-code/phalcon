@@ -21,7 +21,7 @@ namespace Phalcon\Encryption\Security\JWT\Token;
 abstract class AbstractItem
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $data = [];
 

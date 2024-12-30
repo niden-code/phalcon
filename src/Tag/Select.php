@@ -56,12 +56,12 @@ abstract class Select
         $emptyText  = '';
         $emptyValue = '';
         $params     = $parameters;
-        if (true === is_string($params)) {
+        if (is_string($params)) {
             $params = [$parameters, $data];
         }
 
         $id = null;
-        if (true === isset($params[0])) {
+        if (isset($params[0])) {
             $id = $params[0];
         } else {
             $params[0] = $params["id"];
@@ -70,11 +70,11 @@ abstract class Select
         /**
          * Automatically assign the id if the name is not an array
          */
-        if (!str_contains($id, "[") && true !== isset($params["id"])) {
+        if (!str_contains($id, "[") && !isset($params["id"])) {
             $params["id"] = $id;
         }
 
-        if (true !== isset($params["name"])) {
+        if (!isset($params["name"])) {
             $params["name"] = $id;
         } else {
             $name = $params["name"];
@@ -84,14 +84,14 @@ abstract class Select
         }
 
         $value = $params["value"] ?? BaseTag::getValue($id, $params);
-        if (true === isset($params["value"])) {
+        if (isset($params["value"])) {
             unset($params["value"]);
         }
 
         $useEmpty = $params["useEmpty"] ?? false;
-        if (true === isset($params["useEmpty"])) {
+        if (isset($params["useEmpty"])) {
             $emptyValue = $params["emptyValue"] ?? "";
-            if (true === isset($params["emptyValue"])) {
+            if (isset($params["emptyValue"])) {
                 unset($params["emptyValue"]);
             }
 
@@ -105,7 +105,7 @@ abstract class Select
 
         $options = $params[1] ?? $data;
 
-        if (true === is_object($options)) {
+        if (is_object($options)) {
             /**
              * The options parameter is a resultset
              */
@@ -114,7 +114,7 @@ abstract class Select
                 throw new Exception("The 'using' parameter is required");
             }
 
-            if (true !== is_array($using) && true === is_string($using)) {
+            if (!is_array($using) && is_string($using)) {
                 throw new Exception(
                     "The 'using' parameter should be an array"
                 );
@@ -134,7 +134,7 @@ abstract class Select
                 . self::OPTION_CLOSE . PHP_EOL;
         }
 
-        if (true === is_object($options)) {
+        if (is_object($options)) {
             /**
              * Create the SELECT's option from a resultset
              */
@@ -251,7 +251,7 @@ abstract class Select
         $escaper = BaseTag::getEscaperService();
         foreach ($resultset as $option) {
             if (is_array($using)) {
-                if (true === is_object($option)) {
+                if (is_object($option)) {
                     if (true === method_exists($option, "readAttribute")) {
                         $optionValue = $option->readAttribute($usingZero);
                         $optionText  = $option->readAttribute($usingOne);
@@ -260,7 +260,7 @@ abstract class Select
                         $optionText  = $option->usingOne;
                     }
                 } else {
-                    if (true !== is_array($option)) {
+                    if (!is_array($option)) {
                         throw new Exception(
                             "Resultset returned an invalid value"
                         );
@@ -304,7 +304,7 @@ abstract class Select
                 /**
                  * Check if using is a closure
                  */
-                if (true === is_object($using)) {
+                if (is_object($using)) {
                     if (null === $params) {
                         $params = [];
                     }

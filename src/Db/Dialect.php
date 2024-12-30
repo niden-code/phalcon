@@ -69,7 +69,7 @@ abstract class Dialect implements DialectInterface
             return $input;
         }
 
-        $escapeChar = (true !== empty($escapeChar)) ? $escapeChar : $this->escapeChar;
+        $escapeChar = (!empty($escapeChar)) ? $escapeChar : $this->escapeChar;
         if (true !== str_contains($input, ".")) {
             if ("" !== $escapeChar && "*" !== $input) {
                 return $escapeChar
@@ -111,7 +111,7 @@ abstract class Dialect implements DialectInterface
         if (true !== $identifiers) {
             return $input;
         }
-        $escapeChar = (true !== empty($escapeChar)) ? $escapeChar : $this->escapeChar;
+        $escapeChar = (!empty($escapeChar)) ? $escapeChar : $this->escapeChar;
 
         return $escapeChar . trim($input, $escapeChar) . $escapeChar;
     }
@@ -197,7 +197,7 @@ abstract class Dialect implements DialectInterface
         }
 
         $columnExpression = $column;
-        if (true !== isset($column["type"])) {
+        if (!isset($column["type"])) {
             /**
              * The index "0" is the column field
              */
@@ -271,7 +271,7 @@ abstract class Dialect implements DialectInterface
         string $escapeChar = "",
         array $bindCounts = []
     ): string {
-        if (true !== isset($expression["type"])) {
+        if (!isset($expression["type"])) {
             throw new Exception("Invalid SQL expression");
         }
 
@@ -546,13 +546,13 @@ abstract class Dialect implements DialectInterface
      */
     public function select(array $definition): string
     {
-        if (true !== isset($definition["tables"])) {
+        if (!isset($definition["tables"])) {
             throw new Exception(
                 "The index 'tables' is required in the definition array"
             );
         }
 
-        if (true !== isset($definition["columns"])) {
+        if (!isset($definition["columns"])) {
             throw new Exception(
                 "The index 'columns' is required in the definition array"
             );
@@ -583,7 +583,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["joins"]) &&
-            true !== empty($definition["joins"])
+            !empty($definition["joins"])
         ) {
             $sql .= " "
                 . $this->getSqlExpressionJoins(
@@ -598,7 +598,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["where"]) &&
-            true !== empty($definition["where"])
+            !empty($definition["where"])
         ) {
             $sql .= " "
                 . $this->getSqlExpressionWhere(
@@ -613,7 +613,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["group"]) &&
-            true !== empty($definition["group"])
+            !empty($definition["group"])
         ) {
             $sql .= " "
                 . $this->getSqlExpressionGroupBy(
@@ -627,7 +627,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["having"]) &&
-            true !== empty($definition["having"])
+            !empty($definition["having"])
         ) {
             $sql .= " "
                 . $this->getSqlExpressionHaving(
@@ -642,7 +642,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["order"]) &&
-            true !== empty($definition["order"])
+            !empty($definition["order"])
         ) {
             $sql .= " "
                 . $this->getSqlExpressionOrderBy(
@@ -657,7 +657,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["limit"]) &&
-            true !== empty($definition["limit"])
+            !empty($definition["limit"])
         ) {
             $sql = $this->getSqlExpressionLimit(
                 [
@@ -674,7 +674,7 @@ abstract class Dialect implements DialectInterface
          */
         if (
             isset($definition["forUpdate"]) &&
-            true !== empty($definition["forUpdate"])
+            !empty($definition["forUpdate"])
         ) {
             $sql .= " FOR UPDATE";
         }
@@ -729,7 +729,7 @@ abstract class Dialect implements DialectInterface
      */
     protected function checkColumnTypeSql(ColumnInterface $column): string
     {
-        if (true !== is_string($column->getType())) {
+        if (!is_string($column->getType())) {
             return "";
         }
 
@@ -996,7 +996,7 @@ abstract class Dialect implements DialectInterface
         if (is_array($expression)) {
             $fields = [];
             foreach ($expression as $field) {
-                if (true !== is_array($field)) {
+                if (!is_array($field)) {
                     throw new Exception("Invalid SQL-GROUP-BY expression");
                 }
 
@@ -1058,10 +1058,10 @@ abstract class Dialect implements DialectInterface
             $joinType      = "";
             if (
                 isset($join["conditions"]) &&
-                true !== empty($join["conditions"])
+                !empty($join["conditions"])
             ) {
                 $joinConditionsArray = $join["conditions"];
-                if (true !== isset($joinConditionsArray[0])) {
+                if (!isset($joinConditionsArray[0])) {
                     $joinCondition = $this->getSqlExpression(
                         $joinConditionsArray,
                         $escapeChar,
@@ -1247,7 +1247,7 @@ abstract class Dialect implements DialectInterface
         if (is_array($expression)) {
             $fields = [];
             foreach ($expression as $field) {
-                if (true !== is_array($field)) {
+                if (!is_array($field)) {
                     throw new Exception("Invalid SQL-ORDER-BY expression");
                 }
 
@@ -1314,7 +1314,7 @@ abstract class Dialect implements DialectInterface
             return $this->getSqlColumn($expression["column"]);
         }
 
-        if (true !== isset($expression["value"])) {
+        if (!isset($expression["value"])) {
             throw new Exception("Invalid SQL expression");
         }
 
@@ -1408,7 +1408,7 @@ abstract class Dialect implements DialectInterface
         string $alias = "",
         string $escapeChar = ""
     ): string {
-        if (true !== empty($alias)) {
+        if (!empty($alias)) {
             return $qualified . " AS " . $this->escape($alias, $escapeChar);
         }
 
@@ -1457,7 +1457,7 @@ abstract class Dialect implements DialectInterface
         /**
          * Schema
          */
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $tableName = $this->escapeSchema($schemaName, $escapeChar)
                 . "." . $tableName;
         }
@@ -1465,7 +1465,7 @@ abstract class Dialect implements DialectInterface
         /**
          * Alias
          */
-        if (true !== empty($alias)) {
+        if (!empty($alias)) {
             $tableName .= " AS " . $this->escape($alias, $escapeChar);
         }
 

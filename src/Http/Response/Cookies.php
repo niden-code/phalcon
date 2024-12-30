@@ -113,7 +113,7 @@ class Cookies extends AbstractInjectionAware implements CookiesInterface
      */
     public function delete(string $name): bool
     {
-        if (true !== isset($this->cookies[$name])) {
+        if (!isset($this->cookies[$name])) {
             return false;
         }
 
@@ -273,7 +273,7 @@ class Cookies extends AbstractInjectionAware implements CookiesInterface
         /**
          * Check if the cookie needs to be updated or
          */
-        if (true !== isset($this->cookies[$name])) {
+        if (!isset($this->cookies[$name])) {
             $cookie = new Cookie(
                 $name,
                 $value,

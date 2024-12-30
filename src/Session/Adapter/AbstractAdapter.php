@@ -49,7 +49,7 @@ abstract class AbstractAdapter implements SessionHandlerInterface
      */
     public function destroy(string $id): bool
     {
-        if (true !== empty($id) && $this->adapter->has($id)) {
+        if (!empty($id) && $this->adapter->has($id)) {
             return $this->adapter->delete($id);
         }
 

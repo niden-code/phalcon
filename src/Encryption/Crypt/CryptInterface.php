@@ -82,7 +82,7 @@ interface CryptInterface
     /**
      * Returns a list of available cyphers
      *
-     * @return array
+     * @return array<array-key, string>
      */
     public function getAvailableCiphers(): array;
 

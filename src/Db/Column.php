@@ -338,7 +338,7 @@ class Column implements ColumnInterface
         /**
          * Get the column type, one of the TYPE_* constants
          */
-        if (true !== isset($definition["type"])) {
+        if (!isset($definition["type"])) {
             throw new Exception("Column type is required");
         }
 

@@ -45,7 +45,7 @@ class Libmemcached extends AbstractAdapter
         SerializerFactory $factory,
         array $options = []
     ) {
-        if (true !== isset($options['servers'])) {
+        if (!isset($options['servers'])) {
             $options['servers'] = [
                 0 => [
                     'host'   => '127.0.0.1',
@@ -236,7 +236,7 @@ class Libmemcached extends AbstractAdapter
      */
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
-        if (true === is_int($ttl) && $ttl < 1) {
+        if (is_int($ttl) && $ttl < 1) {
             return $this->delete($key);
         }
 
@@ -278,7 +278,7 @@ class Libmemcached extends AbstractAdapter
      */
     private function setSasl(Memcached $connection, string $saslUser, string $saslPass): Libmemcached
     {
-        if (true !== empty($saslUser)) {
+        if (!empty($saslUser)) {
             $connection->setSaslAuthData($saslUser, $saslPass);
         }
 

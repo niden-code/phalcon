@@ -147,7 +147,7 @@ class Mysql extends Dialect
         string $schemaName,
         array $definition
     ): string {
-        if (true !== isset($definition["columns"])) {
+        if (!isset($definition["columns"])) {
             throw new Exception(
                 "The index 'columns' is required in the definition array"
             );
@@ -269,7 +269,7 @@ class Mysql extends Dialect
             . "AND RC.CONSTRAINT_SCHEMA = KCU.CONSTRAINT_SCHEMA "
             . "WHERE KCU.REFERENCED_TABLE_NAME IS NOT NULL AND ";
 
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $sql .= "KCU.CONSTRAINT_SCHEMA = '"
                 . $schemaName
                 . "' AND KCU.TABLE_NAME = '"

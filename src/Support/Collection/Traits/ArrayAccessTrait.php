@@ -26,7 +26,7 @@ trait ArrayAccessTrait
      */
     abstract public function get(
         string $element,
-        $defaultValue = null,
+        mixed $defaultValue = null,
         string $cast = null
     ): mixed;
 
@@ -113,5 +113,5 @@ trait ArrayAccessTrait
      * @param string $element
      * @param mixed  $value
      */
-    abstract public function set(string $element, $value): void;
+    abstract public function set(string $element, mixed $value): void;
 }

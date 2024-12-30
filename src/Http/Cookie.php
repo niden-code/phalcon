@@ -219,7 +219,7 @@ class Cookie extends AbstractInjectionAware implements
         $this->checkRestored();
 
         if (true !== $this->isRead) {
-            if (true !== isset($_COOKIE[$this->name])) {
+            if (!isset($_COOKIE[$this->name])) {
                 return $defaultValue;
             }
 
@@ -236,7 +236,7 @@ class Cookie extends AbstractInjectionAware implements
                 /** @var CryptInterface $crypt */
                 $crypt = $this->container->getShared('crypt');
 
-                if (true !== is_object($crypt)) {
+                if (!is_object($crypt)) {
                     throw new Exception(
                         'A dependency which implements CryptInterface '
                         . 'is required to use encryption'
@@ -369,7 +369,7 @@ class Cookie extends AbstractInjectionAware implements
          * The definition is stored in session
          */
         if (
-            true !== empty($definition) &&
+            !empty($definition) &&
             null !== $this->container &&
             true === $this->container->has('session')
         ) {
@@ -382,7 +382,7 @@ class Cookie extends AbstractInjectionAware implements
         }
 
         $encryptValue = $this->value;
-        if (true === $this->useEncryption && true !== empty($this->value)) {
+        if (true === $this->useEncryption && !empty($this->value)) {
             if (null === $this->container) {
                 throw new Exception(
                     "A dependency injection container is required to "
@@ -393,7 +393,7 @@ class Cookie extends AbstractInjectionAware implements
             /** @var CryptInterface $crypt */
             $crypt = $this->container->getShared('crypt');
 
-            if (true !== is_object($crypt)) {
+            if (!is_object($crypt)) {
                 throw new Exception(
                     'A dependency which implements CryptInterface '
                     . 'is required to use encryption'

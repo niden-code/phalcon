@@ -86,16 +86,16 @@ class Postgresql extends PdoAdapter
      */
     public function connect(array $descriptor = []): void
     {
-        $descriptor = true !== empty($descriptor) ? $descriptor : $this->descriptor;
+        $descriptor = !empty($descriptor) ? $descriptor : $this->descriptor;
         $schemaName = $descriptor["schema"] ?? null;
         if (isset($descriptor["password"])) {
             $password               = $descriptor["password"];
-            $descriptor["password"] = (true !== empty($password)) ? $password : null;
+            $descriptor["password"] = (!empty($password)) ? $password : null;
         }
 
         parent::connect($descriptor);
 
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $sql = "SET search_path TO '" . $schemaName . "'";
 
             $this->execute($sql);
@@ -119,7 +119,7 @@ class Postgresql extends PdoAdapter
         array $definition
     ): bool {
         if (
-            true !== isset($definition["columns"]) ||
+            !isset($definition["columns"]) ||
             (isset($definition["columns"]) && empty($definition["columns"]))
         ) {
             throw new Exception(
@@ -139,7 +139,7 @@ class Postgresql extends PdoAdapter
                 $this->begin();
 
                 foreach ($queries as $query) {
-                    if (true === empty($query)) {
+                    if (empty($query)) {
                         continue;
                     }
 
@@ -666,7 +666,7 @@ class Postgresql extends PdoAdapter
             try {
                 $this->begin();
                 foreach ($queries as $query) {
-                    if (true === empty($query)) {
+                    if (empty($query)) {
                         continue;
                     }
 
@@ -680,7 +680,7 @@ class Postgresql extends PdoAdapter
                 throw $exception;
             }
         } else {
-            return (true !== empty($sql)) || $this->execute($queries[0] . ";");
+            return (!empty($sql)) || $this->execute($queries[0] . ";");
         }
     }
 

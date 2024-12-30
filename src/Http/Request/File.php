@@ -110,7 +110,7 @@ class File implements FileInterface
         $this->type    = $file['type'] ?? $this->type;
         $this->error   = $file['error'] ?? $this->error;
 
-        if (true !== empty($key)) {
+        if (!empty($key)) {
             $this->key = $key;
         }
     }
@@ -209,7 +209,7 @@ class File implements FileInterface
     {
         $name = $this->tmpName;
 
-        return true !== empty($name) && is_uploaded_file($name);
+        return !empty($name) && is_uploaded_file($name);
     }
 
     /**

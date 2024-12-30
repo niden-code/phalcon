@@ -137,7 +137,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             $element->setTagFactory($this->tagFactory);
         }
 
-        if (null === $position || true === empty($this->elements)) {
+        if (null === $position || empty($this->elements)) {
             /**
              * Append the element by its name
              */
@@ -181,11 +181,11 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         ?object $entity = null,
         array $whitelist = []
     ): Form {
-        if (true === empty($this->elements)) {
+        if (empty($this->elements)) {
             throw new Exception("There are no elements in the form");
         }
 
-        if (true === empty($whitelist)) {
+        if (empty($whitelist)) {
             $whitelist = $this->whitelist;
         }
 
@@ -196,7 +196,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             /**
              * Get the element
              */
-            if (true !== isset($this->elements[$key])) {
+            if (!isset($this->elements[$key])) {
                 continue;
             }
 
@@ -204,7 +204,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
              * Check if the item is in the whitelist
              */
             if (
-                true !== empty($whitelist) &&
+                !empty($whitelist) &&
                 true !== in_array($key, $whitelist)
             ) {
                 continue;
@@ -216,7 +216,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             $element       = $this->elements[$key];
             $filters       = $element->getFilters();
             $filteredValue = $value;
-            if (true !== empty($filters)) {
+            if (!empty($filters)) {
                 if (null === $filter) {
                     $container = $this->getDI();
                     $filter    = $container->getShared("filter");
@@ -283,11 +283,11 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             }
 
             foreach ($fields as $field) {
-                if (true === isset($data[$field])) {
+                if (isset($data[$field])) {
                     unset($data[$field]);
                 }
 
-                if (true === isset($this->elements[$field])) {
+                if (isset($this->elements[$field])) {
                     $element = $this->elements[$field];
 
                     $data[$element->getName()] = $element->getDefault();
@@ -317,7 +317,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
      */
     public function current(): mixed
     {
-        if (true !== isset($this->elementsIndexed[$this->position])) {
+        if (!isset($this->elementsIndexed[$this->position])) {
             return false;
         }
 
@@ -334,7 +334,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
      */
     public function get(string $name): ElementInterface
     {
-        if (true !== isset($this->elements[$name])) {
+        if (!isset($this->elements[$name])) {
             throw new Exception(
                 "Element with ID=" . $name . " is not part of the form"
             );
@@ -523,7 +523,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             /**
              * Check if the entity has a public property
              */
-            if (true === isset($this->entity->{$name})) {
+            if (isset($this->entity->{$name})) {
                 return $this->entity->{$name};
             }
         }
@@ -531,7 +531,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         /**
          * Check if the data is in the data array
          */
-        if (true === isset($this->data[$name])) {
+        if (isset($this->data[$name])) {
             return $this->data[$name];
         }
 
@@ -555,7 +555,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         /**
          * Check if the method is internal
          */
-        if (true === isset($forbidden[strtolower($name)])) {
+        if (isset($forbidden[strtolower($name)])) {
             return null;
         }
 
@@ -569,7 +569,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         /**
          * Check if element has default value
          */
-        if (true === isset($this->elements[$name])) {
+        if (isset($this->elements[$name])) {
             $element = $this->elements[$name];
 
             return $element->getDefault();
@@ -682,7 +682,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             /**
              * Assign the filters to the validation
              */
-            if (true !== empty($filters)) {
+            if (!empty($filters)) {
                 $validation->setFilters($name, $filters);
             }
         }
@@ -772,7 +772,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         /**
          * Checks if the element is in the form
          */
-        if (true === isset($this->elements[$name])) {
+        if (isset($this->elements[$name])) {
             unset($this->elements[$name]);
 
             return true;

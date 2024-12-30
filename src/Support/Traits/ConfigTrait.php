@@ -20,9 +20,9 @@ use function is_array;
 trait ConfigTrait
 {
     /**
-     * @param array|ConfigInterface $config
+     * @param array<string, mixed>|ConfigInterface $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function checkConfig(array | ConfigInterface $config): array
     {
@@ -43,7 +43,7 @@ trait ConfigTrait
      */
     protected function checkConfigElement(array $config, string $element): array
     {
-        if (true !== isset($config[$element])) {
+        if (!isset($config[$element])) {
             $exception = $this->getExceptionClass();
             throw new $exception(
                 "You must provide the '" . $element . "' option in the factory config parameter."

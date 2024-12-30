@@ -118,7 +118,7 @@ class Di extends stdClass implements DiInterface
         if (true === str_starts_with($method, 'get')) {
             $possibleService = lcfirst(substr($method, 3));
 
-            if (true === isset($this->services[$possibleService])) {
+            if (isset($this->services[$possibleService])) {
                 return $this->get($possibleService, $arguments);
             }
         }
@@ -152,7 +152,7 @@ class Di extends stdClass implements DiInterface
      */
     public function attempt(string $name, $definition, bool $shared = false)
     {
-        if (true === isset($this->services[$name])) {
+        if (isset($this->services[$name])) {
             return false;
         }
 
@@ -179,12 +179,12 @@ class Di extends stdClass implements DiInterface
          * If the service is shared, and it already has a cached instance then
          * immediately return it without triggering events.
          */
-        if (true === isset($this->services[$name])) {
+        if (isset($this->services[$name])) {
             $service = $this->services[$name];
 
             if (
                 true === $service->isShared() &&
-                true === isset($this->sharedInstances[$name])
+                isset($this->sharedInstances[$name])
             ) {
                 return $this->sharedInstances[$name];
             }
@@ -201,7 +201,7 @@ class Di extends stdClass implements DiInterface
             $instance
         );
 
-        if (true !== is_object($instance)) {
+        if (!is_object($instance)) {
             $instance = $this->processObjectNotNullService(
                 $name,
                 $parameters,
@@ -314,7 +314,7 @@ class Di extends stdClass implements DiInterface
      */
     public function getShared(string $name, array $parameters = null): mixed
     {
-        if (true !== isset($this->sharedInstances[$name])) {
+        if (!isset($this->sharedInstances[$name])) {
             // Store the instance in the shared instances cache.
             $this->sharedInstances[$name] = $this->get($name, $parameters);
         }

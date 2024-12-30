@@ -293,7 +293,7 @@ class Tag
      */
     public static function formLegacy(array | string $parameters): string
     {
-        $params = true !== is_array($parameters) ? [$parameters] : $parameters;
+        $params = !is_array($parameters) ? [$parameters] : $parameters;
 
         $paramsAction = $params[0] ?? "";
         $paramsAction = $params["action"] ?? $paramsAction;
@@ -305,7 +305,7 @@ class Tag
 
         $action = null;
 
-        if (true !== empty($paramsAction)) {
+        if (!empty($paramsAction)) {
             $action = self::getUrlService()
                           ->get($paramsAction)
             ;
@@ -314,11 +314,11 @@ class Tag
         /**
          * Check for extra parameters
          */
-        if (true === isset($params["parameters"])) {
+        if (isset($params["parameters"])) {
             $action .= "?" . $params["parameters"];
         }
 
-        if (true !== empty($action)) {
+        if (!empty($action)) {
             $params["action"] = $action;
         }
 
@@ -418,7 +418,7 @@ class Tag
      */
     public static function getEscaper(array $parameters): EscaperInterface | null
     {
-        $autoescape = true === isset($parameters["escape"])
+        $autoescape = isset($parameters["escape"])
             ? $parameters["escape"]
             : self::$autoEscape;
 
@@ -468,7 +468,7 @@ class Tag
         if (true === $prepend) {
             $documentPrependTitle = self::$documentPrependTitle;
 
-            if (true !== empty($documentPrependTitle)) {
+            if (!empty($documentPrependTitle)) {
                 $reverse = array_reverse($documentPrependTitle);
                 foreach ($reverse as $title) {
                     $items[] = $escaper->html($title);
@@ -476,25 +476,25 @@ class Tag
             }
         }
 
-        if (true !== empty($documentTitle)) {
+        if (!empty($documentTitle)) {
             $items[] = $documentTitle;
         }
 
         if (true === $append) {
             $documentAppendTitle = self::$documentAppendTitle;
 
-            if (true !== empty($documentAppendTitle)) {
+            if (!empty($documentAppendTitle)) {
                 foreach ($documentAppendTitle as $title) {
                     $items[] = $escaper->html($title);
                 }
             }
         }
 
-        if (true === empty($documentTitleSeparator)) {
+        if (empty($documentTitleSeparator)) {
             $documentTitleSeparator = "";
         }
 
-        if (true !== empty($items)) {
+        if (!empty($items)) {
             $output = implode($documentTitleSeparator, $items);
         }
 
@@ -611,14 +611,14 @@ class Tag
         bool $local = true
     ): string {
         $params = $parameters;
-        if (true === is_string($params)) {
+        if (is_string($params)) {
             $params = [$params];
-            if (true === isset($params[1])) {
+            if (isset($params[1])) {
                 $local = (bool)$params[1];
             }
         }
 
-        if (true !== isset($params["src"])) {
+        if (!isset($params["src"])) {
             $params["src"] = $params[0] ?? "";
         }
 
@@ -679,14 +679,14 @@ class Tag
         bool $local = true
     ): string {
         $params = $parameters;
-        if (true === is_string($params)) {
+        if (is_string($params)) {
             $params = [$params];
         }
 
-        if (true === isset($params[1])) {
+        if (isset($params[1])) {
             $local = (bool)$params[1];
         } else {
-            if (true === isset($params["local"])) {
+            if (isset($params["local"])) {
                 $local = (bool)$params["local"];
 
                 unset($params["local"]);
@@ -694,13 +694,13 @@ class Tag
         }
 
         if (
-            true !== isset($params["type"]) &&
+            !isset($params["type"]) &&
             self::$documentType < self::HTML5
         ) {
             $params["type"] = "text/javascript";
         }
 
-        if (true !== isset($params["src"])) {
+        if (!isset($params["src"])) {
             $params["src"] = $params[0] ?? "";
         }
 
@@ -743,27 +743,27 @@ class Tag
         bool $local = true
     ): string {
         $params = $parameters;
-        if (true === is_string($parameters)) {
+        if (is_string($parameters)) {
             $params = [$parameters, $text, $local];
         }
 
-        if (true !== isset($params[0])) {
+        if (!isset($params[0])) {
             $action = $params["action"] ?? "";
-            if (true === isset($params["action"])) {
+            if (isset($params["action"])) {
                 unset($params["action"]);
             }
         } else {
             $action = $params[0];
         }
 
-        if (true !== isset($params[1])) {
+        if (!isset($params[1])) {
             $text = $params["text"] ?? "";
             unset($params["text"]);
         } else {
             $text = $params[1];
         }
 
-        if (true !== isset($params[2])) {
+        if (!isset($params[2])) {
             $local = $params["local"] ?? true;
             unset($params["local"]);
         } else {
@@ -771,7 +771,7 @@ class Tag
         }
 
         $query = $params["query"] ?? null;
-        if (true === isset($params["query"])) {
+        if (isset($params["query"])) {
             unset($params["query"]);
         }
 
@@ -846,7 +846,7 @@ class Tag
     public static function preload(array | string $parameters): string
     {
         $params = $parameters;
-        if (true === is_string($params)) {
+        if (is_string($params)) {
             $params = [$params];
         }
 
@@ -968,13 +968,13 @@ class Tag
 
         $attrs = [];
         foreach ($order as $key => $value) {
-            if (true === isset($attributes[$key])) {
+            if (isset($attributes[$key])) {
                 $attrs[$key] = $attributes[$key];
             }
         }
 
         foreach ($attributes as $key => $value) {
-            if (true !== isset($attrs[$key])) {
+            if (!isset($attrs[$key])) {
                 $attrs[$key] = $value;
             }
         }
@@ -985,8 +985,8 @@ class Tag
 
         $newCode = $code;
         foreach ($attrs as $key => $value) {
-            if (true === is_string($key) && null !== $value) {
-                if (is_array($value) || true === is_resource($value)) {
+            if (is_string($key) && null !== $value) {
+                if (is_array($value) || is_resource($value)) {
                     throw new Exception(
                         "Value at index: '" . $key . "' type: '"
                         . gettype($value) . "' cannot be rendered"
@@ -1210,27 +1210,27 @@ class Tag
         array | string $parameters = null,
         bool $local = true
     ): string {
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             $params = [$parameters, $local];
         } else {
             $params = $parameters;
         }
 
         $local = true;
-        if (true === isset($params[1])) {
+        if (isset($params[1])) {
             $local = (bool)$params[1];
         } else {
-            if (true === isset($params["local"])) {
+            if (isset($params["local"])) {
                 $local = (bool)$params["local"];
                 unset($params["local"]);
             }
         }
 
-        if (true !== isset($params["type"])) {
+        if (!isset($params["type"])) {
             $params["type"] = "text/css";
         }
 
-        if (true !== isset($params["href"])) {
+        if (!isset($params["href"])) {
             $params["href"] = $params[0] ?? "";
         }
 
@@ -1290,7 +1290,7 @@ class Tag
         bool $useEol = false
     ): string {
         $params = $parameters;
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             $params = [$parameters];
         }
 
@@ -1363,29 +1363,29 @@ class Tag
     public static function textArea(array | string $parameters): string
     {
         $params = $parameters;
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             $params = [$parameters];
         }
 
-        if (true !== isset($params[0]) && true === $params["id"]) {
+        if (!isset($params[0]) && true === $params["id"]) {
             $params[0] = $params["id"];
         }
 
         $id = $params[0];
-        if (true !== isset($params["name"])) {
+        if (!isset($params["name"])) {
             $params["name"] = $id;
         } else {
             $name = $params["name"] ?? "";
-            if (true === empty($name)) {
+            if (empty($name)) {
                 $params["name"] = $id;
             }
         }
 
-        if (true !== isset($params["id"])) {
+        if (!isset($params["id"])) {
             $params["id"] = $id;
         }
 
-        if (true === isset($params["value"])) {
+        if (isset($params["value"])) {
             $content = $params["value"];
 
             unset($params["value"]);
@@ -1502,22 +1502,22 @@ class Tag
         $params = [];
         $id     = '';
 
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             $params[] = $parameters;
         } else {
             $params = $parameters;
         }
 
         if (false === $asValue) {
-            if (true !== isset($params[0])) {
+            if (!isset($params[0])) {
                 $params[0] = $params["id"];
             } else {
                 $id = $params[0];
             }
 
-            if (true === isset($params["name"])) {
+            if (isset($params["name"])) {
                 $name = $params["name"];
-                if (true === empty($name)) {
+                if (empty($name)) {
                     $params["name"] = $id;
                 }
             } else {
@@ -1527,7 +1527,7 @@ class Tag
             /**
              * Automatically assign the id if the name is not an array
              */
-            if (true === is_string($id) && !str_contains($id, "[") && true !== isset($params["id"])) {
+            if (is_string($id) && !str_contains($id, "[") && !isset($params["id"])) {
                 $params["id"] = $id;
             }
 
@@ -1536,7 +1536,7 @@ class Tag
             /**
              * Use the "id" as value if the user hadn't set it
              */
-            if (true !== isset($params["value"]) && true === isset($params[0])) {
+            if (!isset($params["value"]) && isset($params[0])) {
                 $params["value"] = $params[0];
             }
         }
@@ -1566,22 +1566,22 @@ class Tag
         array | string $parameters
     ): string {
         $params = $parameters;
-        if (true !== is_array($parameters)) {
+        if (!is_array($parameters)) {
             $params = [$parameters];
         }
 
-        if (true !== isset($params[0])) {
+        if (!isset($params[0])) {
             $params[0] = $params["id"];
         }
 
         $id = $params[0];
 
-        if (true !== isset($params["name"])) {
+        if (!isset($params["name"])) {
             $params["name"] = $id;
         } else {
             $name = $params["name"];
 
-            if (true === empty($name)) {
+            if (empty($name)) {
                 $params["name"] = $id;
             }
         }
@@ -1589,14 +1589,14 @@ class Tag
         /**
          * Automatically assign the id if the name is not an array
          */
-        if (!str_contains($id, "[") && true !== isset($params["id"])) {
+        if (!str_contains($id, "[") && !isset($params["id"])) {
             $params["id"] = $id;
         }
 
         /**
          * Automatically check inputs
          */
-        if (true === isset($params["value"])) {
+        if (isset($params["value"])) {
             $currentValue = $params["value"];
 
             unset($params["value"]);

@@ -17,8 +17,6 @@ use ArrayAccess;
 use IteratorAggregate;
 
 /**
- * Phalcon\Support\Collection\CollectionInterface
- *
  * Interface for Phalcon\Collection class
  *
  * @extends ArrayAccess<int|string, mixed>

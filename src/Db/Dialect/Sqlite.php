@@ -125,13 +125,13 @@ class Sqlite extends Dialect
     ): string {
         $indexType = $index->getType();
 
-        if (true !== empty($indexType)) {
+        if (!empty($indexType)) {
             $sql = "CREATE " . $indexType . " INDEX ";
         } else {
             $sql = "CREATE INDEX ";
         }
 
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $sql .= "\"" . $schemaName . "\".";
         }
 
@@ -183,7 +183,7 @@ class Sqlite extends Dialect
         $options   = $definition["options"] ?? [];
         $temporary = $options["temporary"] ?? null;
 
-        if (true !== isset($definition["columns"])) {
+        if (!isset($definition["columns"])) {
             throw new Exception(
                 "The index 'columns' is required in the definition array"
             );
@@ -269,7 +269,7 @@ class Sqlite extends Dialect
                 $createLines[] = "PRIMARY KEY ("
                     . $this->getColumnList($index->getColumns()) . ")";
             } elseif (
-                true !== empty($indexType) &&
+                !empty($indexType) &&
                 str_contains(strtoupper($indexType), "UNIQUE")
             ) {
                 $createLines[] = "UNIQUE ("
@@ -293,12 +293,12 @@ class Sqlite extends Dialect
                 . ")";
 
             $onDelete = $reference->getOnDelete();
-            if (true !== empty($onDelete)) {
+            if (!empty($onDelete)) {
                 $referenceSql .= " ON DELETE " . $onDelete;
             }
 
             $onUpdate = $reference->getOnUpdate();
-            if (true !== empty($onUpdate)) {
+            if (!empty($onUpdate)) {
                 $referenceSql .= " ON UPDATE " . $onUpdate;
             }
 
@@ -325,7 +325,7 @@ class Sqlite extends Dialect
         array $definition,
         string $schemaName = null
     ): string {
-        if (true !== isset($definition["sql"])) {
+        if (!isset($definition["sql"])) {
             throw new Exception(
                 "The index 'sql' is required in the definition array"
             );
@@ -452,7 +452,7 @@ class Sqlite extends Dialect
         string $schemaName,
         string $indexName
     ): string {
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             return "DROP INDEX \"" . $schemaName . "\".\"" . $indexName . "\"";
         }
 
@@ -554,7 +554,7 @@ class Sqlite extends Dialect
         // rules: https://www.sqlite.org/datatype3.html.
         switch ($columnType) {
             case Column::TYPE_BIGINTEGER:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "BIGINT";
                 }
 
@@ -565,21 +565,21 @@ class Sqlite extends Dialect
                 break;
 
             case Column::TYPE_BLOB:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "BLOB";
                 }
 
                 break;
 
             case Column::TYPE_BOOLEAN:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TINYINT";
                 }
 
                 break;
 
             case Column::TYPE_CHAR:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "CHARACTER";
                 }
 
@@ -588,21 +588,21 @@ class Sqlite extends Dialect
                 break;
 
             case Column::TYPE_DATE:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "DATE";
                 }
 
                 break;
 
             case Column::TYPE_DATETIME:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "DATETIME";
                 }
 
                 break;
 
             case Column::TYPE_DECIMAL:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "NUMERIC";
                 }
 
@@ -611,7 +611,7 @@ class Sqlite extends Dialect
                 break;
 
             case Column::TYPE_DOUBLE:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "DOUBLE";
                 }
 
@@ -622,56 +622,56 @@ class Sqlite extends Dialect
                 break;
 
             case Column::TYPE_FLOAT:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "FLOAT";
                 }
 
                 break;
 
             case Column::TYPE_INTEGER:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "INTEGER";
                 }
 
                 break;
 
             case Column::TYPE_LONGBLOB:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "LONGBLOB";
                 }
 
                 break;
 
             case Column::TYPE_MEDIUMBLOB:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "MEDIUMBLOB";
                 }
 
                 break;
 
             case Column::TYPE_TEXT:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TEXT";
                 }
 
                 break;
 
             case Column::TYPE_TIMESTAMP:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TIMESTAMP";
                 }
 
                 break;
 
             case Column::TYPE_TINYBLOB:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TINYBLOB";
                 }
 
                 break;
 
             case Column::TYPE_VARCHAR:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "VARCHAR";
                 }
 
@@ -680,7 +680,7 @@ class Sqlite extends Dialect
                 break;
 
             default:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     throw new Exception(
                         "Unrecognized SQLite data type at column "
                         . $column->getName()
@@ -689,7 +689,7 @@ class Sqlite extends Dialect
 
                 $valueSql   = "";
                 $typeValues = $column->getTypeValues();
-                if (true !== empty($typeValues)) {
+                if (!empty($typeValues)) {
                     if (is_array($typeValues)) {
                         foreach ($typeValues as $value) {
                             $valueSql .= "\""
@@ -736,7 +736,7 @@ class Sqlite extends Dialect
             . "WHERE type = 'index' "
             . "AND tbl_name = " . $this->escape($tableName) . " COLLATE NOCASE";
 
-        if (true !== empty($keyName)) {
+        if (!empty($keyName)) {
             $sql .= " AND name = " . $this->escape($keyName) . " COLLATE NOCASE";
         }
 
@@ -855,7 +855,7 @@ class Sqlite extends Dialect
         ?string $schemaName = ''
     ): string {
         $schema = "";
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $schema = "\"" . $schemaName . "\".";
         }
 

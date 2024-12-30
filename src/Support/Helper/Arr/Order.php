@@ -29,16 +29,16 @@ class Order
     public const ORDER_DESC = 2;
 
     /**
-     * @param array<int|string,mixed> $collection
-     * @param mixed                   $attribute
+     * @param array<array-key, mixed> $collection
+     * @param string                  $attribute
      * @param int                     $order
      * @param int                     $flags
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     public function __invoke(
         array $collection,
-        $attribute,
+        string $attribute,
         int $order = self::ORDER_ASC,
         int $flags = SORT_REGULAR
     ): array {
@@ -55,34 +55,38 @@ class Order
     }
 
     /**
-     * @param array<int|string,mixed> $sorted
-     * @param mixed                   $attribute
+     * @param array<array-key, mixed> $sorted
+     * @param string                  $attribute
      * @param mixed                   $item
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
-    private function checkNonObject(array $sorted, $attribute, $item): array
-    {
-        if (true !== is_object($item)) {
-            $key          = $item[$attribute];
-            $sorted[$key] = $item;
+    private function checkNonObject(
+        array $sorted,
+        string $attribute,
+        mixed $item
+    ): array {
+        if (!is_object($item)) {
+            $sorted[$item[$attribute]] = $item;
         }
 
         return $sorted;
     }
 
     /**
-     * @param array<int|string,mixed> $sorted
-     * @param mixed                   $attribute
+     * @param array<array-key, mixed> $sorted
+     * @param string                  $attribute
      * @param mixed                   $item
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
-    private function checkObject(array $sorted, $attribute, $item): array
-    {
-        if (true === is_object($item)) {
-            $key          = $item->{$attribute};
-            $sorted[$key] = $item;
+    private function checkObject(
+        array $sorted,
+        string $attribute,
+        mixed $item
+    ): array {
+        if (is_object($item)) {
+            $sorted[$item->$attribute] = $item;
         }
 
         return $sorted;

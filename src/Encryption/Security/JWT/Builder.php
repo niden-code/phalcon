@@ -30,11 +30,6 @@ use function is_string;
 /**
  * JWT Builder
  *
- * @property CollectionInterface $claims
- * @property CollectionInterface $jose
- * @property string              $passphrase
- * @property SignerInterface     $signer
- *
  * @link https://tools.ietf.org/html/rfc7519
  */
 class Builder
@@ -105,15 +100,15 @@ class Builder
     }
 
     /**
-     * @return array|string
+     * @return string[]|string
      */
-    public function getAudience()
+    public function getAudience(): array|string
     {
-        return $this->claims->get(Enum::AUDIENCE);
+        return $this->claims->get(Enum::AUDIENCE, []);
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClaims(): array
     {
@@ -137,7 +132,7 @@ class Builder
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getHeaders(): array
     {
@@ -198,7 +193,7 @@ class Builder
      */
     public function getToken(): Token
     {
-        if (true === empty($this->passphrase)) {
+        if (empty($this->passphrase)) {
             throw new ValidatorException('Invalid passphrase (empty)');
         }
 
@@ -252,7 +247,7 @@ class Builder
      */
     public function setAudience(array|string $audience): Builder
     {
-        if (true === is_string($audience)) {
+        if (is_string($audience)) {
             $audience = [$audience];
         }
 

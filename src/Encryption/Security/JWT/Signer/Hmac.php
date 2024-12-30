@@ -39,7 +39,7 @@ class Hmac extends AbstractSigner
             'sha256' => 1,
         ];
 
-        if (true !== isset($supported[$algo])) {
+        if (!isset($supported[$algo])) {
             throw new UnsupportedAlgorithmException(
                 'Unsupported HMAC algorithm'
             );

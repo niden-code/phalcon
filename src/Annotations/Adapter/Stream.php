@@ -82,7 +82,7 @@ class Stream extends AbstractAdapter
 
         $contents = $this->phpFileGetContents($path);
 
-        if (true === empty($contents)) {
+        if (empty($contents)) {
             return false;
         }
 

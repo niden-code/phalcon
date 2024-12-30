@@ -59,8 +59,8 @@ class NativeArray extends AbstractAdapter
             throw new Exception("Invalid data for paginator");
         }
 
-        $show       = (int) $this->limitRows;
-        $pageNumber = (int) $this->page;
+        $show       = (int)$this->limitRows;
+        $pageNumber = (int)$this->page;
 
         if ($pageNumber <= 0) {
             $pageNumber = 1;
@@ -68,7 +68,7 @@ class NativeArray extends AbstractAdapter
 
         $number       = count($items);
         $roundedTotal = $number / floatval($show);
-        $totalPages   = (int) $roundedTotal;
+        $totalPages   = (int)$roundedTotal;
 
         /**
          * Increase totalpages if wasn't integer

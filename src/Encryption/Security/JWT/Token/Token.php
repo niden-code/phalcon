@@ -115,7 +115,7 @@ class Token
     /**
      * @param Validator $validator
      *
-     * @return array
+     * @return array<array-key, string>
      */
     public function validate(Validator $validator): array
     {

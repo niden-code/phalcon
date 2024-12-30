@@ -90,7 +90,7 @@ abstract class AbstractElement implements ElementInterface
     {
         $name = trim($name);
 
-        if (true === empty($name)) {
+        if (empty($name)) {
             throw new InvalidArgumentException(
                 "Form element name is required"
             );
@@ -367,7 +367,7 @@ abstract class AbstractElement implements ElementInterface
         $tagFactory = $this->getLocalTagFactory();
         $name       = $this->attributes["id"] ?? $this->name;
 
-        if (true !== isset($attributes["for"])) {
+        if (!isset($attributes["for"])) {
             $attributes["for"] = $name;
         }
 
@@ -396,7 +396,7 @@ abstract class AbstractElement implements ElementInterface
         $method     = $this->method;
         $tagFactory = $this->getLocalTagFactory();
 
-        if (true === isset($attributes["value"])) {
+        if (isset($attributes["value"])) {
             $value = $attributes["value"];
             unset($attributes["value"]);
         }
@@ -462,7 +462,7 @@ abstract class AbstractElement implements ElementInterface
     public function setFilters(
         array | string $filters
     ): ElementInterface {
-        if (true === is_string($filters)) {
+        if (is_string($filters)) {
             $filters = [$filters];
         }
 

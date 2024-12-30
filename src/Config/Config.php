@@ -45,8 +45,6 @@ use function method_exists;
  *     ]
  * );
  *```
- *
- * @property string $pathDelimiter
  */
 class Config extends Collection implements ConfigInterface
 {
@@ -87,7 +85,7 @@ class Config extends Collection implements ConfigInterface
      * @return ConfigInterface
      * @throws Exception
      */
-    public function merge($toMerge): ConfigInterface
+    public function merge(array|ConfigInterface $toMerge): ConfigInterface
     {
         $source = $this->toArray();
 
@@ -101,18 +99,11 @@ class Config extends Collection implements ConfigInterface
             return $this;
         }
 
-        if (
-            true === is_object($toMerge) &&
-            $toMerge instanceof ConfigInterface
-        ) {
-            $result = $this->internalMerge($source, $toMerge->toArray());
+        $result = $this->internalMerge($source, $toMerge->toArray());
 
-            $this->init($result);
+        $this->init($result);
 
-            return $this;
-        }
-
-        throw new Exception('Invalid data type for merge.');
+        return $this;
     }
 
     /**
@@ -130,21 +121,22 @@ class Config extends Collection implements ConfigInterface
      */
     public function path(
         string $path,
-        $defaultValue = null,
-        string $delimiter = null
+        mixed $defaultValue = null,
+        ?string $delimiter = null
     ) {
         if (false !== $this->has($path)) {
             return $this->get($path);
         }
 
-        if (false !== empty($delimiter)) {
+        if (empty($delimiter)) {
             $delimiter = $this->pathDelimiter;
         }
 
+        /** @var non-empty-string $delimiter */
         $config = clone $this;
         $keys   = explode($delimiter, $path);
 
-        while (true !== empty($keys)) {
+        while (!empty($keys)) {
             $key = array_shift($keys);
 
             if (true !== $config->has($key)) {
@@ -157,7 +149,7 @@ class Config extends Collection implements ConfigInterface
 
             $config = $config->get($key);
 
-            if (true === empty($config)) {
+            if (empty($config)) {
                 break;
             }
         }
@@ -168,11 +160,11 @@ class Config extends Collection implements ConfigInterface
     /**
      * Sets the default path delimiter
      *
-     * @param string|null $delimiter
+     * @param string $delimiter
      *
      * @return ConfigInterface
      */
-    public function setPathDelimiter(?string $delimiter = null): ConfigInterface
+    public function setPathDelimiter(string $delimiter): ConfigInterface
     {
         $this->pathDelimiter = $delimiter;
 
@@ -188,7 +180,7 @@ class Config extends Collection implements ConfigInterface
      * );
      *```
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
     public function toArray(): array
     {
@@ -209,17 +201,17 @@ class Config extends Collection implements ConfigInterface
     /**
      * Performs a merge recursively
      *
-     * @param array $source
-     * @param array $target
+     * @param array<array-key, mixed> $source
+     * @param array<array-key, mixed> $target
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
     final protected function internalMerge(array $source, array $target): array
     {
         foreach ($target as $key => $value) {
             if (
                 is_array($value) &&
-                true === isset($source[$key]) &&
+                isset($source[$key]) &&
                 is_array($source[$key])
             ) {
                 $source[$key] = $this->internalMerge($source[$key], $value);
@@ -239,7 +231,7 @@ class Config extends Collection implements ConfigInterface
      * @param mixed $element
      * @param mixed $value
      */
-    protected function setData($element, $value): void
+    protected function setData(mixed $element, mixed $value): void
     {
         $element = (string)$element;
         $key     = ($this->insensitive) ? mb_strtolower($element) : $element;

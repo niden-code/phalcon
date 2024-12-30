@@ -126,8 +126,8 @@ abstract class AbstractFile extends AbstractValidator
         if (
             is_array($value) &&
             (
-                true !== isset($value["error"]) ||
-                true !== isset($value["tmp_name"]) ||
+                !isset($value["error"]) ||
+                !isset($value["tmp_name"]) ||
                 $value["error"] !== UPLOAD_ERR_OK ||
                 true !== $this->checkIsUploadedFile($value["tmp_name"])
             )
@@ -170,9 +170,9 @@ abstract class AbstractFile extends AbstractValidator
         if (
             is_array($value) &&
             (
-                true !== isset($value["name"]) ||
-                true !== isset($value["type"]) ||
-                true !== isset($value["size"])
+                !isset($value["name"]) ||
+                !isset($value["type"]) ||
+                !isset($value["size"])
             )
         ) {
             $label        = $this->prepareLabel($validation, $field);
@@ -218,11 +218,11 @@ abstract class AbstractFile extends AbstractValidator
         // Upload is larger than PHP allowed size (post_max_size or upload_max_filesize)
         if (
             "POST" === $method &&
-            true === empty($post) &&
-            true === empty($files) &&
+            empty($post) &&
+            empty($files) &&
             (int)$length > 0 ||
             is_array($value) &&
-            true === isset($value["error"]) &&
+            isset($value["error"]) &&
             $value["error"] === UPLOAD_ERR_INI_SIZE
         ) {
             $label        = $this->prepareLabel($validation, $field);
@@ -276,7 +276,7 @@ abstract class AbstractFile extends AbstractValidator
             $matches
         );
 
-        if (true === isset($matches[2])) {
+        if (isset($matches[2])) {
             $unit = $matches[2];
         }
 
@@ -326,9 +326,9 @@ abstract class AbstractFile extends AbstractValidator
     {
         $value = $validation->getValue($field);
 
-        return true === empty($value) ||
+        return empty($value) ||
             is_array($value) &&
-            true === isset($value["error"]) &&
+            isset($value["error"]) &&
             $value["error"] === UPLOAD_ERR_NO_FILE;
     }
 

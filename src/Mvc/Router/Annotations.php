@@ -387,7 +387,7 @@ class Annotations extends Router
             if ($value != "/") {
                 $uri = $this->routePrefix . $value;
             } else {
-                if (true !== empty($this->routePrefix)) {
+                if (!empty($this->routePrefix)) {
                     $uri = $this->routePrefix;
                 } else {
                     $uri = $value;

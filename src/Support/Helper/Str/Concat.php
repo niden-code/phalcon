@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Support\Helper\Str;
 
-use Phalcon\Traits\Helper\Str\EndsWithTrait;
-use Phalcon\Traits\Helper\Str\StartsWithTrait;
-
 use function array_merge;
 use function end;
 use function implode;
+use function str_ends_with;
+use function str_starts_with;
 use function trim;
 
 /**
@@ -27,9 +26,6 @@ use function trim;
  */
 class Concat
 {
-    use EndsWithTrait;
-    use StartsWithTrait;
-
     /**
      * @param string $delimiter
      * @param string $first
@@ -48,8 +44,8 @@ class Concat
         $parameters = array_merge([$first, $second], $arguments);
         $last       = end($parameters) ?? $second;
 
-        $prefix = $this->toStartsWith($first, $delimiter) ? $delimiter : '';
-        $suffix = $this->toEndsWith($last, $delimiter) ? $delimiter : '';
+        $prefix = str_starts_with($first, $delimiter) ? $delimiter : '';
+        $suffix = str_ends_with($last, $delimiter) ? $delimiter : '';
 
         foreach ($parameters as $parameter) {
             $data[] = trim($parameter, $delimiter);

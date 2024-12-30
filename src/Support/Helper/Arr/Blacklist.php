@@ -29,13 +29,14 @@ class Blacklist
     use FilterTrait;
 
     /**
-     * @param array<int|string,mixed> $collection
-     * @param array<int|string,mixed> $blackList
+     * @param array<array-key, mixed> $collection
+     * @param array<array-key, mixed> $blackList
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     public function __invoke(array $collection, array $blackList): array
     {
+        /** @var array<int|string> $blackList */
         $blackList = $this->toFilter(
             $blackList,
             function ($element) {

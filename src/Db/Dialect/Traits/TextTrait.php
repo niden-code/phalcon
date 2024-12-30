@@ -179,7 +179,7 @@ trait TextTrait
         } else {
             $afterPosition = $column->getAfterPosition();
 
-            if (true !== empty($afterPosition)) {
+            if (!empty($afterPosition)) {
                 $sql = ' AFTER ' . $this->delimit($afterPosition);
             }
         }
@@ -406,7 +406,7 @@ trait TextTrait
          * Check if there is an ENGINE option
          */
         $engine = $options['ENGINE'] ?? '';
-        if (true !== empty($engine)) {
+        if (!empty($engine)) {
             $tableNameOptions[] = 'ENGINE=' . $engine;
         }
 
@@ -414,7 +414,7 @@ trait TextTrait
          * Check if there is an AUTO_INCREMENT option
          */
         $autoIncrement = $options['AUTO_INCREMENT'] ?? '';
-        if (true !== empty($autoIncrement)) {
+        if (!empty($autoIncrement)) {
             $tableNameOptions[] = 'AUTO_INCREMENT=' . $autoIncrement;
         }
 
@@ -422,7 +422,7 @@ trait TextTrait
          * Check if there is a TABLE_COLLATION option
          */
         $tableNameCollation = $options['TABLE_COLLATION'] ?? '';
-        if (true !== empty($tableNameCollation)) {
+        if (!empty($tableNameCollation)) {
             $collationParts     = explode('_', $tableNameCollation);
             $tableNameOptions[] = 'DEFAULT CHARSET=' . $collationParts[0];
             $tableNameOptions[] = 'COLLATE=' . $tableNameCollation;

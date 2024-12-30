@@ -48,12 +48,14 @@ use const LC_ALL;
  *
  * Allows translations using gettext
  *
- * @property int          $category
- * @property string       $defaultDomain
- * @property string|array $directory
- * @property string|false $locale
+ * @phpstan-type TOptions = array{
+ *      locale?: string,
+ *      defaultDomain?: string,
+ *      directory?: string,
+ *      category?: string
+ * }
  */
-class Gettext extends AbstractAdapter implements ArrayAccess
+class Gettext extends AbstractAdapter
 {
     use InfoTrait;
 
@@ -70,23 +72,18 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * @var string|array<string, string>
      */
-    protected $directory;
+    protected array | string $directory;
 
     /**
      * @var string|false
      */
-    protected $locale;
+    protected false | string $locale;
 
     /**
      * Gettext constructor.
      *
-     * @param InterpolatorFactory   $interpolator
-     * @param array<string, string> $options = [
-     *                                       'locale'        => '',
-     *                                       'defaultDomain' => '',
-     *                                       'directory'     => '',
-     *                                       'category'      => ''
-     *                                       ]
+     * @param InterpolatorFactory $interpolator
+     * @param TOptions            $options
      *
      * @throws Exception
      */
@@ -239,7 +236,7 @@ class Gettext extends AbstractAdapter implements ArrayAccess
      */
     public function setDirectory($directory): void
     {
-        if (true !== empty($directory)) {
+        if (!empty($directory)) {
             $this->directory = $directory;
 
             if (is_array($directory)) {
@@ -312,17 +309,17 @@ class Gettext extends AbstractAdapter implements ArrayAccess
     /**
      * Validator for constructor
      *
-     * @param array<string, mixed> $options
+     * @param TOptions $options
      *
      * @throws Exception
      */
     protected function prepareOptions(array $options): void
     {
-        if (true !== isset($options['locale'])) {
+        if (!isset($options['locale'])) {
             throw new Exception("Parameter 'locale' is required");
         }
 
-        if (true !== isset($options['directory'])) {
+        if (!isset($options['directory'])) {
             throw new Exception("Parameter 'directory' is required");
         }
 

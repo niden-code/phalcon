@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function trim;
 
 /**
- * Phalcon\Filter\Sanitize\Trim
- *
  * Sanitizes a value removing leading and trailing spaces
  */
 class Trim

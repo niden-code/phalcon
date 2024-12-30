@@ -32,6 +32,8 @@ trait SerializableTrait
 
     /**
      * Returns the object in an array format
+     *
+     * @return array
      */
     abstract public function toArray(): array;
 

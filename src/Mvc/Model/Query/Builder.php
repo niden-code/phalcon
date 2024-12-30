@@ -156,7 +156,7 @@ class Builder implements BuilderInterface, InjectionAwareInterface
         array | string | null $params = null,
         ?DiInterface $container = null
     ) {
-        if (true === is_array($params)) {
+        if (is_array($params)) {
             /**
              * Process conditions
              */
@@ -1753,7 +1753,7 @@ class Builder implements BuilderInterface, InjectionAwareInterface
         /**
          * Merge the bind params to the current ones
          */
-        if (true !== empty($bindParams)) {
+        if (!empty($bindParams)) {
             $currentBindParams = $this->bindParams;
 
             if (is_array($currentBindParams)) {
@@ -1766,7 +1766,7 @@ class Builder implements BuilderInterface, InjectionAwareInterface
         /**
          * Merge the bind types to the current ones
          */
-        if (true !== empty($bindTypes)) {
+        if (!empty($bindTypes)) {
             $currentBindTypes = $this->bindTypes;
 
             if (is_array($currentBindTypes)) {

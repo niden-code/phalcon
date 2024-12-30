@@ -371,10 +371,10 @@ class Response extends Injectable implements
         /**
          * Output the response body
          */
-        if (true !== empty($this->content)) {
+        if (!empty($this->content)) {
             echo $this->content;
         } else {
-            if (true !== empty($this->file)) {
+            if (!empty($this->file)) {
                 readfile($this->file);
             }
         }
@@ -496,7 +496,7 @@ class Response extends Injectable implements
         string $contentType,
         ?string $charset = null
     ): ResponseInterface {
-        if (true !== empty($charset)) {
+        if (!empty($charset)) {
             $contentType .= '; charset=' . $charset;
         }
 
@@ -795,7 +795,7 @@ class Response extends Injectable implements
         if (null === $message) {
             // See: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
             $statusCodes = $this->getPhrases();
-            if (true !== isset($statusCodes[$code])) {
+            if (!isset($statusCodes[$code])) {
                 throw new Exception(
                     "Non-standard status-code given without a message"
                 );

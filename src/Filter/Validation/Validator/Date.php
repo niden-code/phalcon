@@ -83,7 +83,7 @@ class Date extends AbstractValidator
 
         $format = $this->checkArray($this->getOption("format"), $field);
 
-        if (true === empty($format)) {
+        if (empty($format)) {
             $format = "Y-m-d";
         }
 
@@ -106,7 +106,7 @@ class Date extends AbstractValidator
      */
     private function checkDate(mixed $value, string $format): bool
     {
-        if (true !== is_string($value)) {
+        if (!is_string($value)) {
             return false;
         }
 

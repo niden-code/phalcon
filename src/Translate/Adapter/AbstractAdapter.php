@@ -13,19 +13,21 @@ declare(strict_types=1);
 
 namespace Phalcon\Translate\Adapter;
 
+use ArrayAccess;
 use Exception as BaseException;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
 
 /**
- * Class AbstractAdapter
+ * @psalm-type TOptions = array{
+ *     defaultInterpolator?: string
+ * }
  *
- * @package Phalcon\Translate\Adapter
- *
- * @property string              $defaultInterpolator
- * @property InterpolatorFactory $interpolatorFactory
+ * @template TKey of string
+ * @template TValue of string
+ * @implements ArrayAccess<TKey, TValue>
  */
-abstract class AbstractAdapter implements AdapterInterface
+abstract class AbstractAdapter implements AdapterInterface, ArrayAccess
 {
     /**
      * @var string
@@ -35,8 +37,8 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * AbstractAdapter constructor.
      *
-     * @param InterpolatorFactory  $interpolatorFactory
-     * @param array<string, mixed> $options
+     * @param InterpolatorFactory $interpolatorFactory
+     * @param TOptions            $options
      */
     public function __construct(
         protected InterpolatorFactory $interpolatorFactory,
@@ -67,6 +69,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function offsetExists(mixed $offset): bool
     {
+        /** @var string $offset */
         return $this->has($offset);
     }
 
@@ -79,6 +82,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function offsetGet(mixed $offset): mixed
     {
+        /** @var string $offset */
         return $this->query($offset);
     }
 

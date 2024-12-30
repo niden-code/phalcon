@@ -311,8 +311,8 @@ final class ServerRequest extends AbstractRequest implements
     public function withParsedBody($data): ServerRequest
     {
         if (
-            true !== is_array($data) &&
-            true !== is_object($data) &&
+            !is_array($data) &&
+            !is_object($data) &&
             null !== $data
         ) {
             throw new InvalidArgumentException(

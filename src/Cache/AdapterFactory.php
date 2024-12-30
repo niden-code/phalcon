@@ -22,35 +22,28 @@ use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Cache\Exception\Exception;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Traits\Factory\FactoryTrait;
 
 /**
  * Factory to create Cache adapters
  *
- * @property SerializerFactory $serializerFactory
  */
 class AdapterFactory
 {
     use FactoryTrait;
 
     /**
-     * @var SerializerFactory|null
-     */
-    private ?SerializerFactory $serializerFactory;
-
-    /**
      * AdapterFactory constructor.
      *
-     * @param SerializerFactory     $factory
+     * @param SerializerFactory     $serializerFactory
      * @param array<string, string> $services
      */
     public function __construct(
-        SerializerFactory $factory,
+        protected readonly SerializerFactory $serializerFactory,
         array $services = []
     ) {
-        $this->serializerFactory = $factory;
-
         $this->init($services);
     }
 
@@ -84,6 +77,7 @@ class AdapterFactory
      */
     public function newInstance(string $name, array $options = []): AdapterInterface
     {
+        /** @var AdapterInterface $definition */
         $definition = $this->getService($name);
 
         return new $definition(
@@ -103,7 +97,7 @@ class AdapterFactory
     /**
      * Returns the available adapters
      *
-     * @return array<string, string>
+     * @return string[]
      */
     protected function getServices(): array
     {

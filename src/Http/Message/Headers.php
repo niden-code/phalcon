@@ -48,7 +48,7 @@ class Headers extends Collection
     ): Headers {
         if (
             true === $collection->has("host") &&
-            true !== empty($uri) &&
+            !empty($uri) &&
             "" !== $uri->getHost()
         ) {
             $host = $uri->getHost();
@@ -138,7 +138,7 @@ class Headers extends Collection
      */
     final public function checkHeaderValue($value): void
     {
-        if (true !== is_string($value) && true !== is_numeric($value)) {
+        if (!is_string($value) && !is_numeric($value)) {
             throw new InvalidArgumentException("Invalid header value");
         }
 
@@ -165,11 +165,11 @@ class Headers extends Collection
     final public function getHeaderValue($values): array
     {
         $valueArray = $values;
-        if (true !== is_array($values)) {
+        if (!is_array($values)) {
             $valueArray = [$values];
         }
 
-        if (true === empty($valueArray)) {
+        if (empty($valueArray)) {
             throw new InvalidArgumentException(
                 "Invalid header value: must be a string or " .
                 "array of strings; cannot be an empty array"

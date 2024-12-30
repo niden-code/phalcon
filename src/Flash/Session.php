@@ -117,7 +117,7 @@ class Session extends AbstractFlash
     {
         $messages = $this->getSessionMessages(false);
 
-        if (true !== isset($messages[$type])) {
+        if (!isset($messages[$type])) {
             $messages[$type] = [];
         }
 
@@ -163,11 +163,11 @@ class Session extends AbstractFlash
         /**
          * Session might be empty
          */
-        if (true !== is_array($messages)) {
+        if (!is_array($messages)) {
             $messages = [];
         }
 
-        if (true === is_string($type)) {
+        if (is_string($type)) {
             $return = $messages[$type] ?? [];
             if (true === $remove) {
                 unset($messages[$type]);

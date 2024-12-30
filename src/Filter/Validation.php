@@ -92,7 +92,7 @@ class Validation extends Injectable implements ValidationInterface
         $this->validators = array_filter(
             $validators,
             function (array $element) {
-                return true !== is_array($element[0]) ||
+                return !is_array($element[0]) ||
                     !($element[1] instanceof AbstractCombinedFieldsValidator);
             }
         );
@@ -205,7 +205,7 @@ class Validation extends Injectable implements ValidationInterface
      */
     public function getFilters(string $field = null): mixed
     {
-        if (true === empty($field)) {
+        if (empty($field)) {
             return $this->filters;
         }
 
@@ -280,8 +280,8 @@ class Validation extends Injectable implements ValidationInterface
         }
 
         if (
-            true === isset($this->filters[$field]) &&
-            true !== empty($this->filters[$field])
+            isset($this->filters[$field]) &&
+            !empty($this->filters[$field])
         ) {
             $fieldFilters = $this->filters[$field];
             /**
@@ -329,11 +329,11 @@ class Validation extends Injectable implements ValidationInterface
         array | object $data,
         string $field
     ): mixed {
-        if (true === isset($this->values[$field])) {
+        if (isset($this->values[$field])) {
             return $this->values[$field];
         }
 
-        if (is_array($data) && true === isset($data[$field])) {
+        if (is_array($data) && isset($data[$field])) {
             return $data[$field];
         }
 
@@ -429,7 +429,7 @@ class Validation extends Injectable implements ValidationInterface
         array | string $filters
     ): ValidationInterface {
         $fields = $field;
-        if (true !== is_array($field)) {
+        if (!is_array($field)) {
             $fields = [$field];
         }
 
@@ -514,7 +514,7 @@ class Validation extends Injectable implements ValidationInterface
 
         foreach ($this->validators as $field => $validators) {
             foreach ($validators as $validator) {
-                if (true !== is_object($validator)) {
+                if (!is_object($validator)) {
                     throw new ValidationException(
                         "One of the validators is not valid"
                     );
@@ -541,14 +541,14 @@ class Validation extends Injectable implements ValidationInterface
         }
 
         foreach ($this->combinedFieldsValidators as $scope) {
-            if (true !== is_array($scope)) {
+            if (!is_array($scope)) {
                 throw new ValidationException("The validator scope is not valid");
             }
 
             $field     = $scope[0];
             $validator = $scope[1];
 
-            if (true !== is_object($validator)) {
+            if (!is_object($validator)) {
                 throw new ValidationException("One of the validators is not valid");
             }
 

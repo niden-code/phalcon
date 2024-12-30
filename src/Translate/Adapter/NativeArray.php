@@ -20,16 +20,14 @@ use Phalcon\Translate\InterpolatorFactory;
 use function is_array;
 
 /**
- * Class NativeArray
- *
  * Defines translation lists using PHP arrays
  *
- * @package Phalcon\Translate\Adapter
- *
- * @property array $translate
- * @property bool  $triggerError
+ * @phpstan-type TOptions = array{
+ *      content?: array<string, string>,
+ *      triggerError?: bool
+ * }
  */
-class NativeArray extends AbstractAdapter implements ArrayAccess
+class NativeArray extends AbstractAdapter
 {
     /**
      * @var array<string, string>
@@ -44,11 +42,8 @@ class NativeArray extends AbstractAdapter implements ArrayAccess
     /**
      * NativeArray constructor.
      *
-     * @param InterpolatorFactory  $interpolator
-     * @param array<string, mixed> $options = [
-     *                                      'content'      => '',
-     *                                      'triggerError' => false
-     *                                      ]
+     * @param InterpolatorFactory $interpolator
+     * @param TOptions            $options
      *
      * @throws Exception
      */
@@ -110,7 +105,7 @@ class NativeArray extends AbstractAdapter implements ArrayAccess
      */
     public function query(string $translateKey, array $placeholders = []): string
     {
-        if (true !== isset($this->translate[$translateKey])) {
+        if (!isset($this->translate[$translateKey])) {
             return $this->notFound($translateKey);
         }
 

@@ -125,7 +125,7 @@ trait MessagesHelperTrait
      */
     public function offsetSet($offset, $message): void
     {
-        if (true !== is_object($message)) {
+        if (!is_object($message)) {
             throw new Exception('The message must be an object');
         }
 

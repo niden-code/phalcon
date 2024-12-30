@@ -223,7 +223,7 @@ abstract class AbstractHelper
         string $close = ''
     ): string {
         $escapedAttrs = '';
-        if (true !== empty($attributes)) {
+        if (!empty($attributes)) {
             $attrs        = $this->orderAttributes([], $attributes);
             $escapedAttrs = ' ' . rtrim($this->renderAttributes($attrs));
         }

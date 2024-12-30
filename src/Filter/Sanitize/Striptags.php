@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function strip_tags;
 
 /**
- * Phalcon\Filter\Sanitize\Striptags
- *
  * Sanitizes a value striptags
  */
 class Striptags

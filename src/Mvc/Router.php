@@ -970,7 +970,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
             /**
              * Check for a namespace
              */
-            if (true === isset($parts['namespace'])) {
+            if (isset($parts['namespace'])) {
                 $this->namespaceName = $parts['namespace'];
                 unset($parts['namespace']);
             }
@@ -978,7 +978,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
             /**
              * Check for a module
              */
-            if (true === isset($parts['module'])) {
+            if (isset($parts['module'])) {
                 $this->module = $parts['module'];
                 unset($parts['module']);
             }
@@ -986,7 +986,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
             /**
              * Check for a controller
              */
-            if (true === isset($parts['controller'])) {
+            if (isset($parts['controller'])) {
                 $this->controller = $parts['controller'];
                 unset($parts['controller']);
             }
@@ -994,7 +994,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
             /**
              * Check for an action
              */
-            if (true === isset($parts['action'])) {
+            if (isset($parts['action'])) {
                 $this->action = $parts['action'];
                 unset($parts['action']);
             }
@@ -1002,9 +1002,9 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
             /**
              * Check for parameters
              */
-            if (true === isset($parts["params"])) {
+            if (isset($parts["params"])) {
                 $paramsStr = $parts["params"];
-                if (true === is_string($paramsStr)) {
+                if (is_string($paramsStr)) {
                     $strParams = trim($paramsStr, "/");
 
                     if ('' !== $strParams) {
@@ -1050,7 +1050,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
 
         $groupRoutes = $group->getRoutes();
 
-        if (true === empty($groupRoutes)) {
+        if (empty($groupRoutes)) {
             throw new Exception(
                 "The group of routes does not contain any routes"
             );
@@ -1187,27 +1187,27 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
     public function setDefaults(array $defaults): RouterInterface
     {
         // Set a default namespace
-        if (true === isset($defaults['namespace'])) {
+        if (isset($defaults['namespace'])) {
             $this->defaultNamespace = (string)$defaults['namespace'];
         }
 
         // Set a default module
-        if (true === isset($defaults['module'])) {
+        if (isset($defaults['module'])) {
             $this->defaultModule = (string)$defaults['module'];
         }
 
         // Set a default controller
-        if (true === isset($defaults['controller'])) {
+        if (isset($defaults['controller'])) {
             $this->defaultController = (string)$defaults['controller'];
         }
 
         // Set a default action
-        if (true === isset($defaults['action'])) {
+        if (isset($defaults['action'])) {
             $this->defaultAction = (string)$defaults['action'];
         }
 
         // Set default parameters
-        if (true === isset($defaults['params'])) {
+        if (isset($defaults['params'])) {
             $this->defaultParams = $defaults['params'];
         }
 

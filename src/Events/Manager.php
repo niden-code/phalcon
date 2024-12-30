@@ -26,11 +26,6 @@ use function method_exists;
  * needed, the normal flow of operation. With the EventsManager the developer
  * can create hooks or plugins that will offer monitoring of data, manipulation,
  * conditional execution and much more.
- *
- * @property bool  $collect
- * @property bool  $enablePriorities
- * @property array $events
- * @property array $responses
  */
 class Manager implements ManagerInterface
 {
@@ -45,14 +40,14 @@ class Manager implements ManagerInterface
     protected bool $enablePriorities = false;
 
     /**
-     * @var array|null
+     * @var array
      */
-    protected ?array $events = [];
+    protected array $events = [];
 
     /**
-     * @var array|null
+     * @var array<array-key, mixed>
      */
-    protected ?array $responses = [];
+    protected array $responses = [];
 
     /**
      * Returns if priorities are enabled
@@ -67,19 +62,16 @@ class Manager implements ManagerInterface
     /**
      * Attach a listener to the events manager
      *
-     * @param string $eventType
-     * @param mixed  $handler
-     * @param int    $priority
-     *
-     * @throws Exception
+     * @param string          $eventType
+     * @param object|callable $handler
+     * @param int             $priority
      */
     public function attach(
         string $eventType,
-        $handler,
+        callable|object $handler,
         int $priority = self::DEFAULT_PRIORITY
     ): void {
-        $this->checkHandler($handler);
-
+        /** @var SplPriorityQueue|null $priorityQueue */
         $priorityQueue = $this->events[$eventType] ?? null;
         if (null === $priorityQueue) {
             // Create a SplPriorityQueue to store the events with priorities
@@ -114,15 +106,15 @@ class Manager implements ManagerInterface
     /**
      * Detach the listener from the events manager
      *
-     * @param string $eventType
-     * @param mixed  $handler
+     * @param string          $eventType
+     * @param object|callable $handler
      *
+     * @return void
      * @throws Exception
      */
-    public function detach(string $eventType, $handler): void
+    public function detach(string $eventType, object|callable $handler): void
     {
-        $this->checkHandler($handler);
-
+        /** @var SplPriorityQueue|null $priorityQueue */
         $priorityQueue = $this->events[$eventType] ?? null;
         if (null !== $priorityQueue) {
             /**
@@ -153,7 +145,7 @@ class Manager implements ManagerInterface
      *
      * @param string|null $type
      */
-    public function detachAll(string $type = null): void
+    public function detachAll(?string $type = null): void
     {
         $this->processDetachAllNullType($type);
         $this->processDetachAllNotNullType($type);
@@ -196,10 +188,10 @@ class Manager implements ManagerInterface
     public function fire(
         string $eventType,
         object $source,
-        $data = null,
+        mixed $data = null,
         bool $cancelable = true
     ): mixed {
-        if (true === empty($this->events)) {
+        if (empty($this->events)) {
             return null;
         }
 
@@ -223,14 +215,14 @@ class Manager implements ManagerInterface
 
         // Check if events are grouped by type
         $fireEvents = $this->events[$type] ?? null;
-        if (true === is_object($fireEvents)) {
+        if (is_object($fireEvents)) {
             // Call the events queue
             $status = $this->fireQueue($fireEvents, $event);
         }
 
         // Check if there are listeners for the event type itself
         $fireEvents = $this->events[$eventType] ?? null;
-        if (true === is_object($fireEvents)) {
+        if (is_object($fireEvents)) {
             // Call the events queue
             $status = $this->fireQueue($fireEvents, $event);
         }
@@ -295,7 +287,7 @@ class Manager implements ManagerInterface
      *
      * @param string $type
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
     public function getListeners(string $type): array
     {
@@ -318,7 +310,7 @@ class Manager implements ManagerInterface
      * Returns all the responses returned by every handler executed by the last
      * 'fire' executed
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
     public function getResponses(): array
     {
@@ -355,7 +347,7 @@ class Manager implements ManagerInterface
      */
     public function isValidHandler(mixed $handler): bool
     {
-        if (true !== is_object($handler) && true !== is_callable($handler)) {
+        if (!is_object($handler) && !is_callable($handler)) {
             return false;
         }
 
@@ -375,7 +367,7 @@ class Manager implements ManagerInterface
         EventInterface $event
     ): mixed {
         // Check if the event is a closure
-        if ($handler instanceof Closure || true === is_callable($handler)) {
+        if ($handler instanceof Closure || is_callable($handler)) {
             // Call the function in the PHP userland
             $status = call_user_func_array(
                 $handler,
@@ -406,7 +398,7 @@ class Manager implements ManagerInterface
 
         // Check if the listener has implemented an event with the same name
         if (
-            true !== ($handler instanceof Closure || true === is_callable($handler)) &&
+            true !== ($handler instanceof Closure || is_callable($handler)) &&
             true === method_exists($handler, $eventName)
         ) {
             $status = $handler->{$eventName}(
@@ -420,23 +412,11 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @param mixed $handler
-     *
-     * @throws Exception
-     */
-    private function checkHandler(mixed $handler): void
-    {
-        if (false === $this->isValidHandler($handler)) {
-            throw new Exception('Event handler must be an Object or Callable');
-        }
-    }
-
-    /**
      * @param string|null $type
      */
     private function processDetachAllNotNullType(?string $type): void
     {
-        if (null !== $type && true === isset($this->events[$type])) {
+        if (null !== $type && isset($this->events[$type])) {
             unset($this->events[$type]);
         }
     }

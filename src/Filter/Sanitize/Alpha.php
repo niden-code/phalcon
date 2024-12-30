@@ -16,14 +16,12 @@ namespace Phalcon\Filter\Sanitize;
 use function preg_replace;
 
 /**
- * Phalcon\Filter\Sanitize\Alpha
- *
  * Sanitizes a value to an alpha value
  */
 class Alpha
 {
     /**
-     * @param array|string $input The text to sanitize
+     * @param string[]|string $input The text to sanitize
      *
      * @return string|string[]|null
      */

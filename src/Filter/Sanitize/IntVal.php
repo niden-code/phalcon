@@ -18,8 +18,6 @@ use function filter_var;
 use const FILTER_SANITIZE_NUMBER_INT;
 
 /**
- * Phalcon\Filter\Sanitize\IntVal
- *
  * Sanitizes a value to integer
  */
 class IntVal

@@ -185,7 +185,7 @@ class Binder implements BinderInterface
      */
     protected function getParamsFromCache(string $cacheKey): array | null
     {
-        if (true === isset($this->internalCache[$cacheKey])) {
+        if (isset($this->internalCache[$cacheKey])) {
             return $this->internalCache[$cacheKey];
         }
 
@@ -239,7 +239,7 @@ class Binder implements BinderInterface
             $reflectionClass = new ReflectionClass($typeClassName);
             $className       = $reflectionClass->getName();
 
-            if (true !== isset($params[$paramKey])) {
+            if (!isset($params[$paramKey])) {
                 $paramKey = $paramsKeys[$paramKey];
             }
 
@@ -263,7 +263,7 @@ class Binder implements BinderInterface
                 }
 
                 if (is_array($realClasses)) {
-                    if (true !== isset($realClasses[$paramKey])) {
+                    if (!isset($realClasses[$paramKey])) {
                         throw new Exception(
                             "You should provide model class name for "
                             . $paramKey
@@ -272,7 +272,7 @@ class Binder implements BinderInterface
                     }
                     $className  = $realClasses[$paramKey];
                     $boundModel = $this->findBoundModel($paramValue, $className);
-                } elseif (true === is_string($realClasses)) {
+                } elseif (is_string($realClasses)) {
                     $className  = $realClasses;
                     $boundModel = $this->findBoundModel($paramValue, $className);
                 } else {
@@ -280,7 +280,7 @@ class Binder implements BinderInterface
                         "getModelName should return array or string"
                     );
                 }
-            } elseif (true === is_subclass_of($className, "Phalcon\Mvc\Model")) {
+            } elseif (is_subclass_of($className, "Phalcon\Mvc\Model")) {
                 $boundModel = $this->findBoundModel($paramValue, $className);
             }
 

@@ -59,7 +59,7 @@ class Settings
      */
     public static function set(string $key, bool | int $value): void
     {
-        if (true === isset(self::$settings[$key])) {
+        if (isset(self::$settings[$key])) {
             self::$settings[$key] = $value;
         }
     }

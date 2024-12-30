@@ -125,6 +125,7 @@ abstract class AbstractCache implements CacheInterface, EventsAwareInterface
         $this->fireManagerEvent("cache:beforeDeleteMultiple", $keys);
 
         $result = true;
+        /** @var string $key */
         foreach ($keys as $key) {
             if (true !== $this->adapter->delete($key)) {
                 $result = false;
@@ -184,6 +185,7 @@ abstract class AbstractCache implements CacheInterface, EventsAwareInterface
         $this->fireManagerEvent('cache:beforeGetMultiple', $keys);
 
         $results = [];
+        /** @var string $element */
         foreach ($keys as $element) {
             $results[$element] = $this->get($element, $default);
         }
@@ -277,6 +279,10 @@ abstract class AbstractCache implements CacheInterface, EventsAwareInterface
         $this->fireManagerEvent('cache:beforeSetMultiple', $values);
 
         $result = true;
+        /**
+         * @var string $key
+         * @var mixed $value
+         */
         foreach ($values as $key => $value) {
             if (true !== $this->set($key, $value, $ttl)) {
                 $result = false;

@@ -46,7 +46,7 @@ abstract class AbstractValidatorComposite extends AbstractValidator implements V
      */
     public function validate(Validation $validation, string $field): bool
     {
-        if (true === empty($this->validators)) {
+        if (empty($this->validators)) {
             throw new Exception(
                 get_class($this)
                 . " does not have any validator added"

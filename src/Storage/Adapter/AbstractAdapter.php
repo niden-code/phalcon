@@ -476,8 +476,8 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     protected function initSerializer(): void
     {
         if (
-            true !== empty($this->defaultSerializer) &&
-            true !== is_object($this->serializer)
+            !empty($this->defaultSerializer) &&
+            !is_object($this->serializer)
         ) {
             $className        = $this->defaultSerializer;
             $this->serializer = $this->serializerFactory->newInstance($className);

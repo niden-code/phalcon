@@ -66,7 +66,7 @@ class Reader implements ReaderInterface
          * Get class constants
          */
         $constants = $reflection->getConstants();
-        if (true !== empty($constants)) {
+        if (!empty($constants)) {
             /**
              * Line declaration for constants isn't available
              */
@@ -97,7 +97,7 @@ class Reader implements ReaderInterface
                 }
             }
 
-            if (true !== empty($anotationsConstants)) {
+            if (!empty($anotationsConstants)) {
                 $annotations["constants"] = $anotationsConstants;
             }
         }
@@ -106,7 +106,7 @@ class Reader implements ReaderInterface
          * Get the class properties
          */
         $properties = $reflection->getProperties();
-        if (true !== empty($properties)) {
+        if (!empty($properties)) {
             /**
              * Line declaration for properties isn't available
              */
@@ -133,7 +133,7 @@ class Reader implements ReaderInterface
                 }
             }
 
-            if (true !== empty($annotationsProperties)) {
+            if (!empty($annotationsProperties)) {
                 $annotations["properties"] = $annotationsProperties;
             }
         }
@@ -142,7 +142,7 @@ class Reader implements ReaderInterface
          * Get the class methods
          */
         $methods = $reflection->getMethods();
-        if (true !== empty($methods)) {
+        if (!empty($methods)) {
             $annotationsMethods = [];
             foreach ($methods as $method) {
                 /**
@@ -165,7 +165,7 @@ class Reader implements ReaderInterface
                 }
             }
 
-            if (true !== empty($annotationsMethods)) {
+            if (!empty($annotationsMethods)) {
                 $annotations["methods"] = $annotationsMethods;
             }
         }
@@ -187,7 +187,7 @@ class Reader implements ReaderInterface
         mixed $file = null,
         mixed $line = null
     ): array {
-        if (true !== is_string($file)) {
+        if (!is_string($file)) {
             $file = "eval code";
         }
 

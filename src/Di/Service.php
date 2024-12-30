@@ -143,7 +143,7 @@ class Service implements ServiceInterface
 
         $instanceDefinition = $this->definition;
 
-        if (true === is_string($instanceDefinition)) {
+        if (is_string($instanceDefinition)) {
             /**
              * String definitions can be class names without implicit parameters
              */
@@ -157,12 +157,12 @@ class Service implements ServiceInterface
              * Object definitions can be a Closure or an already resolved
              * instance
              */
-            if (true === is_object($instanceDefinition)) {
+            if (is_object($instanceDefinition)) {
                 if ($instanceDefinition instanceof Closure) {
                     /**
                      * Bounds the closure to the current DI
                      */
-                    if (true === is_object($container)) {
+                    if (is_object($container)) {
                         $instanceDefinition = Closure::bind($instanceDefinition, $container);
                     }
 
@@ -223,7 +223,7 @@ class Service implements ServiceInterface
      */
     public function setParameter(int $position, array $parameter): ServiceInterface
     {
-        if (true !== is_array($this->definition)) {
+        if (!is_array($this->definition)) {
             throw new Exception(
                 'Definition must be an array to update its parameters'
             );
@@ -232,7 +232,7 @@ class Service implements ServiceInterface
         /**
          * Update the parameter
          */
-        if (true === isset($this->definition['arguments'])) {
+        if (isset($this->definition['arguments'])) {
             $arguments            = $this->definition['arguments'];
             $arguments[$position] = $parameter;
         } else {

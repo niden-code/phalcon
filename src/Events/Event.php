@@ -27,12 +27,6 @@ namespace Phalcon\Events;
  *     $event->stop();
  * }
  * ```
- *
- * @property bool   $cancelable
- * @property mixed  $data
- * @property object $source
- * @property bool   $stopped
- * @property string $type
  */
 class Event implements EventInterface
 {

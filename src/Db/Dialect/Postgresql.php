@@ -92,7 +92,7 @@ class Postgresql extends Dialect
             . $this->prepareTable($tableName, $schemaName)
             . " ADD";
 
-        if (true !== empty($reference->getName())) {
+        if (!empty($reference->getName())) {
             $sql .= " CONSTRAINT \"" . $reference->getName() . "\"";
         }
 
@@ -105,12 +105,12 @@ class Postgresql extends Dialect
             . ")";
 
         $onDelete = $reference->getOnDelete();
-        if (true !== empty($onDelete)) {
+        if (!empty($onDelete)) {
             $sql .= " ON DELETE " . $onDelete;
         }
 
         $onUpdate = $reference->getOnUpdate();
-        if (true !== empty($onUpdate)) {
+        if (!empty($onUpdate)) {
             $sql .= " ON UPDATE " . $onUpdate;
         }
 
@@ -139,7 +139,7 @@ class Postgresql extends Dialect
         $sql = "CREATE";
 
         $indexType = $index->getType();
-        if (true !== empty($indexType)) {
+        if (!empty($indexType)) {
             $sql .= " " . $indexType;
         }
         $sql .= " INDEX \""
@@ -192,7 +192,7 @@ class Postgresql extends Dialect
         string $schemaName,
         array $definition
     ): string {
-        if (true !== isset($definition["columns"])) {
+        if (!isset($definition["columns"])) {
             throw new Exception(
                 "The index 'columns' is required in the definition array"
             );
@@ -249,7 +249,7 @@ class Postgresql extends Dialect
             /**
              * Add a COMMENT clause
              */
-            if (true !== empty($column->getComment())) {
+            if (!empty($column->getComment())) {
                 $indexSqlAfterCreate .= " COMMENT ON COLUMN "
                     . $tableName
                     . ".\""
@@ -260,7 +260,7 @@ class Postgresql extends Dialect
             }
         }
 
-        if (true !== empty($primaryColumns)) {
+        if (!empty($primaryColumns)) {
             $createLines[] = "PRIMARY KEY ("
                 . $this->getColumnList($primaryColumns)
                 . ")";
@@ -279,7 +279,7 @@ class Postgresql extends Dialect
                 $indexSql = "CONSTRAINT \"PRIMARY\" PRIMARY KEY ("
                     . $this->getColumnList($index->getColumns())
                     . ")";
-            } elseif (true !== empty($indexType)) {
+            } elseif (!empty($indexType)) {
                 $indexSql = "CONSTRAINT \""
                     . $indexName
                     . "\" "
@@ -296,7 +296,7 @@ class Postgresql extends Dialect
                     . ");";
             }
 
-            if (true !== empty($indexSql)) {
+            if (!empty($indexSql)) {
                 $createLines[] = $indexSql;
             }
         }
@@ -317,12 +317,12 @@ class Postgresql extends Dialect
                 . ")";
 
             $onDelete = $reference->getOnDelete();
-            if (true !== empty($onDelete)) {
+            if (!empty($onDelete)) {
                 $referenceSql .= " ON DELETE " . $onDelete;
             }
 
             $onUpdate = $reference->getOnUpdate();
-            if (true !== empty($onUpdate)) {
+            if (!empty($onUpdate)) {
                 $referenceSql .= " ON UPDATE " . $onUpdate;
             }
 
@@ -354,7 +354,7 @@ class Postgresql extends Dialect
         array $definition,
         ?string $schemaName = null
     ): string {
-        if (true !== isset($definition["sql"])) {
+        if (!isset($definition["sql"])) {
             throw new Exception(
                 "The index 'sql' is required in the definition array"
             );
@@ -384,7 +384,7 @@ class Postgresql extends Dialect
         string $tableName,
         ?string $schemaName = null
     ): string {
-        if (true === empty($schemaName)) {
+        if (empty($schemaName)) {
             $schemaName = "public";
         }
 
@@ -464,7 +464,7 @@ class Postgresql extends Dialect
         string $tableName,
         ?string $schemaName = null
     ): string {
-        if (true === empty($schemaName)) {
+        if (empty($schemaName)) {
             $schemaName = "public";
         }
 
@@ -630,7 +630,7 @@ class Postgresql extends Dialect
 
         switch ($columnType) {
             case Column::TYPE_BIGINTEGER:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     if ($column->isAutoIncrement()) {
                         $columnSql .= "BIGSERIAL";
                     } else {
@@ -641,14 +641,14 @@ class Postgresql extends Dialect
                 break;
 
             case Column::TYPE_BOOLEAN:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "BOOLEAN";
                 }
 
                 break;
 
             case Column::TYPE_CHAR:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "CHARACTER";
                 }
 
@@ -657,7 +657,7 @@ class Postgresql extends Dialect
                 break;
 
             case Column::TYPE_DATE:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "DATE";
                 }
 
@@ -665,13 +665,13 @@ class Postgresql extends Dialect
 
             case Column::TYPE_DATETIME:
             case Column::TYPE_TIMESTAMP:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TIMESTAMP";
                 }
                 break;
 
             case Column::TYPE_DECIMAL:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "NUMERIC";
                 }
 
@@ -680,14 +680,14 @@ class Postgresql extends Dialect
                 break;
 
             case Column::TYPE_FLOAT:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "FLOAT";
                 }
 
                 break;
 
             case Column::TYPE_INTEGER:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     if ($column->isAutoIncrement()) {
                         $columnSql .= "SERIAL";
                     } else {
@@ -698,35 +698,35 @@ class Postgresql extends Dialect
                 break;
 
             case Column::TYPE_SMALLINTEGER:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "SMALLINT";
                 }
 
                 break;
 
             case Column::TYPE_JSON:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "JSON";
                 }
 
                 break;
 
             case Column::TYPE_JSONB:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "JSONB";
                 }
 
                 break;
 
             case Column::TYPE_TEXT:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "TEXT";
                 }
 
                 break;
 
             case Column::TYPE_VARCHAR:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     $columnSql .= "CHARACTER VARYING";
                 }
 
@@ -735,14 +735,14 @@ class Postgresql extends Dialect
                 break;
 
             default:
-                if (true === empty($columnSql)) {
+                if (empty($columnSql)) {
                     throw new Exception(
                         "Unrecognized PostgreSQL data type at column " . $column->getName()
                     );
                 }
 
                 $typeValues = $column->getTypeValues();
-                if (true !== empty($typeValues)) {
+                if (!empty($typeValues)) {
                     if (is_array($typeValues)) {
                         $valueSql = "";
                         foreach ($typeValues as $value) {
@@ -780,7 +780,7 @@ class Postgresql extends Dialect
      */
     public function listTables(?string $schemaName = null): string
     {
-        if (true === empty($schemaName)) {
+        if (empty($schemaName)) {
             $schemaName = "public";
         }
 
@@ -799,7 +799,7 @@ class Postgresql extends Dialect
      */
     public function listViews(?string $schemaName = null): string
     {
-        if (true === empty($schemaName)) {
+        if (empty($schemaName)) {
             $schemaName = "public";
         }
 
@@ -874,7 +874,7 @@ class Postgresql extends Dialect
         /**
          * Add a COMMENT clause
          */
-        if (true !== empty($column->getComment())) {
+        if (!empty($column->getComment())) {
             $sql .= "COMMENT ON COLUMN "
                 . $this->prepareTable($tableName, $schemaName)
                 . ".\""
@@ -887,8 +887,8 @@ class Postgresql extends Dialect
         // DEFAULT
         if ($column->getDefault() !== $currentColumn->getDefault()) {
             if (
-                true === empty($column->getDefault()) &&
-                true !== empty($currentColumn->getDefault())
+                empty($column->getDefault()) &&
+                !empty($currentColumn->getDefault())
             ) {
                 $sql .= $sqlAlterTable
                     . " ALTER COLUMN \""
@@ -948,7 +948,7 @@ class Postgresql extends Dialect
         string $tableName,
         ?string $schemaName = null
     ): string {
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $schemaName = "public";
         }
 
@@ -1001,7 +1001,7 @@ class Postgresql extends Dialect
         string $viewName,
         ?string $schemaName = null
     ): string {
-        if (true !== empty($schemaName)) {
+        if (!empty($schemaName)) {
             $schemaName = "public";
         }
 

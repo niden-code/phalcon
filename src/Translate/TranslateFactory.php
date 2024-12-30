@@ -72,7 +72,7 @@ class TranslateFactory
         /** @var TConfig $config */
         $config  = $this->checkConfig($config);
         $name    = (string)$config['adapter'];
-        $options = true === isset($config['options']) ? (array)$config['options'] : [];
+        $options = isset($config['options']) ? (array)$config['options'] : [];
 
         return $this->newInstance($name, $options);
     }
@@ -89,8 +89,10 @@ class TranslateFactory
     public function newInstance(string $name, array $options = []): AdapterInterface
     {
         $definition = $this->getService($name);
+        /** @var AdapterInterface $translate */
+        $translate = new $definition($this->interpolator, $options);
 
-        return new $definition($this->interpolator, $options);
+        return $translate;
     }
 
     /**

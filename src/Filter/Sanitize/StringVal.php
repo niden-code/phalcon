@@ -16,8 +16,6 @@ namespace Phalcon\Filter\Sanitize;
 use function htmlspecialchars;
 
 /**
- * Phalcon\Filter\Sanitize\String
- *
  * Sanitizes a value to string
  */
 class StringVal

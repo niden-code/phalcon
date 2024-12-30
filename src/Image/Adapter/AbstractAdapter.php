@@ -296,7 +296,7 @@ abstract class AbstractAdapter implements AdapterInterface
             $extension = (string)pathinfo($this->file, PATHINFO_EXTENSION);
         }
 
-        if (true === empty($extension)) {
+        if (empty($extension)) {
             $extension = "png";
         }
 

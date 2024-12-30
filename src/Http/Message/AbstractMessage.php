@@ -301,7 +301,7 @@ abstract class AbstractMessage extends AbstractCommon implements
             return $body;
         }
 
-        if (true !== is_string($body) && true !== is_resource($body)) {
+        if (!is_string($body) && !is_resource($body)) {
             throw new InvalidArgumentException(
                 "Invalid stream passed as a parameter"
             );
@@ -326,11 +326,11 @@ abstract class AbstractMessage extends AbstractCommon implements
             "3.0" => 1,
         ];
 
-        if (true === empty($protocol) || true !== is_string($protocol)) {
+        if (empty($protocol) || !is_string($protocol)) {
             throw new InvalidArgumentException("Invalid protocol value");
         }
 
-        if (true !== isset($protocols[$protocol])) {
+        if (!isset($protocols[$protocol])) {
             throw new InvalidArgumentException(
                 "Unsupported protocol " . $protocol
             );

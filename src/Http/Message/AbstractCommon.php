@@ -32,7 +32,7 @@ abstract class AbstractCommon
      */
     final protected function checkStringParameter($element): void
     {
-        if (true !== is_string($element)) {
+        if (!is_string($element)) {
             throw new InvalidArgumentException(
                 "Method requires a string argument"
             );

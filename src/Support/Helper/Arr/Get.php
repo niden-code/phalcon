@@ -23,7 +23,7 @@ use function settype;
 class Get
 {
     /**
-     * @param array<int|string,mixed> $collection
+     * @param array<array-key, mixed> $collection
      * @param mixed                   $index
      * @param mixed|null              $defaultValue
      * @param string|null             $cast

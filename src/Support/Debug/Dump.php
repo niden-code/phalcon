@@ -269,7 +269,7 @@ class Dump
      */
     protected function getStyle(string $type): string
     {
-        if (true === isset($this->styles[$type])) {
+        if (isset($this->styles[$type])) {
             return $this->styles[$type];
         }
 
@@ -292,7 +292,7 @@ class Dump
         $output      = '';
         $varTemplate = "(<span style=\"%style%\">%var%</span>)";
 
-        if (true !== empty($name)) {
+        if (!empty($name)) {
             $output .= $name . ' ';
         }
 
@@ -320,7 +320,7 @@ class Dump
 
                 if (
                     1 === $tab &&
-                    true !== empty($name) &&
+                    !empty($name) &&
                     true !== is_int($key) &&
                     $name === $key
                 ) {
@@ -333,7 +333,7 @@ class Dump
             return $output . str_repeat($space, $tab - 1) . ')';
         }
 
-        if (true === is_object($variable)) {
+        if (is_object($variable)) {
             $message = $this->getOutputBold('Object') . ' %class%';
             $context = [
                 'style' => $this->getStyle('obj'),
@@ -443,7 +443,7 @@ class Dump
             return $output . str_repeat($space, $tab - 1) . ")";
         }
 
-        if (true === is_int($variable)) {
+        if (is_int($variable)) {
             $message = "<b style=\"%style%\">Integer</b> " . $varTemplate;
             $context = [
                 'style' => $this->getStyle('int'),
@@ -453,7 +453,7 @@ class Dump
             return $output . $this->toInterpolate($message, $context);
         }
 
-        if (true === is_float($variable)) {
+        if (is_float($variable)) {
             $message = "<b style=\"%style%\">Float</b> " . $varTemplate;
             $context = [
                 'style' => $this->getStyle('float'),
@@ -463,7 +463,7 @@ class Dump
             return $output . $this->toInterpolate($message, $context);
         }
 
-        if (true === is_numeric($variable)) {
+        if (is_numeric($variable)) {
             $message = "<b style=\"%style%\">Numeric String</b> "
                 . "(<span style=\"%style%\">%length%</span>) "
                 . "\"<span style=\"%style%\">%var%</span>\"";
@@ -476,7 +476,7 @@ class Dump
             return $output . $this->toInterpolate($message, $context);
         }
 
-        if (true === is_string($variable)) {
+        if (is_string($variable)) {
             $message = "<b style=\"%style%\">String</b> "
                 . "(<span style=\"%style%\">%length%</span>) "
                 . "\"<span style=\"%style%\">%var%</span>\"";
@@ -489,7 +489,7 @@ class Dump
             return $output . $this->toInterpolate($message, $context);
         }
 
-        if (true === is_bool($variable)) {
+        if (is_bool($variable)) {
             $message = "<b style=\"%style%\">Boolean</b> " . $varTemplate;
             $context = [
                 'style' => $this->getStyle('bool'),

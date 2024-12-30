@@ -28,6 +28,7 @@ use function call_user_func_array;
 use function file_exists;
 use function file_put_contents;
 use function filemtime;
+use function is_array;
 use function is_dir;
 use function is_object;
 
@@ -296,7 +297,7 @@ class Manager implements InjectionAwareInterface
      */
     public function get(string $name): Collection
     {
-        if (true !== isset($this->collections[$name])) {
+        if (!isset($this->collections[$name])) {
             throw new Exception('The collection does not exist in the manager');
         }
 
@@ -397,7 +398,7 @@ class Manager implements InjectionAwareInterface
         /**
          * Prepare options if the collection must be filtered
          */
-        if (true !== empty($filters)) {
+        if (!empty($filters)) {
             /**
              * Check for global options in the asset manager. The source and
              * target base path are global locations where all assets are read
@@ -414,7 +415,7 @@ class Manager implements InjectionAwareInterface
             /**
              * Concatenate the global base source path with the collection one
              */
-            if (true !== empty($collectionSourcePath)) {
+            if (!empty($collectionSourcePath)) {
                 $completeSourcePath .= $collectionSourcePath;
             }
 
@@ -427,7 +428,7 @@ class Manager implements InjectionAwareInterface
             /**
              * Concatenate the global base source path with the collection one
              */
-            if (true !== empty($collectionTargetPath)) {
+            if (!empty($collectionTargetPath)) {
                 $completeTargetPath .= $collectionTargetPath;
             }
 
@@ -445,7 +446,7 @@ class Manager implements InjectionAwareInterface
              * If the collection must not be joined we must print HTML for
              * each one
              */
-            if (true !== empty($filters)) {
+            if (!empty($filters)) {
                 $sourcePath = $asset->getPath();
                 if (true === $asset->isLocal()) {
                     $filterNeeded = true;
@@ -464,7 +465,7 @@ class Manager implements InjectionAwareInterface
                 /**
                  * We need a valid final target path
                  */
-                if (true === empty($targetPath)) {
+                if (empty($targetPath)) {
                     throw new Exception(
                         "Asset '" . $sourcePath . "' does not have a valid target path"
                     );
@@ -595,7 +596,7 @@ class Manager implements InjectionAwareInterface
         }
 
         if (
-            true !== empty($filters) &&
+            !empty($filters) &&
             true === $join
         ) {
             /**
@@ -647,7 +648,7 @@ class Manager implements InjectionAwareInterface
         $filters       = $collection->getFilters();
         $join          = $collection->getJoin();
 
-        if (true !== empty($codes)) {
+        if (!empty($codes)) {
             /** @var Inline $code */
             foreach ($codes as $code) {
                 $attributes = $code->getAttributes();
@@ -672,21 +673,21 @@ class Manager implements InjectionAwareInterface
                     $joinedContent .= $content;
                 } else {
                     $html .= $this->tagFactory->element(
-                            $type,
-                            $content,
-                            $attributes,
-                            true
-                        ) . PHP_EOL;
+                        $type,
+                        $content,
+                        $attributes,
+                        true
+                    ) . PHP_EOL;
                 }
             }
 
             if (true === $join) {
                 $html .= $this->tagFactory->element(
-                        $type,
-                        $joinedContent,
-                        $attributes,
-                        true
-                    ) . PHP_EOL;
+                    $type,
+                    $joinedContent,
+                    $attributes,
+                    true
+                ) . PHP_EOL;
             }
 
             /**
@@ -713,7 +714,7 @@ class Manager implements InjectionAwareInterface
     public function outputInlineCss(string $name = null): string
     {
         $collection = $this->getCss();
-        if (true !== empty($name)) {
+        if (!empty($name)) {
             $collection = $this->get($name);
         }
 
@@ -731,7 +732,7 @@ class Manager implements InjectionAwareInterface
     public function outputInlineJs(string $name = null): string
     {
         $collection = $this->getJs();
-        if (true !== empty($name)) {
+        if (!empty($name)) {
             $collection = $this->get($name);
         }
 
@@ -749,7 +750,7 @@ class Manager implements InjectionAwareInterface
     public function outputJs(string $name = null): ?string
     {
         $collection = $this->getJs();
-        if (true !== empty($name)) {
+        if (!empty($name)) {
             $collection = $this->get($name);
         }
 
@@ -842,7 +843,7 @@ class Manager implements InjectionAwareInterface
      */
     private function checkAndCreateCollection(string $type): Collection
     {
-        if (true !== isset($this->collections[$type])) {
+        if (!isset($this->collections[$type])) {
             $this->collections[$type] = new Collection();
         }
 
@@ -852,13 +853,13 @@ class Manager implements InjectionAwareInterface
     /**
      * Builds a LINK[rel="stylesheet"] tag
      *
-     * @param TParameters $parameters
-     * @param bool        $local
+     * @param mixed $parameters
+     * @param bool  $local
      *
      * @return string
      * @throws BaseException
      */
-    private function cssLink(array $parameters = [], bool $local = true): string
+    private function cssLink(mixed $parameters = [], bool $local = true): string
     {
         return $this->processParameters(
             $parameters,
@@ -870,7 +871,7 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * @param mixed                 $callback
+     * @param array<Manager|string> $callback
      * @param array<string, string> $attributes
      * @param string                $prefixedPath
      * @param bool                  $local
@@ -878,7 +879,7 @@ class Manager implements InjectionAwareInterface
      * @return string
      */
     private function doCallback(
-        $callback,
+        array $callback,
         array $attributes,
         string $prefixedPath,
         bool $local
@@ -886,7 +887,7 @@ class Manager implements InjectionAwareInterface
         /**
          * Prepare the parameters for the callback
          */
-        if (true !== empty($attributes)) {
+        if (!empty($attributes)) {
             $attributes[0] = $prefixedPath;
             $parameters    = [$attributes];
         } else {
@@ -918,13 +919,13 @@ class Manager implements InjectionAwareInterface
             /**
              * We need a valid final target path
              */
-            if (true === empty($completeTargetPath)) {
+            if (empty($completeTargetPath)) {
                 throw new Exception(
                     "Path '" . $completeTargetPath . "' is not a valid target path (1)"
                 );
             }
 
-            if (true === is_dir($completeTargetPath)) {
+            if (is_dir($completeTargetPath)) {
                 throw new Exception(
                     "Path '" . $completeTargetPath . "' is not a valid target path (2), it is a directory."
                 );
@@ -990,7 +991,7 @@ class Manager implements InjectionAwareInterface
         /**
          * We need a valid source path
          */
-        if (true === empty($sourcePath)) {
+        if (empty($sourcePath)) {
             $sourcePath = $asset->getPath();
 
             throw new Exception(
@@ -1038,13 +1039,13 @@ class Manager implements InjectionAwareInterface
     }
 
     /**
-     * @param TParameters $parameters
-     * @param bool        $local
+     * @param mixed $parameters
+     * @param bool  $local
      *
      * @return string
-     * @throws Exception
+     * @throws BaseException
      */
-    private function jsLink(array $parameters = [], bool $local = true): string
+    private function jsLink(mixed $parameters = [], bool $local = true): string
     {
         return $this->processParameters(
             $parameters,
@@ -1058,17 +1059,17 @@ class Manager implements InjectionAwareInterface
     /**
      * Processes common parameters for js/css link generation
      *
-     * @param TParameters $parameters
-     * @param bool        $local
-     * @param string      $helperClass
-     * @param string      $type
-     * @param string      $name
+     * @param mixed  $parameters
+     * @param bool   $local
+     * @param string $helperClass
+     * @param string $type
+     * @param string $name
      *
      * @return string
      * @throws BaseException
      */
     private function processParameters(
-        array $parameters,
+        mixed $parameters,
         bool $local,
         string $helperClass,
         string $type,
@@ -1076,18 +1077,22 @@ class Manager implements InjectionAwareInterface
     ): string {
         $params = $parameters;
 
-        if (isset($params[1])) {
+        if (true !== is_array($params)) {
+            $params = [$parameters, $local];
+        }
+
+        if (true === isset($params[1])) {
             $local = (bool)$params[1];
             unset($params[1]);
         } else {
-            if (isset($params["local"])) {
+            if (true === isset($params["local"])) {
                 $local = (bool)$params["local"];
 
                 unset($params["local"]);
             }
         }
 
-        if (true !== isset($params["type"])) {
+        if (!isset($params["type"])) {
             $params["type"] = $type;
         }
 
@@ -1098,7 +1103,7 @@ class Manager implements InjectionAwareInterface
             $params["rel"] = "stylesheet";
         }
 
-        if (true !== isset($params[$name])) {
+        if (!isset($params[$name])) {
             $params[$name] = "";
             if (isset($params[0])) {
                 $params[$name] = $params[0];

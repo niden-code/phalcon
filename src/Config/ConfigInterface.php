@@ -28,11 +28,11 @@ interface ConfigInterface extends CollectionInterface
     public function getPathDelimiter(): string;
 
     /**
-     * @param mixed $toMerge
+     * @param array|ConfigInterface $toMerge
      *
      * @return ConfigInterface
      */
-    public function merge($toMerge): ConfigInterface;
+    public function merge(array|ConfigInterface $toMerge): ConfigInterface;
 
     /**
      * @param string      $path
@@ -41,12 +41,16 @@ interface ConfigInterface extends CollectionInterface
      *
      * @return mixed
      */
-    public function path(string $path, $defaultValue = null, string $delimiter = null);
+    public function path(
+        string $path,
+        mixed $defaultValue = null,
+        ?string $delimiter = null
+    );
 
     /**
-     * @param string|null $delimiter
+     * @param string $delimiter
      *
      * @return ConfigInterface
      */
-    public function setPathDelimiter(string $delimiter = null): ConfigInterface;
+    public function setPathDelimiter(string $delimiter): ConfigInterface;
 }

@@ -22,10 +22,10 @@ use function is_object;
 class Pluck
 {
     /**
-     * @param array<int|string,mixed> $collection
+     * @param array<array-key, mixed> $collection
      * @param string                  $element
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     public function __invoke(array $collection, string $element): array
     {
@@ -39,11 +39,11 @@ class Pluck
     }
 
     /**
-     * @param array<int|string,mixed> $filtered
+     * @param array<array-key, mixed> $filtered
      * @param string                  $element
      * @param mixed                   $item
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     private function checkArray(array $filtered, string $element, $item): array
     {
@@ -55,15 +55,15 @@ class Pluck
     }
 
     /**
-     * @param array<int|string,mixed> $filtered
+     * @param array<array-key, mixed> $filtered
      * @param string                  $element
      * @param mixed                   $item
      *
-     * @return array<int|string,mixed>
+     * @return array<array-key, mixed>
      */
     private function checkObject(array $filtered, string $element, $item): array
     {
-        if (true === is_object($item) && isset($item->{$element})) {
+        if (is_object($item) && isset($item->{$element})) {
             $filtered[] = $item->{$element};
         }
 

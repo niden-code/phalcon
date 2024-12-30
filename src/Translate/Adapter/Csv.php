@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Translate\Adapter;
 
-use ArrayAccess;
 use Exception as BaseException;
 use Phalcon\Traits\Php\FileTrait;
 use Phalcon\Translate\Exception;
@@ -22,30 +21,26 @@ use Phalcon\Translate\InterpolatorFactory;
 use function is_resource;
 
 /**
- * Class Csv
- *
- * @package Phalcon\Translate\Adapter
- *
- * @property array $translate
+ * @phpstan-type TOptions = array{
+ *      content?: string,
+ *      delimiter?: string,
+ *      enclosure?: string
+ * }
  */
-class Csv extends AbstractAdapter implements ArrayAccess
+class Csv extends AbstractAdapter
 {
     use FileTrait;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $translate = [];
 
     /**
      * Csv constructor.
      *
-     * @param InterpolatorFactory   $interpolator
-     * @param array<string, string> $options = [
-     *                                       'content'   => '',
-     *                                       'delimiter' => ';',
-     *                                       'enclosure' => '"'
-     *                                       ]
+     * @param InterpolatorFactory $interpolator
+     * @param TOptions            $options
      *
      * @throws Exception
      */
@@ -55,7 +50,7 @@ class Csv extends AbstractAdapter implements ArrayAccess
     ) {
         parent::__construct($interpolator, $options);
 
-        if (true !== isset($options['content'])) {
+        if (!isset($options['content'])) {
             throw new Exception("Parameter 'content' is required");
         }
 
@@ -80,8 +75,8 @@ class Csv extends AbstractAdapter implements ArrayAccess
     /**
      * Returns the translation related to the given key
      *
-     * @param string $translateKey
-     * @param array  $placeholders
+     * @param string                $translateKey
+     * @param array<string, string> $placeholders
      *
      * @return string
      * @throws BaseException
@@ -96,7 +91,7 @@ class Csv extends AbstractAdapter implements ArrayAccess
     /**
      * Returns the internal array
      *
-     * @return array
+     * @return array<string, string>
      */
     public function toArray(): array
     {
@@ -128,16 +123,14 @@ class Csv extends AbstractAdapter implements ArrayAccess
         }
 
         while (true) {
+            /** @var array<array-key, string>|false $data */
             $data = $this->phpFgetCsv($pointer, $length, $separator, $enclosure);
 
             if (false === $data) {
                 break;
             }
 
-            if (
-                str_starts_with($data[0], '#') ||
-                true !== isset($data[1])
-            ) {
+            if (str_starts_with($data[0], '#') || !isset($data[1])) {
                 continue;
             }
 

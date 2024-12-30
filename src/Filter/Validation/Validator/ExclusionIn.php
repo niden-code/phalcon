@@ -87,13 +87,13 @@ class ExclusionIn extends AbstractValidator
         $domain = $this->getOption("domain");
         if (
             is_array($domain) &&
-            true === isset($domain[$field]) &&
+            isset($domain[$field]) &&
             is_array($domain[$field])
         ) {
             $domain = $domain[$field];
         }
 
-        if (true !== is_array($domain)) {
+        if (!is_array($domain)) {
             throw new ValidationException("Option 'domain' must be an array");
         }
 
@@ -101,7 +101,7 @@ class ExclusionIn extends AbstractValidator
         if (true === $this->hasOption("strict")) {
             $strict = $this->checkArray($this->getOption("strict"), $field);
 
-            if (true !== is_bool($strict)) {
+            if (!is_bool($strict)) {
                 throw new ValidationException("Option 'strict' must be a bool");
             }
         }

@@ -34,9 +34,10 @@ class Decrement
     ): string {
         $number = 0;
         $parts  = explode($separator, $text);
-        $parts  = !is_array($parts) ? [] : $parts;
+        /** @var array<int, string> $parts */
+        $parts  = false === $parts ? [] : $parts;
 
-        if (true === isset($parts[1])) {
+        if (isset($parts[1])) {
             $number = (int)$parts[1];
             $number--;
             if ($number <= 0) {

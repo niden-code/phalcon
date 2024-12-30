@@ -53,10 +53,11 @@ class PadFactory
      */
     public function newInstance(string $name): PadInterface
     {
-        /** @var PadInterface $definition */
         $definition = $this->getService($name);
+        /** @var PadInterface $padding */
+        $padding    = new $definition();
 
-        return new $definition();
+        return $padding;
     }
 
     /**

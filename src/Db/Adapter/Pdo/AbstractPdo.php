@@ -261,7 +261,7 @@ abstract class AbstractPdo extends AbstractAdapter
     public function connect(array $descriptor = []): void
     {
         $dsnParts   = [];
-        $descriptor = true !== empty($descriptor) ? $descriptor : $this->descriptor;
+        $descriptor = !empty($descriptor) ? $descriptor : $this->descriptor;
 
         // Check for a username or use null as default
         $userName = $descriptor["username"] ?? null;
@@ -357,14 +357,14 @@ abstract class AbstractPdo extends AbstractAdapter
             preg_match_all($bindPattern, $sql, $matches, $setOrder)
         ) {
             foreach ($matches as $placeMatch) {
-                if (true !== isset($parameters[$placeMatch[1]])) {
-                    if (true !== isset($placeMatch[2])) {
+                if (!isset($parameters[$placeMatch[1]])) {
+                    if (!isset($placeMatch[2])) {
                         throw new Exception(
                             "Matched parameter was not found in parameters list"
                         );
                     }
 
-                    if (true !== isset($parameters[$placeMatch[2]])) {
+                    if (!isset($parameters[$placeMatch[2]])) {
                         throw new Exception(
                             "Matched parameter was not found in parameters list"
                         );
@@ -453,7 +453,7 @@ abstract class AbstractPdo extends AbstractAdapter
 
         $this->prepareRealSql($sqlStatement, $bindParams);
 
-        if (true !== empty($bindParams)) {
+        if (!empty($bindParams)) {
             $statement = $this->pdo->prepare($sqlStatement);
 
             if (false !== $statement) {
@@ -530,7 +530,7 @@ abstract class AbstractPdo extends AbstractAdapter
                     $type      = Column::BIND_SKIP;
                 } else {
                     $castValue = $value;
-                    if (true === $forceCasting && true !== is_array($value)) {
+                    if (true === $forceCasting && !is_array($value)) {
                         $castValue = match ($type) {
                             Column::BIND_PARAM_INT  => intval($value),
                             Column::BIND_PARAM_STR  => (string)$value,
@@ -544,7 +544,7 @@ abstract class AbstractPdo extends AbstractAdapter
                 /**
                  * 1024 : ignore the bind type
                  */
-                if (true !== is_array($castValue)) {
+                if (!is_array($castValue)) {
                     if ($type === Column::BIND_SKIP) {
                         $statement->bindValue($parameter, $castValue);
                     } else {
@@ -566,7 +566,7 @@ abstract class AbstractPdo extends AbstractAdapter
                         }
                     }
                 }
-            } elseif (true !== is_array($value)) {
+            } elseif (!is_array($value)) {
                 $statement->bindValue($parameter, $value);
             } else {
                 foreach ($value as $position => $itemValue) {
@@ -735,8 +735,8 @@ abstract class AbstractPdo extends AbstractAdapter
             }
         }
 
-        $params = (true !== empty($bindParams)) ? $bindParams : [];
-        $types  = (true !== empty($bindTypes)) ? $bindTypes : [];
+        $params = (!empty($bindParams)) ? $bindParams : [];
+        $types  = (!empty($bindTypes)) ? $bindTypes : [];
 
         $statement = $this->pdo->prepare($sqlStatement);
         if (false === $statement) {
@@ -846,7 +846,7 @@ abstract class AbstractPdo extends AbstractAdapter
         $result = $statement;
         $values = $parameters;
 
-        if (true !== empty($parameters)) {
+        if (!empty($parameters)) {
             $keys = [];
             foreach ($parameters as $key => $value) {
                 if (is_string($key)) {

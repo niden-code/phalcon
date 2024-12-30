@@ -146,20 +146,20 @@ class StringLength extends AbstractValidatorComposite
         string $messageKey,
         string $includedKey
     ): StringLength {
-        if (true === isset($options[$key])) {
+        if (isset($options[$key])) {
             $message  = null;
             $included = false;
             // get custom message
-            if (true === isset($options["message"])) {
+            if (isset($options["message"])) {
                 $message = $options["message"];
-            } elseif (true === isset($options[$messageKey])) {
+            } elseif (isset($options[$messageKey])) {
                 $message = $options[$messageKey];
             }
 
             // get included option
-            if (true === isset($options["included"])) {
+            if (isset($options["included"])) {
                 $included = $options["included"];
-            } elseif (true === isset($options[$includedKey])) {
+            } elseif (isset($options[$includedKey])) {
                 $included = $options[$includedKey];
             }
 

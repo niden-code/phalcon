@@ -16,15 +16,13 @@ namespace Phalcon\Filter\Sanitize;
 use function str_replace;
 
 /**
- * Phalcon\Filter\Sanitize\Remove
- *
  * Sanitizes a value removing parts of a string
  */
 class Remove
 {
     /**
-     * @param array|string $input
-     * @param array|string $replace
+     * @param string[]|string $input
+     * @param string[]|string $replace
      *
      * @return string|string[]
      */

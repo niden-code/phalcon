@@ -551,7 +551,7 @@ class Route implements RouteInterface
             $routePaths = $paths;
         }
 
-        if (true !== is_array($routePaths)) {
+        if (!is_array($routePaths)) {
             throw new Exception("The route contains invalid paths");
         }
 

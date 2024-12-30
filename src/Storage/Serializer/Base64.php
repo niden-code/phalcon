@@ -28,7 +28,7 @@ class Base64 extends AbstractSerializer
      */
     public function serialize()
     {
-        if (true !== is_string($this->data)) {
+        if (!is_string($this->data)) {
             throw new InvalidArgumentException(
                 'Data for the serializer must of type string'
             );
@@ -46,7 +46,7 @@ class Base64 extends AbstractSerializer
      */
     public function unserialize($data)
     {
-        if (true !== is_string($data)) {
+        if (!is_string($data)) {
             throw new InvalidArgumentException(
                 'Data for the unserializer must of type string'
             );

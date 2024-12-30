@@ -16,16 +16,14 @@ namespace Phalcon\Filter\Sanitize;
 use function preg_replace;
 
 /**
- * Phalcon\Filter\Sanitize\Regex
- *
  * Sanitizes a value performing preg_replace
  */
 class Regex
 {
     /**
-     * @param array|string $input
-     * @param array|string $pattern
-     * @param array|string $replace
+     * @param string[]|string $input
+     * @param string[]|string $pattern
+     * @param string[]|string $replace
      *
      * @return string|string[]|null
      */

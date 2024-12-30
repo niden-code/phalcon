@@ -753,7 +753,7 @@ abstract class Model extends AbstractInjectionAware implements
     public function appendMessagesFrom(ModelInterface $model): void
     {
         $messages = $model->getMessages();
-        if (true !== empty($messages)) {
+        if (!empty($messages)) {
             foreach ($messages as $message) {
                 if (is_object($message)) {
                     $message->setMetaData(

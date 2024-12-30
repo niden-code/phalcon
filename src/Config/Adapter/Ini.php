@@ -95,7 +95,7 @@ class Ini extends Config
         $config = [];
 
         foreach ($iniConfig as $section => $directives) {
-            if (false !== is_array($directives)) {
+            if (is_array($directives)) {
                 $sections = [];
 
                 foreach ($directives as $path => $lastValue) {
@@ -128,7 +128,7 @@ class Ini extends Config
      */
     protected function cast($ini)
     {
-        if (false !== is_array($ini)) {
+        if (is_array($ini)) {
             return $this->castArray($ini);
         }
 
@@ -155,7 +155,7 @@ class Ini extends Config
         }
 
         // Decode float/int
-        if (true === is_numeric($ini)) {
+        if (is_numeric($ini)) {
             if (preg_match('/[.]+/', $ini)) {
                 return (double)$ini;
             }

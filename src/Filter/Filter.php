@@ -42,9 +42,6 @@ use function is_string;
  * @method string      upperFirst(string $input)
  * @method string|null upperWords(string $input)
  * @method string|null url(string $input)
- *
- * @property array $mapper
- * @property array $services
  */
 class Filter implements FilterInterface
 {
@@ -71,19 +68,19 @@ class Filter implements FilterInterface
     public const FILTER_URL         = 'url';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $mapper = [];
 
     /**
-     * @var array
+     * @var array<string, FilterInterface>
      */
     protected array $services = [];
 
     /**
      * Filter constructor.
      *
-     * @param array $mapper
+     * @param array<string, string> $mapper
      */
     public function __construct(array $mapper = [])
     {
@@ -93,8 +90,8 @@ class Filter implements FilterInterface
     /**
      * Magic call to make the helper objects available as methods.
      *
-     * @param string $name
-     * @param array  $args
+     * @param string               $name
+     * @param array<string, mixed> $args
      *
      * @return mixed
      * @throws Exception
@@ -117,13 +114,13 @@ class Filter implements FilterInterface
      */
     public function get(string $name): mixed
     {
-        if (true !== isset($this->mapper[$name])) {
+        if (!isset($this->mapper[$name])) {
             throw new Exception(
                 'Filter ' . $name . ' is not registered'
             );
         }
 
-        if (true !== isset($this->services[$name])) {
+        if (!isset($this->services[$name])) {
             $definition            = $this->mapper[$name];
             $this->services[$name] = $this->createInstance($definition);
         }
@@ -147,7 +144,7 @@ class Filter implements FilterInterface
      * Sanitizes a value with a specified single or set of sanitizers
      *
      * @param mixed        $value
-     * @param array|string $sanitizers
+     * @param array<array-key, string|array>|string $sanitizers
      * @param bool         $noRecursive
      *
      * @return array|false|mixed|null
@@ -240,7 +237,7 @@ class Filter implements FilterInterface
      */
     private function createInstance($definition)
     {
-        if (true === is_string($definition)) {
+        if (is_string($definition)) {
             return new $definition();
         }
 
@@ -377,7 +374,7 @@ class Filter implements FilterInterface
         string $sanitizerName,
         array $sanitizerParams
     ) {
-        if (true !== is_array($value)) {
+        if (!is_array($value)) {
             $value = $this->sanitizer(
                 $value,
                 $sanitizerName,
@@ -404,7 +401,7 @@ class Filter implements FilterInterface
         array $sanitizerParams = []
     ) {
         if (true !== $this->has($sanitizerName)) {
-            if (true !== empty($sanitizerName)) {
+            if (!empty($sanitizerName)) {
                 trigger_error(
                     "Sanitizer '" . $sanitizerName . "' is not registered"
                 );

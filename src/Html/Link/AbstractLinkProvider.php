@@ -38,8 +38,8 @@ abstract class AbstractLinkProvider
     {
         foreach ($links as $link) {
             if (
-                true === is_a($link, LinkInterface::class) ||
-                true === is_a($link, "Psr\\Link\\LinkInterface")
+                is_a($link, LinkInterface::class) ||
+                is_a($link, "Psr\\Link\\LinkInterface")
             ) {
                 $this->links[$this->getKey($link)] = $link;
             }

@@ -22,9 +22,12 @@ use Phalcon\Http\RequestInterface;
 use Phalcon\Session\ManagerInterface as SessionInterface;
 use Phalcon\Traits\Helper\Str\StartsWithTrait;
 
+use ValueError;
+
 use function crypt;
 use function hash_equals;
 use function hash_hmac;
+use function is_array;
 use function password_get_info;
 use function password_hash;
 use function password_verify;
@@ -54,6 +57,13 @@ use const PASSWORD_BCRYPT;
  *     }
  * }
  *```
+ *
+ * @phpstan-type TOptions = array{
+ *     cost?: int,
+ *     memory_cost: int,
+ *     time_cost: int,
+ *     threads: int
+ * }
  */
 class Security implements InjectionAwareInterface
 {
@@ -184,13 +194,14 @@ class Security implements InjectionAwareInterface
         /**
          * If tokenKey does not exist in session return false
          */
-        if (true === empty($tokenKey)) {
+        if (empty($tokenKey)) {
             return false;
         }
 
         /**
          * The value is the same?
          */
+        /** @var string $tokenKey */
         $userToken  = $this->processUserToken($tokenKey, $tokenValue);
         $knownToken = $this->getRequestToken();
         if (null === $knownToken || null === $userToken) {
@@ -225,9 +236,10 @@ class Security implements InjectionAwareInterface
         string $algo,
         bool $raw = false
     ): string {
-        $hmac = hash_hmac($algo, $data, $key, $raw);
-        if (false === $hmac) {
-            throw new Exception('Unknown hashing algorithm: ' . $algo);
+        try {
+            $hmac = hash_hmac($algo, $data, $key, $raw);
+        } catch (ValueError $ex) {
+            throw new Exception($ex->getMessage());
         }
 
         return $hmac;
@@ -275,7 +287,7 @@ class Security implements InjectionAwareInterface
     {
         $info = password_get_info($hash);
 
-        return null === $info ? [] : $info;
+        return is_array($info) ? $info : [];
     }
 
     /**
@@ -306,7 +318,7 @@ class Security implements InjectionAwareInterface
      */
     public function getRequestToken(): ?string
     {
-        if (true === empty($this->requestToken)) {
+        if (empty($this->requestToken)) {
             return $this->getSessionToken();
         }
 
@@ -355,7 +367,7 @@ class Security implements InjectionAwareInterface
      * CSRF check
      *
      * @return string
-     * @throws Exception
+     * @throws BaseException
      */
     public function getToken(): string
     {
@@ -381,7 +393,7 @@ class Security implements InjectionAwareInterface
      * check
      *
      * @return string|null
-     * @throws Exception
+     * @throws BaseException
      */
     public function getTokenKey(): ?string
     {
@@ -411,8 +423,8 @@ class Security implements InjectionAwareInterface
     /**
      * Creates a password hash using bcrypt with a pseudo random salt
      *
-     * @param string $password
-     * @param array  $options
+     * @param string   $password
+     * @param TOptions $options
      *
      * @return string
      */
@@ -548,8 +560,10 @@ class Security implements InjectionAwareInterface
      *
      * @return RequestInterface|SessionInterface|null
      */
-    protected function getLocalService(string $name, string $property)
-    {
+    protected function getLocalService(
+        string $name,
+        string $property
+    ): RequestInterface|SessionInterface|null {
         if (
             null === $this->$property &&
             null !== $this->container &&
@@ -584,7 +598,7 @@ class Security implements InjectionAwareInterface
      * We check if the algorithm is Argon based. If yes, options are set for
      * `password_hash` such as `memory_cost`, `time_cost` and `threads`
      *
-     * @param array $options
+     * @param TOptions $options
      *
      * @return array
      */
@@ -606,7 +620,7 @@ class Security implements InjectionAwareInterface
      * Checks the options array for `cost`. If not defined it is set to 10.
      * It also checks the cost if it is between 4 and 31
      *
-     * @param array $options
+     * @param TOptions $options
      *
      * @return int
      */
@@ -627,7 +641,7 @@ class Security implements InjectionAwareInterface
     {
         /** @var SessionInterface|null $session */
         $session = $this->getLocalService('session', 'localSession');
-        if (null !== $session && true === empty($tokenKey)) {
+        if (null !== $session && empty($tokenKey)) {
             $tokenKey = $session->get($this->tokenKeySessionId);
         }
 
