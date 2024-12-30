@@ -27,7 +27,7 @@ class CryptFunctionExistsFixture extends Crypt
      *
      * @link https://php.net/manual/en/function.function-exists.php
      */
-    protected function phpFunctionExists(string $function)
+    protected function phpFunctionExists(string $function): bool
     {
         return false;
     }

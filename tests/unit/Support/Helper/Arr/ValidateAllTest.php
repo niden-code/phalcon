@@ -27,7 +27,6 @@ final class ValidateAllTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrValidateAll(): void
     {
         $object = new ValidateAll();

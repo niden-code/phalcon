@@ -26,7 +26,6 @@ final class GetDataTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-04-17
      */
-    #[Test]
     public function testFilterValidationGetData(): void
     {
         $user = new stdClass();

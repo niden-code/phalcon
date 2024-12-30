@@ -27,7 +27,6 @@ final class GetRealSourcePathTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssGetRealSourcePathLocal(): void
     {
         $asset  = new Css('css/docs.css');
@@ -43,7 +42,6 @@ final class GetRealSourcePathTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssGetRealSourcePathRemote(): void
     {
         $path  = 'https://phalcon.ld/css/docs.css';

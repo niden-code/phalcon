@@ -28,7 +28,6 @@ final class ToJsonTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     #[DataProvider('getClasses')]
     public function testSupportCollectionToJson(
         string $class
@@ -53,7 +52,6 @@ final class ToJsonTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionToJsonEncodeFail(): void
     {
         $data = $this->getData();

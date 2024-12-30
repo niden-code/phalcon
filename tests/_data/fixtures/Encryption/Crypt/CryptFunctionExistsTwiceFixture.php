@@ -28,7 +28,7 @@ class CryptFunctionExistsTwiceFixture extends Crypt
      *
      * @link https://php.net/manual/en/function.function-exists.php
      */
-    protected function phpFunctionExists(string $function)
+    protected function phpFunctionExists(string $function): bool
     {
         if (0 === $this->usage) {
             $this->usage++;

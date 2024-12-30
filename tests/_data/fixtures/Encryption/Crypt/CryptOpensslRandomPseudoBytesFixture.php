@@ -25,7 +25,7 @@ class CryptOpensslRandomPseudoBytesFixture extends Crypt
      *
      * @link https://php.net/manual/en/function.openssl-random-pseudo-bytes
      */
-    protected function phpOpensslRandomPseudoBytes(int $length)
+    protected function phpOpensslRandomPseudoBytes(int $length): string
     {
         throw new ValueError();
     }

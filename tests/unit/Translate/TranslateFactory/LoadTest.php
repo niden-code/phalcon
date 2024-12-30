@@ -43,7 +43,6 @@ final class LoadTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-03-02
      */
-    #[Test]
     public function testTranslateFactoryLoadArray(): void
     {
         /**
@@ -71,7 +70,6 @@ final class LoadTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-03-02
      */
-    #[Test]
     public function testTranslateFactoryLoadConfig(): void
     {
         /**

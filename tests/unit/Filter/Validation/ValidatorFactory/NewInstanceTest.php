@@ -27,7 +27,6 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    #[Test]
     public function testFilterValidationValidatorFactoryNewInstance(): void
     {
         $factory = new ValidatorFactory();
@@ -44,7 +43,6 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    #[Test]
     public function testFilterValidationValidatorFactoryNewInstanceException(): void
     {
         $factory = new ValidatorFactory();

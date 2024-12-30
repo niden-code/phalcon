@@ -24,7 +24,7 @@ class StreamUnserializeFixture extends Stream
      *
      * @link https://php.net/manual/en/function.file-get-contents.php
      */
-    protected function phpFileGetContents(string $filename)
+    protected function phpFileGetContents(string $filename): false|string
     {
         return '{';
     }

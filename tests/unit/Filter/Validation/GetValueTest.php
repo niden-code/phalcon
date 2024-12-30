@@ -37,7 +37,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueEntity(): void
     {
         $alpha = new Alpha();
@@ -67,7 +66,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueData(): void
     {
         $alpha = new Alpha();
@@ -96,7 +94,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataNull(): void
     {
         $alpha = new Alpha();
@@ -124,7 +121,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataFilters(): void
     {
         $this->setNewFactoryDefault();
@@ -157,7 +153,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataFilterException(): void
     {
         $container = new Di();
@@ -193,7 +188,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataFiltersAttribute(): void
     {
         $this->setNewFactoryDefault();
@@ -227,7 +221,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataFiltersMethod(): void
     {
         $this->setNewFactoryDefault();
@@ -261,7 +254,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataFiltersProperty(): void
     {
         $this->setNewFactoryDefault();
@@ -295,7 +287,6 @@ final class GetValueTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetValueDataException(): void
     {
         $alpha = new Alpha();

@@ -43,7 +43,6 @@ final class SetAutoVersionTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-02-01
      */
-    #[Test]
     public function testAssetsManagerAddJsAutomaticVersioning(): void
     {
         if (PHP_OS_FAMILY === 'Windows') {

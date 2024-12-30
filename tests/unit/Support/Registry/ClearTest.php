@@ -24,7 +24,6 @@ final class ClearTest extends AbstractRegistryTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testSupportRegistryClear(): void
     {
         $data = $this->getData();

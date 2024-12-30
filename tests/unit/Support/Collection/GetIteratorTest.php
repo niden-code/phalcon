@@ -27,7 +27,6 @@ final class GetIteratorTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     #[DataProvider('getClasses')]
     public function testSupportCollectionGetIterator(
         string $class

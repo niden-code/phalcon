@@ -41,8 +41,6 @@ final class GetContentTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
-    #[DataProvider('providerCssJs')]
     public function testAssetsAssetGetContent(
         string $type,
         string $path
@@ -63,11 +61,11 @@ final class GetContentTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetGetContentException404(): void
     {
         $file    = 'assets/assets/1198.css';
         $message = "Asset's content for '" . dataDir($file) . "' cannot be read";
+
         $this->expectException(Exception::class);
         $this->expectExceptionMessage($message);
 
@@ -83,7 +81,6 @@ final class GetContentTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetGetContentExceptionCannotReadFile(): void
     {
         $file    = 'assets/assets/1198.css';

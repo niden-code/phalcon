@@ -28,7 +28,6 @@ final class AddAssetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testAssetsManagerAddAsset(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
@@ -43,7 +42,6 @@ final class AddAssetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testAssetsManagerAddAssetAddCss(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

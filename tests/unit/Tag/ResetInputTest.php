@@ -25,7 +25,6 @@ class ResetInputTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagResetInputDisplayTo(): void
     {
         Tag::setDocType(Tag::XHTML10_STRICT);
@@ -59,7 +58,6 @@ class ResetInputTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagResetInputSetDefault(): void
     {
         Tag::setDocType(
@@ -112,7 +110,6 @@ class ResetInputTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-01-20
      */
-    #[Test]
     public function testTagResetInputShouldNotClearPOST(): void
     {
         $_POST = [

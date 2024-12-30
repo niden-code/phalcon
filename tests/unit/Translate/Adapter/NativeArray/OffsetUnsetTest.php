@@ -32,7 +32,6 @@ final class OffsetUnsetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testTranslateAdapterNativeArrayOffsetUnset(): void
     {
         $this->expectException(Exception::class);

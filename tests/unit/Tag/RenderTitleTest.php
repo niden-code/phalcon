@@ -25,7 +25,6 @@ class RenderTitleTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-01
      */
-    #[Test]
     public function testTagRenderTitleWithMaliciousContent(): void
     {
         Tag::resetInput();

@@ -32,7 +32,7 @@ class StreamFilePutContentsFixture extends Stream
         $data,
         int $flags = 0,
         $context = null
-    ) {
+    ): false|int {
         return false;
     }
 }

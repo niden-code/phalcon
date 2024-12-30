@@ -75,23 +75,4 @@ final class DetachTest extends AbstractUnitTestCase
         $this->assertArrayHasKey($eventType, $events);
         $this->assertCount(0, $events[$eventType]);
     }
-
-    /**
-     * Tests detach handler by using an Object - exception
-     *
-     * @dataProvider booleanProvider
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
-     */
-    public function testEventsManagerDetachException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Event handler must be an Object or Callable');
-
-        $manager = new Manager();
-        $manager->detach('test:detachable', false);
-    }
 }

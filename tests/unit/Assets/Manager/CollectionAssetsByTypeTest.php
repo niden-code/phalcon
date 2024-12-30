@@ -31,7 +31,6 @@ final class CollectionAssetsByTypeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-03-19
      */
-    #[Test]
     public function testAssetsManagerCollectionAssetsByType(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

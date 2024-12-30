@@ -27,7 +27,6 @@ final class AddCssTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-10-13
      */
-    #[Test]
     public function testAssetsManagerAddCss(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
@@ -52,7 +51,6 @@ final class AddCssTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2017-06-02
      */
-    #[Test]
     public function testAssetsManagerAddCssDuplicate(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

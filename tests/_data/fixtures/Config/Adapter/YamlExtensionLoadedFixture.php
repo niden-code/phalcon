@@ -26,7 +26,7 @@ class YamlExtensionLoadedFixture extends Yaml
      *
      * @link https://php.net/manual/en/function.extension-loaded.php
      */
-    protected function phpExtensionLoaded(string $name)
+    protected function phpExtensionLoaded(string $name): bool
     {
         return false;
     }

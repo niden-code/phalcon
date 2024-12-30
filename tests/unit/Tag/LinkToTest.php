@@ -24,7 +24,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToArrayParameter(): void
     {
         $options = [
@@ -44,7 +43,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToNamedArrayParameter(): void
     {
         $options = [
@@ -67,7 +65,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Dreamszhu <dreamsxin@qq.com>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToWithComplexLocalUrl(): void
     {
         Tag::resetInput();
@@ -114,7 +111,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Dreamszhu <dreamsxin@qq.com>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToWithComplexRemoteUrl(): void
     {
         Tag::resetInput();
@@ -171,7 +167,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToWithEmptyStringAsURLAndStringAsName(): void
     {
         $url  = '';
@@ -191,7 +186,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Dreamszhu <dreamsxin@qq.com>
      * @since  2014-03-10
      */
-    #[Test]
     public function testTagLinkToWithQueryParam(): void
     {
         $actual = Tag::linkTo(
@@ -218,7 +212,6 @@ class LinkToTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-29
      */
-    #[Test]
     public function testTagLinkToWithStringAsURLAndName(): void
     {
         $url  = 'x_url';

@@ -27,7 +27,6 @@ final class GetSetVersionTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsCollectionGetSetVersion(): void
     {
         $collection = new Collection();

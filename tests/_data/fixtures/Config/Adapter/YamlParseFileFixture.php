@@ -34,7 +34,7 @@ class YamlParseFileFixture extends Yaml
         $pos = 0,
         &$ndocs = null,
         $callbacks = []
-    ) {
+    ): mixed {
         return false;
     }
 }

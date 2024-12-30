@@ -31,7 +31,6 @@ final class GetSetLabelTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetLabel(): void
     {
         $validator  = new PresenceOf();

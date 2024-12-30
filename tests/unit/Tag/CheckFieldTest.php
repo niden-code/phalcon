@@ -23,7 +23,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldStringParameter()
     {
         $options  = 'x_name';
@@ -39,7 +38,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldArrayParameter()
     {
         $options = [
@@ -59,7 +57,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldArrayParameterWithId()
     {
         $options = [
@@ -82,7 +79,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldArrayParameterWithNameNoId()
     {
         $options = [
@@ -104,7 +100,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldWithDisplayTo(): void
     {
         $options = [
@@ -127,7 +122,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldWithDisplayToElementNotPresent(): void
     {
         $options = [
@@ -150,7 +144,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldWithSetDefault(): void
     {
         $options = [
@@ -173,7 +166,6 @@ class CheckFieldTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagFieldWithSetDefaultElementNotPresent(): void
     {
         $options = [

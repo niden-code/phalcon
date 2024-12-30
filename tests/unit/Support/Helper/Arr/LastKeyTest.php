@@ -29,7 +29,6 @@ final class LastKeyTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrLastKey(): void
     {
         $object     = new LastKey();
@@ -51,7 +50,6 @@ final class LastKeyTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrLastKeyFunction(): void
     {
         $object     = new LastKey();

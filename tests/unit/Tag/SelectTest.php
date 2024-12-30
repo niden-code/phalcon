@@ -23,7 +23,6 @@ class SelectTest extends AbstractTagSetup
      * @author Cameron Hall <me@chall.id.au>
      * @since  2019-01-27
      */
-    #[Test]
     public function testTagSelect(): void
     {
         $this->testFieldParameter(
@@ -49,7 +48,6 @@ class SelectTest extends AbstractTagSetup
      *
      * @issue https://github.com/phalcon/cphalcon/issues/13352
      */
-    #[Test]
     public function testTagSelectWithNoOptions(): void
     {
         $this->testFieldParameter(

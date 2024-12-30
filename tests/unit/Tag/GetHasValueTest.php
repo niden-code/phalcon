@@ -26,7 +26,6 @@ class GetHasValueTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-22
      */
-    #[Test]
     public function testTagGetHasValue(): void
     {
         $post = $_POST;

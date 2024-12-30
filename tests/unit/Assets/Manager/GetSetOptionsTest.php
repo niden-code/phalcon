@@ -66,7 +66,6 @@ final class GetSetOptionsTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-03-19
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testAssetsManagerGetSetOptions(
         array $options,

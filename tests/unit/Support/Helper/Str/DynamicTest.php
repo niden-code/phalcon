@@ -28,7 +28,6 @@ final class DynamicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrDynamic(): void
     {
         $object = new Dynamic();
@@ -51,7 +50,6 @@ final class DynamicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrDynamicCustomDelimiter(): void
     {
         $object = new Dynamic();
@@ -74,7 +72,6 @@ final class DynamicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrDynamicCustomSeparator(): void
     {
         $object = new Dynamic();
@@ -120,7 +117,6 @@ final class DynamicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrDynamicException(): void
     {
         $this->expectException(RuntimeException::class);

@@ -33,7 +33,6 @@ final class ValidateTest extends AbstractUnitTestCase
      * @since  2016-06-27
      * @issue  10405
      */
-    #[Test]
     public function testFilterValidationValidateException(): void
     {
         $data       = ['name' => 'Leonidas'];
@@ -53,7 +52,6 @@ final class ValidateTest extends AbstractUnitTestCase
      * @since  2016-06-27
      * @issue  10405
      */
-    #[Test]
     public function testFilterValidationValidateMessageToNonObject(): void
     {
         $myValidator = new PresenceOf();

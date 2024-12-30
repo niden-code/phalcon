@@ -27,7 +27,6 @@ final class SerializeTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     #[DataProvider('getClasses')]
     public function testSupportCollectionSerialize(
         string $class
@@ -48,7 +47,6 @@ final class SerializeTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionSerializeUnderscore(): void
     {
         $data = $this->getData();

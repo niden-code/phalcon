@@ -39,7 +39,6 @@ class PreloadTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagPreload(): void
     {
         $options  = [

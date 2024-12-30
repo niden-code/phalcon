@@ -43,7 +43,6 @@ final class AddJsTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-10-13
      */
-    #[Test]
     public function testAssetsManagerAddJs(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
@@ -66,7 +65,6 @@ final class AddJsTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-02-01
      */
-    #[Test]
     public function testAssetsManagerAddJsVersioning(): void
     {
         if (PHP_OS_FAMILY === 'Windows') {

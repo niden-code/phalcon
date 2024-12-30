@@ -121,7 +121,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldArrayParameter(
         string $type,
@@ -149,7 +148,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldArrayParameterWithId(
         string $type,
@@ -180,7 +178,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldArrayParameterWithNameNoId(
         string $type,
@@ -210,7 +207,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldStringParameter(
         string $type,
@@ -234,7 +230,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldWithDisplayTo(
         string $type,
@@ -265,7 +260,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldWithDisplayToElementNotPresent(
         string $type,
@@ -296,7 +290,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldWithSetDefault(
         string $type,
@@ -327,7 +320,6 @@ final class HelpersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testTagFieldWithSetDefaultElementNotPresent(
         string $type,

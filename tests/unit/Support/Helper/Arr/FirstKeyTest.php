@@ -27,7 +27,6 @@ final class FirstKeyTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrFirstKey(): void
     {
         $object     = new FirstKey();
@@ -49,7 +48,6 @@ final class FirstKeyTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrFirstKeyFunction(): void
     {
         $object     = new FirstKey();

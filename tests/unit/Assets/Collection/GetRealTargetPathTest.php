@@ -30,7 +30,6 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsCollectionGetRealTargetPath(): void
     {
         $collection        = new Collection();
@@ -53,7 +52,6 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsCollectionGetRealTargetPathFileDoesNotExist(): void
     {
         if (PHP_OS_FAMILY === 'Windows') {

@@ -34,7 +34,6 @@ final class OffsetSetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testTranslateAdapterGettextOffsetSet(): void
     {
         $this->expectException(Exception::class);

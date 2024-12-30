@@ -27,7 +27,6 @@ final class GetSetAttributesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineCssGetSetAttributes(): void
     {
         $asset    = new Css('p {color: #000099}');

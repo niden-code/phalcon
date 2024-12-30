@@ -31,7 +31,6 @@ final class GetSetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-03-19
      */
-    #[Test]
     public function testAssetsManagerGetSet(): void
     {
         $manager    = new Manager(new TagFactory(new Escaper()));
@@ -50,7 +49,6 @@ final class GetSetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2017-06-04
      */
-    #[Test]
     public function testAssetsManagerGetUnknown(): void
     {
         $this->expectException(Exception::class);

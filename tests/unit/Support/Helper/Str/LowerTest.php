@@ -27,7 +27,6 @@ final class LowerTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrLower(): void
     {
         $object = new Lower();
@@ -53,7 +52,6 @@ final class LowerTest extends AbstractUnitTestCase
      * @author Stanislav Kiryukhin <korsar.zn@gmail.com>
      * @since  2015-05-06
      */
-    #[Test]
     public function testSupportHelperStrLowerMultiBytesEncoding(): void
     {
         $object = new Lower();

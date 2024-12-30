@@ -23,7 +23,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputArrayParameter(): void
     {
         $options  = [
@@ -61,7 +60,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputArrayParameterWithId(): void
     {
         $options  = [
@@ -103,7 +101,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputArrayParameterWithNameNoId(): void
     {
         $options  = [
@@ -145,7 +142,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputStringParameter(): void
     {
         $options  = 'x_name';
@@ -175,7 +171,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputWithDisplayTo(): void
     {
         $options  = [
@@ -221,7 +216,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputWithDisplayToElementNotPresent(): void
     {
         $options = [
@@ -265,7 +259,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputWithSetDefault(): void
     {
         $options  = [
@@ -310,7 +303,6 @@ class ImageInputTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagImageInputWithSetDefaultElementNotPresent(): void
     {
         $options  = [

@@ -32,7 +32,6 @@ final class IsSetIsLocalTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerJsIsLocal')]
     public function testAssetsAssetJsSetLocal(
         string $path,

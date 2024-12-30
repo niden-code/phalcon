@@ -65,7 +65,6 @@ final class GetRealSourcePathTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('localProvider')]
     public function testAssetsAssetGetRealSourcePathLocal(
         string $type,
@@ -84,7 +83,6 @@ final class GetRealSourcePathTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('remoteProvider')]
     public function testAssetsAssetGetRealSourcePathRemote(
         string $type,

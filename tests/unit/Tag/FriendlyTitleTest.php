@@ -24,7 +24,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterLowercase(): void
     {
         $options  = 'This is a Test';
@@ -41,7 +40,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterNoSeparator(): void
     {
         $options  = 'This is a Test';
@@ -58,7 +56,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterReplaceArray(): void
     {
         $options  = 'This is a Test';
@@ -80,7 +77,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterReplaceString(): void
     {
         $options  = 'This is a Test';
@@ -97,7 +93,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterSeparator(): void
     {
         $options  = 'This is a Test';
@@ -113,7 +108,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleStringParameterUppercase(): void
     {
         $options  = 'This is a Test';
@@ -130,7 +124,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleWithAccentedCharactersAndReplaceArray(): void
     {
         $options = "Perché l'erba è verde?";
@@ -153,7 +146,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleWithAccentedCharactersAndReplaceString(): void
     {
         $options = "Perché l'erba è verde?";
@@ -175,7 +167,6 @@ class FriendlyTitleTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-11
      */
-    #[Test]
     public function testFriendlyTitleWithSpecialCharactersAndEscaping(): void
     {
         $options = "Mess'd up --text-- just (to) stress /test/ ?our! "

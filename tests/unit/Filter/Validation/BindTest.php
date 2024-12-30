@@ -26,7 +26,6 @@ final class BindTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-04-17
      */
-    #[Test]
     public function testFilterValidationBind(): void
     {
         $user = new stdClass();

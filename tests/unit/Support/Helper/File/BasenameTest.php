@@ -96,7 +96,6 @@ final class BasenameTest extends AbstractUnitTestCase
      * @author       Ian Hu <hu2008yinxiang@163.com>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('getNonAsciiExamples')]
     public function testSupportHelperFileBasenameNonASCII(
         string $path,
@@ -119,7 +118,6 @@ final class BasenameTest extends AbstractUnitTestCase
      * @author       Ian Hu <hu2008yinxiang@163.com>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('getAsciiExamples')]
     public function testSupportHelperFileBasenamePureASCII(
         string $path,

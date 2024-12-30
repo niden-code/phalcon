@@ -29,7 +29,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemove(): void
     {
         $data = $this->getData();
@@ -91,7 +90,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemoveException(): void
     {
         $data = $this->getData();
@@ -110,7 +108,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemoveInsensitiveException(): void
     {
         $data = $this->getData();
@@ -129,7 +126,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemoveOffsetUnsetException(): void
     {
         $data = $this->getData();
@@ -148,7 +144,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemoveUnderscoreUnsetException(): void
     {
         $data = $this->getData();
@@ -167,7 +162,6 @@ final class RemoveTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionRemoveUnsetException(): void
     {
         $data = $this->getData();

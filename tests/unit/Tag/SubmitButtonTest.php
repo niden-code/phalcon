@@ -23,7 +23,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonArrayParameter(): void
     {
         $options = [
@@ -43,7 +42,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonArrayParameterWithId(): void
     {
         $options = [
@@ -65,7 +63,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonArrayParameterWithNameNoId(): void
     {
         $options = [
@@ -87,7 +84,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonStringParameter(): void
     {
         $options  = 'x_name';
@@ -103,7 +99,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonWithDisplayTo(): void
     {
         $options = [
@@ -125,7 +120,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonWithDisplayToElementNotPresent(): void
     {
         $options = [
@@ -147,7 +141,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonWithSetDefault(): void
     {
         $options = [
@@ -169,7 +162,6 @@ class SubmitButtonTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagSubmitButtonWithSetDefaultElementNotPresent(): void
     {
         $options = [

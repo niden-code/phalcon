@@ -29,7 +29,6 @@ final class FirstTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrFirst(): void
     {
         $object     = new First();
@@ -50,7 +49,6 @@ final class FirstTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrFirstFunction(): void
     {
         $object     = new First();

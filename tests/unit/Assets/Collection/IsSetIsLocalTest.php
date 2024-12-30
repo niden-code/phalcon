@@ -25,7 +25,6 @@ final class IsSetIsLocalTest extends AbstractUnitTestCase
      * @author Jeremy PASTOURET <https://github.com/jenovateurs>
      * @since  2020-02-15
      */
-    #[Test]
     public function testAssetsCollectionIsSetLocal(): void
     {
         $collection = new Collection();

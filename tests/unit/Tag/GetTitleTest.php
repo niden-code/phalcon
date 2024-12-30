@@ -26,7 +26,6 @@ class GetTitleTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-01-13
      */
-    #[Test]
     public function testTagGetTitleWithMaliciousContent(): void
     {
         Tag::resetInput();

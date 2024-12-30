@@ -27,7 +27,6 @@ final class GetSetDetailedTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportDebugDumpGetSetDetailed(): void
     {
         $dump = new Dump([], false);

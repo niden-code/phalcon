@@ -24,7 +24,7 @@ class AssetFileExistsFixture extends Asset
      *
      * @link https://php.net/manual/en/function.file-exists.php
      */
-    protected function phpFileExists(string $filename)
+    protected function phpFileExists(string $filename): bool
     {
         return false;
     }

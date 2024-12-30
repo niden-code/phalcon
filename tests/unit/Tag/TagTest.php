@@ -29,7 +29,6 @@ class TagTest extends AbstractUnitTestCase
      * @since  2022-06-11
      * @issue  15992
      */
-    #[Test]
     public function testTagTextAreaNullValue(): void
     {
         $this->setNewFactoryDefault();

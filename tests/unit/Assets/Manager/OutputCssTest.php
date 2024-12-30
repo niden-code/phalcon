@@ -54,7 +54,6 @@ final class OutputCssTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2013-09-15
      */
-    #[Test]
     public function testAssetsManagerOutputCssFilterChainCustomFilterWithCssmin(): void
     {
         $fileName = $this->getNewFileName('assets_', 'css');
@@ -92,7 +91,6 @@ final class OutputCssTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-10-13
      */
-    #[Test]
     public function testAssetsManagerOutputCssImplicit(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
@@ -118,7 +116,6 @@ final class OutputCssTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-10-13
      */
-    #[Test]
     public function testAssetsManagerOutputCssNotImplicit(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

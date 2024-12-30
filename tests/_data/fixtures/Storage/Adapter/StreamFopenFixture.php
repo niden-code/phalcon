@@ -25,7 +25,7 @@ class StreamFopenFixture extends Stream
      *
      * @link https://php.net/manual/en/function.fopen.php
      */
-    protected function phpFopen(string $filename, string $mode)
+    protected function phpFopen(string $filename, string $mode): mixed
     {
         return false;
     }

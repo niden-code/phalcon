@@ -28,7 +28,6 @@ final class GetSetDITest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-28
      */
-    #[Test]
     public function testAssetsManagerGetSetDI(): void
     {
         $container = new Di();

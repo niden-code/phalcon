@@ -27,7 +27,6 @@ final class LenTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrLen(): void
     {
         $object = new Len();
@@ -46,7 +45,6 @@ final class LenTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrLenMultiBytesEncoding(): void
     {
         $object = new Len();

@@ -27,7 +27,7 @@ class ApcuApcuDeleteFixture extends Apcu
      *
      * @link https://php.net/manual/en/function.apcu-delete.php
      */
-    protected function phpApcuDelete($key)
+    protected function phpApcuDelete(array|string $key): bool|array
     {
         return false;
     }

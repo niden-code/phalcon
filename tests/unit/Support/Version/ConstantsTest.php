@@ -25,7 +25,6 @@ final class ConstantsTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportVersionConstants(): void
     {
         $this->assertSame(0, Version::VERSION_MAJOR);

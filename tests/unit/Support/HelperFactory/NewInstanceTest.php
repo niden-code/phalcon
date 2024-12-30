@@ -156,7 +156,6 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testSupportHelperFactoryNewInstance(
         string $method,
@@ -177,7 +176,6 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     public function testSupportHelperFactoryNewInstanceException(): void
     {
         $name = uniqid('service-');

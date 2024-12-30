@@ -24,7 +24,6 @@ final class GetValueByEntityTest extends AbstractUnitTestCase
 {
     public const NAME = 'John Doe';
 
-    #[Test]
     public function testFilterValidationGetValueByEntityGetter(): void
     {
         $entity = new EntityWithGetter(self::NAME);
@@ -43,7 +42,6 @@ final class GetValueByEntityTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-11-07
      */
-    #[Test]
     public function testFilterValidationGetValueByEntityPublic(): void
     {
         $entity = new EntityWithPublic(self::NAME);
@@ -56,7 +54,6 @@ final class GetValueByEntityTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    #[Test]
     public function testFilterValidationGetValueByEntityReadAttribute(): void
     {
         $entity = new EntityWithHook(self::NAME);

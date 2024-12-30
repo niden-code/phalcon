@@ -28,7 +28,6 @@ final class AddTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsCollectionAdd(): void
     {
         $collection = new Collection();
@@ -54,7 +53,6 @@ final class AddTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsCollectionAddDuplicate(): void
     {
         $collection = new Collection();

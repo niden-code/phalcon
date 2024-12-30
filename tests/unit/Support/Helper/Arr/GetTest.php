@@ -91,7 +91,6 @@ final class GetTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testSupportHelperArrGetCast(
         string $cast,
@@ -115,7 +114,6 @@ final class GetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGetDefault(): void
     {
         $object     = new Get();
@@ -137,7 +135,6 @@ final class GetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGetNumeric(): void
     {
         $object     = new Get();
@@ -159,7 +156,6 @@ final class GetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGetString(): void
     {
         $object     = new Get();

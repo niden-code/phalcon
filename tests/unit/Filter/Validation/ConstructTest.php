@@ -27,7 +27,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-25
      */
-    #[Test]
     public function testFilterValidationConstruct(): void
     {
         $validators = [

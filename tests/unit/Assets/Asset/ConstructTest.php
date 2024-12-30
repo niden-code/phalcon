@@ -33,7 +33,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructAttributes(
         string $type,
@@ -56,7 +55,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructAttributesSet(
         string $type,
@@ -88,7 +86,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructFilter(
         string $type,
@@ -110,7 +107,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructFilterSet(
         string $type,
@@ -137,7 +133,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructLocal(
         string $type,
@@ -158,7 +153,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerAssets')]
     public function testAssetsAssetConstructRemote(
         string $type,

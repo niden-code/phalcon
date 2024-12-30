@@ -29,7 +29,6 @@ final class SetTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionSet(): void
     {
         $collection = new Collection();
@@ -66,7 +65,6 @@ final class SetTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionOffsetSetException(): void
     {
         $this->expectException(Exception::class);
@@ -83,7 +81,6 @@ final class SetTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionSetException(): void
     {
         $this->expectException(Exception::class);
@@ -100,7 +97,6 @@ final class SetTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionSetArrayException(): void
     {
         $this->expectException(Exception::class);
@@ -117,7 +113,6 @@ final class SetTest extends AbstractCollectionTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportCollectionSetPropertyException(): void
     {
         $this->expectException(Exception::class);

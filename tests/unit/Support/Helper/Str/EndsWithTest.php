@@ -27,7 +27,6 @@ final class EndsWithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrEndsWith(): void
     {
         $object = new EndsWith();
@@ -49,7 +48,6 @@ final class EndsWithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrEndsWithCaseInsensitive(): void
     {
         $object = new EndsWith();
@@ -71,7 +69,6 @@ final class EndsWithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrEndsWithCaseSensitive(): void
     {
         $object = new EndsWith();
@@ -93,7 +90,6 @@ final class EndsWithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrEndsWithEmpty(): void
     {
         $object = new EndsWith();
@@ -109,7 +105,6 @@ final class EndsWithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrEndsWithEmptySearchString(): void
     {
         $object = new EndsWith();

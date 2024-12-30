@@ -24,7 +24,6 @@ final class InitTest extends AbstractRegistryTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testSupportRegistryInit(): void
     {
         $data = $this->getData();

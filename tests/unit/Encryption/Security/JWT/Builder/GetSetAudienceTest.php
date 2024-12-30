@@ -32,7 +32,7 @@ final class GetSetAudienceTest extends AbstractUnitTestCase
         $signer  = new Hmac();
         $builder = new Builder($signer);
 
-        $this->assertNull($builder->getAudience());
+        $this->assertEmpty($builder->getAudience());
 
         $return = $builder->setAudience('audience');
         $this->assertInstanceOf(Builder::class, $return);

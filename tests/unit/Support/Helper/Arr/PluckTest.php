@@ -27,7 +27,6 @@ final class PluckTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrPluck(): void
     {
         $object     = new Pluck();
@@ -49,7 +48,6 @@ final class PluckTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrPluckObject(): void
     {
         $object     = new Pluck();

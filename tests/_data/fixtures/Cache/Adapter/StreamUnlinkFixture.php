@@ -24,7 +24,7 @@ class StreamUnlinkFixture extends Stream
      *
      * @link https://php.net/manual/en/function.unlink.php
      */
-    protected function phpUnlink(string $filename)
+    protected function phpUnlink(string $filename): bool
     {
         return false;
     }

@@ -24,7 +24,6 @@ final class JsonSerializeTest extends AbstractRegistryTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testSupportRegistryJsonSerialize(): void
     {
         $data = $this->getData();

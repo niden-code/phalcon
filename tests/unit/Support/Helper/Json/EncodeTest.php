@@ -30,7 +30,6 @@ final class EncodeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperJsonEncode(): void
     {
         $object   = new Encode();
@@ -51,7 +50,6 @@ final class EncodeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperJsonEncodeExceptionDefaultOptions(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -70,7 +68,6 @@ final class EncodeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperJsonEncodeExceptionNoOptions(): void
     {
         $this->expectException(InvalidArgumentException::class);

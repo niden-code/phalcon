@@ -26,7 +26,6 @@ class GetSetDITest extends AbstractUnitTestCase
      * @author Jeremy PASTOURET <https://github.com/jenovateurs>
      * @since  2019-12-07
      */
-    #[Test]
     public function testTagGetSetDI(): void
     {
         $container = new Di();

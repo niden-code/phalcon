@@ -28,7 +28,6 @@ final class RuleTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-27
      */
-    #[Test]
     public function testFilterValidationRule(): void
     {
         $alpha      = new Alpha();

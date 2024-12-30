@@ -29,7 +29,6 @@ final class GetMessagesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
-    #[Test]
     public function testFilterValidationGetMessages(): void
     {
         $validator  = new PresenceOf();

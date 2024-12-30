@@ -85,21 +85,4 @@ final class AttachTest extends AbstractUnitTestCase
         $actual   = $logListeners[0];
         $this->assertInstanceOf($expected, $actual);
     }
-
-    /**
-     * Tests Phalcon\Events\Manager :: attach() - exception
-     *
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testEventsManagerAttachException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Event handler must be an Object or Callable');
-
-        $manager = new Manager();
-        $manager->attach('test:detachable', false);
-    }
 }

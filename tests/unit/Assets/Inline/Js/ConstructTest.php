@@ -27,7 +27,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineJsConstruct(): void
     {
         $asset = new Js('<script>alert("Hello");</script>');
@@ -45,7 +44,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineJsConstructAttributes(): void
     {
         $asset = new Js('<script>alert("Hello");</script>');
@@ -65,7 +63,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineJsConstructAttributesSet(): void
     {
         $attributes = [
@@ -89,7 +86,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineJsConstructFilter(): void
     {
         $asset  = new Js('<script>alert("Hello");</script>');
@@ -105,7 +101,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsInlineJsConstructFilterSet(): void
     {
         $asset  = new Js('<script>alert("Hello");</script>', false);

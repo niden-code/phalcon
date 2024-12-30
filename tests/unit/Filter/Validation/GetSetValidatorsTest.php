@@ -27,7 +27,6 @@ final class GetSetValidatorsTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-25
      */
-    #[Test]
     public function testFilterValidationGetSetValidators(): void
     {
         $validators = [

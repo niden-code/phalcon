@@ -30,7 +30,6 @@ final class GetCollectionsTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-03-19
      */
-    #[Test]
     public function testAssetsManagerGetCollections(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

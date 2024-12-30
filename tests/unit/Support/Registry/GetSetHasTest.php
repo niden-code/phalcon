@@ -88,7 +88,6 @@ final class GetSetHasTest extends AbstractRegistryTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testSupportRegistryGet(): void
     {
         $registry = new Registry();
@@ -213,7 +212,6 @@ final class GetSetHasTest extends AbstractRegistryTestCase
      *
      * @since        2019-10-12
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testSupportRegistryGetCast(
         string $cast,

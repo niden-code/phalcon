@@ -32,7 +32,6 @@ final class GetSetTypeTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerJs')]
 
     public function testAssetsAssetJsGetSetType(

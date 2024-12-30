@@ -31,7 +31,6 @@ final class GetTest extends AbstractCollectionTestCase
      * @since  2021-12-01
      * @issue  https://github.com/phalcon/cphalcon/issues/15370
      */
-    #[Test]
     #[DataProvider('getClasses')]
     public function testSupportCollectionGet(
         string $class
@@ -77,7 +76,6 @@ final class GetTest extends AbstractCollectionTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('getExamples')]
     public function testSupportCollectionGetCast(
         string $class,

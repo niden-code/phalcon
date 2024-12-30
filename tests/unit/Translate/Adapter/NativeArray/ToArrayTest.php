@@ -31,7 +31,6 @@ final class ToArrayTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testTranslateAdapterNativeToArray(): void
     {
         $language = $this->getArrayConfig()['en'];

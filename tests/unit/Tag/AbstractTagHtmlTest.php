@@ -45,7 +45,6 @@ class AbstractTagHtmlTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagNameSelfClose(): void
     {
         Tag::resetInput();
@@ -77,7 +76,6 @@ class AbstractTagHtmlTest extends AbstractTagSetup
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2014-09-05
      */
-    #[Test]
     #[DataProvider('nameProvider')]
     public function testTagTagHtmlName(
         string $name,
@@ -98,7 +96,6 @@ class AbstractTagHtmlTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagTagHtmlNameEol(): void
     {
         Tag::resetInput();
@@ -130,7 +127,6 @@ class AbstractTagHtmlTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagTagHtmlNameOnlyStart(): void
     {
         Tag::resetInput();
@@ -162,7 +158,6 @@ class AbstractTagHtmlTest extends AbstractTagSetup
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-05
      */
-    #[Test]
     public function testTagTagHtmlWithArray(): void
     {
         Tag::resetInput();

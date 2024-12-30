@@ -26,7 +26,7 @@ class CryptOpensslCipherIvLengthFixture extends Crypt
      *
      * @link https://www.php.net/manual/en/function.openssl-cipher-iv-length
      */
-    public function phpOpensslCipherIvLength(string $cipher)
+    public function phpOpensslCipherIvLength(string $cipher): false|int
     {
         /**
          * Need to run this twice, and the second time it has to return false.

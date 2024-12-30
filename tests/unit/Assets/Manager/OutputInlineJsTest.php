@@ -24,7 +24,6 @@ final class OutputInlineJsTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
-    #[Test]
     public function testAssetsManagerOutputInlineJs(): void
     {
         $this->markTestSkipped('Need implementation');

@@ -27,7 +27,6 @@ final class HasTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2016-03-16
      */
-    #[Test]
     public function testAssetsManagerHas(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
@@ -44,7 +43,6 @@ final class HasTest extends AbstractUnitTestCase
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2016-03-16
      */
-    #[Test]
     public function testAssetsManagerHasEmpty(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));

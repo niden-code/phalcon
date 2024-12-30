@@ -31,7 +31,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetJsConstructAttributes(): void
     {
         $asset = new Js('js/jquery.js');
@@ -49,7 +48,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetJsConstructAttributesSet(): void
     {
         $attributes = [
@@ -76,7 +74,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetJsConstructFilter(): void
     {
         $asset = new Js('js/jquery.js');
@@ -93,7 +90,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetJsConstructFilterSet(): void
     {
         $asset = new Js('js/jquery.js', true, false);
@@ -110,7 +106,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerJs')]
     public function testAssetsAssetJsConstructLocal(
         string $path,

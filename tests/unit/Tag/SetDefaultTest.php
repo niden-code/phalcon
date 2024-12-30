@@ -25,7 +25,6 @@ class SetDefaultTest extends AbstractTagSetup
      * @author Dmitry Patsura <talk@dmtry.me>
      * @since  2014-05-10
      */
-    #[Test]
     public function testTagSetDefault(): void
     {
         Tag::setDefault('property1', 'testVal1');

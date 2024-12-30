@@ -26,7 +26,6 @@ final class AllowEmptyTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-11-07
      */
-    #[Test]
     public function testFilterValidationAllowEmptyFalse(): void
     {
         $data       = ['name' => ''];
@@ -38,7 +37,6 @@ final class AllowEmptyTest extends AbstractUnitTestCase
         $this->assertCount(0, $messages);
     }
 
-    #[Test]
     public function testFilterValidationAllowEmptyTrue(): void
     {
         $data       = ['name' => ''];

@@ -26,7 +26,6 @@ final class SetEntityTest extends AbstractUnitTestCase
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-04-17
      */
-    #[Test]
     public function testFilterValidationSetEntity(): void
     {
         $user       = new stdClass();

@@ -28,7 +28,6 @@ final class GroupTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGroup(): void
     {
         $object     = new Group();
@@ -80,7 +79,6 @@ final class GroupTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGroupFunction(): void
     {
         $object     = new Group();
@@ -102,7 +100,6 @@ final class GroupTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrGroupObject(): void
     {
         $object      = new Group();

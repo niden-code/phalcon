@@ -28,7 +28,6 @@ final class IsSetAutoVersionTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetIsSetAutoVersion(): void
     {
         $asset = new Asset('css', 'css/docs.css');

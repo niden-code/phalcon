@@ -68,7 +68,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('oneToTenProvider')]
     public function testSupportHelperStrRandomAlnum(
         int $i
@@ -93,7 +92,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('oneToTenProvider')]
     public function testSupportHelperStrRandomAlpha(
         int $i
@@ -118,7 +116,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperStrRandomConstants(): void
     {
         $this->assertSame(0, Random::RANDOM_ALNUM);
@@ -136,7 +133,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('randomDistinctProvider')]
     public function testSupportHelperStrRandomDistinct(
         int $i
@@ -160,7 +156,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('oneToTenProvider')]
     public function testSupportHelperStrRandomHexDec(
         int $i
@@ -185,7 +180,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('oneToTenProvider')]
     public function testSupportHelperStrRandomNonZero(
         int $i
@@ -210,7 +204,6 @@ final class RandomTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('oneToTenProvider')]
     public function testSupportHelperStrRandomNumeric(
         int $i

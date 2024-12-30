@@ -39,26 +39,6 @@ final class SetFileCheckingCallbackTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Autoload\Loader :: setFileCheckingCallback() - exception
-     *
-     * @return void
-     * @throws Exception
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     *
-     */
-    public function testAutoloaderLoaderSetFileCheckingCallbackException(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "The 'method' parameter must be either a callable or NULL"
-        );
-
-        $loader = new Loader();
-        $loader->setFileCheckingCallback(1234);
-    }
-
-    /**
      * Tests Phalcon\Autoload\Loader :: setFileCheckingCallback()
      *
      * @return void

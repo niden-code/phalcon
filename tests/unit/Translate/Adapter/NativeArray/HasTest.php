@@ -31,7 +31,6 @@ final class HasTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testTranslateAdapterNativeArrayHas(): void
     {
         $language = $this->getArrayConfig()['en'];

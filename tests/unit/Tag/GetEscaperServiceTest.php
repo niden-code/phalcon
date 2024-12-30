@@ -27,7 +27,6 @@ class GetEscaperServiceTest extends AbstractTagSetup
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    #[Test]
     public function testTagGetEscaperService(): void
     {
         $escaper = Tag::getEscaperService();

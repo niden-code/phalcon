@@ -135,10 +135,6 @@ final class CheckTokenTest extends AbstractUnitTestCase
 
         $session->destroy();
 
-        /**
-         * @todo When Request is done, enable the below
-         */
-
         $_POST = [
             $tokenKey => $token,
         ];
@@ -151,7 +147,6 @@ final class CheckTokenTest extends AbstractUnitTestCase
 
         $actual = $security->checkToken();
         $this->assertFalse($actual);
-
 
         // Destroy token check
         $tokenKey = $security->getTokenKey();

@@ -27,7 +27,6 @@ class GetEscaperTest extends AbstractTagSetup
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    #[Test]
     public function testTagGetEscaper(): void
     {
         $escaper = Tag::getEscaper([]);

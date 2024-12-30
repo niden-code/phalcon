@@ -31,7 +31,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssConstructAttributes(): void
     {
         $asset = new Css('css/docs.css');
@@ -49,7 +48,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssConstructAttributesSet(): void
     {
         $attributes = [
@@ -75,7 +73,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssConstructFilter(): void
     {
         $asset  = new Css('css/docs.css');
@@ -91,7 +88,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testAssetsAssetCssConstructFilterSet(): void
     {
         $asset  = new Css('css/docs.css', true, false);
@@ -107,7 +103,6 @@ final class ConstructTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    #[Test]
     #[DataProvider('providerCss')]
     public function testAssetsAssetCssConstructLocal(
         string $path,

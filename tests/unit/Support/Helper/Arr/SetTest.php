@@ -27,7 +27,6 @@ final class SetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrSetNoIndex(): void
     {
         $object     = new Set();
@@ -48,7 +47,6 @@ final class SetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrSetNumeric(): void
     {
         $object     = new Set();
@@ -69,7 +67,6 @@ final class SetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrSetOverwride(): void
     {
         $object     = new Set();
@@ -92,7 +89,6 @@ final class SetTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    #[Test]
     public function testSupportHelperArrSetString(): void
     {
         $object     = new Set();

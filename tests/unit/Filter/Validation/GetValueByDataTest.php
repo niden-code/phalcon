@@ -28,7 +28,6 @@ final class GetValueByDataTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-11-07
      */
-    #[Test]
     public function testFilterValidationGetValueByDataArray(): void
     {
         $data = [
@@ -43,7 +42,6 @@ final class GetValueByDataTest extends AbstractUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    #[Test]
     public function testFilterValidationGetValueByDataObject(): void
     {
         $data = new EntityWithPublic(self::NAME);

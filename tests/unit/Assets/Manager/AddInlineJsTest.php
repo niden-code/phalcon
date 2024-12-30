@@ -49,7 +49,6 @@ final class AddInlineJsTest extends AbstractUnitTestCase
      *
      * @issue https://github.com/phalcon/cphalcon/issues/11409
      */
-    #[Test]
     public function testAssetsManagerAddInlineJs(): void
     {
         $manager = new Manager(new TagFactory(new Escaper()));
