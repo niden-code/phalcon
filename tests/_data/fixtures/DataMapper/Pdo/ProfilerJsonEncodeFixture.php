@@ -24,7 +24,7 @@ class ProfilerJsonEncodeFixture extends Profiler
      *
      * @link https://php.net/manual/en/function.json-encode.php
      */
-    protected function phpJsonEncode($value, int $flags = 0, int $depth = 512)
+    protected function phpJsonEncode($value, int $flags = 0, int $depth = 512): false|string
     {
         return false;
     }
