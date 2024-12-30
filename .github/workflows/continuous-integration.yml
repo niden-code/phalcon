@@ -46,7 +46,7 @@ jobs:
     permissions:
       contents: read
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: true
@@ -55,6 +55,7 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
     steps:
       - uses: actions/checkout@v4
 
@@ -78,7 +79,7 @@ jobs:
         run: |
           composer cs
 
-      - name: "Psalm"
+      - name: "PHPStan"
         run: |
           composer analyze
 
@@ -117,7 +118,7 @@ jobs:
         #     {php}-{ts}-{os.name}-{compiler}-{arch}
         include:
           # Linux
-          - { name: ubuntu-gcc, os: ubuntu-20.04, compiler: gcc }
+          - { name: ubuntu-gcc, os: ubuntu-22.04, compiler: gcc }
 #          # macOS
 #          - { name: macos-clang, os: macos-12, compiler: clang }
 #          # Windows
@@ -200,7 +201,7 @@ jobs:
     permissions:
       contents: read # to fetch code (actions/checkout)
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: true
@@ -300,7 +301,7 @@ jobs:
   #    permissions:
   #      contents: read # to fetch code (actions/checkout)
   #
-  #    runs-on: ubuntu-20.04
+  #    runs-on: ubuntu-22.04
   #
   #    strategy:
   #      fail-fast: true
@@ -391,7 +392,7 @@ jobs:
     permissions:
       contents: read # to fetch code (actions/checkout)
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: true
@@ -484,12 +485,18 @@ jobs:
           ls -la cv/
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v4.2.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: ./
           args: >
-            -Dsonar.organization=niden
-            -Dsonar.projectKey=niden-code_phalcon
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=src/
+            -Dsonar.exclusions=vendor/**,cv/**,tests/**
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.language=php
+            -Dsonar.tests=tests/
+            -Dsonar.php.coverage.reportPaths=cv/01.xml,cv/02.xml,cv/03.xml,cv/04.xml,cv/05.xml
