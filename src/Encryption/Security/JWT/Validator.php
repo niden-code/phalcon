@@ -147,7 +147,8 @@ class Validator
             ->get(Enum::EXPIRATION_TIME)
         ;
 
-        if (null !== $tokenExpirationTime &&
+        if (
+            null !== $tokenExpirationTime &&
             $this->getTimestamp($timestamp) > (int)$tokenExpirationTime
         ) {
             $this->errors[] = "Validation: the token has expired";

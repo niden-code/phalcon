@@ -21,7 +21,6 @@ use Phalcon\Encryption\Security\Random;
 use Phalcon\Http\RequestInterface;
 use Phalcon\Session\ManagerInterface as SessionInterface;
 use Phalcon\Traits\Helper\Str\StartsWithTrait;
-
 use ValueError;
 
 use function crypt;
