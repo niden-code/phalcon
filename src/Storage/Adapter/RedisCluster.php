@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use Phalcon\Storage\Exception as StorageException;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
 use Redis as RedisConsts;
@@ -26,7 +27,23 @@ use function mb_strtolower;
 /**
  * Redis adapter
  *
- * @property array $options
+ * @phpstan-type TOptions = array{
+ *      defaultSerializer?: string,
+ *      lifetime?: int,
+ *      serializer?: SerializerInterface|null,
+ *      prefix?: string,
+ *      name?: string,
+ *      hosts?: array<string>,
+ *      timeout?: float,
+ *      readTimeout?: float,
+ *      persistent?: bool,
+ *      auth?: array|string,
+ *      context?: string,
+ *      user?: string,
+ *      password?: string,
+ *      verify_peer?: int,
+ *      local_cert?: string
+ *  }
  */
 class RedisCluster extends Redis
 {
@@ -63,17 +80,7 @@ class RedisCluster extends Redis
      * options eg `["verify_peer" => 0, "local_cert" => "file:///path/to/cert.pem"]`
      *
      * @param SerializerFactory $factory
-     * @param array             $options {
-     *                                   name: ?string,
-     *                                   hosts: array,
-     *                                   timeout: float,
-     *                                   readTimeout: float,
-     *                                   persistent: bool,
-     *                                   auth: string|array,
-     *                                   context: string
-     *                                   }
-     *
-     * @throws SupportException
+     * @param TOptions          $options
      */
     public function __construct(SerializerFactory $factory, array $options = [])
     {

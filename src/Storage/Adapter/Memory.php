@@ -23,9 +23,6 @@ use function is_int;
 
 /**
  * Memory adapter
- *
- * @property array $data
- * @property array $options
  */
 class Memory extends AbstractAdapter
 {

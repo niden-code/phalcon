@@ -17,6 +17,7 @@ use DateInterval;
 use Exception as BaseException;
 use Memcached;
 use Phalcon\Storage\Exception as StorageException;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
 
@@ -27,6 +28,14 @@ use function strtolower;
 
 /**
  * Libmemcached adapter
+ *
+ * @phpstan-type TOptions = array{
+ *      defaultSerializer?: string,
+ *      lifetime?: int,
+ *      serializer?: SerializerInterface|null,
+ *      prefix?: string,
+ *      servers?: array<int, array{host: string, port: int, weight: int}>
+ * }
  */
 class Libmemcached extends AbstractAdapter
 {
@@ -39,7 +48,7 @@ class Libmemcached extends AbstractAdapter
      * Libmemcached constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
+     * @param TOptions          $options
      */
     public function __construct(
         SerializerFactory $factory,

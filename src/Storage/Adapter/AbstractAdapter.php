@@ -25,17 +25,14 @@ use function is_object;
 use function mb_strtolower;
 
 /**
- * Class AbstractAdapter
+ * AbstractAdapter for storage classes
  *
- * @package Phalcon\Storage\Adapter
- *
- * @property mixed               $adapter
- * @property string              $defaultSerializer
- * @property int                 $lifetime
- * @property array               $options
- * @property string              $prefix
- * @property SerializerInterface $serializer
- * @property SerializerFactory   $serializerFactory
+ * @phpstan-type TOptions = array{
+ *      defaultSerializer?: string,
+ *      lifetime?: int,
+ *      serializer?: SerializerInterface|null,
+ *      prefix?: string
+ * }
  */
 abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
 {
@@ -44,7 +41,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     /**
      * @var mixed
      */
-    protected $adapter;
+    protected mixed $adapter;
 
     /**
      * Name of the default serializer class
@@ -68,11 +65,6 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     protected int $lifetime = 3600;
 
     /**
-     * @var array
-     */
-    protected array $options = [];
-
-    /**
      * @var string
      */
     protected string $prefix = 'ph-memo-';
@@ -88,11 +80,11 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
      * AbstractAdapter constructor.
      *
      * @param SerializerFactory $serializerFactory
-     * @param array             $options
+     * @param TOptions          $options
      */
     protected function __construct(
         protected SerializerFactory $serializerFactory,
-        array $options = []
+        protected array $options = []
     ) {
         /**
          * Lets set some defaults and options here
@@ -111,8 +103,6 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
             $options['serializer'],
             $options['prefix']
         );
-
-        $this->options = $options;
     }
 
     /**

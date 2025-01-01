@@ -18,6 +18,7 @@ use Exception as BaseException;
 use FilesystemIterator;
 use Iterator;
 use Phalcon\Storage\Exception as StorageException;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Traits\Helper\Str\DirFromFileTrait;
 use Phalcon\Traits\Helper\Str\DirSeparatorTrait;
@@ -43,8 +44,13 @@ use const LOCK_SH;
 /**
  * Stream adapter
  *
- * @property string $storageDir
- * @property array  $options
+ * @phpstan-type TOptions = array{
+ *      defaultSerializer?: string,
+ *      lifetime?: int,
+ *      serializer?: SerializerInterface|null,
+ *      prefix?: string,
+ *      storageDir: string
+ *  }
  */
 class Stream extends AbstractAdapter
 {
@@ -66,12 +72,7 @@ class Stream extends AbstractAdapter
      * Stream constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'storageDir'        => '',
-     *                                   'defaultSerializer' => 'php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param TOptions          $options
      *
      * @throws StorageException
      */

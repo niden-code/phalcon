@@ -28,6 +28,8 @@ use function mb_strtolower;
 
 /**
  * Redis adapter
+ *
+ * @phpstan-import-type TOptions from AbstractAdapter
  */
 class Redis extends AbstractAdapter
 {
@@ -40,7 +42,7 @@ class Redis extends AbstractAdapter
      * Redis constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
+     * @param TOptions          $options
      */
     public function __construct(
         SerializerFactory $factory,

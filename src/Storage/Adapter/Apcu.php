@@ -25,7 +25,7 @@ use function is_int;
 /**
  * Apcu adapter
  *
- * @property array $options
+ * @phpstan-import-type TOptions from AbstractAdapter
  */
 class Apcu extends AbstractAdapter
 {
@@ -40,7 +40,7 @@ class Apcu extends AbstractAdapter
      * Apcu constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
+     * @param TOptions          $options
      *
      * @throws Exception
      */
