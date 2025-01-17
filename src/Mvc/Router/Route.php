@@ -26,8 +26,6 @@ use function strlen;
 use function substr;
 
 /**
- * Phalcon\Mvc\Router\Route
- *
  * This class represents every route added to the router
  */
 class Route implements RouteInterface

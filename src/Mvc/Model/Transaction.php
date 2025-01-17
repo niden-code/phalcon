@@ -152,10 +152,7 @@ class Transaction implements TransactionInterface
      */
     public function getConnection(): AdapterInterface
     {
-        if (
-            true === $this->rollbackOnAbort &&
-            true === connection_aborted()
-        ) {
+        if (true === $this->rollbackOnAbort && 1 === connection_aborted()) {
             $this->rollback("The request was aborted");
         }
 

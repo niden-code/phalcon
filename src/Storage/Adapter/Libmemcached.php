@@ -34,7 +34,10 @@ use function strtolower;
  *      lifetime?: int,
  *      serializer?: SerializerInterface|null,
  *      prefix?: string,
- *      servers?: array<int, array{host: string, port: int, weight: int}>
+ *      servers?: array<int, array{host: string, port: int, weight: int}>,
+ *      persistentId?: string,
+ *      saslAuthData?: array{user: string, pass: string},
+ *      client?: array<string, mixed>
  * }
  */
 class Libmemcached extends AbstractAdapter
@@ -261,8 +264,8 @@ class Libmemcached extends AbstractAdapter
     }
 
     /**
-     * @param Memcached $connection
-     * @param array     $client
+     * @param Memcached            $connection
+     * @param array<string, mixed> $client
      *
      * @return Libmemcached
      * @throws StorageException

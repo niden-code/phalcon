@@ -228,19 +228,19 @@ class Annotations extends Router
              */
             $moduleName = $scope[2] ?? null;
             $moduleName = $moduleName !== null ? $moduleName : "";
-            $sufixed    = $controllerName . $this->controllerSuffix;
+            $suffixed    = $controllerName . $this->controllerSuffix;
 
             /**
              * Add namespace to class if one is set
              */
-            if (null !== $namespaceName) {
-                $sufixed = $namespaceName . "\\" . $sufixed;
+            if (true !== empty($namespaceName)) {
+                $suffixed = $namespaceName . "\\" . $suffixed;
             }
 
             /**
              * Get the annotations from the class
              */
-            $handlerAnnotations = $annotationsService->get($sufixed);
+            $handlerAnnotations = $annotationsService->get($suffixed);
 
             if (!is_object($handlerAnnotations)) {
                 continue;

@@ -309,6 +309,7 @@ class Criteria implements CriteriaInterface, InjectionAwareInterface
      */
     public function execute(): ResultsetInterface
     {
+        /** @var class-string $model */
         $model = $this->getModelName();
 
         if (!is_string($model)) {

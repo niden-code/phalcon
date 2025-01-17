@@ -20,7 +20,6 @@ use Phalcon\Mvc\View\ViewBaseInterface;
 use Phalcon\Parsers\Volt\Enum;
 use Phalcon\Support\Traits\FilePathTrait;
 use Phalcon\Traits\Helper\Str\CamelizeTrait;
-use Phalcon\Volt\Exception;
 use Phalcon\Volt\Parser\Parser;
 
 use function addslashes;
@@ -67,6 +66,8 @@ class Compiler implements InjectionAwareInterface
     use CamelizeTrait;
     use FilePathTrait;
     use InjectionAwareTrait;
+
+    private const CORRUPT_STATEMENT = 'Corrupt statement';
 
     /**
      * @var bool
@@ -559,7 +560,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT);
         }
 
         $expr = $statement["expr"];
@@ -584,7 +585,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];
@@ -609,7 +610,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];
@@ -661,7 +662,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];
@@ -866,11 +867,8 @@ class Compiler implements InjectionAwareInterface
                 . $variable
                 . ") { ";
         } else {
-            $compilation .= '<?php foreach ('
-                . $iterator
-                . ' as $'
-                . $variable
-                . ') { ';
+            $compilation .= '<?php foreach (' . $iterator
+                . ' as $' . $variable . ') { ';
         }
 
         /**
@@ -946,7 +944,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];
@@ -990,7 +988,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["path"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $pathExpr = $statement["path"];
@@ -1067,7 +1065,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["name"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $name = $statement["name"];
@@ -1158,7 +1156,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];
@@ -1233,7 +1231,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["assignments"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $assignments = $statement["assignments"];
@@ -1305,7 +1303,7 @@ class Compiler implements InjectionAwareInterface
          * A valid expression is required
          */
         if (!isset($statement["expr"])) {
-            throw new Exception("Corrupt statement", $statement);
+            throw new Exception(self::CORRUPT_STATEMENT, $statement);
         }
 
         $expr = $statement["expr"];

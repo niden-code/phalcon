@@ -560,9 +560,9 @@ class Query implements QueryInterface, InjectionAwareInterface
     /**
      * Returns the current cache backend instance
      *
-     * @return AdapterInterface
+     * @return CacheInterface
      */
-    public function getCache(): AdapterInterface
+    public function getCache(): CacheInterface
     {
         return $this->cache;
     }

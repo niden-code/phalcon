@@ -49,7 +49,7 @@ use const LOCK_SH;
  *      lifetime?: int,
  *      serializer?: SerializerInterface|null,
  *      prefix?: string,
- *      storageDir: string
+ *      storageDir?: string
  *  }
  */
 class Stream extends AbstractAdapter

@@ -225,13 +225,7 @@ abstract class MetaData extends Injectable implements MetaDataInterface
      */
     public function getColumnMap(ModelInterface $model): array | null
     {
-        $data = $this->readColumnMapIndex($model, self::MODELS_COLUMN_MAP);
-
-        if (is_array($data) || null === $data) {
-            return $data;
-        }
-
-        throw new Exception(self::MESSAGE_INVALID_METADATA);
+        return $this->readColumnMapIndex($model, self::MODELS_COLUMN_MAP);
     }
 
     /**

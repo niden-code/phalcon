@@ -548,7 +548,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
     /**
      * Returns an array of default parameters
      *
-     * @return string[]
+     * @return array<string, array<array-key, mixed>|string>
      */
     public function getDefaults(): array
     {

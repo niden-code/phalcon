@@ -188,14 +188,9 @@ class QueryBuilder extends AbstractAdapter
          * Change 'COUNT()' parameters, when the query contains 'GROUP BY'
          */
         if ($hasGroup) {
-            if (is_array($groups)) {
-                $groupColumn = implode(", ", $groups);
-            } else {
-                $groupColumn = $groups;
-            }
-
+            $groupColumn = implode(", ", $groups);
             if (!$hasHaving) {
-                $totalBuilder->groupBy(null)->columns(
+                $totalBuilder->groupBy([])->columns(
                     [
                         "COUNT(DISTINCT " . $groupColumn . ") AS [rowcount]",
                     ]

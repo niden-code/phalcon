@@ -16,6 +16,7 @@ namespace Phalcon\Storage\Adapter;
 use DateInterval;
 use Exception as BaseException;
 use Phalcon\Storage\Exception as StorageException;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Redis as RedisService;
 use RedisException;
@@ -29,7 +30,43 @@ use function mb_strtolower;
 /**
  * Redis adapter
  *
- * @phpstan-import-type TOptions from AbstractAdapter
+ * @phpstan-type TConstructorOptions = array{
+ *      auth?: array|string,
+ *      connectTimeout?: float,
+ *      defaultSerializer?: string,
+ *      host?: string,
+ *      index?: int,
+ *      lifetime?: int,
+ *      serializer?: SerializerInterface|null,
+ *      persistent?: bool,
+ *      persistentId?: string,
+ *      port?: int,
+ *      prefix?: string,
+ *      readTimeout?: int,
+ *      retryInterval?: int,
+ *      socket?: string,
+ *      timeout?: float
+ *  }
+ *
+ * @phpstan-type TDefaultOptions = array<string, array|bool|float|int|SerializerInterface|string|null>
+ * }
+ * @phpstan-type TOptions = array{
+ *      auth: array|string,
+ *      connectTimeout: float,
+ *      defaultSerializer: string,
+ *      host: string,
+ *      index: int,
+ *      lifetime: int,
+ *      serializer: SerializerInterface|null,
+ *      persistent: bool,
+ *      persistentId: string,
+ *      port: int,
+ *      prefix: string,
+ *      readTimeout: int,
+ *      retryInterval: int,
+ *      socket: string,
+ *      timeout: float
+ *  }
  */
 class Redis extends AbstractAdapter
 {
@@ -41,13 +78,14 @@ class Redis extends AbstractAdapter
     /**
      * Redis constructor.
      *
-     * @param SerializerFactory $factory
-     * @param TOptions          $options
+     * @param SerializerFactory   $factory
+     * @param TConstructorOptions $options
      */
     public function __construct(
         SerializerFactory $factory,
         array $options = []
     ) {
+        /** @var TOptions $options */
         $options = $this->getDefaultOptions($options);
         parent::__construct($factory, $options);
     }
@@ -220,6 +258,11 @@ class Redis extends AbstractAdapter
         return is_bool($result) ? $result : false;
     }
 
+    /**
+     * @param TDefaultOptions $options
+     *
+     * @return TOptions
+     */
     protected function getDefaultOptions($options): array
     {
         /**

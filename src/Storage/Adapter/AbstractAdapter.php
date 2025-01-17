@@ -422,7 +422,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
             return $this->lifetime;
         }
 
-        if (is_object($ttl) && $ttl instanceof DateInterval) {
+        if ($ttl instanceof DateInterval) {
             $dateTime = new DateTime('@0');
             return $dateTime->add($ttl)
                             ->getTimestamp()

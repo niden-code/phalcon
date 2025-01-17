@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Translate\Adapter;
 
-use ArrayAccess;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
 
@@ -23,7 +22,7 @@ use function is_array;
  * Defines translation lists using PHP arrays
  *
  * @phpstan-type TOptions = array{
- *      content?: array<string, string>,
+ *      content?: array<string, string>|mixed,
  *      triggerError?: bool
  * }
  */

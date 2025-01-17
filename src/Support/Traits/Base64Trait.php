@@ -15,6 +15,7 @@ namespace Phalcon\Support\Traits;
 
 use function base64_decode;
 use function base64_encode;
+use function is_string;
 use function str_repeat;
 use function str_replace;
 
@@ -35,11 +36,8 @@ trait Base64Trait
         }
 
         $data = base64_decode(strtr($input, '-_', '+/'));
-        if (false === $data) {
-            $data = '';
-        }
 
-        return $data;
+        return !$data ? '' : $data;
     }
 
     /**
