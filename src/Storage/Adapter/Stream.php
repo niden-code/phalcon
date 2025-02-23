@@ -43,8 +43,12 @@ use const LOCK_SH;
 /**
  * Stream adapter
  *
- * @property string $storageDir
- * @property array  $options
+ * @phpstan-type TOptions = array{
+ *     storageDir: string,
+ *     defaultSerializer?: string,
+ *     lifetime?: int,
+ *     prefix?: string
+ * }
  */
 class Stream extends AbstractAdapter
 {
@@ -66,12 +70,7 @@ class Stream extends AbstractAdapter
      * Stream constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'storageDir'        => '',
-     *                                   'defaultSerializer' => 'php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param TOptions          $options
      *
      * @throws StorageException
      */
@@ -152,6 +151,7 @@ class Stream extends AbstractAdapter
      * @param mixed  $data
      *
      * @return bool
+     * @throws BaseException
      */
     public function setForever(string $key, mixed $data): bool
     {

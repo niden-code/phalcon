@@ -74,8 +74,9 @@ class Connection extends AbstractConnection
                 );
             }
 
-
-            // if no error mode is specified, use exceptions
+            /**
+             * If no error mode is specified, use exceptions
+             */
             if (!isset($options[PDO::ATTR_ERRMODE])) {
                 $options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
             }
