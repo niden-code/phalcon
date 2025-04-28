@@ -47,9 +47,9 @@ class Debug
     protected array $blacklist = ["request" => [], "server" => []];
 
     /**
-     * @var mixed
+     * @var array
      */
-    protected mixed $data = null;
+    protected array $data = [];
 
     /**
      * @var bool
@@ -82,13 +82,23 @@ class Debug
     protected string $uri = "https://assets.phalcon.io/debug/6.0.x/";
 
     /**
+     * @var Version
+     */
+    protected version;
+
+    public function __construct()
+    {
+        let this->version = new Version();
+    }
+
+    /**
      * Clears are variables added previously
      *
      * @return $this
      */
     public function clearVars(): Debug
     {
-        $this->data = null;
+        $this->data = [];
 
         return $this;
     }
@@ -515,12 +525,16 @@ class Debug
      */
     protected function getArrayDump(array $arguments, int $number = 0): string | null
     {
-        if ($number >= 3 || empty($arguments)) {
+        var dump, index, numberArguments, value, varDump;
+
+        let numberArguments = count(arguments);
+
+        if number >= 3 || numberArguments == 0 {
             return null;
         }
 
-        if (count($arguments) >= 10) {
-            return (string)count($arguments);
+        if numberArguments >= 10 {
+            return numberArguments;
         }
 
         $dump = [];
@@ -660,9 +674,11 @@ class Debug
                 /**
                  * Generate a link to the official docs
                  */
-                $classNameWithLink = "<a target='_new' "
-                    . "href='https://docs.phalcon.io/6.0/en/api/$prepareUriClass'>"
-                    . "$className</a>";
+                let classNameWithLink = "<a target=\"_new\" href=\"https://docs.phalcon.io/"
+                        . this->version->getPart(Version::VERSION_MAJOR)
+                        . ".0/en/api/"
+                        . prepareUriClass
+                        . "\">" . className . "</a>";
             } else {
                 $classReflection = new ReflectionClass($className);
 

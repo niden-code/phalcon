@@ -6,19 +6,8 @@ FROM php:${PHP_VERSION}-fpm AS base
 # Additional extensions that are mostly used are installed here too.
 
 ARG PHP_VERSION=8.4
-ARG UID=1000
-ARG GID=1000
-ARG USER=phalcon
-ARG GROUP=phalcon
 
 RUN set -eux \
-# Add user and group
-    && groupadd -g "${GID}" "${GROUP}" \
-    && useradd -l -m -u "${UID}" -g "${GID}" "${USER}" \
-    && usermod -s /bin/bash "${USER}" \
-    && mkdir /app \
-    && chown "${USER}":"${GROUP}" /app \
-    && chmod 0770 /app \
 # Install needed packages
     && apt update -y \
     && apt install -yq --no-install-recommends \
@@ -85,10 +74,6 @@ RUN set -eux \
         xdebug \
 # Copy ini file \
     && mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-# Set correct pid file location and permissions
-    && mkdir -p /run/php \
-    && chown "${USER}":"${GROUP}" /run/php \
-    && chmod 0770 /run/php \
 # Cleanup
     && apt-get autoremove --purge -y \
     && apt-get autoclean -y \
@@ -105,8 +90,8 @@ RUN set -eux \
     && echo "extension=phalcon" > /usr/local/etc/php/conf.d/phalcon.ini
 
 # hadolint ignore=DL3022
-COPY --from=composer/composer:2 --chown=${USER}:${GROUP} --chmod=0660 /usr/bin/composer /usr/bin/composer
-COPY resources/docker/develop/.bashrc /home/${USER}/.bashrc
+COPY --from=composer/composer:2 --chmod=0770 /usr/bin/composer /usr/bin/composer
+COPY resources/docker/develop/.bashrc /root/.bashrc
 COPY resources/docker/develop/extra.ini /usr/local/etc/php/conf.d/
 
 # User/Group globals
@@ -114,8 +99,6 @@ ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-SHELL [ "/bin/bash", "--rcfile", "/home/${USER}/.bashrc", "-o", "pipefail", "-c" ]
+SHELL [ "/bin/bash", "--rcfile", "/root/.bashrc", "-o", "pipefail", "-c" ]
 
 WORKDIR /app
-
-USER ${USER}

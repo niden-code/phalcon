@@ -47,25 +47,6 @@ use Phalcon\Session\ManagerInterface as SessionManager;
 use Phalcon\Support\HelperFactory;
 use stdClass;
 
-//use Phalcon\Annotations\Adapter;
-//use Phalcon\Db\Adapter\AdapterInterface;
-//use Phalcon\Http\RequestInterface;
-//use Phalcon\Http\Response;
-//use Phalcon\Http\Response\Cookies;
-//use Phalcon\Http\Response\CookiesInterface;
-//use Phalcon\Http\ResponseInterface;
-//use Phalcon\Mvc\Dispatcher;
-//use Phalcon\Mvc\DispatcherInterface;
-//use Phalcon\Mvc\Model\MetaData\Memory;
-//use Phalcon\Mvc\Model\MetadataInterface;
-//use Phalcon\Mvc\Model\Transaction\ManagerInterface;
-//use Phalcon\Mvc\Router;
-//use Phalcon\Mvc\RouterInterface;
-//use Phalcon\Mvc\View;
-//use Phalcon\Mvc\ViewInterface;
-//use Phalcon\Url;
-//use Phalcon\Url\UrlInterface;
-
 /**
  * This class allows to access services in the services container by just only
  * accessing a public property with the same name of a registered service
@@ -152,9 +133,7 @@ abstract class Injectable extends stdClass implements InjectionAwareInterface
      */
     public function __isset(string $name): bool
     {
-        return $this->getDI()
-                    ->has($name)
-        ;
+        return $this->getDI()->has($name);
     }
 
     /**

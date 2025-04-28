@@ -36,8 +36,6 @@ use function strtolower;
  * developers to create new instances of the Logger or load them from config
  * files (see Phalcon\Config\Config object).
  *
- * @package Phalcon\Logger
- *
  * @property AdapterInterface[] $adapters
  * @property array              $excluded
  * @property int                $logLevel

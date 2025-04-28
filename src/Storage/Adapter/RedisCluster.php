@@ -20,13 +20,8 @@ use Redis as RedisConsts;
 use RedisCluster as RedisService;
 use Throwable;
 
-use function defined;
-use function mb_strtolower;
-
 /**
  * Redis adapter
- *
- * @property array $options
  */
 class RedisCluster extends Redis
 {
@@ -152,46 +147,5 @@ class RedisCluster extends Redis
         $options["context"]     = $options["context"] ?? null;
 
         return $options;
-    }
-
-    /**
-     * Checks the serializer. If it is a supported one it is set, otherwise
-     * the custom one is set.
-     *
-     * @param RedisService $connection
-     *
-     * @throws SupportException
-     */
-    private function setSerializer(RedisService $connection): void
-    {
-        $map = [
-            'redis_none' => RedisConsts::SERIALIZER_NONE,
-            'redis_php'  => RedisConsts::SERIALIZER_PHP,
-        ];
-
-        /**
-         * In case IGBINARY or MSGPACK are not defined for previous versions
-         * of Redis
-         */
-        if (defined('\\Redis::SERIALIZER_IGBINARY')) {
-            $map['redis_igbinary'] = RedisConsts::SERIALIZER_IGBINARY;
-        }
-
-        if (defined('\\Redis::SERIALIZER_MSGPACK')) {
-            $map['redis_msgpack'] = RedisConsts::SERIALIZER_MSGPACK;
-        }
-
-        if (defined('\\Redis::SERIALIZER_JSON')) {
-            $map['redis_json'] = RedisConsts::SERIALIZER_JSON;
-        }
-
-        $serializer = mb_strtolower($this->defaultSerializer);
-
-        if (isset($map[$serializer])) {
-            $this->defaultSerializer = '';
-            $connection->setOption(RedisConsts::OPT_SERIALIZER, $map[$serializer]);
-        }
-
-        $this->initSerializer();
     }
 }

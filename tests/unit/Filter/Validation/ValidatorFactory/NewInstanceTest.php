@@ -17,7 +17,6 @@ use Phalcon\Filter\Validation\Exception;
 use Phalcon\Filter\Validation\Validator\Alnum;
 use Phalcon\Filter\Validation\ValidatorFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 final class NewInstanceTest extends AbstractUnitTestCase
 {

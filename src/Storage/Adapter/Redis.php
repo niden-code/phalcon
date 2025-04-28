@@ -18,6 +18,7 @@ use Exception as BaseException;
 use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Redis as RedisService;
+use RedisCluster as RedisClusterService;
 use RedisException;
 
 use function constant;
@@ -245,6 +246,48 @@ class Redis extends AbstractAdapter
     }
 
     /**
+     * Checks the serializer. If it is a supported one it is set, otherwise
+     * the custom one is set.
+     *
+     * @param RedisService|RedisClusterService $connection
+     *
+     * @return void
+     * @throws BaseException
+     */
+    protected function setSerializer(RedisService|RedisClusterService $connection): void
+    {
+        $map = [
+            'redis_none' => RedisService::SERIALIZER_NONE,
+            'redis_php'  => RedisService::SERIALIZER_PHP,
+        ];
+
+        /**
+         * In case IGBINARY or MSGPACK are not defined for previous versions
+         * of Redis
+         */
+        if (defined('\\Redis::SERIALIZER_IGBINARY')) {
+            $map['redis_igbinary'] = constant('\\Redis::SERIALIZER_IGBINARY');
+        }
+
+        if (defined('\\Redis::SERIALIZER_MSGPACK')) {
+            $map['redis_msgpack'] = constant('\\Redis::SERIALIZER_MSGPACK');
+        }
+
+        if (defined('\\Redis::SERIALIZER_JSON')) {
+            $map['redis_json'] = constant('\\Redis::SERIALIZER_JSON');
+        }
+
+        $serializer = mb_strtolower($this->defaultSerializer);
+
+        if (isset($map[$serializer])) {
+            $this->defaultSerializer = '';
+            $connection->setOption(RedisService::OPT_SERIALIZER, $map[$serializer]);
+        }
+
+        $this->initSerializer();
+    }
+
+    /**
      * @param RedisService $connection
      *
      * @return Redis
@@ -347,47 +390,5 @@ class Redis extends AbstractAdapter
         }
 
         return $this;
-    }
-
-    /**
-     * Checks the serializer. If it is a supported one it is set, otherwise
-     * the custom one is set.
-     *
-     * @param RedisService $connection
-     *
-     * @return void
-     * @throws BaseException
-     */
-    private function setSerializer(RedisService $connection): void
-    {
-        $map = [
-            'redis_none' => RedisService::SERIALIZER_NONE,
-            'redis_php'  => RedisService::SERIALIZER_PHP,
-        ];
-
-        /**
-         * In case IGBINARY or MSGPACK are not defined for previous versions
-         * of Redis
-         */
-        if (defined('\\Redis::SERIALIZER_IGBINARY')) {
-            $map['redis_igbinary'] = constant('\\Redis::SERIALIZER_IGBINARY');
-        }
-
-        if (defined('\\Redis::SERIALIZER_MSGPACK')) {
-            $map['redis_msgpack'] = constant('\\Redis::SERIALIZER_MSGPACK');
-        }
-
-        if (defined('\\Redis::SERIALIZER_JSON')) {
-            $map['redis_json'] = constant('\\Redis::SERIALIZER_JSON');
-        }
-
-        $serializer = mb_strtolower($this->defaultSerializer);
-
-        if (isset($map[$serializer])) {
-            $this->defaultSerializer = '';
-            $connection->setOption(RedisService::OPT_SERIALIZER, $map[$serializer]);
-        }
-
-        $this->initSerializer();
     }
 }

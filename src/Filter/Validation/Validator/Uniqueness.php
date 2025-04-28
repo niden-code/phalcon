@@ -18,6 +18,7 @@ use Phalcon\Filter\Validation\AbstractCombinedFieldsValidator;
 use Phalcon\Filter\Validation\Exception;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\ModelInterface;
+use Phalcon\Support\Settings;
 
 use function array_keys;
 use function get_class;
@@ -141,7 +142,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
     protected function getColumnNameReal(mixed $record, string $field): string
     {
         // Caching columnMap
-        $columnRenaming = (bool)ini_get("orm.column_renaming");
+        $columnRenaming = Settings::get("orm.column_renaming");
         if (true === $columnRenaming && empty($this->columnMap)) {
             $this->columnMap = $record
                 ->getDI()

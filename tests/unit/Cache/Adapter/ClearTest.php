@@ -232,7 +232,7 @@ final class ClearTest extends AbstractUnitTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2023-07-17
      */
-    public function testCacheAdapterWealClear(): void
+    public function testCacheAdapterWeakClear(): void
     {
         $serializer = new SerializerFactory();
         $adapter    = new Weak($serializer);

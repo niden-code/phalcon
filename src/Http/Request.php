@@ -1878,6 +1878,74 @@ class Request extends AbstractInjectionAware implements
     }
 
     /**
+     * parse multipart/form-data from raw data
+     */
+    private function getFormData(): array
+    {
+        preg_match("/boundary=(.*)$/is", $this->getContentType(), $matches);
+
+        $boundary  = $matches[1];
+        $bodyParts = preg_split(
+            "/\\R?-+" . preg_quote($boundary, "/") . "/s",
+            $this->getRawBody()
+        );
+
+        array_pop($bodyParts);
+
+        $dataset = [];
+        foreach ($bodyParts as $bodyPart) {
+            if (empty($bodyPart)) {
+                continue;
+            }
+
+            $splited = preg_split("/\\R\\R/", $bodyPart, 2);
+
+            $headers = [];
+
+            $headerParts = preg_split(
+                "/\\R/s",
+                $splited[0],
+                -1,
+                PREG_SPLIT_NO_EMPTY
+            );
+
+            foreach ($headerParts as $headerPart) {
+                if (strpos($headerPart, ":") === false) {
+                    continue;
+                }
+
+                $exploded    = explode(":", $headerPart, 2);
+                $headerName  = strtolower(trim($exploded[0]));
+                $headerValue = trim($exploded[1]);
+
+                if (strpos($headerValue, ";") !== false) {
+                    $explodedHeader = explode(";", $headerValue);
+
+                    foreach ($explodedHeader as $part) {
+                        $part = str_replace("/\"/", "", trim($part));
+
+                        if (strpos($part, "=") !== false) {
+                            $explodedPart = explode("=", $part, 2);
+                            $namePart     = strtolower(trim($explodedPart[0]));
+                            $valuePart    = trim(trim($explodedPart[1]), '"');
+
+                            $headers[$headerName][$namePart] = $valuePart;
+                        } else {
+                            $headers[$headerName][] = $part;
+                        }
+                    }
+                } else {
+                    $headers[$headerName] = $headerValue;
+                }
+            }
+
+            $dataset[$headers["content-disposition"]["name"]] = $splited[1];
+        }
+
+        return $dataset;
+    }
+
+    /**
      * Gets a variable from put request
      *
      *```php
@@ -1912,16 +1980,29 @@ class Request extends AbstractInjectionAware implements
 
             if (
                 is_string($contentType) &&
-                false !== stripos($contentType, 'json')
+                (
+                    stripos($contentType, "json") != false ||
+                    stripos($contentType, "multipart/form-data") !== false
+                )
             ) {
-                $cached = $this->getJsonRawBody(true);
-                $cached = !is_array($cached) ? [] : $cached;
+                if (stripos($contentType, "json") != false) {
+                    $cached = $this->getJsonRawBody(true);
+                }
+
+                if (stripos($contentType, "multipart/form-data") !== false) {
+                    $cached = $this->getFormData();
+                }
+
+                if (!is_array($cached)) {
+                    $cached = [];
+                }
             } else {
                 $cached = [];
+
                 parse_str($this->getRawBody(), $cached);
             }
 
-            $this->{$collection} = $cached;
+            $this->$collection = $cached;
         }
 
         return $this->getHelper(

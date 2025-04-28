@@ -24,6 +24,7 @@ use Phalcon\Html\Attributes;
 use Phalcon\Html\Attributes\AttributesInterface;
 use Phalcon\Html\TagFactory;
 use Phalcon\Messages\Messages;
+use Phalcon\Support\Settings;
 use Phalcon\Traits\Helper\Str\CamelizeTrait;
 
 use function is_string;
@@ -245,7 +246,15 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
                 /**
                  * Use the public property if it doesn't have a setter
                  */
-                $entity->{$key} = $filteredValue;
+                if (!Settings::get("form.strict_entity_property_check")) {
+                    $entity->$key = $filteredValue;
+
+                    continue;
+                }
+
+                if (property_exists($entity, $key)) {
+                    $entity->{$key} = $filteredValue;
+                }
             }
         }
 

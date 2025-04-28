@@ -99,11 +99,11 @@ class MimeType extends AbstractFile
         }
 
         $value = $validation->getValue($field);
-        $types = $this->checkArray($this->getOption("types"), $field);
+        $types = $this->checkArray($this->getOption("allowedTypes"), $field);
 
         if (!is_array($types)) {
             throw new Exception(
-                "Option 'types' must be an array"
+                "Option 'allowedTypes' must be an array"
             );
         }
         if (true === $this->phpFunctionExists("finfo_open")) {

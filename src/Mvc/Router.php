@@ -644,7 +644,7 @@ class Router extends AbstractInjectionAware implements RouterInterface, EventsAw
         /**
          * By default we use $_GET["url"] to obtain the rewrite information
          */
-        if (empty($this->uriSource)) {
+        if (self::URI_SOURCE_GET_URL === $this->uriSource) {
             $url = $_GET['_url'] ?? '';
             if (true !== empty($url)) {
                 return $this->extractRealUri($url);

@@ -396,7 +396,7 @@ class Filter implements FilterInterface
      * @throws Exception
      */
     private function sanitizer(
-        $value,
+        mixed $value,
         string $sanitizerName,
         array $sanitizerParams = []
     ) {
