@@ -16,7 +16,7 @@ namespace Phalcon\Storage\Adapter;
 use DateInterval;
 
 /**
- * Interface for Phalcon\Logger adapters
+ * Interface for Phalcon\Storage adapters
  */
 interface AdapterInterface
 {
