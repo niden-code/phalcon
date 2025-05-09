@@ -77,10 +77,7 @@ class Apcu extends AbstractAdapter
      */
     public function setForever(string $key, mixed $data): bool
     {
-        $result = $this->phpApcuStore(
-            $this->getPrefixedKey($key),
-            $this->getSerializedData($data)
-        );
+        $result = $this->phpApcuStore($key, $this->getSerializedData($data));
 
         return is_bool($result) ? $result : false;
     }
@@ -95,7 +92,7 @@ class Apcu extends AbstractAdapter
      */
     protected function doDecrement(string $key, int $value = 1): false | int
     {
-        return $this->phpApcuDec($this->getPrefixedKey($key), $value);
+        return $this->phpApcuDec($key, $value);
     }
 
     /**
@@ -107,7 +104,7 @@ class Apcu extends AbstractAdapter
      */
     protected function doDelete(string $key): bool
     {
-        return (bool)$this->phpApcuDelete($this->getPrefixedKey($key));
+        return (bool)$this->phpApcuDelete($key);
     }
 
     /**
@@ -117,7 +114,7 @@ class Apcu extends AbstractAdapter
      */
     protected function doGetData(string $key): mixed
     {
-        return $this->phpApcuFetch($this->getPrefixedKey($key));
+        return $this->phpApcuFetch($key);
     }
 
     /**
@@ -129,7 +126,7 @@ class Apcu extends AbstractAdapter
      */
     protected function doHas(string $key): bool
     {
-        $result = $this->phpApcuExists($this->getPrefixedKey($key));
+        $result = $this->phpApcuExists($key);
 
         return is_bool($result) ? $result : false;
     }
@@ -144,7 +141,7 @@ class Apcu extends AbstractAdapter
      */
     protected function doIncrement(string $key, int $value = 1): false | int
     {
-        return $this->phpApcuInc($this->getPrefixedKey($key), $value);
+        return $this->phpApcuInc($key, $value);
     }
 
     /**
@@ -164,11 +161,11 @@ class Apcu extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
         $result = $this->phpApcuStore(
-            $this->getPrefixedKey($key),
+            $key,
             $this->getSerializedData($value),
             $this->getTtl($ttl)
         );

@@ -134,7 +134,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeDecrement", $key);
 
-        $result = $this->doDecrement($key, $value);
+        $result = $this->doDecrement($this->getPrefixedKey($key), $value);
 
         $this->fireManagerEvent($this->eventType . ":afterDecrement", $key);
 
@@ -152,7 +152,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeDelete", $key);
 
-        $result = $this->doDelete($key);
+        $result = $this->doDelete($this->getPrefixedKey($key));
 
         $this->fireManagerEvent($this->eventType . ":afterDelete", $key);
 
@@ -171,7 +171,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeGet", $key);
 
-        $result = $this->doGet($key, $defaultValue);
+        $result = $this->doGet($this->getPrefixedKey($key), $defaultValue);
 
         $this->fireManagerEvent($this->eventType . ":afterGet", $key);
 
@@ -248,7 +248,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeHas", $key);
 
-        $result = $this->doHas($key);
+        $result = $this->doHas($this->getPrefixedKey($key));
 
         $this->fireManagerEvent($this->eventType . ":afterHas", $key);
 
@@ -267,7 +267,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeIncrement", $key);
 
-        $result = $this->doIncrement($key, $value);
+        $result = $this->doIncrement($this->getPrefixedKey($key), $value);
 
         $this->fireManagerEvent($this->eventType . ":afterIncrement", $key);
 
@@ -291,7 +291,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     {
         $this->fireManagerEvent($this->eventType . ":beforeSet", $key);
 
-        $result = $this->doSet($key, $value, $ttl);
+        $result = $this->doSet($this->getPrefixedKey($key), $value, $ttl);
 
         $this->fireManagerEvent($this->eventType . ":afterSet", $key);
 

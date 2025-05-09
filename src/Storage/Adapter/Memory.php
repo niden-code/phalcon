@@ -52,16 +52,6 @@ class Memory extends AbstractAdapter
     }
 
     /**
-     * Flushes/clears the cache
-     */
-    public function clear(): bool
-    {
-        $this->data = [];
-
-        return true;
-    }
-
-    /**
      * Stores data in the adapter
      *
      * @param string $prefix
@@ -97,18 +87,13 @@ class Memory extends AbstractAdapter
      */
     protected function doDecrement(string $key, int $value = 1): false | int
     {
-        $prefixedKey = $this->getPrefixedKey($key);
-        $result      = array_key_exists($prefixedKey, $this->data);
+        if (array_key_exists($key, $this->data)) {
+            $this->data[$key] -= $value;
 
-        if (true === $result) {
-            $current  = $this->data[$prefixedKey];
-            $newValue = (int)$current - $value;
-            $result   = $newValue;
-
-            $this->data[$prefixedKey] = $newValue;
+            return $this->data[$key];
         }
 
-        return $result;
+        return false;
     }
 
     /**
@@ -120,10 +105,9 @@ class Memory extends AbstractAdapter
      */
     protected function doDelete(string $key): bool
     {
-        $prefixedKey = $this->getPrefixedKey($key);
-        $exists      = array_key_exists($prefixedKey, $this->data);
+        $exists = array_key_exists($key, $this->data);
 
-        unset($this->data[$prefixedKey]);
+        unset($this->data[$key]);
 
         return $exists;
     }
@@ -135,7 +119,7 @@ class Memory extends AbstractAdapter
      */
     protected function doGetData(string $key): mixed
     {
-        return $this->data[$this->getPrefixedKey($key)];
+        return $this->data[$key];
     }
 
     /**
@@ -147,9 +131,7 @@ class Memory extends AbstractAdapter
      */
     protected function doHas(string $key): bool
     {
-        $prefixedKey = $this->getPrefixedKey($key);
-
-        return array_key_exists($prefixedKey, $this->data);
+        return array_key_exists($key, $this->data);
     }
 
     /**
@@ -162,18 +144,13 @@ class Memory extends AbstractAdapter
      */
     protected function doIncrement(string $key, int $value = 1): false | int
     {
-        $prefixedKey = $this->getPrefixedKey($key);
-        $result      = array_key_exists($prefixedKey, $this->data);
+        if (array_key_exists($key, $this->data)) {
+            $this->data[$key] += $value;
 
-        if ($result) {
-            $current  = $this->data[$prefixedKey];
-            $newValue = (int)$current + $value;
-            $result   = $newValue;
-
-            $this->data[$prefixedKey] = $newValue;
+            return $this->data[$key];
         }
 
-        return $result;
+        return false;
     }
 
     /**
@@ -192,13 +169,10 @@ class Memory extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
-        $content     = $this->getSerializedData($value);
-        $prefixedKey = $this->getPrefixedKey($key);
-
-        $this->data[$prefixedKey] = $content;
+        $this->data[$key] = $this->getSerializedData($value);
 
         return true;
     }
