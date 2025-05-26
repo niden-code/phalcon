@@ -11,11 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Storage\Adapter;
+namespace Phalcon\Storage\Wip;
 
 use DateInterval;
 use Exception as BaseException;
 use Memcached;
+use Phalcon\Storage\Adapter\AbstractAdapter;
 use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
@@ -59,19 +60,6 @@ class Libmemcached extends AbstractAdapter
     }
 
     /**
-     * Flushes/clears the cache
-     *
-     * @return bool
-     * @throws StorageException
-     */
-    public function clear(): bool
-    {
-        return $this->getAdapter()
-                    ->flush()
-        ;
-    }
-
-    /**
      * Returns the already connected adapter or connects to the Memcached
      * server(s)
      *
@@ -87,7 +75,7 @@ class Libmemcached extends AbstractAdapter
             $connection = new Memcached($persistentId);
             $serverList = $connection->getServerList();
 
-            $connection->setOption(Memcached::OPT_PREFIX_KEY, $this->prefix);
+//            $connection->setOption(Memcached::OPT_PREFIX_KEY, $this->prefix);
 
             if (count($serverList) < 1) {
                 /** @var array $servers */
@@ -133,8 +121,7 @@ class Libmemcached extends AbstractAdapter
     public function getKeys(string $prefix = ''): array
     {
         return $this->getFilteredKeys(
-            $this->getAdapter()
-                 ->getAllKeys(),
+            $this->getAdapter()->getAllKeys(),
             $prefix
         );
     }
@@ -152,7 +139,10 @@ class Libmemcached extends AbstractAdapter
     public function setForever(string $key, mixed $data): bool
     {
         $result = $this->getAdapter()
-                       ->set($key, $this->getSerializedData($data), 0)
+                       ->set(
+                           $this->getPrefixedKey($key),
+                           $this->getSerializedData($data)
+                       )
         ;
 
         return is_bool($result) ? $result : false;
@@ -184,9 +174,7 @@ class Libmemcached extends AbstractAdapter
      */
     protected function doDelete(string $key): bool
     {
-        return $this->getAdapter()
-                    ->delete($key, 0)
-        ;
+        return $this->getAdapter()->delete($key);
     }
 
     /**
@@ -237,7 +225,7 @@ class Libmemcached extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
         $result = $this->getAdapter()

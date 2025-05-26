@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Fixtures\Storage\Adapter;
 
 use DateInterval;
 use Exception;
-use Phalcon\Storage\Adapter\Libmemcached as StorageLibmemcached;
+use Phalcon\Storage\Wip\Libmemcached as StorageLibmemcached;
 
 /**
  * Phalcon\Tests\Fixtures\Storage\Adapter

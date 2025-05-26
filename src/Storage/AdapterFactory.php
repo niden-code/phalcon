@@ -16,15 +16,16 @@ namespace Phalcon\Storage;
 use Exception as BaseException;
 use Phalcon\Storage\Adapter\AdapterInterface;
 use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\Adapter\RedisCluster;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Adapter\Weak;
+use Phalcon\Storage\Wip\Libmemcached;
 use Phalcon\Traits\Factory\FactoryTrait;
 
 /**
- * Class AdapterFactory
+ * Storage Adapter Factory
  *
  * @property SerializerFactory $serializerFactory
  */
@@ -102,9 +103,10 @@ class AdapterFactory
     {
         return [
             'apcu'         => Apcu::class,
-            'libmemcached' => Libmemcached::class,
+//            'libmemcached' => Libmemcached::class,
             'memory'       => Memory::class,
-            'redis'        => Redis::class,
+//            'redis'        => Redis::class,
+//            'rediscluster' => RedisCluster::class,
             'stream'       => Stream::class,
             'weak'         => Weak::class,
         ];

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Cache\Adapter;
 
 use Phalcon\Cache\Adapter\AdapterInterface as CacheAdapterInterface;
-use Phalcon\Storage\Adapter\Libmemcached as StorageLibmemcached;
+use Phalcon\Storage\Wip\Libmemcached as StorageLibmemcached;
 
 /**
  * Libmemcached adapter

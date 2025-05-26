@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Annotations\Adapter;
 
 use Phalcon\Annotations\Parser\Reflection;
-use Phalcon\Storage\Adapter\Libmemcached as StorageLibmemcached;
+use Phalcon\Storage\Wip\Libmemcached as StorageLibmemcached;
 
 /**
  * Stores the parsed annotations in memory. This adapter is the suitable
