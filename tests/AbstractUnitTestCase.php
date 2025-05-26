@@ -169,25 +169,27 @@ abstract class AbstractUnitTestCase extends TestCase
      */
     public function safeDeleteDirectory(string $directory): void
     {
-        $dirIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach ($iterator as $fileInfo) {
-            if ($fileInfo->isDir() === true) {
-                $this->safeDeleteDirectory($fileInfo->getRealPath());
-                continue;
-            }
-
-            if (
-                empty($fileInfo->getRealPath()) === false &&
-                file_exists($fileInfo->getRealPath())
-            ) {
-                unlink($fileInfo->getRealPath());
-            }
-        }
-
         if (is_dir($directory)) {
-            rmdir($directory);
+            $dirIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
+            $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach ($iterator as $fileInfo) {
+                if ($fileInfo->isDir() === true) {
+                    $this->safeDeleteDirectory($fileInfo->getRealPath());
+                    continue;
+                }
+
+                if (
+                    empty($fileInfo->getRealPath()) === false &&
+                    file_exists($fileInfo->getRealPath())
+                ) {
+                    unlink($fileInfo->getRealPath());
+                }
+            }
+
+            if (is_dir($directory)) {
+                rmdir($directory);
+            }
         }
     }
 
