@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use DateInterval;
+use EmptyIterator;
 use Exception as BaseException;
 use FilesystemIterator;
 use Iterator;
@@ -43,8 +44,12 @@ use const LOCK_SH;
 /**
  * Stream adapter
  *
- * @property string $storageDir
- * @property array  $options
+ * @phpstan-template ConstructorOptions array{
+ *      storageDir: string,
+ *      defaultSerializer?: string|'php',
+ *      lifetime?: int|3600,
+ *      prefix?: string
+ * }
  */
 class Stream extends AbstractAdapter
 {
@@ -55,7 +60,7 @@ class Stream extends AbstractAdapter
     /**
      * @var string
      */
-    protected string $prefix = 'ph-strm';
+    protected string $prefix = 'ph-strm-';
 
     /**
      * @var string
@@ -65,14 +70,10 @@ class Stream extends AbstractAdapter
     /**
      * Stream constructor.
      *
-     * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'storageDir'        => '',
-     *                                   'defaultSerializer' => 'php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param SerializerFactory  $factory
+     * @param ConstructorOptions $options
      *
+     * @throws BaseException
      * @throws StorageException
      */
     public function __construct(
@@ -89,7 +90,10 @@ class Stream extends AbstractAdapter
         /**
          * Lets set some defaults and options here
          */
-        $this->storageDir = $this->toDirSeparator($storageDir);
+
+        $this->storageDir = $this->toDirSeparator(
+            $this->toDirSeparator($storageDir) . $this->prefix
+        );
 
         parent::__construct($factory, $options);
 
@@ -118,7 +122,7 @@ class Stream extends AbstractAdapter
     }
 
     /**
-     * Stores data in the adapter
+     * Returns the keys stored in the adapter
      *
      * @param string $prefix
      *
@@ -152,6 +156,7 @@ class Stream extends AbstractAdapter
      * @param mixed  $data
      *
      * @return bool
+     * @throws BaseException
      */
     public function setForever(string $key, mixed $data): bool
     {
@@ -171,17 +176,18 @@ class Stream extends AbstractAdapter
      * @param int    $value
      *
      * @return false|int
+     * @throws BaseException
      */
     protected function doDecrement(string $key, int $value = 1): false | int
     {
-        if (true !== $this->has($key)) {
+        if (true !== $this->doHas($key)) {
             return false;
         }
 
-        $data = $this->get($key);
+        $data = $this->doGet($key);
         $data = (int)$data - $value;
 
-        $result = $this->set($key, $data);
+        $result = $this->doSet($key, $data);
         if (false !== $result) {
             $result = $data;
         }
@@ -198,7 +204,7 @@ class Stream extends AbstractAdapter
      */
     protected function doDelete(string $key): bool
     {
-        if (true !== $this->has($key)) {
+        if (true !== $this->doHas($key)) {
             return false;
         }
 
@@ -268,14 +274,14 @@ class Stream extends AbstractAdapter
      */
     protected function doIncrement(string $key, int $value = 1): false | int
     {
-        if (true !== $this->has($key)) {
+        if (true !== $this->doHas($key)) {
             return false;
         }
 
-        $data = $this->get($key);
+        $data = $this->doGet($key);
         $data = (int)$data + $value;
 
-        $result = $this->set($key, $data);
+        $result = $this->doSet($key, $data);
         if (false !== $result) {
             $result = $data;
         }
@@ -300,7 +306,7 @@ class Stream extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
         $payload = [
@@ -321,12 +327,9 @@ class Stream extends AbstractAdapter
      */
     private function getDir(string $key = ''): string
     {
-        $dirPrefix   = $this->toDirSeparator(
-            $this->storageDir . $this->prefix
+        return $this->toDirSeparator(
+            $this->storageDir . $this->toDirFromFile($this->getKeyWithoutPrefix($key))
         );
-        $dirFromFile = $this->toDirFromFile($this->getKeyWithoutPrefix($key));
-
-        return $this->toDirSeparator($dirPrefix . $dirFromFile);
     }
 
     /**
@@ -350,6 +353,10 @@ class Stream extends AbstractAdapter
      */
     private function getIterator(string $dir): Iterator
     {
+        if (false === $this->phpFileExists($dir)) {
+            return new EmptyIterator();
+        }
+
         return new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
                 $dir,
@@ -465,7 +472,7 @@ class Stream extends AbstractAdapter
         }
 
         return false !== $this->phpFilePutContents(
-            $directory . $key,
+            $directory . $this->getKeyWithoutPrefix($key),
             $payload,
             LOCK_EX
         );

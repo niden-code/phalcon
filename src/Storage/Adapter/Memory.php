@@ -74,7 +74,7 @@ class Memory extends AbstractAdapter
      */
     public function setForever(string $key, mixed $data): bool
     {
-        return $this->set($key, $data);
+        return $this->doSet($this->getPrefixedKey($key), $data);
     }
 
     /**

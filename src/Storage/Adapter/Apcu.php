@@ -21,6 +21,7 @@ use Phalcon\Support\Traits\PhpApcuTrait;
 
 use function is_bool;
 use function is_int;
+use function iterator_to_array;
 
 /**
  * Apcu adapter
@@ -63,7 +64,10 @@ class Apcu extends AbstractAdapter
         $pattern = '/^' . $this->prefix . $prefix . '/';
         $apc     = new APCUIterator($pattern);
 
-        return array_map(fn($item) => $item['key'], iterator_to_array($apc));
+        return $this->getFilteredKeys(
+            array_map(fn($item) => $item['key'], iterator_to_array($apc)),
+            $prefix
+        );
     }
 
     /**
@@ -74,10 +78,14 @@ class Apcu extends AbstractAdapter
      * @param mixed  $data
      *
      * @return bool
+     * @throws Exception
      */
     public function setForever(string $key, mixed $data): bool
     {
-        $result = $this->phpApcuStore($key, $this->getSerializedData($data));
+        $result = $this->phpApcuStore(
+            $this->getPrefixedKey($key),
+            $this->getSerializedData($data)
+        );
 
         return is_bool($result) ? $result : false;
     }

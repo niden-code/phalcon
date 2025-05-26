@@ -18,6 +18,7 @@ use Exception as BaseException;
 use Phalcon\Storage\SerializerFactory;
 use WeakReference;
 
+use function array_keys;
 use function is_int;
 use function is_object;
 
@@ -32,9 +33,13 @@ class Weak extends AbstractAdapter
     protected string | null $fetching = null;
 
     /**
+     * @var string
+     */
+    protected string $prefix = 'ph-weak-';
+
+    /**
      * @var array
      */
-
     protected array $weakList = [];
 
     /**
@@ -50,7 +55,6 @@ class Weak extends AbstractAdapter
         parent::__construct($factory, $options);
 
         $this->defaultSerializer = "none";
-        $this->prefix            = "";
     }
 
     /**
@@ -72,19 +76,7 @@ class Weak extends AbstractAdapter
      */
     public function getKeys(string $prefix = ""): array
     {
-        $keys = array_keys($this->weakList);
-        if ('' !== $prefix) {
-            $results = [];
-            foreach ($keys as $key) {
-                if (str_starts_with($key, $prefix)) {
-                    $results[] = $key;
-                }
-            }
-
-            return $results;
-        }
-
-        return $keys;
+        return $this->getFilteredKeys(array_keys($this->weakList), $prefix);
     }
 
     /**
@@ -97,16 +89,17 @@ class Weak extends AbstractAdapter
     }
 
     /**
-     * For compatiblity only, there is no Forever with WeakReference.
+     * There is no Forever with WeakReference.
      *
      * @param string $key
      * @param mixed  $data
      *
      * @return bool
+     * @throws BaseException
      */
     public function setForever(string $key, mixed $data): bool
     {
-        return $this->set($key, $data);
+        return $this->doSet($this->getPrefixedKey($key), $data);
     }
 
     /**
@@ -172,7 +165,7 @@ class Weak extends AbstractAdapter
          * value could be null, object could be destroyed while fetching
          */
         if (null === $value) {
-            $this->delete($key);
+            $this->doDelete($key);
         }
 
         return $value;
@@ -220,7 +213,7 @@ class Weak extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
         if (!is_object($value)) {
