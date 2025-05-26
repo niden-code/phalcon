@@ -113,7 +113,7 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
         $keys   = $this->getKeys();
 
         foreach ($keys as $key) {
-            if (true !== $this->doDelete($key)) {
+            if (true !== $this->doDelete($this->getPrefixedKey($key))) {
                 $result = false;
             }
         }

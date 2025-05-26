@@ -137,9 +137,14 @@ trait ActionsTrait
      */
     protected function getFilteredKeys(array $keys, string $prefix): array
     {
-        return array_filter(
-            $keys ?: [],
-            fn($key) => str_starts_with($key, $this->prefix . $prefix)
+        return array_values(
+            array_map(
+                fn($key) => str_replace($this->prefix, '', $key),
+                array_filter(
+                    $keys,
+                    fn($key) => str_starts_with($key, $this->prefix . $prefix)
+                )
+            )
         );
     }
 
