@@ -105,7 +105,7 @@ RUN set -eux \
     && echo "extension=phalcon" > /usr/local/etc/php/conf.d/phalcon.ini
 
 # hadolint ignore=DL3022
-COPY --from=composer/composer:2 --chown=${USER}:${GROUP} --chmod=0660 /usr/bin/composer /usr/bin/composer
+COPY --from=composer/composer:2 --chown=${USER}:${GROUP} --chmod=0770 /usr/bin/composer /usr/bin/composer
 COPY resources/docker/develop/.bashrc /home/${USER}/.bashrc
 COPY resources/docker/develop/extra.ini /usr/local/etc/php/conf.d/
 
