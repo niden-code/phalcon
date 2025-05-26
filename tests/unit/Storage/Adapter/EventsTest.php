@@ -13,120 +13,21 @@ namespace Phalcon\Tests\Unit\Storage\Adapter;
 
 use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
-use Phalcon\Storage\Adapter\Stream;
-use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 use RuntimeException;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function getOptionsRedisCluster;
-use function outputDir;
-
-final class EventsTest extends AbstractUnitTestCase
+final class EventsTest extends AbstractStorageTestCase
 {
     /**
-     * @return array[]
-     */
-    public static function getExamples(): array
-    {
-        return [
-            [
-                'apcu',
-                Apcu::class,
-                [],
-            ],
-            [
-                'memcached',
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-            ],
-            [
-                '',
-                Memory::class,
-                [],
-            ],
-            [
-                'redis',
-                Redis::class,
-                getOptionsRedis(),
-            ],
-            [
-                'redis',
-                RedisCluster::class,
-                getOptionsRedisCluster(),
-            ],
-            [
-                '',
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-            ],
-            [
-                '',
-                Weak::class,
-                [],
-            ],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public static function getAdapters(): array
-    {
-        return [
-            [
-                Apcu::class,
-                [],
-                'apcu',
-            ],
-            [
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-                'memcached'
-            ],
-            [
-                Memory::class,
-                [],
-                '',
-            ],
-            [
-                Redis::class,
-                getOptionsRedis(),
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                getOptionsRedisCluster(),
-                'redis',
-            ],
-            [
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-                '',
-            ],
-        ];
-    }
-
-    /**
-     * Tests Cache\Adapter\Libmemcached :: getEventsManager()
+     * Tests Cache\Adapter\* :: getEventsManager()
      *
-     * @dataProvider getAdapters
+     * @dataProvider getExamples
      *
-     * @author n[oO]ne <lominum@protonmail.com>
-     * @since  2024-06-07
+     * @author       n[oO]ne <lominum@protonmail.com>
+     * @since        2024-06-07
      */
-    public function testCacheAdapterMemoryGetEventsManagerNotSet(
+    public function testCacheAdapterGetEventsManagerNotSet(
         string $adapterClass,
         array $options,
         string $extension
@@ -138,18 +39,19 @@ final class EventsTest extends AbstractUnitTestCase
         $serializer = new SerializerFactory();
         $adapter    = new $adapterClass($serializer, $options);
 
-        $this->assertNull($adapter->getEventsManager());
+        $actual = $adapter->getEventsManager();
+        $this->assertNull($actual);
     }
 
     /**
-     * Tests Cache\Adapter\Libmemcached :: getEventsManager()
+     * Tests Cache\Adapter\* :: getEventsManager()
      *
-     * @dataProvider getAdapters
+     * @dataProvider getExamples
      * *
-     * @author n[oO]ne <lominum@protonmail.com>
-     * @since  2024-06-07
+     * @author       n[oO]ne <lominum@protonmail.com>
+     * @since        2024-06-07
      */
-    public function testCacheAdapterMemoryGetEventsManagerSet(
+    public function testCacheAdapterGetEventsManagerSet(
         string $adapterClass,
         array $options,
         string $extension
@@ -163,7 +65,9 @@ final class EventsTest extends AbstractUnitTestCase
 
         $adapter->setEventsManager(new Manager());
 
-        $this->assertInstanceOf(Manager::class, $adapter->getEventsManager());
+        $expected = Manager::class;
+        $actual   = $adapter->getEventsManager();
+        $this->assertInstanceOf($expected, $actual);
     }
 
     /**
@@ -174,9 +78,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterDecrement(
+        string $adapterClass,
+        array $options,
         string $extension,
-        string $class,
-        array $options
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -184,7 +88,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -201,7 +105,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'decrement'], ['test']);
         call_user_func_array([$adapter, 'decrement'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -212,9 +116,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterDelete(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -222,7 +126,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -239,7 +143,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'delete'], ['test']);
         call_user_func_array([$adapter, 'delete'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -250,9 +154,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterGet(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -260,7 +164,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -277,7 +181,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'get'], ['test']);
         call_user_func_array([$adapter, 'get'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -288,9 +192,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterHas(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -298,7 +202,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -315,7 +219,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'has'], ['test']);
         call_user_func_array([$adapter, 'has'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -326,9 +230,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterIncrement(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -336,7 +240,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -353,7 +257,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'increment'], ['test']);
         call_user_func_array([$adapter, 'increment'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -364,9 +268,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsAfterSet(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -374,7 +278,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -391,7 +295,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'set'], ['test', 'test']);
         call_user_func_array([$adapter, 'set'], ['test', 'test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -402,9 +306,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeDecrement(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -412,7 +316,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -429,7 +333,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'decrement'], ['test']);
         call_user_func_array([$adapter, 'decrement'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -440,9 +344,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeDelete(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -450,7 +354,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -467,7 +371,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'delete'], ['test']);
         call_user_func_array([$adapter, 'delete'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -478,9 +382,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeGet(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -488,7 +392,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -505,7 +409,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'get'], ['test']);
         call_user_func_array([$adapter, 'get'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -516,9 +420,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeHas(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -526,7 +430,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -543,7 +447,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'has'], ['test']);
         call_user_func_array([$adapter, 'has'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -554,9 +458,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeIncrement(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -564,7 +468,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -581,7 +485,7 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'increment'], ['test']);
         call_user_func_array([$adapter, 'increment'], ['test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 
     /**
@@ -592,9 +496,9 @@ final class EventsTest extends AbstractUnitTestCase
      * @since        2024-06-07
      */
     public function testStorageAdapterEventsBeforeSet(
-        string $extension,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -602,7 +506,7 @@ final class EventsTest extends AbstractUnitTestCase
 
         $counter    = 0;
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
         $manager    = new Manager();
 
         $manager->attach(
@@ -619,6 +523,6 @@ final class EventsTest extends AbstractUnitTestCase
         call_user_func_array([$adapter, 'set'], ['test', 'test']);
         call_user_func_array([$adapter, 'set'], ['test', 'test']);
 
-        $this->assertEquals(2, $counter);
+        $this->assertSame(2, $counter);
     }
 }

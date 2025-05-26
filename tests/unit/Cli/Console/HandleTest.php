@@ -488,7 +488,7 @@ final class HandleTest extends AbstractUnitTestCase
         $script = rootDir() . 'tests/testbed/cli.php ';
 
         ob_start();
-        $actual = shell_exec('sudo php ' . $script . 'print');
+        $actual = shell_exec('php ' . $script . 'print');
         ob_end_clean();
 
         $expected = 'printMainAction';

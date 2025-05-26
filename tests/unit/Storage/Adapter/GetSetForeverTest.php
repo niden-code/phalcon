@@ -13,66 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
-use Phalcon\Storage\Adapter\Stream;
-use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 use stdClass;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function getOptionsRedisCluster;
-use function outputDir;
 use function uniqid;
 
-final class GetSetForeverTest extends AbstractUnitTestCase
+final class GetSetForeverTest extends AbstractStorageTestCase
 {
-    /**
-     * @return array[]
-     */
-    public static function getExamples(): array
-    {
-        return [
-            [
-                Apcu::class,
-                [],
-                'apcu',
-            ],
-            [
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-                'memcached',
-            ],
-            [
-                Memory::class,
-                [],
-                '',
-            ],
-            [
-                Redis::class,
-                getOptionsRedis(),
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                getOptionsRedisCluster(),
-                'redis',
-            ],
-            [
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-                '',
-            ],
-        ];
-    }
-
     /**
      * Tests Phalcon\Storage\Adapter\* :: get()/setForever()
      *
@@ -82,54 +30,33 @@ final class GetSetForeverTest extends AbstractUnitTestCase
      * @since        2020-09-09
      */
     public function testStorageAdapterGetSetForever(
-        string $class,
+        string $adapterClass,
         array $options,
-        string $extension
+        string $extension,
+        string $name
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
 
-        $key = uniqid();
+        $key   = uniqid();
+        $value = 'test';
 
-        $result = $adapter->setForever($key, "test");
+        if ('weak' === $name) {
+            $value     = new stdClass();
+            $value->id = 1;
+        }
+
+        $result = $adapter->setForever($key, $value);
         $this->assertTrue($result);
 
         sleep(2);
         $result = $adapter->has($key);
         $this->assertTrue($result);
 
-        /**
-         * Delete it
-         */
-        $result = $adapter->delete($key);
-        $this->assertTrue($result);
-    }
-
-    /**
-     * Tests Phalcon\Storage\Adapter\Weak :: get()setForever()
-     *
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2023-07-17
-     */
-    public function testStorageAdapterWeakGetSetForever(): void
-    {
-        $serializer = new SerializerFactory();
-        $adapter    = new Weak($serializer);
-
-        $key    = uniqid();
-        $obj    = new stdClass();
-        $result = $adapter->setForever($key, "test");
-        $this->assertFalse($result);
-        $result = $adapter->setForever($key, $obj);
-        $this->assertTrue($result);
-        sleep(2);
-        $result = $adapter->has($key);
-        $this->assertTrue($result);
         /**
          * Delete it
          */

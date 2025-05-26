@@ -20,10 +20,10 @@ use Phalcon\Storage\Serializer\Json;
 use Phalcon\Storage\Serializer\Msgpack;
 use Phalcon\Storage\Serializer\Php;
 use Phalcon\Support\Collection;
+use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Fixtures\Storage\Serializer\Base64DecodeFixture;
 use Phalcon\Tests\Fixtures\Storage\Serializer\IgbinarySerializeFixture;
 use Phalcon\Tests\Fixtures\Storage\Serializer\IgbinaryUnserializeFixture;
-use Phalcon\Tests\AbstractUnitTestCase;
 use stdClass;
 
 use function json_encode;

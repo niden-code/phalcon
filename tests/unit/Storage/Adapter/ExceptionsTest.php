@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Exception as StorageException;
+use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
 use Phalcon\Tests\AbstractUnitTestCase;
@@ -79,10 +79,10 @@ final class ExceptionsTest extends AbstractUnitTestCase
 //            'Connection refused'
 //        );
 
-        $serializer      = new SerializerFactory();
-        $options         = getOptionsRedis();
+        $serializer = new SerializerFactory();
+        $options = getOptionsRedis();
         $options['host'] = 'tls://127.0.0.1';
-        $options['ssl']  = [
+        $options['ssl'] = [
             'verify_peer_name' => '127.0.0.1',
             'verify_peer'      => false,
         ];
@@ -146,7 +146,7 @@ final class ExceptionsTest extends AbstractUnitTestCase
             ]
         );
 
-        $target = outputDir() . 'ph-strm/te/st/-k/';
+        $target = outputDir() . 'ph-strm-/te/st/-k/';
         if (true !== is_dir($target)) {
             mkdir($target, 0777, true);
         }

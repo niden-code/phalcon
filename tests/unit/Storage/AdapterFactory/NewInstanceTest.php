@@ -13,62 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\AdapterFactory;
 
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\Stream;
-use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\AdapterFactory;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function outputDir;
 use function uniqid;
 
-final class NewInstanceTest extends AbstractUnitTestCase
+final class NewInstanceTest extends AbstractStorageTestCase
 {
-    public static function getExamples(): array
-    {
-        return [
-            [
-                'apcu',
-                Apcu::class,
-                [],
-            ],
-            [
-                'libmemcached',
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-            ],
-            [
-                'memory',
-                Memory::class,
-                [],
-            ],
-            [
-                'redis',
-                Redis::class,
-                getOptionsRedis(),
-            ],
-            [
-                'stream',
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-            ],
-            [
-                'weak',
-                Weak::class,
-                [],
-            ],
-        ];
-    }
-
     /**
      * Tests Phalcon\Storage\AdapterFactory :: newInstance()
      *
@@ -81,16 +34,17 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @since        2020-09-09
      */
     public function testStorageAdapterFactoryNewInstance(
-        string $name,
-        string $class,
-        array $options
+        string $adapterClass,
+        array $options,
+        string $extension,
+        string $name
     ): void {
         $serializer = new SerializerFactory();
         $adapter    = new AdapterFactory($serializer);
 
         $service = $adapter->newInstance($name, $options);
 
-        $this->assertInstanceOf($class, $service);
+        $this->assertInstanceOf($adapterClass, $service);
     }
 
     /**

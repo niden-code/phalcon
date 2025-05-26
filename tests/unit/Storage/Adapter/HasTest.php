@@ -13,70 +13,19 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
-use Phalcon\Storage\Adapter\Stream;
-use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
 use Phalcon\Tests\Fixtures\Storage\Adapter\StreamFileGetContentsFixture;
 use Phalcon\Tests\Fixtures\Storage\Adapter\StreamFopenFixture;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 use stdClass;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function getOptionsRedisCluster;
 use function outputDir;
 use function uniqid;
 
-final class HasTest extends AbstractUnitTestCase
+final class HasTest extends AbstractStorageTestCase
 {
-    /**
-     * @return array[]
-     */
-    public static function getExamples(): array
-    {
-        return [
-            [
-                Apcu::class,
-                [],
-                'apcu',
-            ],
-            [
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-                'memcached',
-            ],
-            [
-                Memory::class,
-                [],
-                '',
-            ],
-            [
-                Redis::class,
-                getOptionsRedis(),
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                getOptionsRedisCluster(),
-                'redis',
-            ],
-            [
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-                '',
-            ],
-        ];
-    }
-
     /**
      * Tests Phalcon\Storage\Adapter\* :: has()
      *
@@ -86,23 +35,29 @@ final class HasTest extends AbstractUnitTestCase
      * @since        2020-09-09
      */
     public function testStorageAdapterHas(
-        string $class,
+        string $abstractClass,
         array $options,
-        ?string $extension
+        string $extension,
+        string $name
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $abstractClass($serializer, $options);
 
-        $key = uniqid();
+        $key   = uniqid();
+        $value = 'test';
+
+        if ('weak' === $name) {
+            $value = new stdClass();
+        }
 
         $actual = $adapter->has($key);
         $this->assertFalse($actual);
 
-        $adapter->set($key, 'test');
+        $adapter->set($key, $value);
         $actual = $adapter->has($key);
         $this->assertTrue($actual);
     }
@@ -163,30 +118,5 @@ final class HasTest extends AbstractUnitTestCase
 
         $actual = $adapter->has($key);
         $this->assertFalse($actual);
-    }
-
-    /**
-     * Tests Phalcon\Storage\Adapter\Weak :: has()
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2023-07-17
-     */
-    public function testStorageAdapterWeakHas(): void
-    {
-        $serializer = new SerializerFactory();
-        $adapter    = new Weak($serializer);
-
-        $obj1 = new stdClass();
-
-        $key1   = uniqid();
-        $actual = $adapter->has($key1);
-        $this->assertFalse($actual);
-
-        $adapter->set($key1, $obj1);
-
-        $actual = $adapter->has($key1);
-        $this->assertTrue($actual);
     }
 }

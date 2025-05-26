@@ -13,76 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
-use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 
-use function getOptionsLibmemcached;
-use function getOptionsRedis;
-use function getOptionsRedisCluster;
 use function outputDir;
 use function uniqid;
 
-final class IncrementTest extends AbstractUnitTestCase
+final class IncrementTest extends AbstractStorageTestCase
 {
-    /**
-     * @return array[]
-     */
-    public static function getExamples(): array
-    {
-        return [
-            [
-                'Apcu',
-                Apcu::class,
-                [],
-                'apcu',
-                1,
-            ],
-            [
-                'Libmemcached',
-                Libmemcached::class,
-                getOptionsLibmemcached(),
-                'memcached',
-                false,
-            ],
-            [
-                'Memory',
-                Memory::class,
-                [],
-                '',
-                false,
-            ],
-            [
-                'Redis',
-                Redis::class,
-                getOptionsRedis(),
-                'redis',
-                1
-            ],
-            [
-                'RedisCluster',
-                RedisCluster::class,
-                getOptionsRedisCluster(),
-                'redis',
-                1
-            ],
-            [
-                'Stream',
-                Stream::class,
-                [
-                    'storageDir' => outputDir(),
-                ],
-                '',
-                false,
-            ],
-        ];
-    }
-
     /**
      * Tests Phalcon\Storage\Adapter\* :: increment()
      *
@@ -92,47 +30,60 @@ final class IncrementTest extends AbstractUnitTestCase
      * @since        2020-09-09
      */
     public function testStorageAdapterIncrement(
-        string $className,
-        string $class,
+        string $adapterClass,
         array $options,
         string $extension,
-        mixed $unknown
+        string $name,
+        mixed $decrement,
+        mixed $increment
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
+        $adapter    = new $adapterClass($serializer, $options);
 
-        $key    = uniqid();
-        $result = $adapter->set($key, 10);
-        $this->assertTrue($result);
-
-        $expected = 11;
-        $actual   = $adapter->increment($key);
-        $this->assertEquals($expected, $actual);
-
-        $actual = $adapter->get($key);
-        $this->assertEquals($expected, $actual);
-
-        $expected = 20;
-        $actual   = $adapter->increment($key, 9);
-        $this->assertEquals($expected, $actual);
-
-        $actual = $adapter->get($key);
-        $this->assertEquals($expected, $actual);
+        $key = uniqid();
 
         /**
-         * unknown key
+         * Weak does not implement increment. It just returns false
          */
-        $key      = uniqid();
-        $expected = $unknown;
-        $actual   = $adapter->increment($key);
-        $this->assertEquals($expected, $actual);
+        if ('weak' === $name) {
+            $actual = $adapter->increment($key);
+            $this->assertFalse($actual);
+        } else {
+            $result = $adapter->set($key, 10);
+            $this->assertTrue($result);
 
-        if ('Stream' === $className) {
-            $this->safeDeleteDirectory(outputDir('ph-strm'));
+            $expected = 11;
+            $actual   = $adapter->increment($key);
+            $this->assertEquals($expected, $actual);
+
+            $actual = (int)$adapter->get($key);
+            $this->assertSame($expected, $actual);
+
+            $expected = 20;
+            $actual   = $adapter->increment($key, 9);
+            $this->assertSame($expected, $actual);
+
+            $actual = (int)$adapter->get($key);
+            $this->assertSame($expected, $actual);
+
+            $actual = $adapter->delete($key);
+            $this->assertTrue($actual);
+
+            /**
+             * unknown key
+             */
+            $key      = uniqid();
+            $expected = $increment;
+            $actual   = $adapter->increment($key);
+            $this->assertSame($expected, $actual);
+
+            if ('stream' === $name) {
+                $this->safeDeleteDirectory(outputDir('ph-strm-'));
+            }
         }
     }
 }

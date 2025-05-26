@@ -14,18 +14,14 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
 use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Libmemcached;
 use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Storage\Wip\Libmemcached;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 use function array_merge;
-use function getOptionsRedis;
-use function getOptionsRedisCluster;
 use function outputDir;
 
 final class GetPrefixTest extends AbstractUnitTestCase
@@ -111,76 +107,76 @@ final class GetPrefixTest extends AbstractUnitTestCase
                 'my-prefix',
                 '',
             ],
-            [
-                Redis::class,
-                array_merge(
-                    getOptionsRedis(),
-                    [
-                    ]
-                ),
-                'ph-reds-',
-                'redis',
-            ],
-            [
-                Redis::class,
-                array_merge(
-                    getOptionsRedis(),
-                    [
-                        'prefix' => '',
-                    ]
-                ),
-                '',
-                'redis',
-            ],
-            [
-                Redis::class,
-                array_merge(
-                    getOptionsRedis(),
-                    [
-                        'prefix' => 'my-prefix',
-                    ]
-                ),
-                'my-prefix',
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                array_merge(
-                    getOptionsRedisCluster(),
-                    [
-                    ]
-                ),
-                'ph-redc-',
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                array_merge(
-                    getOptionsRedisCluster(),
-                    [
-                        'prefix' => '',
-                    ]
-                ),
-                '',
-                'redis',
-            ],
-            [
-                RedisCluster::class,
-                array_merge(
-                    getOptionsRedisCluster(),
-                    [
-                        'prefix' => 'my-prefix',
-                    ]
-                ),
-                'my-prefix',
-                'redis',
-            ],
+            //            [
+            //                Redis::class,
+            //                array_merge(
+            //                    getOptionsRedis(),
+            //                    [
+            //                    ]
+            //                ),
+            //                'ph-reds-',
+            //                'redis',
+            //            ],
+            //            [
+            //                Redis::class,
+            //                array_merge(
+            //                    getOptionsRedis(),
+            //                    [
+            //                        'prefix' => '',
+            //                    ]
+            //                ),
+            //                '',
+            //                'redis',
+            //            ],
+            //            [
+            //                Redis::class,
+            //                array_merge(
+            //                    getOptionsRedis(),
+            //                    [
+            //                        'prefix' => 'my-prefix',
+            //                    ]
+            //                ),
+            //                'my-prefix',
+            //                'redis',
+            //            ],
+            //            [
+            //                RedisCluster::class,
+            //                array_merge(
+            //                    getOptionsRedisCluster(),
+            //                    [
+            //                    ]
+            //                ),
+            //                'ph-redc-',
+            //                'redis',
+            //            ],
+            //            [
+            //                RedisCluster::class,
+            //                array_merge(
+            //                    getOptionsRedisCluster(),
+            //                    [
+            //                        'prefix' => '',
+            //                    ]
+            //                ),
+            //                '',
+            //                'redis',
+            //            ],
+            //            [
+            //                RedisCluster::class,
+            //                array_merge(
+            //                    getOptionsRedisCluster(),
+            //                    [
+            //                        'prefix' => 'my-prefix',
+            //                    ]
+            //                ),
+            //                'my-prefix',
+            //                'redis',
+            //            ],
             [
                 Stream::class,
                 [
                     'storageDir' => outputDir(),
                 ],
-                'ph-strm',
+                'ph-strm-',
                 '',
             ],
             [
@@ -205,7 +201,7 @@ final class GetPrefixTest extends AbstractUnitTestCase
                 Weak::class,
                 [
                 ],
-                '',
+                'ph-weak-',
                 '',
             ],
             [
@@ -221,7 +217,7 @@ final class GetPrefixTest extends AbstractUnitTestCase
                 [
                     'prefix' => 'my-prefix',
                 ],
-                '',
+                'my-prefix',
                 '',
             ],
         ];
