@@ -290,7 +290,7 @@ final class SerializeUnserializeTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Storage\Serializer\Igbinary :: serialize()
+     * Tests Phalcon\Storage\Serializer\* :: serialize()/unserialize()
      *
      * @dataProvider getExamples
      *
