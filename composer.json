@@ -9,7 +9,8 @@
     "psr-7",
     "psr-11",
     "psr-12",
-    "psr-16"
+    "psr-16",
+    "payload-interop"
   ],
   "license": "MIT",
   "require": {
