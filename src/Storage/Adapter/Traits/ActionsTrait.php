@@ -64,7 +64,8 @@ trait ActionsTrait
     abstract protected function doDelete(string $key): bool;
 
     /**
-     * @param string $key
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -192,7 +193,7 @@ trait ActionsTrait
             return $this->lifetime;
         }
 
-        if (is_object($ttl) && $ttl instanceof DateInterval) {
+        if ($ttl instanceof DateInterval) {
             $dateTime = new DateTime('@0');
 
             return $dateTime->add($ttl)->getTimestamp();

@@ -59,6 +59,10 @@ final class GetSetTest extends AbstractStorageTestCase
         $result = $adapter->has($key);
         $this->assertTrue($result);
 
+        $expected = $value;
+        $actual = $adapter->get($key);
+        $this->assertEquals($expected, $actual);
+
         /**
          * This will issue delete
          */

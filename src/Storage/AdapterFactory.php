@@ -105,7 +105,7 @@ class AdapterFactory
             'apcu'         => Apcu::class,
 //            'libmemcached' => Libmemcached::class,
             'memory'       => Memory::class,
-//            'redis'        => Redis::class,
+            'redis'        => Redis::class,
 //            'rediscluster' => RedisCluster::class,
             'stream'       => Stream::class,
             'weak'         => Weak::class,

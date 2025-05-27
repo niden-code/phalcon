@@ -51,19 +51,6 @@ class Redis extends AbstractAdapter
     }
 
     /**
-     * Flushes/clears the cache
-     *
-     * @return bool
-     * @throws StorageException
-     */
-    public function clear(): bool
-    {
-        return $this->getAdapter()
-                    ->flushDB()
-        ;
-    }
-
-    /**
      * Returns the already connected adapter or connects to the Redis
      * server(s)
      *
@@ -80,8 +67,6 @@ class Redis extends AbstractAdapter
                 ->checkAuth($connection)
                 ->checkIndex($connection)
             ;
-
-            $connection->setOption(RedisService::OPT_PREFIX, $this->prefix);
 
             $this->setSerializer($connection);
             $this->adapter = $connection;
@@ -101,8 +86,7 @@ class Redis extends AbstractAdapter
     public function getKeys(string $prefix = ''): array
     {
         return $this->getFilteredKeys(
-            $this->getAdapter()
-                 ->keys('*'),
+            $this->getAdapter()->keys($this->prefix . '*'),
             $prefix
         );
     }
@@ -121,7 +105,10 @@ class Redis extends AbstractAdapter
     public function setForever(string $key, mixed $data): bool
     {
         $result = $this->getAdapter()
-                       ->set($key, $this->getSerializedData($data))
+                       ->set(
+                           $this->getPrefixedKey($key),
+                           $this->getSerializedData($data)
+                       )
         ;
 
         return is_bool($result) ? $result : false;
@@ -156,6 +143,23 @@ class Redis extends AbstractAdapter
     protected function doDelete(string $key): bool
     {
         return (bool)$this->getAdapter()->unlink($key);
+    }
+
+    /**
+     * @param string     $key
+     * @param mixed|null $defaultValue
+     *
+     * @return mixed
+     * @throws StorageException
+     */
+    protected function doGet(string $key, mixed $defaultValue = null): mixed
+    {
+        $content = $this->getAdapter()->get($key);
+
+        return false !== $content
+            ? $this->getUnserializedData($content, $defaultValue)
+            : $defaultValue
+        ;
     }
 
     /**
@@ -204,7 +208,7 @@ class Redis extends AbstractAdapter
     protected function doSet(string $key, mixed $value, mixed $ttl = null): bool
     {
         if (is_int($ttl) && $ttl < 1) {
-            return $this->delete($key);
+            return $this->doDelete($key);
         }
 
         $result = $this->getAdapter()
