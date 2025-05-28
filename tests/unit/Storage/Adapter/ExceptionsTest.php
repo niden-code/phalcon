@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
+use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Exception as StorageException;
-use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
 use Phalcon\Tests\AbstractUnitTestCase;

@@ -22,7 +22,6 @@ use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
 use stdClass;
 
 use function outputDir;
-use function sleep;
 use function uniqid;
 
 final class GetKeysTest extends AbstractStorageTestCase

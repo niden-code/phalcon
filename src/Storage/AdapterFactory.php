@@ -21,7 +21,6 @@ use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\RedisCluster;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Adapter\Weak;
-use Phalcon\Storage\Wip\Libmemcached;
 use Phalcon\Traits\Factory\FactoryTrait;
 
 /**
@@ -103,10 +102,10 @@ class AdapterFactory
     {
         return [
             'apcu'         => Apcu::class,
-//            'libmemcached' => Libmemcached::class,
+            //            'libmemcached' => Libmemcached::class,
             'memory'       => Memory::class,
             'redis'        => Redis::class,
-//            'rediscluster' => RedisCluster::class,
+            'rediscluster' => RedisCluster::class,
             'stream'       => Stream::class,
             'weak'         => Weak::class,
         ];

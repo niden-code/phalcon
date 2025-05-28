@@ -14,9 +14,6 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Storage;
 
 use ArrayObject;
-use Memcached as NativeMemcached;
-use Redis as NativeRedis;
-use RedisCluster as NativeRedisCluster;
 use Phalcon\Storage\Adapter\Apcu;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\Adapter\Redis;
@@ -24,6 +21,8 @@ use Phalcon\Storage\Adapter\RedisCluster;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Redis as NativeRedis;
+use RedisCluster as NativeRedisCluster;
 use SplObjectStorage;
 use SplQueue;
 use stdClass;
@@ -52,16 +51,16 @@ abstract class AbstractStorageTestCase extends AbstractUnitTestCase
                 null,               // GetAdapter
                 'ph-apcu-',         // Prefix
             ],
-//            [
-//                Libmemcached::class,
-//                getOptionsLibmemcached(),
-//                'memcached',
-//                'libmemcached',
-//                false,
-//                false,
-//                NativeMemcached::class,
-//                'ph-memc-',
-//            ],
+            //            [
+            //                Libmemcached::class,
+            //                getOptionsLibmemcached(),
+            //                'memcached',
+            //                'libmemcached',
+            //                false,
+            //                false,
+            //                NativeMemcached::class,
+            //                'ph-memc-',
+            //            ],
             [
                 Memory::class,
                 [],
@@ -80,18 +79,18 @@ abstract class AbstractStorageTestCase extends AbstractUnitTestCase
                 -1,
                 1,
                 NativeRedis::class,
-               'ph-reds-',
+                'ph-reds-',
             ],
-//            [
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                'redis',
-//                'rediscluster',
-//                -1,
-//                1,
-//                NativeRedisCluster::class,
-//                'ph-redc-',
-//            ],
+            [
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                'redis',
+                'rediscluster',
+                -1,
+                1,
+                NativeRedisCluster::class,
+                'ph-redc-',
+            ],
             [
                 Stream::class,
                 [
@@ -324,70 +323,70 @@ abstract class AbstractStorageTestCase extends AbstractUnitTestCase
                 ),
                 uniqid(),
             ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                null,
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                true,
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                false,
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                123456,
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                123.456,
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                uniqid(),
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                getOptionsRedisCluster(),
-//                new stdClass(),
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                array_merge(
-//                    getOptionsRedisCluster(),
-//                    [
-//                        'defaultSerializer' => 'Base64',
-//                    ]
-//                ),
-//                uniqid(),
-//            ],
-//            [
-//                'redis',
-//                RedisCluster::class,
-//                array_merge(
-//                    getOptionsRedisCluster(),
-//                    [
-//                        'persistent' => true,
-//                    ]
-//                ),
-//                uniqid(),
-//            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                null,
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                true,
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                false,
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                123456,
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                123.456,
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                uniqid(),
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                getOptionsRedisCluster(),
+            //                new stdClass(),
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                array_merge(
+            //                    getOptionsRedisCluster(),
+            //                    [
+            //                        'defaultSerializer' => 'Base64',
+            //                    ]
+            //                ),
+            //                uniqid(),
+            //            ],
+            //            [
+            //                'redis',
+            //                RedisCluster::class,
+            //                array_merge(
+            //                    getOptionsRedisCluster(),
+            //                    [
+            //                        'persistent' => true,
+            //                    ]
+            //                ),
+            //                uniqid(),
+            //            ],
             [
                 '',
                 Stream::class,
@@ -476,5 +475,4 @@ abstract class AbstractStorageTestCase extends AbstractUnitTestCase
             ],
         ];
     }
-
 }

@@ -13,17 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use ArrayObject;
-use Phalcon\Storage\Adapter\Apcu;
-use Phalcon\Storage\Adapter\Memory;
-use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Adapter\RedisCluster;
-use Phalcon\Storage\Adapter\Stream;
-use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Tests\Unit\Storage\AbstractStorageTestCase;
-use SplObjectStorage;
-use SplQueue;
 use stdClass;
 
 use function uniqid;
@@ -60,7 +51,7 @@ final class GetSetTest extends AbstractStorageTestCase
         $this->assertTrue($result);
 
         $expected = $value;
-        $actual = $adapter->get($key);
+        $actual   = $adapter->get($key);
         $this->assertEquals($expected, $actual);
 
         /**
