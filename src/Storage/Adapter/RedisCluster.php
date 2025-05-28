@@ -14,19 +14,52 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use Phalcon\Storage\Exception as StorageException;
-use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
-use Redis as RedisConsts;
 use RedisCluster as RedisService;
 use Throwable;
 
-use function defined;
-use function mb_strtolower;
-
 /**
- * Redis adapter
+ * RedisCluster adapter
  *
- * @property array $options
+ * You can create and connect to a cluster either by passing it one or more
+ * 'seed' nodes, or by defining these in redis.ini as a 'named' cluster.
+ *
+ * If you are connecting with the cluster by offering a name, that is
+ * configured in `redis.ini`:
+ *
+ * ```ini
+ * # In redis.ini
+ * redis.clusters.seeds = "mycluster[]=localhost:7000&test[]=localhost:7001"
+ * redis.clusters.timeout = "mycluster=5"
+ * redis.clusters.read_timeout = "mycluster=10"
+ * redis.clusters.auth = "mycluster=password"
+ * ```
+ *
+ * you can use `$options = ["name" => "mycluster"]`.
+ *
+ * If you don't have cluster seeds configured in your `redis.ini`, you should
+ * pass hosts as an array, eg.
+ * `$options = ["hosts" => ["a-host:7000", "b-host:7001"]]`.
+ *
+ * You can provide authentication data offering a string `user=password` or
+ * array `["user" => "name", "password" => "secret"]`.
+ *
+ * The `timeout` is the amount of time library will wait when connecting or
+ * writing to the cluster `readTimeout` is the amount of time library will
+ * wait for a result from the cluster.
+ *
+ * The `context` is an array of values used for ssl/tls stream context  options
+ * eg `["verify_peer" => 0, "local_cert" => "file:///path/to/cert.pem"]`
+ *
+ * @phpstan-template ConstructorOptions array{
+ *       name?: string | null,
+ *       hosts?: array,
+ *       timeout?: float,
+ *       readTimeout?: float,
+ *       persistent?: bool,
+ *       auth?: string|array,
+ *       context?: string
+ *  }
  */
 class RedisCluster extends Redis
 {
@@ -34,51 +67,6 @@ class RedisCluster extends Redis
      * @var string
      */
     protected string $prefix = 'ph-redc-';
-
-    /**
-     * You can create and connect to a cluster either by passing it one or more 'seed' nodes, or by defining
-     * these in redis.ini as a 'named' cluster.
-     *
-     * If you are connecting with the cluster by offering a name, that is configured in redis.ini:
-     *
-     *      ```
-     *      # In redis.ini
-     *      redis.clusters.seeds = "mycluster[]=localhost:7000&test[]=localhost:7001"
-     *      redis.clusters.timeout = "mycluster=5"
-     *      redis.clusters.read_timeout = "mycluster=10"
-     *      redis.clusters.auth = "mycluster=password"
-     *      ```
-     * you can use `$options = ["name" => "mycluster"]`.
-     *
-     * If you don't have cluster seeds configured in your redis.ini,
-     * you should pass hosts as an array, eg. `$options = ["hosts" => ["a-host:7000", "b-host:7001"]]`.
-     *
-     * You can provide authentication data offering a string `user=password` or
-     * array `["user" => "name", "password" => "secret"]`.
-     *
-     * The `timeout` is the amount of time library will wait when connecting or writing to the cluster
-     * `readTimeout` is the amount of time library will wait for a result from the cluster.
-     *
-     * The `context` is an array of values used for ssl/tls stream context
-     * options eg `["verify_peer" => 0, "local_cert" => "file:///path/to/cert.pem"]`
-     *
-     * @param SerializerFactory $factory
-     * @param array             $options {
-     *                                   name: string | null,
-     *                                   hosts: array,
-     *                                   timeout: float,
-     *                                   readTimeout: float,
-     *                                   persistent: bool,
-     *                                   auth: string|array,
-     *                                   context: string
-     *                                   }
-     *
-     * @throws SupportException
-     */
-    public function __construct(SerializerFactory $factory, array $options = [])
-    {
-        parent::__construct($factory, $options);
-    }
 
     /**
      * Flushes/clears the cache
@@ -118,18 +106,19 @@ class RedisCluster extends Redis
                     $options["auth"],
                     $options["context"]
                 );
-            } catch (Throwable $e) {
+            } catch (Throwable $ex) {
                 throw new StorageException(
                     sprintf(
                         "Could not connect to the Redis cluster server due to: %s",
-                        $e->getMessage()
+                        $ex->getMessage()
                     ),
-                    previous: $e
+                    0,
+                    $ex
                 );
             }
 
-            $connection->setOption(RedisConsts::OPT_PREFIX, $this->prefix);
-
+//            $connection->setOption(RedisConsts::OPT_PREFIX, $this->prefix);
+//
             $this->setSerializer($connection);
             $this->adapter = $connection;
         }
@@ -137,8 +126,12 @@ class RedisCluster extends Redis
         return $this->adapter;
     }
 
-
-    protected function getDefaultOptions($options): array
+    /**
+     * @param ConstructorOptions $options
+     *
+     * @return array
+     */
+    protected function getDefaultOptions(array $options): array
     {
         /**
          * Lets set some defaults and options here
@@ -152,46 +145,5 @@ class RedisCluster extends Redis
         $options["context"]     = $options["context"] ?? null;
 
         return $options;
-    }
-
-    /**
-     * Checks the serializer. If it is a supported one it is set, otherwise
-     * the custom one is set.
-     *
-     * @param RedisService $connection
-     *
-     * @throws SupportException
-     */
-    private function setSerializer(RedisService $connection): void
-    {
-        $map = [
-            'redis_none' => RedisConsts::SERIALIZER_NONE,
-            'redis_php'  => RedisConsts::SERIALIZER_PHP,
-        ];
-
-        /**
-         * In case IGBINARY or MSGPACK are not defined for previous versions
-         * of Redis
-         */
-        if (defined('\\Redis::SERIALIZER_IGBINARY')) {
-            $map['redis_igbinary'] = RedisConsts::SERIALIZER_IGBINARY;
-        }
-
-        if (defined('\\Redis::SERIALIZER_MSGPACK')) {
-            $map['redis_msgpack'] = RedisConsts::SERIALIZER_MSGPACK;
-        }
-
-        if (defined('\\Redis::SERIALIZER_JSON')) {
-            $map['redis_json'] = RedisConsts::SERIALIZER_JSON;
-        }
-
-        $serializer = mb_strtolower($this->defaultSerializer);
-
-        if (isset($map[$serializer])) {
-            $this->defaultSerializer = '';
-            $connection->setOption(RedisConsts::OPT_SERIALIZER, $map[$serializer]);
-        }
-
-        $this->initSerializer();
     }
 }
