@@ -16,7 +16,6 @@ namespace Phalcon\Mvc;
 use Phalcon\Di\AbstractInjectionAware;
 use Phalcon\Mvc\Url\Exception;
 use Phalcon\Mvc\Url\UrlInterface;
-use Phalcon\Parsers\Parser;
 
 use function http_build_query;
 use function is_array;
@@ -174,15 +173,7 @@ class Url extends AbstractInjectionAware implements UrlInterface
             /**
              * Replace the patterns by its variables
              */
-            /**
-             * @todo Check the implementation for this
-             */
-//            $uri = phalcon_replace_paths(
-//                $route->getPattern(),
-//                $route->getReversedPaths(),
-//                $uri
-//            );
-            $uri = Parser::replacePaths(
+            $uri = $this->replacePaths(
                 $route->getPattern(),
                 $route->getReversedPaths(),
                 $uri
@@ -232,11 +223,7 @@ class Url extends AbstractInjectionAware implements UrlInterface
     {
         if (null === $this->baseUri) {
             if (isset($_SERVER["PHP_SELF"])) {
-                /**
-                 * @todo Check the implementation for this
-                 */
-                // $uri = phalcon_get_uri($_SERVER["PHP_SELF"]);
-                $uri = $_SERVER["PHP_SELF"];
+                $uri = $this->getUri($_SERVER["PHP_SELF"]);
             } else {
                 $uri = null;
             }
@@ -369,5 +356,341 @@ class Url extends AbstractInjectionAware implements UrlInterface
         $this->staticBaseUri = $staticBaseUri;
 
         return $this;
+    }
+
+    /**
+     * Extract the part of a path that lies between the last two
+     * directory separators.
+     *
+     * Walk the string backwards. Find the last separator ("/" or "\\"), then
+     * the one before that and return the string between them.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function getUri(string $path): string
+    {
+        if (true === empty($path)) {
+            return '';
+        }
+
+        $length     = strlen($path);
+        $separators = 0;
+        $position   = 0;
+
+        /**
+         * Walk backwards
+         */
+        for ($counter = $length - 1; $counter >= 0; --$counter) {
+            $character = $path[$counter];
+            /**
+             * Find a separator
+             */
+            if ($character === '/' || $character === '\\') {
+                ++$separators;
+                /**
+                 * Found, store it
+                 */
+                if ($separators === 1) {
+                    $position = $counter;
+                } else {
+                    /**
+                     * Found the second one, return the string in between
+                     */
+                    $start  = $counter + 1;
+                    $length = $position - $counter - 1;
+
+                    return substr($path, $start, $length);
+                }
+            }
+        }
+
+        /**
+         * Default
+         */
+        return '';
+    }
+
+
+    /**
+     * Resolve a placeholder found in a pattern.
+     *
+     * @param bool    $named
+     * @param array   $paths
+     * @param array   $replacements
+     * @param int    &$position
+     * @param string  $cursor
+     * @param int     $markerPosition
+     *
+     * @return string|null
+     */
+    private function replaceMarker(
+        bool $named,
+        array $paths,
+        array $replacements,
+        int &$position,
+        string $cursor,
+        int $markerPosition
+    ): ?string {
+        /**
+         * Named placeholder
+         */
+        if (true === $named) {
+            /**
+             * The placeholder runs from $markerPosition (first char after
+             * "{” or “(”) up to the character just before the closing
+             * brace/parenthesis.
+             *
+             * The length is computed as:
+             *     length = cursor - marker - 1
+             *
+             * $cursor is the full pattern, $markerPosition is the start offset,
+             * and we already know the current parsing index ($cursorIdx) from
+             * the caller – but the caller passes us the *current* cursor
+             * pointer, so we can compute the length by scanning forward until
+             * we hit a non‑valid char or a ':' that separates a variable name.
+             *
+             * For simplicity we rely on the fact that the driver already knows
+             * the exact substring that belongs to the placeholder (it stops
+             * when the closing brace/parenthesis is encountered). Therefore we
+             * can extract the raw text between the braces directly from the
+             * original pattern.
+             *
+             * The driver supplies $markerPosition as the offset of the
+             * opening brace/parenthesis.  The closing position is the current
+             * parsing index ($cursorIdx) which the driver does not expose;
+             * however, the driver only calls this function *after* it has
+             * verified that the placeholder is syntactically correct, so we
+             * can safely take the substring from $markerPosition + 1 up to the
+             * next non‑identifier character.
+             */
+            $raw = substr($cursor, $markerPosition + 1);
+
+            /**
+             * Find the first character that terminates the identifier:
+             *     - end of string
+             *     - a character that is not a‑z, A‑Z, 0‑9, '-', '_' or ':'
+             */
+            if (preg_match('/^([a-zA-Z][a-zA-Z0-9\-\_:]*)/', $raw, $matches)) {
+                $identifier = $matches[1];
+            } else {
+                /**
+                 * Invalid identifier. Advance the position
+                 */
+                ++$position;
+
+                return null;
+            }
+
+            /**
+             * If the identifier contains a colon, split it (e.g. "var:sub")
+             */
+            if (str_contains($identifier, ':')) {
+                [$identifier] = explode(':', $identifier, 2);
+            }
+
+            /**
+             * Look up the identifier
+             */
+            if (array_key_exists($identifier, $replacements)) {
+                ++$position;
+
+                return (string)$replacements[$identifier];
+            }
+
+            /**
+             * Not found - advance position
+             */
+            ++$position;
+
+            return null;
+        }
+
+        /**
+         * Positional placeholder. Position is 1 based, PHP arrays are 0 based
+         */
+        $idx = $position - 1;
+
+        if (array_key_exists($idx, $paths)) {
+            $value = $paths[$idx];
+
+            /**
+             * Replace when the value is a string and it exists in the
+             * $replacements array.
+             */
+            if (is_string($value) && array_key_exists($value, $replacements)) {
+                ++$position;
+
+                return (string)$replacements[$value];
+            }
+        }
+
+        /**
+         * No match – advance position
+         */
+        ++$position;
+
+        return null;
+    }
+
+    /**
+     * Convert a routing pattern by replacing placeholders with values from
+     * $paths and $replacements.
+     *
+     * @param string $pattern
+     * @param array  $paths
+     * @param array  $replacements
+     *
+     * @return string|false|null
+     */
+    private function replacePaths(string $pattern, array $paths, array $replacements)
+    {
+        if (true === empty($pattern)) {
+            return false;
+        }
+
+        $counter            = 0;          // index inside $pattern
+        $position           = 1;          // 1‑based placeholder position
+        $bracketCount       = 0;          // curly‑brace nesting level
+        $parenCount         = 0;          // parentheses nesting level
+        $intermediate       = 0;          // length of current placeholder content
+        $lookingPlaceholder = false;      // true when we are inside a ":name" placeholder
+        $markerPosition     = null;       // start offset of the current placeholder
+        $result             = '';         // builds the final string
+
+        // Skip leading slash
+        if ($pattern[0] === '/') {
+            $counter = 1;
+        }
+
+        /**
+         * Empty array - return without leading slash
+         */
+        if (empty($paths)) {
+            return substr($pattern, $counter);
+        }
+
+        $length = strlen($pattern);
+
+        for (; $counter < $length; ++$counter) {
+            $character = $pattern[$counter];
+
+            /**
+             * Curly braces
+             */
+            if ($parenCount === 0 && !$lookingPlaceholder) {
+                if ($character === '{') {
+                    if ($bracketCount === 0) {
+                        $markerPosition = $counter;
+                        $intermediate   = 0;
+                    }
+                    ++$bracketCount;
+                } elseif ($character === '}') {
+                    --$bracketCount;
+                    if ($intermediate > 0 && $bracketCount === 0) {
+                        /**
+                         * Replace the named placeholder
+                         */
+                        $replacement = $this->replaceMarker(
+                            true,
+                            $paths,
+                            $replacements,
+                            $position,
+                            $pattern,
+                            $markerPosition
+                        );
+                        if ($replacement !== null) {
+                            $result .= $replacement;
+                        }
+
+                        continue;
+                    }
+                }
+            }
+
+            /**
+             * Parentheses
+             */
+            if ($bracketCount === 0 && !$lookingPlaceholder) {
+                if ($character === '(') {
+                    if ($parenCount === 0) {
+                        $markerPosition = $counter;
+                        $intermediate   = 0;
+                    }
+                    ++$parenCount;
+                } elseif ($character === ')') {
+                    --$parenCount;
+                    if ($intermediate > 0 && $parenCount === 0) {
+                        /**
+                         * Replace the unnamed placeholder
+                         */
+                        $replacement = $this->replaceMarker(
+                            false,
+                            $paths,
+                            $replacements,
+                            $position,
+                            $pattern,
+                            $markerPosition
+                        );
+                        if ($replacement !== null) {
+                            $result .= $replacement;
+                        }
+
+                        continue;
+                    }
+                }
+            }
+
+            /**
+             * Colon
+             */
+            if ($bracketCount === 0 && $parenCount === 0) {
+                if ($lookingPlaceholder) {
+                    if ($intermediate > 0) {
+                        // End of placeholder when we encounter a non‑letter or EOS
+                        $isEnd = ($character < 'a' || $character > 'z' || $counter === $length - 1);
+                        if ($isEnd) {
+                            /**
+                             * Replace the unnamed placeholder
+                             */
+                            $replacement = $this->replaceMarker(
+                                false,
+                                $paths,
+                                $replacements,
+                                $position,
+                                $pattern,
+                                $markerPosition
+                            );
+                            if ($replacement !== null) {
+                                $result .= $replacement;
+                            }
+                            $lookingPlaceholder = false;
+
+                            continue;
+                        }
+                    }
+                } else {
+                    if ($character === ':') {
+                        $lookingPlaceholder = true;
+                        $markerPosition     = $counter;
+                        $intermediate       = 0;
+
+                        continue;
+                    }
+                }
+            }
+
+            /**
+             * Character count of the placeholder
+             */
+            if ($bracketCount > 0 || $parenCount > 0 || $lookingPlaceholder) {
+                ++$intermediate;
+            } else {
+                $result .= $character;
+            }
+        }
+
+        return $result;
     }
 }
