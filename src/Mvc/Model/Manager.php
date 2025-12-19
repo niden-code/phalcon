@@ -24,7 +24,6 @@ use Phalcon\Mvc\Model\Query\BuilderInterface;
 use Phalcon\Mvc\Model\Query\StatusInterface;
 use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Mvc\ModelInterface;
-use Phalcon\Parsers\Parser;
 use Phalcon\Support\Settings;
 use Phalcon\Traits\Helper\Str\UncamelizeTrait;
 use ReflectionClass;
@@ -237,7 +236,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
      */
     public function __destruct()
     {
-        Parser::ormDestroyCache();
+//        Parser::ormDestroyCache();
 
         Query::clean();
     }
