@@ -56,7 +56,32 @@
       "Phalcon\\Tests\\Modules\\Backend\\Tasks\\": "tests/_data/fixtures/modules/backend/tasks/",
       "Phalcon\\Tests\\Modules\\Frontend\\": "tests/_data/fixtures/modules/frontend/",
       "Phalcon\\Tests\\Modules\\Frontend\\Controllers\\": "tests/_data/fixtures/modules/frontend/controllers/"
-    }
+    },
+    "exclude-from-classmap": [
+      "tests/unit/Mvc/Dispatcher/Helper/DispatcherTestDefaultNoNamespaceController.php",
+      "tests/_data/fixtures/Annotations/TestClass.php",
+      "tests/_data/fixtures/Annotations/AnnotationsTestClass.php",
+      "tests/_data/fixtures/Annotations/TestInvalid.php",
+      "tests/_data/fixtures/Annotations/TestClassNs.php",
+      "tests/_data/fixtures/Annotations/AnnotationsTestInvalid.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Adapter/Mongo.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Adapter/Blackhole.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Adapter/Memcached.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Adapter/Redis.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Adapter/File.inc",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Example/Example.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Base/Any.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Plugin/Another.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Engines/Gasoline.php",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Engines/Alcohol.inc",
+      "tests/_data/fixtures/Loader/Example/Namespaces/Engines/Diesel.php",
+      "tests/_data/fixtures/Loader/Example/Folders/Types/Integer.php",
+      "tests/_data/fixtures/Loader/Example/Folders/Dialects/Sqlite.php",
+      "tests/_data/fixtures/Loader/Example/Events/LoaderEvent.php",
+      "tests/_data/fixtures/Loader/Example/Classes/One.php",
+      "tests/_data/fixtures/Loader/Example/Classes/Two.php",
+      "tests/_data/fixtures/controllers/NamespacedAnnotationController.php"
+    ]
   },
   "config": {
     "optimize-autoloader": true,
