@@ -176,14 +176,16 @@ class TagFactory
      */
     public function newInstance(string $name)
     {
-        return $this->getCachedInstance($name, $this->escaper);
+        $doctype = $this->newInstance('doctype');
+
+        return $this->getCachedInstance($name, $this->escaper, $doctype);
     }
 
     /**
      * @param string   $name
      * @param callable $callable
      */
-    public function set(string $name, $callable): void
+    public function set(string $name, callable $callable): void
     {
         $this->mapper[$name] = $callable;
         unset($this->instances[$name]);
