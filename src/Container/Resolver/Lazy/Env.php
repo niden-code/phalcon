@@ -80,12 +80,16 @@ class Env extends Lazy
      */
     protected function getEnv(): string
     {
-        $envs = array_merge($_ENV, getenv());
+        if (array_key_exists($this->varname, $_ENV)) {
+            return $_ENV[$this->varname];
+        }
 
-        if (!array_key_exists($this->varname, $envs)) {
+        $value = getenv($this->varname);
+
+        if ($value === false) {
             throw NotFound::envNotDefined($this->varname);
         }
 
-        return $envs[$this->varname];
+        return $value;
     }
 }

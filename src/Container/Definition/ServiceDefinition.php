@@ -33,12 +33,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Definition;
 
+use Phalcon\Container\Container;
 use Phalcon\Container\Exception\Invalid;
 use ReflectionClass;
 use ReflectionException;
 
 use function in_array;
-use function method_exists;
 
 class ServiceDefinition
 {
@@ -61,6 +61,7 @@ class ServiceDefinition
     protected bool $frozen      = false;
     protected bool $isCacheable = false;
     protected string $lifetime  = ServiceLifetime::SCOPED;
+    protected ReflectionClass|null $reflectionClass = null;
     /**
      * @var array<array-key, string>
      */
@@ -69,7 +70,7 @@ class ServiceDefinition
     public function __construct(
         protected string $serviceName,
         protected string $type,
-        protected mixed $raw = null
+        protected mixed $raw = null,
     ) {
     }
 
@@ -105,10 +106,9 @@ class ServiceDefinition
             $this->tags[] = $tag;
         }
 
-        if (
-            $this->container !== null
-            && method_exists($this->container, 'setTag')
-        ) {
+        /** @var Container|null $container */
+        $container = $this->container;
+        if ($container !== null) {
             $this->container->setTag($tag, $this->serviceName);
         }
 
@@ -128,9 +128,9 @@ class ServiceDefinition
         if ($this->hasFactory()) {
             $instance = ($this->factory)($container);
         } else {
-            $class      = $this->class ?? $this->serviceName;
             $args       = $this->resolveArgs($container, $this->constructorArgs);
-            $reflection = new ReflectionClass($class);
+            $reflection = $this->reflectionClass ??
+                new ReflectionClass($this->class ?? $this->serviceName);
             $instance   = $reflection->newInstanceArgs($args);
         }
 
@@ -155,23 +155,20 @@ class ServiceDefinition
             return;
         }
 
+        /** @var Container $container */
         if (
             $this->type === DefinitionType::STRING &&
-            method_exists($container, 'isAutowireEnabled') &&
             $container->isAutowireEnabled()
         ) {
-            $class       = $this->class ?? $this->serviceName;
-            $reflection  = new ReflectionClass($class);
-            $constructor = $reflection->getConstructor();
-            $params      = $constructor !== null ? $constructor->getParameters() : [];
+            $this->reflectionClass = new ReflectionClass($this->class ?? $this->serviceName);
+            $constructor           = $this->reflectionClass->getConstructor();
+            $params                = $constructor !== null ? $constructor->getParameters() : [];
 
-            if (method_exists($container, 'getResolver')) {
-                $this->constructorArgs = $container->getResolver()->resolveParameters(
-                    $container,
-                    $params,
-                    $this->arguments
-                );
-            }
+            $this->constructorArgs = $container->getResolver()->resolveParameters(
+                $container,
+                $params,
+                $this->arguments,
+            );
         } elseif ($this->type === DefinitionType::STRING && !empty($this->arguments)) {
             $this->constructorArgs = $this->arguments;
         }

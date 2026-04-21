@@ -9,7 +9,7 @@
     }
   },
   "storage.driver": "xml",
-  "storage.xml_storage_path": "./tests/benchmarks/",
+  "storage.xml_storage_path": "./tests/benchmarks/store/",
   "report.generators": {
     "phalcon": {
       "generator": "composite",

@@ -34,6 +34,7 @@ declare(strict_types=1);
 namespace Phalcon\Container\Resolver;
 
 use Closure;
+use Phalcon\Container\Container;
 use Phalcon\Container\Exception\Invalid;
 use Phalcon\Container\Resolver\Lazy\Lazy;
 use Phalcon\Container\Resolver\ResolverService;
@@ -48,10 +49,14 @@ use ReflectionType;
 use function array_key_exists;
 use function call_user_func_array;
 use function class_exists;
-use function method_exists;
 
 class Resolver implements ResolverService
 {
+    /**
+     * @var array<string, bool>
+     */
+    private array $resolvableCache = [];
+
     /**
      * Is this a resolvable class?
      *
@@ -61,11 +66,16 @@ class Resolver implements ResolverService
      */
     public function isResolvableClass(string $className): bool
     {
-        if (!class_exists($className)) {
-            return false;
+        if (isset($this->resolvableCache[$className])) {
+            return $this->resolvableCache[$className];
         }
 
-        return (new ReflectionClass($className))->isInstantiable();
+        if (!class_exists($className)) {
+            return $this->resolvableCache[$className] = false;
+        }
+
+        return $this->resolvableCache[$className] =
+            (new ReflectionClass($className))->isInstantiable();
     }
 
     /**
@@ -87,8 +97,13 @@ class Resolver implements ResolverService
             ? $callable
             : Closure::fromCallable($callable);
         $reflection = new ReflectionFunction($closure);
-        $params     = $reflection->getParameters();
-        $resolved   = $this->resolveParameters($container, $params, $arguments);
+
+        if ($reflection->getNumberOfParameters() === 0) {
+            return call_user_func_array($callable, []);
+        }
+
+        $params   = $reflection->getParameters();
+        $resolved = $this->resolveParameters($container, $params, $arguments);
 
         return call_user_func_array($callable, $resolved);
     }
@@ -161,7 +176,8 @@ class Resolver implements ResolverService
         if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
             $typeName = $type->getName();
 
-            if (method_exists($container, 'has') && $container->has($typeName)) {
+            /** @var Container $container */
+            if ($container->has($typeName)) {
                 return $container->get($typeName);
             }
         }

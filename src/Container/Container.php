@@ -49,8 +49,8 @@ use Phalcon\Di\InjectionAwareInterface;
 use ReflectionException;
 
 use function array_key_exists;
+use function array_keys;
 use function class_exists;
-use function in_array;
 use function is_object;
 
 class Container implements Collection
@@ -76,13 +76,17 @@ class Container implements Collection
      * @var array<string, Processor>
      */
     protected array $processors = [];
+    /**
+     * @var array<string, string>
+     */
+    protected array $resolvedAliasCache = [];
     protected Resolver $resolver;
     /**
      * @var array<string, ServiceDefinition>
      */
     protected array $services = [];
     /**
-     * @var array<string, list<string>>
+     * @var array<string, array<string, bool>>
      */
     protected array $tags = [];
 
@@ -150,11 +154,11 @@ class Container implements Collection
     {
         $name = $this->resolveAlias($name);
 
-        if (array_key_exists($name, $this->instances)) {
+        if (isset($this->instances[$name])) {
             throw Invalid::cannotExtendResolved($name);
         }
 
-        if (!array_key_exists($name, $this->services)) {
+        if (!isset($this->services[$name])) {
             throw NotFound::serviceNotFound($name);
         }
 
@@ -178,7 +182,7 @@ class Container implements Collection
             return $this->resolveParameter($name);
         }
 
-        if (array_key_exists($name, $this->instances)) {
+        if (isset($this->instances[$name])) {
             return $this->instances[$name];
         }
 
@@ -206,10 +210,9 @@ class Container implements Collection
      */
     public function getByTag(string $tag): array
     {
-        $names  = $this->tags[$tag] ?? [];
         $result = [];
 
-        foreach ($names as $serviceName) {
+        foreach (array_keys($this->tags[$tag] ?? []) as $serviceName) {
             $result[] = $this->get($serviceName);
         }
 
@@ -226,7 +229,7 @@ class Container implements Collection
      */
     public function getDefinition(string $name): ServiceDefinition
     {
-        if (!array_key_exists($name, $this->services)) {
+        if (!isset($this->services[$name])) {
             throw NotFound::serviceNotFound($name);
         }
 
@@ -243,7 +246,7 @@ class Container implements Collection
      */
     public function getInstance(string $name): object
     {
-        if (!array_key_exists($name, $this->instances)) {
+        if (!isset($this->instances[$name])) {
             throw NotFound::instanceNotFound($name);
         }
 
@@ -260,7 +263,7 @@ class Container implements Collection
      */
     public function getParameter(string $name): mixed
     {
-        if (!array_key_exists($name, $this->parameters)) {
+        if (!isset($this->parameters[$name])) {
             throw NotFound::parameterNotFound($name);
         }
 
@@ -311,8 +314,8 @@ class Container implements Collection
 
         if (
             array_key_exists($name, $this->parameters)
-            || array_key_exists($name, $this->instances)
-            || array_key_exists($name, $this->services)
+            || isset($this->instances[$name])
+            || isset($this->services[$name])
         ) {
             return true;
         }
@@ -329,7 +332,7 @@ class Container implements Collection
      */
     public function hasAlias(string $name): bool
     {
-        return array_key_exists($name, $this->aliases);
+        return isset($this->aliases[$name]);
     }
 
     /**
@@ -341,7 +344,7 @@ class Container implements Collection
      */
     public function hasDefinition(string $name): bool
     {
-        return array_key_exists($name, $this->services);
+        return isset($this->services[$name]);
     }
 
     /**
@@ -353,7 +356,7 @@ class Container implements Collection
      */
     public function hasInstance(string $name): bool
     {
-        return array_key_exists($name, $this->instances);
+        return isset($this->instances[$name]);
     }
 
     /**
@@ -452,7 +455,8 @@ class Container implements Collection
     public function setAlias(string $name, string $alias): static
     {
         $this->detectCircularAlias($alias, $name);
-        $this->aliases[$alias] = $name;
+        $this->aliases[$alias]    = $name;
+        $this->resolvedAliasCache = [];
 
         return $this;
     }
@@ -528,13 +532,7 @@ class Container implements Collection
      */
     public function setTag(string $tag, string $serviceName): void
     {
-        if (!array_key_exists($tag, $this->tags)) {
-            $this->tags[$tag] = [];
-        }
-
-        if (!in_array($serviceName, $this->tags[$tag], true)) {
-            $this->tags[$tag][] = $serviceName;
-        }
+        $this->tags[$tag][$serviceName] = true;
     }
 
     /**
@@ -547,6 +545,7 @@ class Container implements Collection
     public function unsetAlias(string $name): void
     {
         unset($this->aliases[$name]);
+        $this->resolvedAliasCache = [];
     }
 
     /**
@@ -620,11 +619,11 @@ class Container implements Collection
                 throw Invalid::circularAlias($alias);
             }
 
-            if (array_key_exists($current, $seen)) {
+            if (isset($seen[$current])) {
                 break;
             }
 
-            if (!array_key_exists($current, $this->aliases)) {
+            if (!isset($this->aliases[$current])) {
                 break;
             }
 
@@ -665,7 +664,7 @@ class Container implements Collection
      */
     private function resolve(string $name, bool $cache): mixed
     {
-        if (!array_key_exists($name, $this->services)) {
+        if (!isset($this->services[$name])) {
             if ($this->autowire && class_exists($name)) {
                 $this->set($name, $name);
             } else {
@@ -702,11 +701,15 @@ class Container implements Collection
      */
     private function resolveAlias(string $name): string
     {
+        if (isset($this->resolvedAliasCache[$name])) {
+            return $this->resolvedAliasCache[$name];
+        }
+
         $seen    = [];
         $current = $name;
 
-        while (array_key_exists($current, $this->aliases)) {
-            if (array_key_exists($current, $seen)) {
+        while (isset($this->aliases[$current])) {
+            if (isset($seen[$current])) {
                 throw Invalid::circularAlias($name);
             }
 
@@ -714,7 +717,7 @@ class Container implements Collection
             $current        = $this->aliases[$current];
         }
 
-        return $current;
+        return $this->resolvedAliasCache[$name] = $current;
     }
 
     /**
