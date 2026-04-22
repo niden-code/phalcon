@@ -148,6 +148,8 @@ class Manager implements ManagerInterface, InjectionAwareInterface
             if (true === $connection->isUnderTransaction()) {
                 $connection->commit();
             }
+
+            $this->collectTransaction($transaction);
         }
     }
 
@@ -372,7 +374,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface
 
         foreach ($this->transactions as $managedTransaction) {
             if ($managedTransaction != $transaction) {
-                $newTransactions[] = $transaction;
+                $newTransactions[] = $managedTransaction;
             } else {
                 $this->number--;
             }
