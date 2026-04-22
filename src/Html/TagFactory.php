@@ -125,16 +125,6 @@ class TagFactory
     use FactoryTrait;
 
     /**
-     * @var EscaperInterface
-     */
-    private EscaperInterface $escaper;
-
-    /**
-     * @var ResponseInterface|null
-     */
-    private ?ResponseInterface $response;
-
-    /**
      * TagFactory constructor.
      *
      * @param EscaperInterface       $escaper
@@ -142,13 +132,10 @@ class TagFactory
      * @param ResponseInterface|null $response
      */
     public function __construct(
-        EscaperInterface $escaper,
+        private readonly EscaperInterface $escaper,
         array $services = [],
-        ?ResponseInterface $response = null
+        private readonly ?ResponseInterface $response = null
     ) {
-        $this->escaper  = $escaper;
-        $this->response = $response;
-
         $this->init($services);
     }
 
