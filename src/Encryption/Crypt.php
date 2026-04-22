@@ -261,7 +261,7 @@ class Crypt implements CryptInterface
      */
     public function decryptBase64(
         string $input,
-        mixed $key = null,
+        string|null $key = null,
         bool $safe = false
     ): string {
         if (true === $safe) {
@@ -344,7 +344,7 @@ class Crypt implements CryptInterface
      */
     public function encryptBase64(
         string $input,
-        mixed $key = null,
+        string|null $key = null,
         bool $safe = false
     ): string {
         if (true === $safe) {

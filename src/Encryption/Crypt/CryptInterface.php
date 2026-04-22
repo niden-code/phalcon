@@ -31,12 +31,12 @@ interface CryptInterface
     /**
      * Decrypt a text that is coded as a base64 string
      *
-     * @param string     $input
-     * @param mixed|null $key
+     * @param string      $input
+     * @param string|null $key
      *
      * @return string
      */
-    public function decryptBase64(string $input, mixed $key = null): string;
+    public function decryptBase64(string $input, string|null $key = null): string;
 
     /**
      * Encrypts a text
@@ -51,12 +51,12 @@ interface CryptInterface
     /**
      * Encrypts a text returning the result as a base64 string
      *
-     * @param string     $input
-     * @param mixed|null $key
+     * @param string      $input
+     * @param string|null $key
      *
      * @return string
      */
-    public function encryptBase64(string $input, mixed $key = null): string;
+    public function encryptBase64(string $input, string|null $key = null): string;
 
     /**
      * Returns authentication data
