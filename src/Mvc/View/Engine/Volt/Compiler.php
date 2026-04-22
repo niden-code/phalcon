@@ -1930,48 +1930,6 @@ class Compiler implements InjectionAwareInterface
             }
 
             /**
-             * Check if it's a method in Phalcon\Tag
-             *
-             * @todo This needs a lot of refactoring and will break a lot of applications if removed
-             */
-            if ($name === "preload") {
-                return '$this->preload(' . $arguments . ")";
-            }
-
-            /**
-             * Check if it's a method in Phalcon\Tag
-             *
-             * @todo This needs a lot of refactoring and will break a lot of applications if removed
-             */
-            $method       = lcfirst($this->toCamelize($name));
-            $arrayHelpers = [
-                'link_to'        => true,
-                'image'          => true,
-                'form_legacy'    => true,
-                'submit_button'  => true,
-                'radio_field'    => true,
-                'check_field'    => true,
-                'file_field'     => true,
-                'hidden_field'   => true,
-                'password_field' => true,
-                'text_area'      => true,
-                'text_field'     => true,
-                'email_field'    => true,
-                'date_field'     => true,
-                'tel_field'      => true,
-                'numeric_field'  => true,
-                'image_input'    => true,
-            ];
-
-            if (method_exists("Phalcon\\Tag", $method)) {
-                if (isset($arrayHelpers[$name])) {
-                    return "\Phalcon\Tag::" . $method . "([" . $arguments . "])";
-                }
-
-                return "\Phalcon\Tag::" . $method . "(" . $arguments . ")";
-            }
-
-            /**
              * These are for the TagFactory
              */
             if (null !== $this->container && true === $this->container->has("tag")) {

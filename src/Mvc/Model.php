@@ -370,6 +370,21 @@ abstract class Model extends AbstractInjectionAware implements
             }
 
             /**
+             * Return an already-loaded single model for non-reusable relations to
+             * avoid overwriting modifications made to the object between accesses.
+             * Resultsets (hasMany) are never returned from this cache because they
+             * can go stale after external deletes; reusable relations delegate
+             * caching to the models manager.
+             */
+            if (
+                isset($this->related[$lowerProperty]) &&
+                !$relation->isReusable() &&
+                $this->related[$lowerProperty] instanceof ModelInterface
+            ) {
+                return $this->related[$lowerProperty];
+            }
+
+            /**
              * Get the related records
              */
             return $this->getRelated($lowerProperty);

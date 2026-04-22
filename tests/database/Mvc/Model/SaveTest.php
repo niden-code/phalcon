@@ -25,6 +25,7 @@ use Phalcon\Tests\Support\Models\Customers;
 use Phalcon\Tests\Support\Models\CustomersDefaults;
 use Phalcon\Tests\Support\Models\CustomersKeepSnapshots;
 use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesHasOneNotReusable;
 use Phalcon\Tests\Support\Models\InvoicesKeepSnapshots;
 use Phalcon\Tests\Support\Models\InvoicesSchema;
 use Phalcon\Tests\Support\Models\InvoicesValidationFails;
@@ -376,6 +377,37 @@ final class SaveTest extends AbstractDatabaseTestCase
     /**
      * Tests Phalcon\Mvc\Model\ :: save() with property source
      *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-21
+     *
+     * @issue  15554
+     * @group  mysql
+     */
+    public function testMvcModelSaveMultipleChangedRelationValues(): void
+    {
+        /** @var PDO $connection */
+        $connection = self::getConnection();
+
+        $invoicesMigration = new InvoicesMigration($connection);
+        $invoicesMigration->insert(77, 1, 0, uniqid('inv-', true));
+
+        $customersMigration = new CustomersMigration($connection);
+        $customersMigration->insert(1, 1, 'firstName', 'lastName');
+
+        $invoice = InvoicesHasOneNotReusable::findFirst(77);
+
+        $invoice->customer->cst_name_first  = 'newFirstName';
+        $invoice->customer->cst_status_flag = 0;
+
+        $this->assertTrue($invoice->save());
+
+        $customer = Customers::findFirst(1);
+
+        $this->assertSame('newFirstName', $customer->cst_name_first);
+        $this->assertSame(0, (int) $customer->cst_status_flag);
+    }
+
+    /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-11-16
      * @issue  #11922
