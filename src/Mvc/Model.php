@@ -43,13 +43,15 @@ use Phalcon\Mvc\Model\TransactionInterface;
 use Phalcon\Mvc\Model\ValidationFailed;
 use Phalcon\Support\Collection;
 use Phalcon\Support\Collection\CollectionInterface;
+use Phalcon\Support\Helper\Str\Camelize;
+use Phalcon\Support\Helper\Str\Uncamelize;
 use Phalcon\Support\Settings;
-use Phalcon\Traits\Helper\Str\CamelizeTrait;
-use Phalcon\Traits\Helper\Str\UncamelizeTrait;
 use Psr\EventDispatcher\StoppableEventInterface;
 use Psr\Log\LoggerInterface;
 use Serializable;
 use Throwable;
+
+use TypeError;
 
 use function array_intersect;
 use function array_key_exists;
@@ -120,9 +122,6 @@ abstract class Model extends AbstractInjectionAware implements
     Serializable,
     JsonSerializable
 {
-    use CamelizeTrait;
-    use UncamelizeTrait;
-
     public const DIRTY_STATE_DETACHED   = 2;
     public const DIRTY_STATE_PERSISTENT = 0;
     public const DIRTY_STATE_TRANSIENT  = 1;
@@ -393,7 +392,7 @@ abstract class Model extends AbstractInjectionAware implements
         /**
          * Check if the property has getters
          */
-        $method = "get" . $this->toCamelize($property);
+        $method = "get" . (new Camelize())($property);
 
         if (method_exists($this, $method)) {
             return $this->$method();
@@ -436,7 +435,7 @@ abstract class Model extends AbstractInjectionAware implements
             $result = true;
         } else {
             // If this is a property
-            $method = "get" . $this->toCamelize($property);
+            $method = "get" . (new Camelize())($property);
 
             $result = method_exists($this, $method);
         }
@@ -1096,7 +1095,7 @@ abstract class Model extends AbstractInjectionAware implements
 
             if (!is_array($columnMap)) {
                 if (!$disableSetters) {
-                    $setter = "set" . self::staticToCamelize($key);
+                    $setter = "set" . (new Camelize())($key);
                     if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                         $instance->$setter($value);
                         continue;
@@ -1105,7 +1104,7 @@ abstract class Model extends AbstractInjectionAware implements
 
                 try {
                     $instance->$key = $value;
-                } catch (\TypeError) {
+                } catch (TypeError) {
                     // Typed non-nullable property cannot accept null – skip
                 }
 
@@ -1149,7 +1148,7 @@ abstract class Model extends AbstractInjectionAware implements
 
             if (!is_array($attribute)) {
                 if (!$disableSetters) {
-                    $setter = "set" . self::staticToCamelize($attribute);
+                    $setter = "set" . (new Camelize())($attribute);
                     if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                         $instance->$setter($value);
                         continue;
@@ -1158,7 +1157,7 @@ abstract class Model extends AbstractInjectionAware implements
 
                 try {
                     $instance->$attribute = $value;
-                } catch (\TypeError) {
+                } catch (TypeError) {
                     // Typed non-nullable property cannot accept null – skip
                 }
 
@@ -1196,7 +1195,7 @@ abstract class Model extends AbstractInjectionAware implements
             $data[$key]     = $castValue;
 
             if (!$disableSetters) {
-                $setter = "set" . self::staticToCamelize($attributeName);
+                $setter = "set" . (new Camelize())($attributeName);
                 if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                     $instance->$setter($castValue);
                     continue;
@@ -1205,7 +1204,7 @@ abstract class Model extends AbstractInjectionAware implements
 
             try {
                 $instance->$attributeName = $castValue;
-            } catch (\TypeError) {
+            } catch (TypeError) {
                 // Typed non-nullable property cannot accept null – skip
             }
         }
@@ -3561,7 +3560,7 @@ abstract class Model extends AbstractInjectionAware implements
             /**
              * Check if there is a getter for this property
              */
-            $method = "get" . $this->toCamelize($attributeField);
+            $method = "get" . (new Camelize())($attributeField);
 
             /**
              * Do not use the getter if the field name is `source` (getSource)
@@ -3675,7 +3674,7 @@ abstract class Model extends AbstractInjectionAware implements
                      */
                     try {
                         $this->$key = $value;
-                    } catch (\TypeError) {
+                    } catch (TypeError) {
                         // Incompatible value for typed property – leave as-is
                     }
                 }
@@ -5608,7 +5607,7 @@ abstract class Model extends AbstractInjectionAware implements
                 /**
                  * Get the possible real method name
                  */
-                $field = self::staticToUncamelize($extraMethod);
+                $field = (new Uncamelize())($extraMethod);
 
                 if (!isset($attributes[$field])) {
                     throw new Exception(
@@ -5704,7 +5703,7 @@ abstract class Model extends AbstractInjectionAware implements
         ];
 
 
-        $possibleSetter = "set" . $this->toCamelize($property);
+        $possibleSetter = "set" . (new Camelize())($property);
 
         if (!method_exists($this, $possibleSetter)) {
             return false;
