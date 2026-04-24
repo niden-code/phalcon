@@ -55,6 +55,7 @@ final class ListTablesTest extends AbstractDatabaseTestCase
             'photo',
             'songs',
             'stuff',
+            'table_with_string_field',
             'table_with_uuid_primary',
         ];
         $actual   = $mysql->listTables($schema);

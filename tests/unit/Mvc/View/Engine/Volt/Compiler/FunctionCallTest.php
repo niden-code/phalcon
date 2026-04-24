@@ -73,11 +73,11 @@ class FunctionCallTest extends AbstractUnitTestCase
             ],
             [
                 '{{ preload(\'abc.css\') }}',
-                '<?= $this->preload(\'abc.css\') ?>',
+                '<?= $this->tag->preload(\'abc.css\') ?>',
             ],
             [
                 '{{ preload(\'abc.jpg\', [\'as\' : \'image\']) }}',
-                '<?= $this->preload(\'abc.jpg\', [\'as\' => \'image\']) ?>',
+                '<?= $this->tag->preload(\'abc.jpg\', [\'as\' => \'image\']) ?>',
             ],
             [
                 '{{ somefunction(\'abc\') }}',

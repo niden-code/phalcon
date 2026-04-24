@@ -131,6 +131,8 @@ class PdoResult implements ResultInterface
      */
     public function execute(): bool
     {
+        $this->rowCount = null;
+
         return $this->pdoStatement->execute();
     }
 

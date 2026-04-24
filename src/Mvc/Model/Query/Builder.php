@@ -1177,6 +1177,12 @@ class Builder implements BuilderInterface, InjectionAwareInterface
      */
     public function groupBy(mixed $group): BuilderInterface
     {
+        if ($group === null) {
+            $this->group = [];
+
+            return $this;
+        }
+
         if (is_string($group)) {
             if (str_contains($group, ",")) {
                 $group = str_replace(" ", "", $group);

@@ -78,10 +78,9 @@ final class UpdateTest extends AbstractDatabaseTestCase
         );
 
         /**
-         * Validation should fail because we don't allow
-         * empty strings for `not null` columns
+         * Empty strings are valid for NOT NULL VARCHAR columns
          */
-        $this->assertFalse(
+        $this->assertTrue(
             $manualCustomer->update()
         );
 

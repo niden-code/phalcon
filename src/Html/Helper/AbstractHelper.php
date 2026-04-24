@@ -156,10 +156,14 @@ abstract class AbstractHelper
         $result = '';
         foreach ($attributes as $key => $value) {
             if (is_string($key) && null !== $value) {
-                $result .= $key
-                    . '="'
-                    . $this->escaper->attributes($value)
-                    . '" ';
+                if (true === $value) {
+                    $result .= $key . ' ';
+                } else {
+                    $result .= $key
+                        . '="'
+                        . $this->escaper->attributes($value)
+                        . '" ';
+                }
             }
         }
 

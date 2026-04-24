@@ -296,6 +296,8 @@ abstract class Resultset implements
             $connection->commit();
         }
 
+        $this->refresh();
+
         return $result;
     }
 
@@ -765,5 +767,58 @@ abstract class Resultset implements
     public function valid(): bool
     {
         return $this->pointer < $this->count;
+    }
+
+    /**
+     * Re-executes the underlying query and refreshes the resultset with
+     * current data from the database.
+     *
+     * @return bool
+     */
+    public function refresh(): bool
+    {
+        if (!is_object($this->result)) {
+            $this->count = 0;
+            $this->rows  = [];
+
+            return false;
+        }
+
+        $result  = $this->result;
+        $success = $result->execute();
+
+        if ($success === false) {
+            return false;
+        }
+
+        $this->isFresh = true;
+
+        $rowCount    = $result->numRows();
+        $this->count = $rowCount;
+
+        if ($rowCount === 0) {
+            $this->rows = [];
+
+            return true;
+        }
+
+        $prefetchRecords = (int) Settings::get("orm.resultset_prefetch_records");
+        if ($prefetchRecords > 0 && $rowCount <= $prefetchRecords) {
+            $rows = $result->fetchAll();
+
+            $this->rows = is_array($rows) ? $rows : [];
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the internal result object.
+     *
+     * @return mixed
+     */
+    public function getResult(): mixed
+    {
+        return $this->result;
     }
 }

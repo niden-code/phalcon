@@ -1096,7 +1096,7 @@ abstract class Model extends AbstractInjectionAware implements
 
             if (!is_array($columnMap)) {
                 if (!$disableSetters) {
-                    $setter = "set" . $instance->toCamelize($key);
+                    $setter = "set" . self::staticToCamelize($key);
                     if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                         $instance->$setter($value);
                         continue;
@@ -1149,7 +1149,7 @@ abstract class Model extends AbstractInjectionAware implements
 
             if (!is_array($attribute)) {
                 if (!$disableSetters) {
-                    $setter = "set" . $instance->toCamelize($attribute);
+                    $setter = "set" . self::staticToCamelize($attribute);
                     if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                         $instance->$setter($value);
                         continue;
@@ -1196,7 +1196,7 @@ abstract class Model extends AbstractInjectionAware implements
             $data[$key]     = $castValue;
 
             if (!$disableSetters) {
-                $setter = "set" . $instance->toCamelize($attributeName);
+                $setter = "set" . self::staticToCamelize($attributeName);
                 if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
                     $instance->$setter($castValue);
                     continue;
@@ -1594,7 +1594,8 @@ abstract class Model extends AbstractInjectionAware implements
          * we can get proper counts.
          */
         if ($success) {
-            $this->related = [];
+            $this->related      = [];
+            $this->dirtyRelated = [];
             $this->modelsManager->clearReusableObjects();
         }
 
@@ -1775,6 +1776,7 @@ abstract class Model extends AbstractInjectionAware implements
                 $this->dirtyRelated = [];
             }
 
+            $this->related = [];
             $this->fireEvent("afterSave");
         }
 
@@ -2551,6 +2553,14 @@ abstract class Model extends AbstractInjectionAware implements
 //                 */
 //                $this->related[lowerAlias] = result;
 //            }
+            if (isset($this->dirtyRelated[$lowerAlias])) {
+                return $this->dirtyRelated[$lowerAlias];
+            }
+
+            if (isset($this->related[$lowerAlias])) {
+                return $this->related[$lowerAlias];
+            }
+
             /**
              * We do not need conditionals here. The models manager stores
              * reusable related records so we utilize that and remove complexity
