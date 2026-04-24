@@ -1720,6 +1720,22 @@ abstract class Model extends AbstractInjectionAware implements
         }
 
         /**
+         * Capture the current snapshot before the write so it can be restored
+         * if postSaveRelatedRecords later rolls back the transaction
+         */
+        $manager         = $this->getModelsManager();
+        $savedSnapshot    = null;
+        $savedOldSnapshot = null;
+
+        if (
+            $manager->isKeepingSnapshots($this) &&
+            Settings::get("orm.update_snapshot_on_save")
+        ) {
+            $savedSnapshot    = $this->snapshot;
+            $savedOldSnapshot = $this->oldSnapshot;
+        }
+
+        /**
          * Depending if the record exists we do an update or an insert operation
          */
         if ($exists) {
@@ -1767,6 +1783,19 @@ abstract class Model extends AbstractInjectionAware implements
 
         if ($success === false) {
             $this->cancelOperation();
+
+            /**
+             * If the transaction was rolled back, restore the snapshot to its
+             * pre-save state so that Dynamic Update can detect changes correctly
+             * on the next save attempt
+             */
+            if (
+                $manager->isKeepingSnapshots($this) &&
+                Settings::get("orm.update_snapshot_on_save")
+            ) {
+                $this->snapshot    = $savedSnapshot;
+                $this->oldSnapshot = $savedOldSnapshot;
+            }
         } else {
             if ($hasRelatedToSave) {
                 /**
@@ -4545,9 +4574,11 @@ abstract class Model extends AbstractInjectionAware implements
             $snapshot[$attributeField] = $lastInsertedId;
 
             /**
-             * Since the primary key was modified, we delete the uniqueParams
-             * to force any future update to re-build the primary key
+             * Since the primary key was modified, we delete the uniqueKey
+             * and uniqueParams to force any future has() call to re-build
+             * the primary key condition from current attribute values
              */
+            $this->uniqueKey    = null;
             $this->uniqueParams = [];
         }
 
