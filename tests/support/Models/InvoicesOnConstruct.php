@@ -11,11 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tag;
+namespace Phalcon\Tests\Support\Models;
 
-/**
- * Exceptions thrown in Phalcon\Tag will use this class
- */
-class Exception extends \Exception
+class InvoicesOnConstruct extends Invoices
 {
+    public ?string $onConstructLabel = null;
+
+    public function onConstruct(): void
+    {
+        $this->onConstructLabel = 'initialized';
+    }
 }

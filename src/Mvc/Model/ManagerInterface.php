@@ -165,6 +165,13 @@ interface ManagerInterface
     public function createQuery(string $phql): QueryInterface;
 
     /**
+     * Clears the internal reusable list
+     *
+     * @return void
+     */
+    public function clearReusableObjects(): void;
+
+    /**
      * Creates a Phalcon\Mvc\Model\Query and execute it
      *
      * @param string     $phql
@@ -393,6 +400,16 @@ interface ManagerInterface
         string $first,
         string $second
     ): array | bool;
+
+    /**
+     * Returns a reusable object from the internal list
+     *
+     * @param string $modelName
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getReusableRecords(string $modelName, string $key): mixed;
 
     /**
      * Returns the connection to write data related to a model
@@ -632,6 +649,21 @@ interface ManagerInterface
     public function setReadConnectionService(
         ModelInterface $model,
         string $connectionService
+    ): void;
+
+    /**
+     * Stores a reusable record in the internal list
+     *
+     * @param string $modelName
+     * @param string $key
+     * @param mixed  $records
+     *
+     * @return void
+     */
+    public function setReusableRecords(
+        string $modelName,
+        string $key,
+        mixed $records
     ): void;
 
     /**

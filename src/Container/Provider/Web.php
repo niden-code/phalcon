@@ -133,16 +133,13 @@ class Web implements Provider
 
         // --- FQCN bindings (set + alias) — no unique interface available ---
 
-        $services->set(Annotations::class, Annotations::class)
-                 ->setArgument(0, LazyFactory::get(AnnotationsMemory::class));
+        $services->set(Annotations::class, Annotations::class);
         $services->setAlias(Annotations::class, 'annotations');
 
-        $services->set(AnnotationsMemory::class, AnnotationsMemory::class)
-                 ->setArgument(0, LazyFactory::get(SerializerFactory::class));
+        $services->set(AnnotationsMemory::class, AnnotationsMemory::class);
         $services->setAlias(AnnotationsMemory::class, 'annotationsMemory');
 
-        $services->set(AssetsManager::class, AssetsManager::class)
-                 ->setArgument(0, LazyFactory::get(TagFactory::class));
+        $services->set(AssetsManager::class, AssetsManager::class);
         $services->setAlias(AssetsManager::class, 'assets');
 
         $services->set(DbEventFactory::class, DbEventFactory::class);
@@ -166,8 +163,7 @@ class Web implements Provider
         $services->set(Settings::class, Settings::class);
         $services->setAlias(Settings::class, 'settings');
 
-        $services->set(TagFactory::class, TagFactory::class)
-                 ->setArgument(0, LazyFactory::get(EscaperInterface::class));
+        $services->set(TagFactory::class, TagFactory::class);
         $services->setAlias(TagFactory::class, 'tag');
     }
 }

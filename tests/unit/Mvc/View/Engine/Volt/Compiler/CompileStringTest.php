@@ -199,32 +199,6 @@ class CompileStringTest extends AbstractUnitTestCase
                 '{{ robots.getPart(a) }}',
                 '<?= $robots->getPart($a) ?>',
             ],
-            //Phalcon\Tag helpers
-            [
-                "{{ link_to('hello', 'some-link') }}",
-                '<?= \Phalcon\Tag::linkTo([\'hello\', \'some-link\']) ?>',
-            ],
-            [
-                "{{ form_legacy('action': 'save/products', 'method': 'post') }}",
-                '<?= \Phalcon\Tag::formLegacy([\'action\' => \'save/products\', \'method\' => \'post\']) ?>',
-            ],
-            [
-                '{{ stylesheet_link(config.cdn.css.bootstrap, config.cdn.local) }}',
-                '<?= \Phalcon\Tag::stylesheetLink($config->cdn->css->bootstrap, $config->cdn->local) ?>',
-            ],
-            [
-                "{{ javascript_include('js/some.js') }}",
-                '<?= \Phalcon\Tag::javascriptInclude(\'js/some.js\') ?>',
-            ],
-            [
-                "{{ image('img/logo.png', 'width': 80) }}",
-                "<?= \\Phalcon\Tag::image(['img/logo.png', 'width' => 80]) ?>",
-            ],
-            [
-                "{{ email_field('email', 'class': 'form-control', 'placeholder': 'Email Address') }}",
-                "<?= \\Phalcon\Tag::emailField(['email', 'class' => 'form-control', " .
-                "'placeholder' => 'Email Address']) ?>",
-            ],
             //Filters
             [
                 '{{ "hello"|e }}',

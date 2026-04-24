@@ -1338,11 +1338,31 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
              */
             $query = $builder->getQuery();
 
-            return match ($relation->getType()) {
+            $reusable = $relation->isReusable();
+
+            if ($reusable) {
+                $uniqueKey = $this->getUniqueKey(
+                    $referencedModel,
+                    [$intermediateModel, $parameters, $record->readAttribute($fields)]
+                );
+                $records   = $this->getReusableRecords($referencedModel, $uniqueKey);
+
+                if (is_array($records) || is_object($records)) {
+                    return $records;
+                }
+            }
+
+            $records = match ($relation->getType()) {
                 Relation::HAS_MANY_THROUGH => $query->execute(),
                 Relation::HAS_ONE_THROUGH  => $query->setUniqueRow(true)->execute(),
                 default                    => throw new Exception("Unknown relation type"),
             };
+
+            if ($reusable) {
+                $this->setReusableRecords($referencedModel, $uniqueKey, $records);
+            }
+
+            return $records;
         }
 
         $conditions = [];
@@ -1560,7 +1580,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
      *
      * @return mixed
      */
-    public function getReusableRecords(string $modelName, string $key)
+    public function getReusableRecords(string $modelName, string $key): mixed
     {
         return $this->reusable[$key] ?? null;
     }

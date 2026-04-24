@@ -655,6 +655,14 @@ abstract class Model extends AbstractInjectionAware implements
         $manager->initialize($this);
 
         /**
+         * Allow the developer to run initialization code every time
+         * the model is instantiated, including when restored from cache
+         */
+        if (method_exists($this, 'onConstruct')) {
+            $this->{'onConstruct'}();
+        }
+
+        /**
          * Fetch serialized props
          */
         $properties = [];
@@ -1062,6 +1070,21 @@ abstract class Model extends AbstractInjectionAware implements
         // Change the dirty state to persistent
         $instance->setDirtyState($dirtyState);
 
+        $disableSetters = (bool) Settings::get("orm.disable_assign_setters");
+
+        $localMethods = [
+            "setConnectionService"      => 1,
+            "setDirtyState"             => 1,
+            "setEventsManager"          => 1,
+            "setReadConnectionService"  => 1,
+            "setOldSnapshotData"        => 1,
+            "setSchema"                 => 1,
+            "setSnapshotData"           => 1,
+            "setSource"                 => 1,
+            "setTransaction"            => 1,
+            "setWriteConnectionService" => 1,
+        ];
+
         /**
          * Assign the data in the model
          */
@@ -1072,7 +1095,19 @@ abstract class Model extends AbstractInjectionAware implements
             }
 
             if (!is_array($columnMap)) {
-                $instance->$key = $value;
+                if (!$disableSetters) {
+                    $setter = "set" . $instance->toCamelize($key);
+                    if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
+                        $instance->$setter($value);
+                        continue;
+                    }
+                }
+
+                try {
+                    $instance->$key = $value;
+                } catch (\TypeError) {
+                    // Typed non-nullable property cannot accept null – skip
+                }
 
                 continue;
             }
@@ -1113,7 +1148,19 @@ abstract class Model extends AbstractInjectionAware implements
             }
 
             if (!is_array($attribute)) {
-                $instance->$attribute = $value;
+                if (!$disableSetters) {
+                    $setter = "set" . $instance->toCamelize($attribute);
+                    if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
+                        $instance->$setter($value);
+                        continue;
+                    }
+                }
+
+                try {
+                    $instance->$attribute = $value;
+                } catch (\TypeError) {
+                    // Typed non-nullable property cannot accept null – skip
+                }
 
                 continue;
             }
@@ -1145,9 +1192,22 @@ abstract class Model extends AbstractInjectionAware implements
                 };
             }
 
-            $attributeName            = $attribute[0];
-            $instance->$attributeName = $castValue;
-            $data[$key]               = $castValue;
+            $attributeName  = $attribute[0];
+            $data[$key]     = $castValue;
+
+            if (!$disableSetters) {
+                $setter = "set" . $instance->toCamelize($attributeName);
+                if (method_exists($instance, $setter) && !isset($localMethods[$setter])) {
+                    $instance->$setter($castValue);
+                    continue;
+                }
+            }
+
+            try {
+                $instance->$attributeName = $castValue;
+            } catch (\TypeError) {
+                // Typed non-nullable property cannot accept null – skip
+            }
         }
 
         /**
@@ -3501,8 +3561,18 @@ abstract class Model extends AbstractInjectionAware implements
                 "getSource" !== $method &&
                 method_exists($this, $method)
             ) {
-                $data[$attributeField] = $this->$method();
-            } elseif (property_exists($this, $attributeField)) {
+                /**
+                 * A getter may access a typed property that was never
+                 * initialized (e.g. because cloneResultMap() skipped a null
+                 * value for a NOT NULL column). Catch the resulting Error and
+                 * return null rather than letting it propagate.
+                 */
+                try {
+                    $data[$attributeField] = $this->$method();
+                } catch (\Error) {
+                    $data[$attributeField] = null;
+                }
+            } elseif (isset($this->$attributeField)) {
                 $data[$attributeField] = $this->$attributeField;
             } else {
                 $data[$attributeField] = null;
@@ -3570,6 +3640,14 @@ abstract class Model extends AbstractInjectionAware implements
             $manager->initialize($this);
 
             /**
+             * Allow the developer to run initialization code every time
+             * the model is instantiated, including when restored from cache
+             */
+            if (method_exists($this, 'onConstruct')) {
+                $this->{'onConstruct'}();
+            }
+
+            /**
              * Fetch serialized props
              */
             if (isset($attributes["attributes"])) {
@@ -3578,7 +3656,18 @@ abstract class Model extends AbstractInjectionAware implements
                  * Update the objects properties
                  */
                 foreach ($properties as $key => $value) {
-                    $this->$key = $value;
+                    /**
+                     * A TypeError can be thrown when assigning null to a typed
+                     * non-nullable PHP property (e.g. int $id) because the
+                     * serialised value was null due to the property being
+                     * uninitialized at serialize() time. Skip such assignments
+                     * gracefully.
+                     */
+                    try {
+                        $this->$key = $value;
+                    } catch (\TypeError) {
+                        // Incompatible value for typed property – leave as-is
+                    }
                 }
             } else {
                 $properties = [];
@@ -5971,7 +6060,7 @@ abstract class Model extends AbstractInjectionAware implements
 
                         /**
                          * Field is null when: 1) is not set, 2) is numeric but
-                         * its value is not numeric, 3) is null or 4) is empty string
+                         * its value is not numeric, or 3) is null.
                          * Read the attribute from the this_ptr using the real or renamed name
                          */
                         if (isset($this->$attributeField)) {
@@ -5987,16 +6076,7 @@ abstract class Model extends AbstractInjectionAware implements
                                             $isNull = true;
                                         }
                                     } else {
-                                        if (
-                                            $value === null ||
-                                            (
-                                                $value === "" &&
-                                                (
-                                                    !isset($defaultValues[$field]) ||
-                                                    $value !== $defaultValues[$field]
-                                                )
-                                            )
-                                        ) {
+                                        if ($value === null) {
                                             $isNull = true;
                                         }
                                     }

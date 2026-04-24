@@ -1086,12 +1086,21 @@ class Query implements QueryInterface, InjectionAwareInterface
                 $model = $this->modelsInstances[$modelName];
             }
 
-            $connection = $this->getReadConnection(
-                $model,
-                $intermediate,
-                $bindParams,
-                $bindTypes
-            );
+            if (!empty($intermediate["forUpdate"])) {
+                $connection = $this->getWriteConnection(
+                    $model,
+                    $intermediate,
+                    $bindParams,
+                    $bindTypes
+                );
+            } else {
+                $connection = $this->getReadConnection(
+                    $model,
+                    $intermediate,
+                    $bindParams,
+                    $bindTypes
+                );
+            }
 
             if (is_object($connection)) {
                 // More than one type of connection is not allowed
@@ -1288,6 +1297,23 @@ class Query implements QueryInterface, InjectionAwareInterface
 
         if ($this->sharedLock) {
             $sqlSelect = $dialect->sharedLock($sqlSelect);
+        }
+
+        /**
+         * Embed RawValue bind params directly in the SQL instead of passing
+         * them to PDO, which would quote them as strings.
+         */
+        foreach ($processed as $wildcard => $value) {
+            if ($value instanceof RawValue) {
+                if (str_starts_with($wildcard, ':')) {
+                    $sqlSelect = str_replace($wildcard, (string) $value, $sqlSelect);
+                } else {
+                    $sqlSelect = str_replace(':' . $wildcard, (string) $value, $sqlSelect);
+                }
+
+                unset($processed[$wildcard]);
+                unset($processedTypes[$wildcard]);
+            }
         }
 
         /**

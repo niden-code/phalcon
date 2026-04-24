@@ -263,9 +263,25 @@ abstract class AbstractValidator implements ValidatorInterface
         $allowEmpty = $this->getOption("allowEmpty", false);
 
         if (is_array($allowEmpty)) {
-            $allowEmpty = isset($allowEmpty[$field])
-                ? $allowEmpty[$field]
-                : false;
+            /**
+             * Per-field map: ['fieldName' => true/false]
+             * Used by multi-field validators such as Ip.
+             */
+            if (isset($allowEmpty[$field])) {
+                return true === $allowEmpty[$field] && empty($value);
+            }
+
+            /**
+             * Value list: [null, '']
+             * Strict comparison so that '0' is not treated as empty.
+             */
+            foreach ($allowEmpty as $emptyValue) {
+                if ($emptyValue === $value) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         return true === $allowEmpty && empty($value);
