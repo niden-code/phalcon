@@ -297,6 +297,14 @@ create table songs
 create index songs_albums_id_index on songs (albums_id);
             
 
+drop table if exists table_with_string_field;
+
+create table table_with_string_field
+            (
+                id    serial       constraint table_with_string_field_pk primary key,
+                field varchar(255) not null
+            );
+
 
 drop table if exists table_with_uuid_primary;
             

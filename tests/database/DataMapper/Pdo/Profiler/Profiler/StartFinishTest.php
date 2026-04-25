@@ -28,6 +28,7 @@ final class StartFinishTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoProfilerProfilerStartFinish(): void
     {
@@ -61,6 +62,7 @@ final class StartFinishTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoProfilerProfilerStartFinishEmptyValues(): void
     {
@@ -91,6 +93,7 @@ final class StartFinishTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoProfilerProfilerStartFinishEncodeException(): void
     {

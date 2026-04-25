@@ -60,6 +60,7 @@ final class GetSqlTest extends AbstractDatabaseTestCase
      * @issue  14657
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelQueryGetSql(): void
     {

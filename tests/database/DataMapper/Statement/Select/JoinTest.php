@@ -41,6 +41,7 @@ final class JoinTest extends AbstractStatementTestCase
      *
      * @dataProvider getJoinNames
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectJoin(string $join): void
     {
@@ -65,6 +66,7 @@ final class JoinTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectJoinSubSelect(): void
     {
@@ -109,6 +111,7 @@ final class JoinTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectJoinWithBind(): void
     {
@@ -146,6 +149,7 @@ final class JoinTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectJoinWithUsing(): void
     {

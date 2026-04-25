@@ -28,6 +28,7 @@ final class InlineTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementBindBindInline(): void
     {

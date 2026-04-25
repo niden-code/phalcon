@@ -440,6 +440,14 @@ create index co_sources_username_index
     on co_sources (username);
             
 
+drop table if exists `table_with_string_field`;
+
+create table `table_with_string_field`
+            (
+                `id`    int(10) unsigned not null auto_increment primary key,
+                `field` varchar(255) not null
+            ) engine=InnoDB default charset=utf8;
+
 
 drop table if exists `table_with_uuid_primary`;
             

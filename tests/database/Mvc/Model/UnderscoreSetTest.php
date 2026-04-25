@@ -44,6 +44,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSet(): void
     {
@@ -94,6 +95,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetIsUsingSetters(): void
     {
@@ -147,6 +149,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetUndefinedPropertyWithAssociativeArray(): void
     {
@@ -177,6 +180,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithArrayOfBelongsToRelatedRecord(): void
     {
@@ -217,6 +221,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithArrayOfHasOneRelatedRecord(): void
     {
@@ -256,6 +261,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithBelongsToRelatedRecord(): void
     {
@@ -282,6 +288,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasManyRelatedRecords(): void
     {
@@ -389,6 +396,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasManyToManyRelatedRecords(): void
     {
@@ -432,6 +440,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-05-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasOneRelatedRecord(): void
     {
@@ -458,6 +467,7 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
      * @since  2019-11-03
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasOneThroughRelatedRecord(): void
     {

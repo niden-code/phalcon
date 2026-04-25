@@ -46,6 +46,7 @@ final class DynamicUpdateTest extends AbstractDatabaseTestCase
      * @since  2023-08-11
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDisableDynamicUpdate(): void
     {
@@ -107,6 +108,7 @@ final class DynamicUpdateTest extends AbstractDatabaseTestCase
      * @since  2023-08-11
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDisabledCherryPickDynamicUpdate(): void
     {
@@ -167,6 +169,7 @@ final class DynamicUpdateTest extends AbstractDatabaseTestCase
      * @issue https://github.com/phalcon/cphalcon/issues/16343
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelEnableDynamicUpdate(): void
     {

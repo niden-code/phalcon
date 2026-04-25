@@ -46,8 +46,8 @@ final class GetChangedFieldsTest extends AbstractDatabaseTestCase
      * @since  2018-11-13
      *
      * @group mysql
-     * @group pgsql
      * @group sqlite
+     * @group pgsql
      */
     public function testMvcModelGetChangedFieldsNewModel(): void
     {
@@ -71,8 +71,8 @@ final class GetChangedFieldsTest extends AbstractDatabaseTestCase
      * @since  2018-11-13
      *
      * @group mysql
-     * @group pgsql
      * @group sqlite
+     * @group pgsql
      */
     public function testMvcModelGetChangedFieldsWithSnapshot(): void
     {

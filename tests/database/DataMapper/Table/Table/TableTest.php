@@ -67,6 +67,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDeleteRow(): void
     {
@@ -122,6 +123,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDeleteRowNoPrimaryKey(): void
     {
@@ -145,6 +147,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRowCompositeKey(): void
     {
@@ -174,6 +177,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRowCompositeKeyMissingThrowsException(): void
     {
@@ -201,6 +205,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRowCompositeKeyPrimaryValueNotScalarThrowsException(): void
     {
@@ -229,6 +234,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRow(): void
     {
@@ -285,6 +291,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRows(): void
     {
@@ -364,6 +371,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRowsCompositeKey(): void
     {
@@ -417,6 +425,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testInsertRow(): void
     {
@@ -472,6 +481,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testInsertRowWithoutAutoinc(): void
     {
@@ -513,6 +523,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testUpdateRow(): void
     {
@@ -592,6 +603,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testUpdateRowNoPrimaryKey(): void
     {
@@ -616,6 +628,7 @@ final class TableTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testUpdateRowUpdatedPrimaryKeyThrowsException(): void
     {

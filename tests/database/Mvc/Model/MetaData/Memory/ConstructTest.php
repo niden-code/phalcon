@@ -61,6 +61,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2018-11-13
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelMetadataMemoryConstruct(): void
     {
@@ -85,6 +86,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2018-11-13
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelMetadataMemoryConstructManual(): void
     {

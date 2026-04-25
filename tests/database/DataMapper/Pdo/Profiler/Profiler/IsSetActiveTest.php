@@ -23,6 +23,7 @@ final class IsSetActiveTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoProfilerProfilerIsSetActive(): void
     {

@@ -25,6 +25,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionConstruct(): void
     {
@@ -41,6 +42,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionConstructException(): void
     {
@@ -56,6 +58,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionFactory(): void
     {
@@ -77,6 +80,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionNew(): void
     {
@@ -96,6 +100,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionNewException(): void
     {
@@ -112,6 +117,7 @@ final class ConstructTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionWithPdo(): void
     {

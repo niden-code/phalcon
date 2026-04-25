@@ -71,6 +71,7 @@ final class ReadMetadataTest extends AbstractDatabaseTestCase
      * @since        2023-07-01
      *
      * @group mysql
+     * @group sqlite
      *
      */
     public function testMvcModelMetadataGetAttributes(
@@ -141,7 +142,8 @@ final class ReadMetadataTest extends AbstractDatabaseTestCase
 
         if (
             'metadataStream' !== $service &&
-            'metadataMemory' !== $service
+            'metadataMemory' !== $service &&
+            'sqlite' !== self::getDriver()
         ) {
             $service = $adapter->getAdapter();
 

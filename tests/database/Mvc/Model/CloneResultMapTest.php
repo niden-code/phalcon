@@ -69,6 +69,7 @@ final class CloneResultMapTest extends AbstractDatabaseTestCase
      * @since        2020-10-05
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelCloneResultMap(
         int | string $invId,
@@ -125,6 +126,7 @@ final class CloneResultMapTest extends AbstractDatabaseTestCase
      * @since  2026-04-22
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelCloneResultMapCallsSetters(): void
     {
@@ -158,6 +160,7 @@ final class CloneResultMapTest extends AbstractDatabaseTestCase
      * @since        2020-10-05
      *
      * @group mysql
+     * @group sqlite
      * @group pgsql
      */
     public function testMvcModelCloneResultMapWithCasting(

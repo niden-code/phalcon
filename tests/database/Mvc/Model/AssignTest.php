@@ -41,6 +41,7 @@ final class AssignTest extends AbstractDatabaseTestCase
      * @since  2019-04-18
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelAssign(): void
     {
@@ -103,6 +104,7 @@ final class AssignTest extends AbstractDatabaseTestCase
      * @since  2020-02-13
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelAssignAutoPrimary(): void
     {
@@ -128,6 +130,7 @@ final class AssignTest extends AbstractDatabaseTestCase
      * @since  2020-01-29
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelAssignIncomplete(): void
     {

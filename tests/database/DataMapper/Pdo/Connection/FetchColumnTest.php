@@ -23,6 +23,7 @@ final class FetchColumnTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionFetchCol(): void
     {

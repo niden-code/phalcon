@@ -41,6 +41,7 @@ final class GetMessagesTest extends AbstractDatabaseTestCase
      * @since  2020-02-01
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelGetMessages(): void
     {
@@ -70,6 +71,7 @@ final class GetMessagesTest extends AbstractDatabaseTestCase
      * @since  2023-09-30
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelGetMessagesFiltered(): void
     {

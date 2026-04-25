@@ -70,6 +70,7 @@ final class TableEventsTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDeleteRow(): void
     {
@@ -109,6 +110,7 @@ final class TableEventsTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRow(): void
     {
@@ -198,6 +200,7 @@ final class TableEventsTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testFetchRows(): void
     {
@@ -260,6 +263,7 @@ final class TableEventsTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testInsertRow(): void
     {
@@ -293,6 +297,7 @@ final class TableEventsTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testUpdateRow(): void
     {

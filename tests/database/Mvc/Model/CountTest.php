@@ -60,6 +60,7 @@ final class CountTest extends AbstractDatabaseTestCase
      * @since  2020-01-29
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelCount(): void
     {

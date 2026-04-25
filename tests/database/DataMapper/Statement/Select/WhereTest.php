@@ -26,6 +26,7 @@ final class WhereTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectOrWhereBind(): void
     {
@@ -59,6 +60,7 @@ final class WhereTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectWhere(): void
     {
@@ -87,6 +89,7 @@ final class WhereTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectWhereBind(): void
     {
@@ -126,6 +129,7 @@ final class WhereTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectWhereSubSelect(): void
     {

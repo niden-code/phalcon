@@ -26,6 +26,7 @@ final class ForUpdateTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectForUpdate(): void
     {
@@ -48,6 +49,7 @@ final class ForUpdateTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectForUpdateUnset(): void
     {

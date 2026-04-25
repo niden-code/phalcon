@@ -77,6 +77,7 @@ final class QueryTest extends AbstractDatabaseTestCase
      * @since  2018-11-13
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelQuery(): void
     {
@@ -100,6 +101,7 @@ final class QueryTest extends AbstractDatabaseTestCase
      * @issue  14535
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelQueryIssue14535(): void
     {
@@ -127,6 +129,7 @@ final class QueryTest extends AbstractDatabaseTestCase
      * @issue  14783
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelQueryIssue14783(): void
     {

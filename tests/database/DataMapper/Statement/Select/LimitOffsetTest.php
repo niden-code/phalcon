@@ -26,6 +26,7 @@ final class LimitOffsetTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectLimitOffset(): void
     {
@@ -55,6 +56,7 @@ final class LimitOffsetTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectLimitOffsetMssql(): void
     {
@@ -83,6 +85,7 @@ final class LimitOffsetTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectPage(): void
     {
@@ -134,6 +137,7 @@ final class LimitOffsetTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectPageCalculations(): void
     {

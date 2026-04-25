@@ -29,6 +29,7 @@ final class SelectTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmQuerySelect(): void
     {
@@ -75,6 +76,7 @@ final class SelectTest extends AbstractDatabaseTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmQuerySelectCallException(): void
     {

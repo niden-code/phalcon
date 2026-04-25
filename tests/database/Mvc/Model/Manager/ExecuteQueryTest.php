@@ -51,6 +51,7 @@ final class ExecuteQueryTest extends AbstractDatabaseTestCase
      * @issue  15024
      *
      * @group mysql
+     * @group sqlite
      * @group pgsql
      */
     public function testMvcModelManagerExecuteQuery(): void

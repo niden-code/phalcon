@@ -61,6 +61,7 @@ final class GetFirstTest extends AbstractDatabaseTestCase
      * @issue  15027
      *
      * @group mysql
+     * @group sqlite
      * @group pgsql
      */
     public function testMvcModelResultsetGetFirst(): void

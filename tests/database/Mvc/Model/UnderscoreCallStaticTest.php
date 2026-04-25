@@ -47,6 +47,7 @@ final class UnderscoreCallStaticTest extends AbstractDatabaseTestCase
      * @since  2019-10-14
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreCallStatic(): void
     {

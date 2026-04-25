@@ -51,6 +51,7 @@ final class UpdateTest extends AbstractDatabaseTestCase
      * @since  2020-10-18
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelSaveAfterWithoutDefaultValues(): void
     {
@@ -117,6 +118,7 @@ final class UpdateTest extends AbstractDatabaseTestCase
      * @since  2021-08-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelSaveViaSettersAndLocalMethod(): void
     {

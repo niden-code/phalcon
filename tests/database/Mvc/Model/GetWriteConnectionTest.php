@@ -34,6 +34,7 @@ final class GetWriteConnectionTest extends AbstractDatabaseTestCase
      * @since  2020-01-31
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelGetWriteConnection(): void
     {

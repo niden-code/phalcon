@@ -45,6 +45,7 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2020-02-01
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDelete(): void
     {
@@ -75,6 +76,7 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2020-08-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDeleteCascadeRelated(): void
     {
@@ -146,6 +148,7 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2022-11-18
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDeleteGetRelated(): void
     {
@@ -272,6 +275,7 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2020-10-17
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDeleteRestrictRelated(): void
     {
@@ -327,6 +331,7 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2020-10-17
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelDeleteRestrictRelatedInTransaction(): void
     {

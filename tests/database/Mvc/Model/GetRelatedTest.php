@@ -43,6 +43,7 @@ final class GetRelatedTest extends AbstractDatabaseTestCase
      * @since  2020-08-02
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelGetRelated(): void
     {
@@ -125,6 +126,7 @@ final class GetRelatedTest extends AbstractDatabaseTestCase
      * @since  2021-10-01
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelGetRelatedChangeForeignKey(): void
     {

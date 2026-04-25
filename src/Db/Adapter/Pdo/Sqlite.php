@@ -240,6 +240,15 @@ class Sqlite extends PdoAdapter
                     $definition["bindType"]  = Column::TYPE_DECIMAL;
 
                     break;
+                case str_contains($lowerType, "real"):
+                    /**
+                     * Real are float
+                     */
+                    $definition["type"]      = Column::TYPE_FLOAT;
+                    $definition["isNumeric"] = true;
+                    $definition["bindType"]  = Column::BIND_PARAM_DECIMAL;
+
+                    break;
                 /**
                  * TIMESTAMP
                  */
@@ -271,7 +280,7 @@ class Sqlite extends PdoAdapter
                  * Text are varchars
                  */
                 case str_contains($lowerType, "text"):
-                    $definition["type"] = Column::TYPE_VARCHAR;
+                    $definition["type"] = Column::TYPE_TEXT;
 
                     break;
                 default:

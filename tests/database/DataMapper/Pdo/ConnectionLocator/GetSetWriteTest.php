@@ -27,6 +27,7 @@ final class GetSetWriteTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionLocatorGetSetWrite(): void
     {
@@ -63,6 +64,7 @@ final class GetSetWriteTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionLocatorGetWriteEmpty(): void
     {
@@ -85,6 +87,7 @@ final class GetSetWriteTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionLocatorGetWriteException(): void
     {
@@ -115,6 +118,7 @@ final class GetSetWriteTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionLocatorGetWriteRandom(): void
     {

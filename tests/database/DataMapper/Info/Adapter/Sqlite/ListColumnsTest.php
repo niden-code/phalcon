@@ -19,7 +19,6 @@ final class ListColumnsTest extends AbstractDatabaseTestCase
     /**
      * @since  2025-01-14
      *
-     * @group  sqlite
      */
     public function testDmInfoAdapterMysqlListTables(): void
     {

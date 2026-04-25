@@ -51,6 +51,7 @@ final class ToArrayTest extends AbstractDatabaseTestCase
      * @since  2021-11-03
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelToArray(): void
     {
@@ -98,6 +99,7 @@ final class ToArrayTest extends AbstractDatabaseTestCase
      * @since  2021-11-03
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelToArrayColumnMap(): void
     {
@@ -147,6 +149,7 @@ final class ToArrayTest extends AbstractDatabaseTestCase
      * @issue https://github.com/phalcon/cphalcon/issues/16467
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelToArrayExecuteColumnNotInColumnMap(): void
     {

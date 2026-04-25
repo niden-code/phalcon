@@ -67,6 +67,7 @@ final class CacheTest extends AbstractDatabaseTestCase
      * @issue
      *
      * @group mysql
+     * @group sqlite
      */
     public function testMvcModelQueryCache(
         string $serializer

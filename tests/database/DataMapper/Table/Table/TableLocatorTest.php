@@ -35,6 +35,7 @@ final class TableLocatorTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGet(): void
     {
@@ -49,6 +50,7 @@ final class TableLocatorTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetConnectionLocator(): void
     {
@@ -61,6 +63,7 @@ final class TableLocatorTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetUnknownThrowsException(): void
     {
@@ -77,6 +80,7 @@ final class TableLocatorTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testHas(): void
     {

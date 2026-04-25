@@ -26,6 +26,7 @@ final class DistinctTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectDistinct(): void
     {
@@ -49,6 +50,7 @@ final class DistinctTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectDistinctTwice(): void
     {
@@ -73,6 +75,7 @@ final class DistinctTest extends AbstractStatementTestCase
      * @since  2020-01-20
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmStatementSelectDistinctUnset(): void
     {

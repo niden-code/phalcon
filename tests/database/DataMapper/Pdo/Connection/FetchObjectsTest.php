@@ -25,6 +25,7 @@ final class FetchObjectsTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionFetchObjects(): void
     {
@@ -85,6 +86,7 @@ final class FetchObjectsTest extends AbstractDatabaseTestCase
      * @since  2020-01-25
      *
      * @group mysql
+     * @group sqlite
      */
     public function testDmPdoConnectionFetchObjectsCtor(): void
     {

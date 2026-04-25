@@ -51,6 +51,7 @@ final class PaginateTest extends AbstractDatabaseTestCase
      * @since  2020-02-01
      *
      * @group mysql
+     * @group sqlite
      */
     public function testPaginatorAdapterQuerybuilderPaginate(): void
     {
@@ -99,6 +100,7 @@ final class PaginateTest extends AbstractDatabaseTestCase
      * @since  2020-01-29
      *
      * @group mysql
+     * @group sqlite
      * @group pgsql
      */
     public function testPaginatorAdapterQuerybuilderPaginateGroupBy(): void
@@ -173,6 +175,7 @@ final class PaginateTest extends AbstractDatabaseTestCase
      *
      * @issue  15266
      * @group mysql
+     * @group sqlite
      */
     public function testPaginatorAdapterQuerybuilderPaginateGroupByNullColumnsOption(): void
     {
@@ -180,8 +183,9 @@ final class PaginateTest extends AbstractDatabaseTestCase
         $connection = self::getConnection();
         $migration  = new InvoicesMigration($connection);
 
-        $this->insertDataInvoices($migration, 2, 'default', 1, 'grp1');
-        $this->insertDataInvoices($migration, 2, 'default', 2, 'grp2');
+        $invId = ('sqlite' === self::getDriver()) ? 'null' : 'default';
+        $this->insertDataInvoices($migration, 2, $invId, 1, 'grp1');
+        $this->insertDataInvoices($migration, 2, $invId, 2, 'grp2');
 
         $now = date('Y-m-d H:i:s');
         $connection->exec(
@@ -226,6 +230,7 @@ final class PaginateTest extends AbstractDatabaseTestCase
      * @issue  14639
      *
      * @group mysql
+     * @group sqlite
      *
      * @throws Exception
      * @author Phalcon Team <team@phalcon.io>

@@ -28,6 +28,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testConstructor(): void
     {
@@ -40,6 +41,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testConstructorWithData(): void
     {
@@ -64,6 +66,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testConstructorWithUnknownColumnsThrowsException(): void
     {
@@ -90,6 +93,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetCopy(): void
     {
@@ -114,6 +118,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetDiff(): void
     {
@@ -158,6 +163,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetInit(): void
     {
@@ -182,6 +188,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testGetIterator(): void
     {
@@ -206,6 +213,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testHas(): void
     {
@@ -222,6 +230,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testJsonSerialize(): void
     {
@@ -246,6 +255,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testRemove(): void
     {
@@ -270,6 +280,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testRemoveDeletedThrowsException(): void
     {
@@ -290,6 +301,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testSet(): void
     {
@@ -321,6 +333,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testSetOnDeletedRowThrowsException(): void
     {
@@ -340,6 +353,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testSetUnknownColumnThrowsException(): void
     {
@@ -358,6 +372,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testLastAction(): void
     {
@@ -436,6 +451,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testLastActionInvalidThrowsException(): void
     {
@@ -452,6 +468,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testSetNumericToBool(): void
     {
@@ -486,6 +503,7 @@ final class RowTest extends AbstractDatabaseTestCase
      * @return void
      *
      * @group mysql
+     * @group sqlite
      */
     public function testSetBoolToNumeric(): void
     {
