@@ -61,7 +61,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ env.EXTENSIONS }}
-          ini-values: apc.enable_cli=on, session.save_path=/tmp
+          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -396,7 +396,6 @@ jobs:
           coverage: xdebug
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PHALCON_PATH: ext
 
       - name: "Validate composer"
         run: composer validate --no-check-all --no-check-publish
