@@ -50,7 +50,6 @@ use Psr\EventDispatcher\StoppableEventInterface;
 use Psr\Log\LoggerInterface;
 use Serializable;
 use Throwable;
-
 use TypeError;
 
 use function array_intersect;
