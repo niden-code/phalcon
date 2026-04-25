@@ -371,65 +371,65 @@ jobs:
   #          name: "db-postgres-${{ matrix.php }}.coverage"
   #          path: "tests/_output/coverage.xml"
 
-#  db-sqlite-tests:
-#    name: SQLite tests
-#
-#    permissions:
-#      contents: read # to fetch code (actions/checkout)
-#
-#    runs-on: ubuntu-24.04
-#
-#    strategy:
-#      fail-fast: true
-#      matrix:
-#        php:
-#          - '8.1'
-#
-#    steps:
-#      - uses: actions/checkout@v6
-#
-#      - name: "Setup platform specific environment"
-#        shell: pwsh
-#        run: git config --global core.autocrlf false
-#
-#      - name: "Setup PHP"
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ matrix.php }}
-#          extensions: ${{ env.EXTENSIONS }}
-#          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
-#          tools: pecl, phpize, php-config, composer:v2
-#          coverage: xdebug
-#        env:
-#          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          PHALCON_PATH: ext
-#
-#      - name: "Validate composer"
-#        run: composer validate --no-check-all --no-check-publish
-#
-#      - name: "Install development dependencies with Composer"
-#        uses: "ramsey/composer-install@v4"
-#        with:
-#          composer-options: "--prefer-dist"
-#
-#      - name: "Setup Tests"
-#        shell: bash
-#        run: |
-#          if [ "${{ runner.os }}" = "Linux" ]; then
-#            ./config/ci/linux-setup-locales.sh
-#          fi
-#
-#          cp tests/support/_config/.env.default .env
-#          php tests/support/_config/generate-db-schemas.php
-#
-#      - name: "Run Database Tests (SQLite)"
-#        run: composer test-db-sqlite-coverage
-#
-#      - name: "Upload coverage file artifact"
-#        uses: "actions/upload-artifact@v7"
-#        with:
-#          name: "db-sqlite-${{ matrix.php }}.coverage"
-#          path: "tests/_output/coverage.xml"
+  db-sqlite-tests:
+    name: SQLite tests
+
+    permissions:
+      contents: read # to fetch code (actions/checkout)
+
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php:
+          - '8.1'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: "Setup platform specific environment"
+        shell: pwsh
+        run: git config --global core.autocrlf false
+
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.EXTENSIONS }}
+          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
+          tools: pecl, phpize, php-config, composer:v2
+          coverage: xdebug
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PHALCON_PATH: ext
+
+      - name: "Validate composer"
+        run: composer validate --no-check-all --no-check-publish
+
+      - name: "Install development dependencies with Composer"
+        uses: "ramsey/composer-install@v4"
+        with:
+          composer-options: "--prefer-dist"
+
+      - name: "Setup Tests"
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            ./config/ci/linux-setup-locales.sh
+          fi
+
+          cp tests/support/_config/.env.default .env
+          php tests/support/_config/generate-db-schemas.php
+
+      - name: "Run Database Tests (SQLite)"
+        run: composer test-db-sqlite-coverage
+
+      - name: "Upload coverage file artifact"
+        uses: "actions/upload-artifact@v7"
+        with:
+          name: "db-sqlite-${{ matrix.php }}.coverage"
+          path: "tests/_output/coverage.xml"
 
   upload-coverage:
     name: Upload coverage
@@ -444,7 +444,7 @@ jobs:
       - unit-tests
       - db-mysql-tests
 #      - "db-postgres-tests"
-#      - "db-sqlite-tests"
+      - db-sqlite-tests
 
     steps:
       - name: Checkout
