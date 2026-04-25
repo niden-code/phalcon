@@ -56,12 +56,29 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: "Cache extensions"
+        uses: shivammathur/cache-extensions@v1
+        id: cache-ext
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.EXTENSIONS }}
+          key: ext-cache-v1
+
+      - name: "Restore extensions"
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache-ext.outputs.dir }}
+          key: ${{ steps.cache-ext.outputs.key }}
+          restore-keys: ${{ steps.cache-ext.outputs.key }}
+
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ env.EXTENSIONS }}
-          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
+          ini-values: apc.enable_cli=on, session.save_path=/tmp, opcache.enable_cli=1, opcache.jit=1235, opcache.jit_buffer_size=256M
+          tools: composer:v2
+          coverage: none
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -137,6 +154,21 @@ jobs:
           redis-cli -h 127.0.0.1 -p 5000 ping
           redis-cli -h 127.0.0.1 -p 5000 cluster nodes
 
+      - name: "Cache extensions"
+        uses: shivammathur/cache-extensions@v1
+        id: cache-ext
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.EXTENSIONS }}
+          key: ext-cache-v1
+
+      - name: "Restore extensions"
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache-ext.outputs.dir }}
+          key: ${{ steps.cache-ext.outputs.key }}
+          restore-keys: ${{ steps.cache-ext.outputs.key }}
+
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
@@ -144,7 +176,7 @@ jobs:
           extensions: ${{ env.EXTENSIONS }}
           ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
           tools: composer:v2
-          coverage: xdebug
+          coverage: pcov
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -206,19 +238,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-      postgres:
-        image: postgres:18-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_USER: phalcon
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: phalcon
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
       redis:
         image: redis:8-alpine
         ports:
@@ -235,14 +254,29 @@ jobs:
         shell: pwsh
         run: git config --global core.autocrlf false
 
+      - name: "Cache extensions"
+        uses: shivammathur/cache-extensions@v1
+        id: cache-ext
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.EXTENSIONS }}
+          key: ext-cache-v1
+
+      - name: "Restore extensions"
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache-ext.outputs.dir }}
+          key: ${{ steps.cache-ext.outputs.key }}
+          restore-keys: ${{ steps.cache-ext.outputs.key }}
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ env.EXTENSIONS }}
-          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
+          ini-values: apc.enable_cli=on, session.save_path=/tmp
           tools: composer:v2
-          coverage: xdebug
+          coverage: pcov
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PHALCON_PATH: ext
@@ -383,33 +417,6 @@ jobs:
           - '8.1'
 
     services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - "3306:3306"
-        env:
-          MYSQL_ROOT_PASSWORD: secret
-          MYSQL_USER: phalcon
-          MYSQL_DATABASE: phalcon
-          MYSQL_PASSWORD: secret
-        options: >-
-          --health-cmd "mysqladmin ping --silent"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      postgres:
-        image: postgres:18-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_USER: phalcon
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: phalcon
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
       redis:
         image: redis:8-alpine
         ports:
@@ -426,14 +433,29 @@ jobs:
         shell: pwsh
         run: git config --global core.autocrlf false
 
+      - name: "Cache extensions"
+        uses: shivammathur/cache-extensions@v1
+        id: cache-ext
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.EXTENSIONS }}
+          key: ext-cache-v1
+
+      - name: "Restore extensions"
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache-ext.outputs.dir }}
+          key: ${{ steps.cache-ext.outputs.key }}
+          restore-keys: ${{ steps.cache-ext.outputs.key }}
+
       - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ env.EXTENSIONS }}
-          ini-values: apc.enable_cli=on, session.save_path=${{ env.SESSION_SAVE_PATH }}
+          ini-values: apc.enable_cli=on, session.save_path=/tmp
           tools: composer:v2
-          coverage: xdebug
+          coverage: pcov
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -459,7 +481,7 @@ jobs:
         run: composer test-db-sqlite-coverage
 
       - name: "Upload coverage file artifact"
-        uses: "actions/upload-artifact@v7"
+        uses: actions/upload-artifact@v7
         with:
           name: "db-sqlite-${{ matrix.php }}.coverage"
           path: "tests/_output/coverage.xml"
@@ -531,6 +553,6 @@ jobs:
 #          mv cv/unit-8.1.coverage/coverage.xml      cv/02.xml
 #          mv cv/unit-8.2.coverage/coverage.xml      cv/03.xml
 #          mv cv/unit-8.3.coverage/coverage.xml      cv/04.xml
-#          mv cv/unit-8.4.coverage/coverage.xml      cv/05.xml
+#          mv cv/unit-8.5.coverage/coverage.xml      cv/05.xml
 #          mv cv/unit-8.5.coverage/coverage.xml      cv/06.xml
 #          ls -la cv/
