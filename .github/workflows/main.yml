@@ -206,6 +206,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      postgres:
+        image: postgres:18-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: phalcon
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: phalcon
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
       redis:
         image: redis:8-alpine
         ports:
@@ -370,6 +383,33 @@ jobs:
           - '8.1'
 
     services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - "3306:3306"
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_USER: phalcon
+          MYSQL_DATABASE: phalcon
+          MYSQL_PASSWORD: secret
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      postgres:
+        image: postgres:18-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: phalcon
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: phalcon
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
       redis:
         image: redis:8-alpine
         ports:
